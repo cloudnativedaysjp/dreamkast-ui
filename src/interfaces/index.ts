@@ -4,7 +4,12 @@
 //
 // import { User } from 'path/to/interfaces';
 
-export type User = {
-  id: number
-  name: string
+export type Talk = {
+  id: Number
+  trackId: string
+  vimeoId: string
+  title: string
+  description: string
+  speakers: string[]
+  onAir?: Boolean
 }

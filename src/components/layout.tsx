@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 type Props = {
   children?: ReactNode
   title?: string
-  classes
+  classes?
 }
 
 const useStyles = makeStyles((theme) => ({

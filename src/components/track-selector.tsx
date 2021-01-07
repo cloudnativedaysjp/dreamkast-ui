@@ -1,17 +1,35 @@
-import * as React from 'react'
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import React, {useState} from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 type Props = {
-  tracks: String[]
+  selectedTrackId: String
+  selectTrack: Function
 }
 
-const TrackSelector = ({ tracks }: Props) => (
-  <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-    {tracks.map((track) => (
-      <Button>{track}</Button>
-    ))}
-  </ButtonGroup>
-)
+const useStyles = makeStyles({
+  debug: {
+    backgroundColor: "#CCC"
+  },
+  buttongroup: {
+    justifyContent: "center",
+    backgroundColor: "#CC0"
+  }
+});
 
-export default TrackSelector
+const TrackSelector = ({ selectedTrackId, selectTrack }: Props) => {
+  const classes = useStyles();
+  const tracks = {1: "Track 1", 2: "Track 2",3: "Track 3",4: "Track 4",5: "Track 5",6: "Track 6"}
+
+  return(
+    <ToggleButtonGroup className={classes.buttongroup} value={selectedTrackId} color="primary" onChange={selectTrack} exclusive aria-label="text primary button group">
+      {Object.keys(tracks).map((key) => (
+        <ToggleButton value={key} className={classes.debug}>{tracks[key]}</ToggleButton>
+      ))}
+    </ToggleButtonGroup>
+  )
+  
+}
+
+export default TrackSelector;

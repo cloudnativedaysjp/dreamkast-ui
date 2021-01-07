@@ -1,13 +1,25 @@
+import { List } from '@material-ui/core'
+import { ListItemText } from '@material-ui/core'
 import * as React from 'react'
+import { Talk } from '../interfaces'
 
 type Props = {
-    talk_id
+    talk: Talk
 }
 
-const Chat = ({ talk_id }: Props) => (
-  <div>
-
-  </div>
+const Chat = ({ talk }: Props) => (
+    <div>
+        <h2>Chat / QA</h2>
+        <List>
+            <ListItemText primary="foooo" />
+            <ListItemText primary="bar" />
+            <ListItemText primary="baz" />
+            <ListItemText primary="hoge" />
+            <ListItemText primary="fuga" />
+            <ListItemText primary="piyo" />
+            <ListItemText primary="fooo" />
+        </List>
+    </div>
 )
 
 export default Chat

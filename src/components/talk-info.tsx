@@ -1,19 +1,17 @@
 import * as React from 'react'
+import { Talk } from '../interfaces'
 
 type Props = {
-  id: Number
-  title: String
-  description: String
-  speakers: String[]
+  selectedTalk: Talk
 }
 
-const TalkInfo = ({ id, title, description, speakers }: Props) => (
+const TalkInfo = ({ selectedTalk }: Props) => (
   <section className="talk-info">
-      <h3>{title}</h3>
+      <h3>{selectedTalk.title}</h3>
       <h4>
-          {speakers.join(" / ")}
+          {selectedTalk.speakers.join(" / ")}
       </h4>
-      <div>{description}</div>
+      <div>{selectedTalk.description}</div>
   </section>
 )
 
