@@ -4,7 +4,6 @@ import TalkInfo from '../components/talk-info'
 import Chat from './chat'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Talks } from '../utils/talk-data'
 import { Talk } from '../interfaces'
 import TalkSelector from './talk-selector'
 
@@ -35,17 +34,17 @@ const currentVimeoId = ({ selectedTalk, selectedTrackId, talks }: Props) => {
   return currentId;
 }
 
-const Track = ({ selectedTalk, selectedTrackId, isLive, talks, selectTalk }: Props) => {
+const Track = ({ selectedTalk, selectedTrackId, talks, selectTalk }: Props) => {
   const classes = useStyles();
 
 
   return (
     <Grid container spacing={1} justify="center" alignItems="center" alignContent="center">
       <Grid item xs={12} md={8} className={classes.player} justify="center" alignItems="center" alignContent="center">
-        <Player vimeoId={currentVimeoId({ selectedTalk, selectedTrackId, isLive, talks })} autoplay={false}></Player>
+        <Player vimeoId={currentVimeoId({ selectedTalk, selectedTrackId, talks })} autoplay={false}></Player>
       </Grid>
       <Grid item xs={12} md={3} className={classes.chat} justify="center" alignItems="center" alignContent="center">
-        <Chat talk_id={selectedTalk.id} />
+        <Chat talk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={8} className={classes.player} justify="center" alignItems="center" alignContent="center">
         <TalkInfo selectedTalk={selectedTalk} />
