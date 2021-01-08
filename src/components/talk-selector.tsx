@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import React from 'react'
+//import { makeStyles } from '@material-ui/core/styles';
 import { Talk } from '../interfaces'
 import { List } from '@material-ui/core'
 import { ListItem } from '@material-ui/core'
@@ -13,17 +13,17 @@ type Props = {
 
 }
 
-const useStyles = makeStyles((theme) => ({
-  player: {
-    //backgroundColor: "#CC0",
-  },
-  chat: {
-    //backgroundColor: "#CC0",
-  }
-}));
+// const useStyles = makeStyles({
+//   player: {
+//     //backgroundColor: "#CC0",
+//   },
+//   chat: {
+//     //backgroundColor: "#CC0",
+//   }
+// });
 
 const TalkSelector = ({ selectedTrackId, selectedTalk, talks, selectTalk }: Props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <List component="nav">

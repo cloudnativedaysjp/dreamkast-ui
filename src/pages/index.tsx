@@ -5,15 +5,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import { useState } from 'react';
 import { Talks } from '../utils/talk-data';
-import { lstat } from 'fs';
+import { Talk } from '../interfaces';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   debug: {
     //backgroundColor: "#C00",
   }
-}));
+});
 
-const Dreamkast = () => {
+const IndexPage = () => {
   const classes = useStyles();
 
   // States
@@ -22,7 +22,7 @@ const Dreamkast = () => {
   const [selectedTalk, setSelectedTalk] = useState(talks[0]);
   
   // Handlers
-  const selectTrack = (event, selectedId) => {
+  const selectTrack = (_event: object, selectedId: string) => {
     setSelectedTrackId(selectedId);
     talks.forEach(talk => {
       if(talk.trackId == selectedId){
@@ -33,7 +33,7 @@ const Dreamkast = () => {
     })
   }
 
-  const selectTalk = (event, talk) => {
+  const selectTalk = (_event: object, talk: Talk) => {
     setSelectedTalk(talk)
   }
 
@@ -55,4 +55,4 @@ const Dreamkast = () => {
   )
 }
 
-export default Dreamkast
+export default IndexPage

@@ -7,7 +7,7 @@ type Props = {
   speakers: String[]
 }
 
-const Sponsors = ({ id, title, description, speakers }: Props) => (
+const Sponsors = ({ title, description, speakers }: Props) => (
   <section className="talk-info">
       <h3>{title}</h3>
       <h4>

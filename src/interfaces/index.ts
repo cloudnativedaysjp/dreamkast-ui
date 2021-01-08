@@ -13,3 +13,7 @@ export type Talk = {
   speakers: string[]
   onAir?: Boolean
 }
+
+export type Track = {
+  [key: string]: any;
+}

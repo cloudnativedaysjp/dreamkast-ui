@@ -10,6 +10,7 @@ type Props = {
 const Chat = ({ talk }: Props) => (
     <div>
         <h2>Chat / QA</h2>
+        <h3>{ talk.title }</h3>
         <List>
             <ListItemText primary="foooo" />
             <ListItemText primary="bar" />

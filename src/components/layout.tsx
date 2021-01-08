@@ -11,7 +11,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 type Props = {
   children?: ReactNode
   title?: string
-  classes?
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -26,33 +25,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-const Layout = ({ children, title = 'This is the default title', classes = useStyles() }: Props) => (
-  <div>
-    <Head>
-      <title>{title}</title>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <header>
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          Dreamkast
-        </Typography>
-        <Button color="inherit">Login</Button>
-      </Toolbar>
-    </AppBar>
-    </header>
-    {children}
-    <footer>
-      <hr />
-      <span>CloudNative Days</span>
-    </footer>
-  </div>
-)
+const Layout = ({ children, title = 'This is the default title' }: Props) => {
+  const classes = useStyles();
+  return (
+    <div>
+      <Head>
+        <title>{title}</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <header>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Dreamkast
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      </header>
+      {children}
+      <footer>
+        <hr />
+        <span>CloudNative Days</span>
+      </footer>
+    </div>
+  )
+}
 
 export default Layout

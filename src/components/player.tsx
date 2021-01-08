@@ -2,17 +2,17 @@ import * as React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
 type Props = {
-  vimeoId
+  vimeoId: string
   autoplay: Boolean
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   player: {
     width: "100%",
     height: "500px",
     backgroundColor: "#123"
   }
-}));
+});
 
 const Player = ({ vimeoId, autoplay }: Props) => {
   const classes = useStyles();
