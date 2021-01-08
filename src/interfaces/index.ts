@@ -5,15 +5,15 @@
 // import { User } from 'path/to/interfaces';
 
 export type Talk = {
-  id: Number
+  id: number
   trackId: string
   vimeoId: string
   title: string
   description: string
   speakers: string[]
-  onAir?: Boolean
+  onAir?: boolean
 }
 
 export type Track = {
-  [key: string]: any;
+  [key: string]: any
 }

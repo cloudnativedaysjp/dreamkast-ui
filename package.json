@@ -6,7 +6,7 @@
         "build": "next build",
         "start": "next start",
         "type-check": "tsc",
-        "lint": "eslint '*/**/*.{js,ts}'"
+        "lint": "eslint '*/**/*.{js,ts}' --quiet --fix"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.2",
