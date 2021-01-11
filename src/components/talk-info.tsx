@@ -7,11 +7,9 @@ type Props = {
 
 const TalkInfo = ({ selectedTalk }: Props) => (
   <section className="talk-info">
-      <h3>{selectedTalk.title}</h3>
-      <h4>
-          {selectedTalk.speakers.join(" / ")}
-      </h4>
-      <div>{selectedTalk.description}</div>
+    <h3>{selectedTalk.title}</h3>
+    <h4>{selectedTalk.speakers.join(' / ')}</h4>
+    <div>{selectedTalk.description}</div>
   </section>
 )
 
