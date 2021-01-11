@@ -6,7 +6,7 @@ import { Track } from '../interfaces'
 
 type Props = {
   selectedTrackId: string
-  selectTrack: Function
+  selectTrack: (selectedId: string) => void
 }
 
 const useStyles = makeStyles({
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackSelector: React.FC = ({ selectedTrackId, selectTrack }) => {
+const TrackSelector: React.FC<Props> = ({ selectedTrackId, selectTrack }) => {
   const classes = useStyles()
   const tracks: Track = {
     1: 'Track 1',
@@ -35,7 +35,7 @@ const TrackSelector: React.FC = ({ selectedTrackId, selectTrack }) => {
       className={classes.buttongroup}
       value={selectedTrackId}
       color="primary"
-      onChange={(_evnet, value) => selectTrack(event, value)}
+      onChange={(_event, value) => selectTrack(value as string)}
       exclusive
       aria-label="text primary button group"
     >

@@ -22,7 +22,7 @@ const IndexPage: React.FC = () => {
   const [selectedTalk, setSelectedTalk] = useState(talks[0])
 
   // Handlers
-  const selectTrack = (_event: object, selectedId: string) => {
+  const selectTrack = (selectedId: string) => {
     setSelectedTrackId(selectedId)
     talks.forEach((talk) => {
       if (talk.trackId == selectedId) {
@@ -33,7 +33,7 @@ const IndexPage: React.FC = () => {
     })
   }
 
-  const selectTalk = (_event: object, talk: Talk) => {
+  const selectTalk = (talk: Talk) => {
     setSelectedTalk(talk)
   }
 

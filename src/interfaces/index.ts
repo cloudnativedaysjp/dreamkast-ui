@@ -15,5 +15,5 @@ export type Talk = {
 }
 
 export type Track = {
-  [key: number]: string
+  [key: string]: string
 }

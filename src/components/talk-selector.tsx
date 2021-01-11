@@ -9,7 +9,7 @@ type Props = {
   selectedTrackId: string
   selectedTalk: Talk
   talks: Talk[]
-  selectTalk: Function
+  selectTalk: (talk: Talk) => void
 }
 
 // const useStyles = makeStyles({
@@ -37,7 +37,7 @@ const TalkSelector: React.FC<Props> = ({
             <ListItem
               button
               selected={talk.id === selectedTalk.id}
-              onClick={(event) => selectTalk(event, talk)}
+              onClick={() => selectTalk(talk)}
             >
               <ListItemText inset primary={talk.title} />
             </ListItem>
