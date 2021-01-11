@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 })
 
-const IndexPage = () => {
+const IndexPage: React.FC = () => {
   const classes = useStyles()
 
   // States

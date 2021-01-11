@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackSelector = ({ selectedTrackId, selectTrack }: Props) => {
+const TrackSelector: React.FC = ({ selectedTrackId, selectTrack }) => {
   const classes = useStyles()
   const tracks: Track = {
     1: 'Track 1',

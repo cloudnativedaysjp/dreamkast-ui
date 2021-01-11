@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 type Props = {
   id: number
@@ -7,7 +7,7 @@ type Props = {
   speakers: string[]
 }
 
-const Sponsors = ({ title, description, speakers }: Props) => (
+const Sponsors: React.FC<Props> = ({ title, description, speakers }) => (
   <section className="talk-info">
     <h3>{title}</h3>
     <h4>{speakers.join(' / ')}</h4>

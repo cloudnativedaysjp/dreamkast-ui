@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 })
 
-const Player = ({ vimeoId, autoplay }: Props) => {
+const Player: React.FC<Props> = ({ vimeoId, autoplay }) => {
   const classes = useStyles()
   return (
     <iframe

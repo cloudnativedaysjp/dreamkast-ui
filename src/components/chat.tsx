@@ -1,13 +1,14 @@
+import React from 'react'
 import { List } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
-import * as React from 'react'
+
 import { Talk } from '../interfaces'
 
 type Props = {
   talk: Talk
 }
 
-const Chat = ({ talk }: Props) => (
+const Chat: React.FC<Props> = ({ talk }) => (
   <div>
     <h2>Chat / QA</h2>
     <h3>{talk.title}</h3>

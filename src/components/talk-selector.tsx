@@ -21,12 +21,12 @@ type Props = {
 //   }
 // });
 
-const TalkSelector = ({
+const TalkSelector: React.FC<Props> = ({
   selectedTrackId,
   selectedTalk,
   talks,
   selectTalk,
-}: Props) => {
+}) => {
   // const classes = useStyles();
 
   return (

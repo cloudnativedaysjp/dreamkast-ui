@@ -11,7 +11,7 @@ type Props = {
   selectedTrackId: string
   selectedTalk: Talk
   talks: Talk[]
-  selectTalk: Function
+  selectTalk: (talk: Talk) => void
 }
 
 const useStyles = makeStyles({
@@ -33,7 +33,12 @@ const currentVimeoId = (selectedTalk: Talk, talks: Talk[]) => {
   return currentId
 }
 
-const Track = ({ selectedTalk, selectedTrackId, talks, selectTalk }: Props) => {
+const Track: React.FC<Props> = ({
+  selectedTalk,
+  selectedTrackId,
+  talks,
+  selectTalk,
+}) => {
   const classes = useStyles()
 
   return (
