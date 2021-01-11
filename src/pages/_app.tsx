@@ -5,7 +5,10 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 
-export default function Dreamkast({ Component, pageProps }: AppProps) {
+export default function Dreamkast({
+  Component,
+  pageProps,
+}: AppProps): JSX.Element {
   return (
     <React.Fragment>
       <Head>
