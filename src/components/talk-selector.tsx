@@ -9,8 +9,7 @@ type Props = {
   selectedTrackId: string
   selectedTalk: Talk
   talks: Talk[]
-  selectTalk: Function
-
+  selectTalk: (talk: Talk) => void
 }
 
 // const useStyles = makeStyles({
@@ -22,15 +21,24 @@ type Props = {
 //   }
 // });
 
-const TalkSelector = ({ selectedTrackId, selectedTalk, talks, selectTalk }: Props) => {
+const TalkSelector: React.FC<Props> = ({
+  selectedTrackId,
+  selectedTalk,
+  talks,
+  selectTalk,
+}) => {
   // const classes = useStyles();
 
   return (
     <List component="nav">
       {talks.map((talk) => {
-        if(talk.trackId == selectedTrackId){
+        if (talk.trackId == selectedTrackId) {
           return (
-            <ListItem button　selected={talk.id === selectedTalk.id} onClick={(event) => selectTalk(event, talk)}>
+            <ListItem
+              button
+              selected={talk.id === selectedTalk.id}
+              onClick={() => selectTalk(talk)}
+            >
               <ListItemText inset primary={talk.title} />
             </ListItem>
           )
@@ -40,4 +48,4 @@ const TalkSelector = ({ selectedTrackId, selectedTalk, talks, selectTalk }: Prop
   )
 }
 
-export default TalkSelector;
+export default TalkSelector
