@@ -1,0 +1,14 @@
+name: jest
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  jest:
+    name: jest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: yarn install
+        run: yarn install
+      - name: jest
+        run: yarn test
