@@ -1,0 +1,14 @@
+name: eslint
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  eslint:
+    name: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: yarn install
+        run: yarn install
+      - name: eslint
+        run: yarn lint
