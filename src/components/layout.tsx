@@ -49,7 +49,7 @@ const Layout: React.FC<Props> = ({
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Dreamkast
+              New Dreamkast
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>
