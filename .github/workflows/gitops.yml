@@ -41,6 +41,10 @@ jobs:
           IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
 
+          if [ ! -e ${{ github.head_ref }} ]; then
+            IMAGE_TAG = ${{ github.head_ref }}
+          fi
+
           IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
 
@@ -50,6 +54,7 @@ jobs:
           docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
           docker push $IMAGE_WITH_SHA
 
+          echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
           echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
           echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
 
@@ -66,8 +71,11 @@ jobs:
           kustomize-version: "3.6.1"
 
       - name: Update Kubernetes resources
+        env:
+          IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
-          cd dreamkast-infra/dreamkast-ui/base
+          cp -r dreamkast-infra/dreamkast-ui/overlays/template dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
+          cd dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
           kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
           cat kustomization.yaml
 
