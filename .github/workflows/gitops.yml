@@ -42,7 +42,7 @@ jobs:
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
 
           if [ ! -e ${{ github.head_ref }} ]; then
-            IMAGE_TAG = ${{ github.head_ref }}
+            IMAGE_TAG=${{ github.head_ref }}
           fi
 
           IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
