@@ -78,8 +78,10 @@ jobs:
           cp -r dreamkast-infra/dreamkast-ui/overlays/template dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
           cd dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
           kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          kustomize edit set label app:dreamkast-ui-$IMAGE_TAG
           if [ ! -e ${{ github.head_ref }} ]; then
             kustomize edit set namespace dreamkast-dev
+            sed -i -e s/IMAGE_TAG/$IMAGE_TAG/ dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG/ingress.yaml
           fi
 
           cat kustomization.yaml
@@ -92,8 +94,6 @@ jobs:
           else
             sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
           fi
-
-          
 
       - name: Commit files
         run: |
