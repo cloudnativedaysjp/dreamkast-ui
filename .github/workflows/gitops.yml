@@ -74,10 +74,26 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
+          echo "========Update application manifests=========="
           cp -r dreamkast-infra/dreamkast-ui/overlays/template dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
           cd dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
           kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
+          if [ ! -e ${{ github.head_ref }} ]; then
+            kustomize edit set namespace dreamkast-dev
+          fi
+
           cat kustomization.yaml
+          echo "========Update application manifests=========="
+          cd ../../../../
+          cp dreamkast-infra/argocd-apps/template/dreamkast-ui.yaml dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+          sed -i -e s/IMAGE_TAG/$IMAGE_TAG/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+          if [ ! -e ${{ github.head_ref }} ]; then
+            sed -i -e s/NAMESPACE/dreamkast-dev/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+          else
+            sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+          fi
+
+          
 
       - name: Commit files
         run: |
