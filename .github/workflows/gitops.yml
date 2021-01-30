@@ -76,7 +76,9 @@ jobs:
         run: |
           BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
           echo "========Update application manifests=========="
-          cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
+          if [ ! -e ${{ github.head_ref }} ]; then
+            cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
+          fi
           cd dreamkast-infra/dreamkast/overlays/$BRANCH
           kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
           if [ ! -e ${{ github.head_ref }} ]; then
