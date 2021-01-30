@@ -74,25 +74,25 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
+          BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
           echo "========Update application manifests=========="
-          cp -r dreamkast-infra/dreamkast-ui/overlays/template dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
-          cd dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG
+          cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
+          cd dreamkast-infra/dreamkast/overlays/$BRANCH
           kustomize edit set image ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
-          kustomize edit set label app:dreamkast-ui-$IMAGE_TAG
           if [ ! -e ${{ github.head_ref }} ]; then
-            kustomize edit set namespace dreamkast-dev
-            sed -i -e s/IMAGE_TAG/$IMAGE_TAG/ dreamkast-infra/dreamkast-ui/overlays/$IMAGE_TAG/ingress.yaml
+            kustomize edit set namespace dreamkast-$BRANCH
+            sed -i -e s/BRANCH/$BRANCH/ ./ingress.yaml
           fi
-
           cat kustomization.yaml
-          echo "========Update application manifests=========="
+
+          echo "========Generate ArgoCD app=========="
           cd ../../../../
-          cp dreamkast-infra/argocd-apps/template/dreamkast-ui.yaml dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
-          sed -i -e s/IMAGE_TAG/$IMAGE_TAG/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+          cp dreamkast-infra/argocd-apps/template/dreamkast.yaml dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
+          sed -i -e s/BRANCH/$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
           if [ ! -e ${{ github.head_ref }} ]; then
-            sed -i -e s/NAMESPACE/dreamkast-dev/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+            sed -i -e s/NAMESPACE/dreamkast-$BRANCH/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
           else
-            sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-ui-$IMAGE_TAG.yaml
+            sed -i -e s/NAMESPACE/dreamkast/ dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
           fi
 
       - name: Commit files
