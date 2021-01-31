@@ -32,7 +32,7 @@ jobs:
 
       - name: Clean up manifests
         run: |
-          BRANCH=$(echo ${{ github.head_ref }} | sed s/_/-/)
+          BRANCH=ui-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
 
           rm -f dreamkast-infra/argocd-apps/dreamkast-$BRANCH.yaml
           rm -rf dreamkast-infra/dreamkast/overlays/$BRANCH

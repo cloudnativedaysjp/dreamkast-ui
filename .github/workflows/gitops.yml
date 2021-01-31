@@ -1,4 +1,4 @@
-name: CI
+name: GitOps
 
 on:
   push:
@@ -86,7 +86,12 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.ecr.outputs.IMAGE_TAG }}
         run: |
-          BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
+          if [ ! -e ${{ github.head_ref }} ]; then
+            BRANCH=ui-$(cat $GITHUB_EVENT_PATH | jq -r ".number")
+          else
+            BRANCH=$(echo $IMAGE_TAG | sed s/_/-/)
+          fi
+
           echo "========Update application manifests=========="
           if [ ! -e ${{ github.head_ref }} ]; then
             cp -r dreamkast-infra/dreamkast/overlays/template dreamkast-infra/dreamkast/overlays/$BRANCH
