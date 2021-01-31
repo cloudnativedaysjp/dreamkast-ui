@@ -24,4 +24,4 @@ docker run -p 3001:3001 --name dremakst-ui <IMAGE>
 
 ## License
 
-MIT License
+MIT License 

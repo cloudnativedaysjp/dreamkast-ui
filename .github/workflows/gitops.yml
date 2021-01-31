@@ -131,3 +131,12 @@ jobs:
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
           branch: main
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        if: ${{ github.event.action == 'opened' }}
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Review app
+            http://dreamkast-ui-${{ github.event.pull_request.number }}.dev.cloudnativedays.jp/
