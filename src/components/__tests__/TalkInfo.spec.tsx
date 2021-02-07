@@ -1,10 +1,10 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { Talks } from '../../utils/talk-data'
-import Chat from '../Chat'
+import TalkInfo from '../TalkInfo'
 
-test('Chat', () => {
-  const component = renderer.create(<Chat talk={Talks[0]} />)
+test('TalkInfo', () => {
+  const component = renderer.create(<TalkInfo selectedTalk={Talks[0]} />)
   const tree = component.toJSON()
   expect(tree).toMatchSnapshot()
 })

@@ -1,11 +1,11 @@
 import React from 'react'
-import Player from '../components/player'
-import TalkInfo from '../components/talk-info'
-import Chat from './chat'
+import Player from './Player'
+import TalkInfo from './TalkInfo'
+import Chat from './Chat'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import { Talk } from '../interfaces'
-import TalkSelector from './talk-selector'
+import TalkSelector from './TalkSelector'
 
 type Props = {
   selectedTrackId: string

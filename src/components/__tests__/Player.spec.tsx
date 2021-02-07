@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import Player from '../player'
+import Player from '../Player'
 
 test('Player', () => {
   const component = renderer.create(
