@@ -1,7 +1,6 @@
 import React from 'react'
 import { List } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
-
 import { Talk } from '../interfaces'
 
 type Props = {

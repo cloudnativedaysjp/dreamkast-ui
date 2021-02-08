@@ -1,6 +1,6 @@
-import Layout from '../components/layout'
-import TrackSelector from '../components/track-selector'
-import Track from '../components/track'
+import Layout from '../components/Layout'
+import TrackSelector from '../components/TrackSelector'
+import Track from '../components/Track'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import { useState } from 'react'
@@ -38,7 +38,7 @@ const IndexPage: React.FC = () => {
   }
 
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Dreamkast">
       <Grid
         container
         spacing={0}
