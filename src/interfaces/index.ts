@@ -15,5 +15,21 @@ export type Talk = {
 }
 
 export type Track = {
-  [key: string]: string
+  id: number
+  name: string
+  videoPlatform: string
+  videoId: string
+}
+
+export type Event = {
+  id: number
+  name: string
+  abbr: string
+  status: string
+  theme: string
+  about: string
+  privacy_policy: string
+  privacy_policy_for_speaker: string
+  copyright: string
+  coc: string
 }
