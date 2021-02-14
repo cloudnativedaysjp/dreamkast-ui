@@ -63,6 +63,7 @@ jobs:
           docker build --target build -t $CACHE_BUILD --build-arg=BUILDKIT_INLINE_CACHE=1  .
 
           docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
+          docker push $IMAGE_WITH_TAG
           docker push $IMAGE_WITH_SHA
           docker push $CACHE_BASE
           docker push $CACHE_BUILD
