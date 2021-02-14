@@ -1,0 +1,423 @@
+openapi: "3.0.2"
+info:
+  title: Dreamkast API
+  version: "1.0.0"
+  description: "This is a API definition of the Dreamakst. You can find a documentation of this API at http://api-docs.dev.cloudnativedays.jp/."
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+servers:
+  - url: http://localhost:8080/
+  - url: http://api-mock.dev.cloudnativedays.jp/
+  - url: http://dreamkast-api-mock.udcp.info/
+paths:
+  /api/v1/events/{eventAbbr}:
+    get:
+      tags:
+        - Event
+      parameters:
+        - name: eventAbbr
+          in: path
+          description: ID of event
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid eventAbbr supplied
+        '404':
+          description: Event not found
+  /api/v1/tracks:
+    get:
+      tags:
+        - Track
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Track'
+        '400':
+          description: Invalid eventAbbr supplied
+        '404':
+          description: Event not found
+  
+  /api/v1/tracks/{trackId}:
+    get:
+      tags:
+        - Track
+      parameters:
+        - name: trackId
+          in: path
+          description: ID of track
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Track'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Track not found
+  /api/v1/talks:
+    get:
+      tags:
+        - Talk
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+        - name: trackId
+          in: query
+          description: ID of track
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Talk'
+        '400':
+          description: Invalid eventAbbr supplied
+        '404':
+          description: Event not found
+  /api/v1/talks/{talkId}:
+    get:
+      tags:
+        - Talk
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Talk'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Talk not found
+  /api/v1/chat_messages:
+    get:
+      tags:
+        - ChatMessage
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+        - name: roomId
+          in: query
+          description: ID of chat room
+          required: true
+          schema:
+            type: string
+        - name: roomType
+          in: query
+          description: Type of chat room
+          required: true
+          schema:
+            type: string
+        - name: createdFrom
+          in: query
+          description: YYYY-MM-DDThh:mm:ss+TZD (use UTC)
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ChatMessage'
+        '400':
+          description: Invalid params supplied
+        '404':
+           description: ChatMessage not found
+    post:
+      tags:
+        - ChatMessage
+      summary: Post Chat Message
+      requestBody:
+        description: chat message to create
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessage'
+      responses:
+        '201':
+          description: CREATED
+  /api/v1/sponsors:
+    get:
+      tags:
+        - Sponsor
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sponsor'
+        '400':
+          description: Invalid params supplied
+
+components:
+  schemas:
+    Event:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        abbr:
+          type: string
+        status:
+          type: string
+        theme:
+          type: string
+        about:
+          type: string
+        privacy_policy:
+          type: string
+        privacy_policy_for_speaker:
+          type: string
+        copyright:
+          type: string
+        coc:
+          type: string
+      example:
+        id: 2
+        name: "CloudNative Days Spring 2020 ONLINE"
+        abbr: "cndo2021"
+        status: "closed"
+        theme: "ともに踏み出すCloudNative祭"
+        about: "『クラウドネイティブ』って何だっけ？ 私たち自身ずっと考えてきました。"
+        privacy_policy: "プライバシーポリシーだよ"
+        privacy_policy_for_speaker: "スピーカー向けのポリシーだよ"
+        copyright: "CloudNative Days Committee"
+        coc: "CoCだよ"
+      required:
+        - id
+        - name
+        - abbr
+        - status
+        - theme
+        - about
+        - privacy_policy
+        - privacy_policy_for_speaker
+        - copyright
+        - coc
+    Track:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        videoPlatform:
+          type: string
+        videoId:
+          type: string
+      example:
+        id: 2
+        name: "Track 2"
+        videoPlatform: "vimeo"
+        videoId: "453935827"
+      required:
+        - id
+        - name
+    Talk:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        trackId:
+          type: number
+        videoPlatform:
+          type: string
+        videoId:
+          type: string
+        title:
+          type: string
+        abstract:
+          type: string
+        speakers:
+          type: array
+          items:
+            type: number
+        dayId:
+          type: number
+        showOnTimetable:
+          type: boolean
+        startTime:
+          type: string
+        endTime:
+          type: string
+        talkDuration:
+          type: number
+        talkDifficulty:
+          type: string
+        talkCategory:
+          type: string
+        onAir:
+          type: boolean
+        documentUrl:
+          type: string
+      example:
+        - id: 1
+          trackId: 2
+          videoPlatform: "vimeo"
+          videoId: "453935827"
+          title: "やんごとなき発表"
+          abstract: "やんごとなき発表をします"
+          speakers: "やんごとない人"
+          dayId: 1
+          showOnTimetable: true
+          startTime: "Sat, 23 Jan 2021 09:00:00 GMT"
+          endTime: "Sat, 23 Jan 2021 09:20:00 GMT"
+          talkDuration: 40
+          talkDifficulty: "moderate"
+          talkCategory: "CI/CD"
+          onAir: true
+          documentUrl: "http://documents"
+        - id: 2
+          trackId: 2
+          videoPlatform: "vimeo"
+          videoId: "453935827"
+          title: "やんごとなき発表"
+          abstract: "やんごとなき発表をします"
+          speakers: "やんごとない人"
+          dayId: 1
+          showOnTimetable: true
+          startTime: "Sat, 23 Jan 2021 09:00:00 GMT"
+          endTime: "Sat, 23 Jan 2021 09:20:00 GMT"
+          talkDuration: 40
+          talkDifficulty: "moderate"
+          talkCategory: "CI/CD"
+          onAir: true
+          documentUrl: "http://documents"
+      required:
+        - id
+        - trackId
+        - videoId
+        - title
+        - abstract
+        - speakers
+        - dayId
+        - showOnTimetable
+        - startTime
+        - endTime
+        - talkDuration
+        - talkDifficulty
+        - talkCategory
+    ChatMessage:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        eventAbbr:
+          type: string
+        talkId:
+          type: number
+        body:
+          type: string
+        createdAt:
+          type: string
+      example:
+        id: 2
+        body: "foo bar"
+        createdAt: "2021-01-30T10:06:33.938Z"
+      required:
+        - eventAbbr
+        - talkId
+        - body
+    Sponsor:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: number
+        eventAbbr:
+          type: string
+        name:
+          type: string
+        abbr:
+          type: string
+        url:
+          type: string
+        logo_url:
+          type: string
+      example:
+        - id: 1
+          conference_id: 2
+          name: スポンサー1株式会社
+          abbr: sponsor1
+          url: https://example.com/
+          logo_url: cndo2021/trademark.png
+        - id: 2
+          conference_id: 2
+          name: スポンサー2株式会社
+          abbr: sponsor2
+          url: https://example.com/
+          logo_url: dummy.png
+      required:
+        - id
+        - eventAbbr
+        - name
+        - abbr
+        - url
+        - logo_url
