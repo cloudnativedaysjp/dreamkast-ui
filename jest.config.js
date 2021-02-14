@@ -3,7 +3,11 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.next/',
+    '<rootDir>/node_modules/',
+    '/client-axios/',
+  ],
   snapshotSerializers: ['enzyme-to-json/serializer'],
   testMatch: [
     '**/__tests__/**/*.+(ts|tsx|js)',
