@@ -55,6 +55,7 @@ aws ecr get-login-password | docker login --username AWS --password-stdin http:/
 3. Run
 
 ```
+docker-compose pull
 docker-compose up -d
 ```
 
