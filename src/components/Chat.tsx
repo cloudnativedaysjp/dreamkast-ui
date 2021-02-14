@@ -3,11 +3,15 @@ import React, {useEffect} from 'react'
 import {Box, Grid} from '@material-ui/core'
 import { Talk } from '../interfaces'
 import { useState } from 'react'
-import { ChatMessage as ChatMessageInterface, ChatMessageApi } from '../client-axios/api'
-import useInterval from "use-interval";
+import { ChatMessage as ChatMessageInterface } from '../client-axios/api'
 import { makeStyles } from "@material-ui/core/styles";
 import ChatMessage from './ChatMessage';
-import ChatMessageForm from './ChatMessageForm';
+import {ChatMessageClass} from "../interfaces";
+import ChatMessageForm from "./ChatMessageForm";
+
+if (typeof window !== "undefined") {
+    var actionCable = require("actioncable");
+}
 
 type Props = {
     talk: Talk
@@ -25,22 +29,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Chat: React.FC<Props> = ({ talk }) => {
     const classes = useStyles();
-    const api = new ChatMessageApi();
     const [messages, setMessages] = useState<ChatMessageInterface[]>([])
 
-    useEffect(() => {
-        api.apiV1ChatMessagesGet("cndt2020", "1", "talk")
-            .then(res => {
-                setMessages(res.data);
-            });
-    }, []);
-
-    useInterval(() => {
-        api.apiV1ChatMessagesGet("cndt2020", "1", "talk")
-            .then(res => {
-                setMessages(res.data);
-            });
-    }, 10000);
+    // if (typeof window !== "undefined") {
+        useEffect(() => {
+            const cable = actionCable.createConsumer('ws://localhost:8080/cable');
+            cable.subscriptions.create({channel: 'ChatChannel'},
+                {
+                    received(obj: any) {
+                        const msg = new ChatMessageClass("1", 1, obj["body"]);
+                        let tmp = messages
+                        tmp = messages
+                        tmp.push(msg)
+                        console.log(tmp)
+                        setMessages(tmp);
+                    }
+                }
+            )
+        }, []);
+    // }
 
     const setLastMessageElement = (chatMessage: ChatMessageInterface, ref: React.RefObject<HTMLDivElement>) => {
         const lastChat = messages[messages.length - 1];
