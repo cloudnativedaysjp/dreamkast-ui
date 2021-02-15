@@ -25,8 +25,6 @@ const TrackView: React.FC<Props> = ({ selectedTrackId }) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
-  console.log(selectedTrackId)
-
   const getTalks = useCallback(async () => {
     const api = new TalkApi()
     const { data } = await api.apiV1TalksGet(
@@ -48,10 +46,6 @@ const TrackView: React.FC<Props> = ({ selectedTrackId }) => {
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
   }, [talks])
-
-  useEffect(() => {
-    console.log(selectedTalk)
-  }, [selectedTalk])
 
   return (
     <Grid

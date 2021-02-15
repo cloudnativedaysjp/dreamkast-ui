@@ -8,8 +8,8 @@ exports[`TrackSelector 1`] = `
   role="group"
 >
   <button
-    aria-pressed={true}
-    className="MuiButtonBase-root MuiToggleButton-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal makeStyles-debug-1 Mui-selected"
+    aria-pressed={false}
+    className="MuiButtonBase-root MuiToggleButton-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal makeStyles-debug-1"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -26,12 +26,12 @@ exports[`TrackSelector 1`] = `
     onTouchStart={[Function]}
     tabIndex={0}
     type="button"
-    value="1"
+    value={10}
   >
     <span
       className="MuiToggleButton-label"
     >
-      Track 1
+      A
     </span>
   </button>
   <button
@@ -53,12 +53,12 @@ exports[`TrackSelector 1`] = `
     onTouchStart={[Function]}
     tabIndex={0}
     type="button"
-    value="2"
+    value={11}
   >
     <span
       className="MuiToggleButton-label"
     >
-      Track 2
+      B
     </span>
   </button>
   <button
@@ -80,93 +80,12 @@ exports[`TrackSelector 1`] = `
     onTouchStart={[Function]}
     tabIndex={0}
     type="button"
-    value="3"
+    value={12}
   >
     <span
       className="MuiToggleButton-label"
     >
-      Track 3
-    </span>
-  </button>
-  <button
-    aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal makeStyles-debug-1"
-    disabled={false}
-    onBlur={[Function]}
-    onChange={[Function]}
-    onClick={[Function]}
-    onDragLeave={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseDown={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    tabIndex={0}
-    type="button"
-    value="4"
-  >
-    <span
-      className="MuiToggleButton-label"
-    >
-      Track 4
-    </span>
-  </button>
-  <button
-    aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal makeStyles-debug-1"
-    disabled={false}
-    onBlur={[Function]}
-    onChange={[Function]}
-    onClick={[Function]}
-    onDragLeave={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseDown={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    tabIndex={0}
-    type="button"
-    value="5"
-  >
-    <span
-      className="MuiToggleButton-label"
-    >
-      Track 5
-    </span>
-  </button>
-  <button
-    aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal makeStyles-debug-1"
-    disabled={false}
-    onBlur={[Function]}
-    onChange={[Function]}
-    onClick={[Function]}
-    onDragLeave={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseDown={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    tabIndex={0}
-    type="button"
-    value="6"
-  >
-    <span
-      className="MuiToggleButton-label"
-    >
-      Track 6
+      C
     </span>
   </button>
 </div>
