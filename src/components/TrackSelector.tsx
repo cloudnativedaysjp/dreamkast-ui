@@ -2,11 +2,12 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import { Track } from '../interfaces'
+import { Track } from '../client-axios'
 
 type Props = {
-  selectedTrackId: string
-  selectTrack: (selectedId: string) => void
+  tracks: Track[]
+  selectedTrackId: number
+  selectTrack: (selectedId: number) => void
 }
 
 const useStyles = makeStyles({
@@ -19,29 +20,25 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackSelector: React.FC<Props> = ({ selectedTrackId, selectTrack }) => {
+const TrackSelector: React.FC<Props> = ({
+  tracks,
+  selectedTrackId,
+  selectTrack,
+}) => {
   const classes = useStyles()
-  const tracks: Track = {
-    1: 'Track 1',
-    2: 'Track 2',
-    3: 'Track 3',
-    4: 'Track 4',
-    5: 'Track 5',
-    6: 'Track 6',
-  }
 
   return (
     <ToggleButtonGroup
       className={classes.buttongroup}
       value={selectedTrackId}
       color="primary"
-      onChange={(_event, value) => selectTrack(value as string)}
+      onChange={(_event, value) => selectTrack(value as number)}
       exclusive
       aria-label="text primary button group"
     >
-      {Object.keys(tracks).map((key) => (
-        <ToggleButton value={key} className={classes.debug}>
-          {tracks[key]}
+      {tracks.map((track) => (
+        <ToggleButton key={track.id} value={track.id} className={classes.debug}>
+          {track.name}
         </ToggleButton>
       ))}
     </ToggleButtonGroup>

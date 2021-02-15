@@ -1,11 +1,11 @@
+import { GetStaticProps } from 'next'
+import { useState } from 'react'
 import Layout from '../components/Layout'
 import TrackSelector from '../components/TrackSelector'
-import Track from '../components/Track'
+import TrackView from '../components/Track'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import { useState } from 'react'
-import { Talks } from '../utils/talk-data'
-import { Talk } from '../interfaces'
+import { Track, TrackApi } from '../client-axios'
 
 const useStyles = makeStyles({
   debug: {
@@ -13,28 +13,19 @@ const useStyles = makeStyles({
   },
 })
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC<{ tracks: Track[] }> = ({
+  tracks,
+}: {
+  tracks: Track[]
+}) => {
   const classes = useStyles()
 
   // States
-  const [selectedTrackId, setSelectedTrackId] = useState('1')
-  const [talks] = useState(Talks)
-  const [selectedTalk, setSelectedTalk] = useState(talks[0])
+  const [selectedTrackId, setSelectedTrackId] = useState<number>(tracks[0].id)
 
   // Handlers
-  const selectTrack = (selectedId: string) => {
+  const selectTrack = (selectedId: number) => {
     setSelectedTrackId(selectedId)
-    talks.forEach((talk) => {
-      if (talk.trackId == selectedId) {
-        if (talk.onAir) {
-          setSelectedTalk(talk)
-        }
-      }
-    })
-  }
-
-  const selectTalk = (talk: Talk) => {
-    setSelectedTalk(talk)
   }
 
   return (
@@ -56,21 +47,27 @@ const IndexPage: React.FC = () => {
           alignContent="center"
         >
           <TrackSelector
+            tracks={tracks}
             selectedTrackId={selectedTrackId}
             selectTrack={selectTrack}
           />
         </Grid>
         <Grid item xs={12} md={12} className={classes.debug} justify="center">
-          <Track
-            selectedTalk={selectedTalk}
-            selectedTrackId={selectedTrackId}
-            talks={talks}
-            selectTalk={selectTalk}
-          />
+          <TrackView selectedTrackId={selectedTrackId} />
         </Grid>
       </Grid>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const api = new TrackApi()
+  const { data } = await api.apiV1TracksGet('cndo2021')
+  const tracks = data
+
+  return {
+    props: { tracks },
+  }
 }
 
 export default IndexPage
