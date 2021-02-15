@@ -209,7 +209,7 @@ export interface Talk {
      * @type {string}
      * @memberof Talk
      */
-    _abstract: string;
+    abstract: string;
     /**
      * 
      * @type {Array<number>}

@@ -9,7 +9,7 @@ const TalkInfo: React.FC<Props> = ({ selectedTalk }) => (
   <section className="talk-info">
     <h3>{selectedTalk?.title}</h3>
     <h4>{selectedTalk?.speakers.join(' / ')}</h4>
-    {/* <div>{selectedTalk?.description}</div> */}
+    <div>{selectedTalk?.abstract}</div>
   </section>
 )
 
