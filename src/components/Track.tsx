@@ -9,6 +9,7 @@ import TalkSelector from './TalkSelector'
 
 type Props = {
   selectedTrackId: number
+  propTalks?: Talk[]
 }
 
 const useStyles = makeStyles({
@@ -20,9 +21,9 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackView: React.FC<Props> = ({ selectedTrackId }) => {
+const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   const classes = useStyles()
-  const [talks, setTalks] = useState<Talk[]>([])
+  const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
   const getTalks = useCallback(async () => {
@@ -35,7 +36,7 @@ const TrackView: React.FC<Props> = ({ selectedTrackId }) => {
   }, [])
 
   useEffect(() => {
-    getTalks()
+    if (!propTalks) getTalks()
   }, [])
 
   const selectTalk = (talk: Talk) => {

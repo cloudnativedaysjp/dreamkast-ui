@@ -36,6 +36,7 @@ const TalkSelector: React.FC<Props> = ({
           return (
             <ListItem
               button
+              key={talk.id}
               selected={talk.id === selectedTalk?.id}
               onClick={() => selectTalk(talk)}
             >
