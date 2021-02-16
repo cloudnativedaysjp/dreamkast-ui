@@ -1,17 +1,11 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { Talks } from '../../utils/talk-data'
-import Track from '../Track'
+import { Talks } from '../../util/mock'
+import TrackView from '../Track'
 
 test('Track', () => {
   const component = renderer.create(
-    <Track
-      selectedTalk={Talks[0]}
-      selectedTrackId={'1'}
-      talks={Talks}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      selectTalk={() => {}}
-    />,
+    <TrackView propTalks={Talks} selectedTrackId={1} />,
   )
   const tree = component.toJSON()
   expect(tree).toMatchSnapshot()

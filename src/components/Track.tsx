@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Player from './Player'
 import TalkInfo from './TalkInfo'
 import Chat from './Chat'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import { Talk } from '../interfaces'
+import { Talk, TalkApi } from '../client-axios'
 import TalkSelector from './TalkSelector'
 
 type Props = {
-  selectedTrackId: string
-  selectedTalk: Talk
-  talks: Talk[]
-  selectTalk: (talk: Talk) => void
+  selectedTrackId: number
+  propTalks?: Talk[]
 }
 
 const useStyles = makeStyles({
@@ -23,23 +21,32 @@ const useStyles = makeStyles({
   },
 })
 
-const currentVimeoId = (selectedTalk: Talk, talks: Talk[]) => {
-  let currentId = ''
-  talks.forEach((talk) => {
-    if (talk.id == selectedTalk.id) {
-      currentId = talk.vimeoId
-    }
-  })
-  return currentId
-}
-
-const Track: React.FC<Props> = ({
-  selectedTalk,
-  selectedTrackId,
-  talks,
-  selectTalk,
-}) => {
+const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   const classes = useStyles()
+  const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
+  const [selectedTalk, setSelectedTalk] = useState<Talk>()
+
+  const getTalks = useCallback(async () => {
+    const api = new TalkApi()
+    const { data } = await api.apiV1TalksGet(
+      'cndo2021',
+      String(selectedTrackId),
+    )
+    setTalks(data)
+  }, [selectedTrackId])
+
+  useEffect(() => {
+    if (!propTalks) getTalks()
+  }, [])
+
+  const selectTalk = (talk: Talk) => {
+    setSelectedTalk(talk)
+  }
+
+  useEffect(() => {
+    const onAirTalk = talks.find((talk) => talk.onAir)
+    setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
+  }, [talks])
 
   return (
     <Grid
@@ -58,10 +65,7 @@ const Track: React.FC<Props> = ({
         alignItems="center"
         alignContent="center"
       >
-        <Player
-          vimeoId={currentVimeoId(selectedTalk, talks)}
-          autoplay={false}
-        ></Player>
+        <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
       </Grid>
       <Grid
         item
@@ -98,4 +102,4 @@ const Track: React.FC<Props> = ({
   )
 }
 
-export default Track
+export default TrackView

@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { Talks } from '../../utils/talk-data'
+import { Talks } from '../../util/mock'
 import Chat from '../Chat'
 
 test('Chat', () => {

@@ -1,16 +1,16 @@
 import React from 'react'
 import { List } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
-import { Talk } from '../interfaces'
+import { Talk } from '../client-axios'
 
 type Props = {
-  talk: Talk
+  talk?: Talk
 }
 
 const Chat: React.FC<Props> = ({ talk }) => (
   <div>
     <h2>Chat / QA</h2>
-    <h3>{talk.title}</h3>
+    <h3>{talk?.title}</h3>
     <List>
       <ListItemText primary="foooo" />
       <ListItemText primary="bar" />

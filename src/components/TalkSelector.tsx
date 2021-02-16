@@ -1,13 +1,13 @@
 import React from 'react'
 //import { makeStyles } from '@material-ui/core/styles';
-import { Talk } from '../interfaces'
+import { Talk } from '../client-axios'
 import { List } from '@material-ui/core'
 import { ListItem } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
 
 type Props = {
-  selectedTrackId: string
-  selectedTalk: Talk
+  selectedTrackId: number
+  selectedTalk?: Talk
   talks: Talk[]
   selectTalk: (talk: Talk) => void
 }
@@ -36,7 +36,8 @@ const TalkSelector: React.FC<Props> = ({
           return (
             <ListItem
               button
-              selected={talk.id === selectedTalk.id}
+              key={talk.id}
+              selected={talk.id === selectedTalk?.id}
               onClick={() => selectTalk(talk)}
             >
               <ListItemText inset primary={talk.title} />
