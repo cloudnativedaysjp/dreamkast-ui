@@ -1,5 +1,4 @@
-import { GetStaticProps } from 'next'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Layout from '../components/Layout'
 import TrackSelector from '../components/TrackSelector'
 import TrackView from '../components/Track'
@@ -13,20 +12,28 @@ const useStyles = makeStyles({
   },
 })
 
-const IndexPage: React.FC<{ tracks: Track[] }> = ({
-  tracks,
-}: {
-  tracks: Track[]
-}) => {
+const IndexPage: React.FC = () => {
   const classes = useStyles()
 
   // States
-  const [selectedTrackId, setSelectedTrackId] = useState<number>(tracks[0].id)
+  const [selectedTrackId, setSelectedTrackId] = useState<number>(0)
+  const [tracks, setTracks] = useState<Track[]>([])
 
   // Handlers
   const selectTrack = (selectedId: number) => {
     setSelectedTrackId(selectedId)
   }
+
+  const getTracks = useCallback(async () => {
+    const api = new TrackApi()
+    const { data } = await api.apiV1TracksGet('cndo2021')
+    setTracks(data)
+    setSelectedTrackId(data[0].id)
+  }, [])
+
+  useEffect(() => {
+    getTracks()
+  }, [])
 
   return (
     <Layout title="Dreamkast">
@@ -58,16 +65,6 @@ const IndexPage: React.FC<{ tracks: Track[] }> = ({
       </Grid>
     </Layout>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const api = new TrackApi()
-  const { data } = await api.apiV1TracksGet('cndo2021')
-  const tracks = data
-
-  return {
-    props: { tracks },
-  }
 }
 
 export default IndexPage
