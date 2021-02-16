@@ -33,7 +33,7 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
       String(selectedTrackId),
     )
     setTalks(data)
-  }, [])
+  }, [selectedTrackId])
 
   useEffect(() => {
     if (!propTalks) getTalks()
