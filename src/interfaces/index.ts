@@ -7,7 +7,7 @@
 import {ChatMessage as ChatMessageInterface} from "../client-axios";
 
 export type Talk = {
-  id: number
+  id: string
   trackId: string
   vimeoId: string
   title: string

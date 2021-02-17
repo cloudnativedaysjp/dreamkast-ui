@@ -3,7 +3,7 @@ import React, {useEffect} from 'react'
 import {Box, Grid} from '@material-ui/core'
 import { Talk } from '../interfaces'
 import { useState } from 'react'
-import { ChatMessage as ChatMessageInterface } from '../client-axios/api'
+import {ChatMessage as ChatMessageInterface, ChatMessageApi} from '../client-axios/api'
 import { makeStyles } from "@material-ui/core/styles";
 import ChatMessage from './ChatMessage';
 import {ChatMessageClass} from "../interfaces";
@@ -29,24 +29,37 @@ const useStyles = makeStyles((theme) => ({
 
 const CableApp = {};
 const Chat: React.FC<Props> = ({ talk }) => {
+    const api = new ChatMessageApi();
     const classes = useStyles();
     const [messages, setMessages] = useState<ChatMessageInterface[]>([])
+    const fetchChatMessagesFromAPI = () => {
+        api.apiV1ChatMessagesGet("cndo2021", talk.id, "talk")
+            .then(res => {
+                setMessages(res.data);
+            });
+    }
 
     useEffect(() => {
-        console.log("talk is updated: " + JSON.stringify(talk))
+        fetchChatMessagesFromAPI();
+    }, []);
+
+
+    useEffect(() => {
         setMessages([]);
-        console.log(CableApp);
         if (CableApp.cable != null) {
-            console.log("disconnect")
             CableApp.cable.disconnect();
         }
+        fetchChatMessagesFromAPI();
         CableApp.cable = actionCable.createConsumer('ws://localhost:8080/cable');
         CableApp.cable.subscriptions.create({channel: 'ChatChannel', roomType: 'talk', roomId: talk.id},
             {
                 received(obj: any) {
-                    console.log(obj)
-                    const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
-                    setMessages(messages => messages.concat(msg));
+                    const id = obj["id"]
+                    if (messages && messages[id]) {
+                        const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
+                        messages[id] = msg
+                        setMessages(messages => messages);
+                    }
                 }
             }
         )
