@@ -27,21 +27,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const CableApp = {};
 const Chat: React.FC<Props> = ({ talk }) => {
     const classes = useStyles();
     const [messages, setMessages] = useState<ChatMessageInterface[]>([])
 
     useEffect(() => {
-        const cable = actionCable.createConsumer('ws://localhost:8080/cable');
-        cable.subscriptions.create({channel: 'ChatChannel'},
+        console.log("talk is updated: " + JSON.stringify(talk))
+        setMessages([]);
+        console.log(CableApp);
+        if (CableApp.cable != null) {
+            console.log("disconnect")
+            CableApp.cable.disconnect();
+        }
+        CableApp.cable = actionCable.createConsumer('ws://localhost:8080/cable');
+        CableApp.cable.subscriptions.create({channel: 'ChatChannel', roomType: 'talk', roomId: talk.id},
             {
                 received(obj: any) {
+                    console.log(obj)
                     const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
                     setMessages(messages => messages.concat(msg));
                 }
             }
         )
-    }, []);
+    }, [talk])
 
     const setLastMessageElement = (chatMessage: ChatMessageInterface, ref: React.RefObject<HTMLDivElement>) => {
         const lastChat = messages[messages.length - 1];
