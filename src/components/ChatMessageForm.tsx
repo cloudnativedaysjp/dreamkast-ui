@@ -2,13 +2,15 @@ import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {ChatMessageApi} from "../client-axios";
 
-type Props = {}
+type Props = {
+    roomId: number
+}
 
 type Inputs = {
     chatMessage: string,
 };
 
-const ChatMessageForm: React.FC<Props> = ({}) => {
+const ChatMessageForm: React.FC<Props> = ({roomId}) => {
     const api = new ChatMessageApi();
     const {
         register,
@@ -20,7 +22,7 @@ const ChatMessageForm: React.FC<Props> = ({}) => {
 
     const onSubmit = (data: Inputs) => {
         setSubmittedData(data);
-        const msg = {eventAbbr: "cndo2021", roomId: 1, roomType: "talk", body: data.chatMessage}
+        const msg = {eventAbbr: "cndo2021", roomId: roomId, roomType: "talk", body: data.chatMessage}
         api.apiV1ChatMessagesPost(msg)
     };
     useEffect(() => {

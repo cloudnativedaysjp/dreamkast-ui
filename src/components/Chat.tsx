@@ -37,7 +37,6 @@ const Chat: React.FC<Props> = ({ talk }) => {
             {
                 received(obj: any) {
                     const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
-                    console.log(msg);
                     setMessages(messages => messages.concat(msg));
                 }
             }
@@ -66,7 +65,7 @@ const Chat: React.FC<Props> = ({ talk }) => {
                     </Grid>
                 </Grid>
             </Box>
-            <ChatMessageForm />
+            <ChatMessageForm roomId={talk.id} />
         </div>
     )
 }
