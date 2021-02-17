@@ -1,7 +1,7 @@
 import React, {useCallback} from "react";
 import {useForm} from "react-hook-form";
-import {ChatMessageClass} from "../interfaces";
 import {ChatMessageApi} from "../client-axios";
+import {TextField} from "@material-ui/core";
 
 type Props = {}
 
@@ -13,13 +13,13 @@ type Reset = (values?: Record<string, any>) => void;
 
 const ChatMessageForm: React.FC<Props> = ({}) => {
     const api = new ChatMessageApi();
-    const { register, handleSubmit, reset }: ({
-        register: Function,
-        handleSubmit: Function,
-        reset: Reset,
-    }) = useForm<Inputs>();
+    const { register, handleSubmit, reset } = useForm<Inputs>();
+
     const onSubmit = (data: Inputs) => {
-        const msg = new ChatMessageClass("cndt2020", 1, data.chatMessage);
+        console.log(data);
+        const msg = {eventAbbr: "cndo2021", roomId: 1, roomType: "talk", body: data.chatMessage}
+        console.log(msg)
+        reset()
         api.apiV1ChatMessagesPost(msg)
     };
     const onReset = useCallback(() => reset(), [reset])

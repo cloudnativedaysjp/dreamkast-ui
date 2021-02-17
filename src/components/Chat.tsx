@@ -31,23 +31,18 @@ const Chat: React.FC<Props> = ({ talk }) => {
     const classes = useStyles();
     const [messages, setMessages] = useState<ChatMessageInterface[]>([])
 
-    // if (typeof window !== "undefined") {
-        useEffect(() => {
-            const cable = actionCable.createConsumer('ws://localhost:8080/cable');
-            cable.subscriptions.create({channel: 'ChatChannel'},
-                {
-                    received(obj: any) {
-                        const msg = new ChatMessageClass("1", 1, obj["body"]);
-                        let tmp = messages
-                        tmp = messages
-                        tmp.push(msg)
-                        console.log(tmp)
-                        setMessages(tmp);
-                    }
+    useEffect(() => {
+        const cable = actionCable.createConsumer('ws://localhost:8080/cable');
+        cable.subscriptions.create({channel: 'ChatChannel'},
+            {
+                received(obj: any) {
+                    const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
+                    console.log(msg);
+                    setMessages(messages => messages.concat(msg));
                 }
-            )
-        }, []);
-    // }
+            }
+        )
+    }, []);
 
     const setLastMessageElement = (chatMessage: ChatMessageInterface, ref: React.RefObject<HTMLDivElement>) => {
         const lastChat = messages[messages.length - 1];
