@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import Player from './Player'
-import TalkInfo from './TalkInfo'
-import Chat from './Chat'
+import { Player } from '../Player'
+import { TalkInfo } from '../TalkInfo'
+import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import { Talk, TalkApi } from '../client-axios'
-import TalkSelector from './TalkSelector'
+import { Talk, TalkApi } from '../../client-axios'
+import { TalkSelector } from '../TalkSelector'
 
 type Props = {
   selectedTrackId: number
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
+export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   const classes = useStyles()
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -37,7 +37,7 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
 
   useEffect(() => {
     if (!propTalks) getTalks()
-  }, [])
+  }, [getTalks])
 
   const selectTalk = (talk: Talk) => {
     setSelectedTalk(talk)
@@ -101,5 +101,3 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
     </Grid>
   )
 }
-
-export default TrackView

@@ -1,6 +1,6 @@
 import React from 'react'
 //import { makeStyles } from '@material-ui/core/styles';
-import { Talk } from '../client-axios'
+import { Talk } from '../../client-axios'
 import { List } from '@material-ui/core'
 import { ListItem } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
@@ -21,7 +21,7 @@ type Props = {
 //   }
 // });
 
-const TalkSelector: React.FC<Props> = ({
+export const TalkSelector: React.FC<Props> = ({
   selectedTrackId,
   selectedTalk,
   talks,
@@ -48,5 +48,3 @@ const TalkSelector: React.FC<Props> = ({
     </List>
   )
 }
-
-export default TalkSelector

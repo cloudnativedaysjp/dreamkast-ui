@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Layout: React.FC<Props> = ({
+export const Layout: React.FC<Props> = ({
   children,
   title = 'This is the default title',
 }) => {
@@ -63,5 +63,3 @@ const Layout: React.FC<Props> = ({
     </div>
   )
 }
-
-export default Layout

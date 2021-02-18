@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 })
 
-const Player: React.FC<Props> = ({ vimeoId, autoplay }) => {
+export const Player: React.FC<Props> = ({ vimeoId, autoplay }) => {
   const classes = useStyles()
   return (
     <iframe
@@ -33,5 +33,3 @@ const Player: React.FC<Props> = ({ vimeoId, autoplay }) => {
     ></iframe>
   )
 }
-
-export default Player

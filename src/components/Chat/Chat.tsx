@@ -1,13 +1,13 @@
 import React from 'react'
 import { List } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
-import { Talk } from '../client-axios'
+import { Talk } from '../../client-axios'
 
 type Props = {
   talk?: Talk
 }
 
-const Chat: React.FC<Props> = ({ talk }) => (
+export const Chat: React.FC<Props> = ({ talk }) => (
   <div>
     <h2>Chat / QA</h2>
     <h3>{talk?.title}</h3>
@@ -22,5 +22,3 @@ const Chat: React.FC<Props> = ({ talk }) => (
     </List>
   </div>
 )
-
-export default Chat

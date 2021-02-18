@@ -1,10 +1,11 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import Player from '../Player'
+import { Talks } from '../../../util/mock'
+import { TrackView } from '../Track'
 
-test('Player', () => {
+test('Track', () => {
   const component = renderer.create(
-    <Player vimeoId={'453943528'} autoplay={true} />,
+    <TrackView propTalks={Talks} selectedTrackId={1} />,
   )
   const tree = component.toJSON()
   expect(tree).toMatchSnapshot()

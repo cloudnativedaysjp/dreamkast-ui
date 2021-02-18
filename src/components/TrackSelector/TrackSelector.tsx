@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import { Track } from '../client-axios'
+import { Track } from '../../client-axios'
 
 type Props = {
   tracks: Track[]
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 })
 
-const TrackSelector: React.FC<Props> = ({
+export const TrackSelector: React.FC<Props> = ({
   tracks,
   selectedTrackId,
   selectTrack,
@@ -44,5 +44,3 @@ const TrackSelector: React.FC<Props> = ({
     </ToggleButtonGroup>
   )
 }
-
-export default TrackSelector

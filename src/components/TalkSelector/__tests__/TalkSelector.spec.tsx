@@ -1,7 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import { Talks } from '../../util/mock'
-import TalkSelector from '../TalkSelector'
+import { Talks } from '../../../util/mock'
+import { TalkSelector } from '../TalkSelector'
 
 test('TalkSelector', () => {
   const component = renderer.create(
