@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import {ChatMessageApi} from "../client-axios";
 
 type Props = {
-    roomId: number
+    roomId: string
 }
 
 type Inputs = {

@@ -54,12 +54,8 @@ const Chat: React.FC<Props> = ({ talk }) => {
         CableApp.cable.subscriptions.create({channel: 'ChatChannel', roomType: 'talk', roomId: talk.id},
             {
                 received(obj: any) {
-                    const id = obj["id"]
-                    if (messages && messages[id]) {
-                        const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
-                        messages[id] = msg
-                        setMessages(messages => messages);
-                    }
+                    const msg = new ChatMessageClass(obj["eventAbbr"], obj["roomId"], obj["roomType"], obj["body"]);
+                    setMessages(messages => messages.concat(msg));
                 }
             }
         )
