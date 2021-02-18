@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import * as Styled from './styled'
 import { Player } from '../Player'
 import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
@@ -39,27 +38,14 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   }, [talks])
 
   return (
-    <Grid
-      container
-      spacing={1}
-      justify="center"
-      alignItems="center"
-      alignContent="center"
-    >
-      <Grid
-        item
-        xs={12}
-        md={8}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
-      >
+    <Grid container spacing={1} justify="center" alignItems="flex-start">
+      <Grid item xs={12} md={8}>
         <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
       </Grid>
-      <Grid item xs={12} md={3} justify="center" alignItems="center">
+      <Grid item xs={12} md={3}>
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid item xs={10} md={8} justify="flex-start" alignItems="center">
+      <Grid item xs={10} md={8}>
         <TalkInfo selectedTalk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={3}>

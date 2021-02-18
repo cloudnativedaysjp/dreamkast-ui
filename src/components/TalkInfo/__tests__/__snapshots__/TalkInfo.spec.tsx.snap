@@ -2,14 +2,14 @@
 
 exports[`TalkInfo 1`] = `
 <section
-  className="talk-info"
+  className="sc-bdfBwQ"
 >
-  <h3>
+  <h2>
     ほげふが
-  </h3>
-  <h4>
+  </h2>
+  <h3>
     1 / 2
-  </h4>
+  </h3>
   <div>
     ぴよぴよ
   </div>
