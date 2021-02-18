@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react'
+import * as Styled from './styled'
 import { Player } from '../Player'
 import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core/styles'
 import { Talk, TalkApi } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 
@@ -12,17 +12,7 @@ type Props = {
   propTalks?: Talk[]
 }
 
-const useStyles = makeStyles({
-  player: {
-    //backgroundColor: "#CC0",
-  },
-  chat: {
-    //backgroundColor: "#CC0",
-  },
-})
-
 export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
-  const classes = useStyles()
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
@@ -60,37 +50,19 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
         item
         xs={12}
         md={8}
-        className={classes.player}
         justify="center"
         alignItems="center"
         alignContent="center"
       >
         <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        md={3}
-        className={classes.chat}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
-      >
+      <Grid item xs={12} md={3} justify="center" alignItems="center">
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        md={8}
-        className={classes.player}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
-      >
+      <Grid item xs={10} md={8} justify="flex-start" alignItems="center">
         <TalkInfo selectedTalk={selectedTalk} />
       </Grid>
-      <Grid item xs={12} md={3} className={classes.chat}>
-        <h2>このトラックのセッション</h2>
+      <Grid item xs={12} md={3}>
         <TalkSelector
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrackId}

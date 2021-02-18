@@ -1,7 +1,6 @@
 import React from 'react'
-//import { makeStyles } from '@material-ui/core/styles';
+import * as Styled from './styled'
 import { Talk } from '../../client-axios'
-import { List } from '@material-ui/core'
 import { ListItem } from '@material-ui/core'
 import { ListItemText } from '@material-ui/core'
 
@@ -12,15 +11,6 @@ type Props = {
   selectTalk: (talk: Talk) => void
 }
 
-// const useStyles = makeStyles({
-//   player: {
-//     //backgroundColor: "#CC0",
-//   },
-//   chat: {
-//     //backgroundColor: "#CC0",
-//   }
-// });
-
 export const TalkSelector: React.FC<Props> = ({
   selectedTrackId,
   selectedTalk,
@@ -30,21 +20,24 @@ export const TalkSelector: React.FC<Props> = ({
   // const classes = useStyles();
 
   return (
-    <List component="nav">
-      {talks.map((talk) => {
-        if (talk.trackId == selectedTrackId) {
-          return (
-            <ListItem
-              button
-              key={talk.id}
-              selected={talk.id === selectedTalk?.id}
-              onClick={() => selectTalk(talk)}
-            >
-              <ListItemText inset primary={talk.title} />
-            </ListItem>
-          )
-        }
-      })}
-    </List>
+    <Styled.Container>
+      <Styled.Title>このトラックのセッション</Styled.Title>
+      <Styled.List>
+        {talks.map((talk) => {
+          if (talk.trackId == selectedTrackId) {
+            return (
+              <ListItem
+                button
+                key={talk.id}
+                selected={talk.id === selectedTalk?.id}
+                onClick={() => selectTalk(talk)}
+              >
+                <ListItemText inset primary={talk.title} />
+              </ListItem>
+            )
+          }
+        })}
+      </Styled.List>
+    </Styled.Container>
   )
 }

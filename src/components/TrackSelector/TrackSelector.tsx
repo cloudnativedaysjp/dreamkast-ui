@@ -13,7 +13,7 @@ export const TrackSelector: React.FC<Props> = ({
   selectedTrackId,
   selectTrack,
 }) => {
-  const [item, setItem] = React.useState(selectedTrackId)
+  const [item, setItem] = useState(selectedTrackId)
 
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,

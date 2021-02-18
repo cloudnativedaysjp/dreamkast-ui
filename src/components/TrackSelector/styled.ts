@@ -10,6 +10,6 @@ export const TrackMenuContainer = styled(ToggleButtonGroup)`
 
 export const MenuItem = styled(ToggleButton)`
   width: 14%;
-  border: 1px solid !important;
+  border: 1.5px solid !important;
   border-radius: 5px !important;
 `

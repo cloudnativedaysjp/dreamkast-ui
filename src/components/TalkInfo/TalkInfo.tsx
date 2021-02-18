@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Styled from './styled'
 import { Talk } from '../../client-axios'
 
 type Props = {
@@ -6,9 +7,9 @@ type Props = {
 }
 
 export const TalkInfo: React.FC<Props> = ({ selectedTalk }) => (
-  <section className="talk-info">
-    <h3>{selectedTalk?.title}</h3>
-    <h4>{selectedTalk?.speakers.join(' / ')}</h4>
+  <Styled.Container>
+    <h2>{selectedTalk?.title}</h2>
+    <h3>{selectedTalk?.speakers.join(' / ')}</h3>
     <div>{selectedTalk?.abstract}</div>
-  </section>
+  </Styled.Container>
 )
