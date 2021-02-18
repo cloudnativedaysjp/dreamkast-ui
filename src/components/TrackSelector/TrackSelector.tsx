@@ -1,7 +1,5 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import React, { useState } from 'react'
+import * as Styled from './styled'
 import { Track } from '../../client-axios'
 
 type Props = {
@@ -10,37 +8,34 @@ type Props = {
   selectTrack: (selectedId: number) => void
 }
 
-const useStyles = makeStyles({
-  debug: {
-    backgroundColor: '#CCC',
-  },
-  buttongroup: {
-    justifyContent: 'center',
-    backgroundColor: '#CC0',
-  },
-})
-
 export const TrackSelector: React.FC<Props> = ({
   tracks,
   selectedTrackId,
   selectTrack,
 }) => {
-  const classes = useStyles()
+  const [item, setItem] = React.useState(selectedTrackId)
 
+  const handleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    selectItem: number | null,
+  ) => {
+    if (selectItem !== null) {
+      setItem(selectItem)
+      selectTrack(selectItem as number)
+    }
+  }
   return (
-    <ToggleButtonGroup
-      className={classes.buttongroup}
-      value={selectedTrackId}
+    <Styled.TrackMenuContainer
+      value={item}
       color="primary"
-      onChange={(_event, value) => selectTrack(value as number)}
+      onChange={handleChange}
       exclusive
-      aria-label="text primary button group"
     >
       {tracks.map((track) => (
-        <ToggleButton key={track.id} value={track.id} className={classes.debug}>
+        <Styled.MenuItem key={track.id} value={track.id}>
           {track.name}
-        </ToggleButton>
+        </Styled.MenuItem>
       ))}
-    </ToggleButtonGroup>
+    </Styled.TrackMenuContainer>
   )
 }

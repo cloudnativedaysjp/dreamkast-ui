@@ -1,25 +1,17 @@
 import React, { ReactNode } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import * as Styled from './styled'
 import Head from 'next/head'
 import Button from '@material-ui/core/Button'
 import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 
 type Props = {
   children?: ReactNode
   title?: string
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+const useStyles = makeStyles(() => ({
   title: {
     flexGrow: 1,
   },
@@ -39,20 +31,12 @@ export const Layout: React.FC<Props> = ({
       </Head>
       <header>
         <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+          <Styled.Header>
             <Typography variant="h6" className={classes.title}>
               New Dreamkast
             </Typography>
             <Button color="inherit">Login</Button>
-          </Toolbar>
+          </Styled.Header>
         </AppBar>
       </header>
       {children}
