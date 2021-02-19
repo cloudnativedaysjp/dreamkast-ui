@@ -78,7 +78,7 @@ jobs:
           argo_target_file: manifests/app/argocd-apps/production/dreamkast-main.yaml
           image: ${{ steps.ecr.outputs.IMAGE_WITH_SHA }}
           namespace: dreamkast
-          replacements: BRANCH=main
+          replacements: BRANCH=main,ENVIRONMENT=production
 
       - name: Commit files
         run: |
