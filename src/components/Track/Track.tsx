@@ -5,6 +5,7 @@ import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import { Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
+import { Sponsors } from '../Sponsors'
 
 type Props = {
   selectedTrackId: number
@@ -41,6 +42,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
     <Grid container spacing={1} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
         <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
+        <Sponsors />
       </Grid>
       <Grid item xs={12} md={3}>
         <Chat talk={selectedTalk} />
