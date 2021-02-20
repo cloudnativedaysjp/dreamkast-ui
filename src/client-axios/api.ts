@@ -44,7 +44,13 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    talkId: number;
+    roomId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessage
+     */
+    roomType?: string;
     /**
      * 
      * @type {string}
@@ -209,13 +215,13 @@ export interface Talk {
      * @type {string}
      * @memberof Talk
      */
-    abstract: string;
+    _abstract: string;
     /**
-     * 
-     * @type {Array<number>}
+     * array of speakers name
+     * @type {Array<string>}
      * @memberof Talk
      */
-    speakers: Array<number>;
+    speakers: Array<string>;
     /**
      * 
      * @type {number}
