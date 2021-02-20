@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { ChatMessageApi } from '../client-axios'
 
 type Props = {
-  roomId?: string
+  roomId?: number
 }
 
 type Inputs = {
@@ -25,7 +25,7 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
     setSubmittedData(data)
     const msg = {
       eventAbbr: 'cndo2021',
-      roomId: Number(roomId),
+      roomId: roomId,
       roomType: 'talk',
       body: data.chatMessage,
     }

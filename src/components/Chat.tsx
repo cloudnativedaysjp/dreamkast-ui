@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import { Box, Grid } from '@material-ui/core'
-import { Talk } from '../interfaces'
 import { useState } from 'react'
 import {
   ChatMessage as ChatMessageInterface,
-  ChatMessageApi,
-} from '../client-axios/api'
+  ChatMessageApi, Talk,
+} from '../client-axios'
 import { makeStyles } from '@material-ui/core/styles'
 import ChatMessage from './ChatMessage'
-import { ChatMessageClass } from '../interfaces'
 import ChatMessageForm from './ChatMessageForm'
 import ActionCable from 'actioncable'
+import {ChatMessageClass} from "../interfaces";
 
 type Props = {
   talk?: Talk
@@ -32,7 +31,7 @@ const Chat: React.FC<Props> = ({ talk }) => {
   const [messages, setMessages] = useState<ChatMessageInterface[]>([])
   const fetchChatMessagesFromAPI = () => {
     if (!talk) return
-    api.apiV1ChatMessagesGet('cndo2021', talk.id, 'talk').then((res) => {
+    api.apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk').then((res) => {
       setMessages(res.data)
     })
   }
