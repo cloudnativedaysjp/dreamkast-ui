@@ -44,7 +44,13 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    talkId: number;
+    roomId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessage
+     */
+    roomType?: string;
     /**
      * 
      * @type {string}
