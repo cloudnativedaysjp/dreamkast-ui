@@ -21,7 +21,7 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
     const [submittedData, setSubmittedData] = useState({})
 
     const onSubmit = (data: Inputs) => {
-        if (roomId) return
+        if (!roomId) return
         setSubmittedData(data)
         const msg = {
             eventAbbr: 'cndo2021',
