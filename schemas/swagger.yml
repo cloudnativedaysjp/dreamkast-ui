@@ -295,9 +295,10 @@ components:
         abstract:
           type: string
         speakers:
+          description: array of speakers name
           type: array
           items:
-            type: number
+            type: string
         dayId:
           type: number
         showOnTimetable:
@@ -337,9 +338,9 @@ components:
           trackId: 2
           videoPlatform: "vimeo"
           videoId: "453935827"
-          title: "やんごとなき発表"
-          abstract: "やんごとなき発表をします"
-          speakers: "やんごとない人"
+          title: "めちゃすごい発表"
+          abstract: "めちゃすごい発表をします"
+          speakers: "めちゃすごい人"
           dayId: 1
           showOnTimetable: true
           startTime: "Sat, 23 Jan 2021 09:00:00 GMT"
@@ -371,8 +372,10 @@ components:
           type: number
         eventAbbr:
           type: string
-        talkId:
+        roomId:
           type: number
+        roomType:
+          type: string
         body:
           type: string
         createdAt:
