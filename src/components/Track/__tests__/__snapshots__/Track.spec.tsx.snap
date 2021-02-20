@@ -95,31 +95,35 @@ exports[`Track 1`] = `
   <div
     className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-md-8"
   >
-    <section
-      className="sc-bdfBwQ"
+    <div
+      className="sc-gsTCUz qkhkd"
     >
-      <h2 />
-      <h3 />
-      <div />
-    </section>
+      <div
+        className="sc-bdfBwQ kOLHZB"
+      >
+        <h2 />
+        <h3 />
+        <div />
+      </div>
+    </div>
   </div>
   <div
     className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
   >
     <div
-      className="sc-gsTCUz lmYqBg"
+      className="sc-dlfnbm fuZnQG"
     >
       <div
-        className="sc-dlfnbm iRYuVZ"
+        className="sc-hKgILt hRrWPu"
       >
         このトラックのセッション
       </div>
       <ul
-        className="MuiList-root sc-hKgILt fWMRiy MuiList-padding"
+        className="MuiList-root sc-eCssSg alSoa MuiList-padding"
       >
         <div
           aria-disabled={false}
-          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+          className="MuiButtonBase-root MuiListItem-root sc-jSgupP MuiListItem-gutters MuiListItem-button"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -136,7 +140,7 @@ exports[`Track 1`] = `
           tabIndex={0}
         >
           <div
-            className="MuiListItemText-root MuiListItemText-inset"
+            className="MuiListItemText-root sc-gKsewC MuiListItemText-inset"
           >
             <span
               className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -147,7 +151,7 @@ exports[`Track 1`] = `
         </div>
         <div
           aria-disabled={false}
-          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+          className="MuiButtonBase-root MuiListItem-root sc-jSgupP MuiListItem-gutters MuiListItem-button"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -164,7 +168,7 @@ exports[`Track 1`] = `
           tabIndex={0}
         >
           <div
-            className="MuiListItemText-root MuiListItemText-inset"
+            className="MuiListItemText-root sc-gKsewC MuiListItemText-inset"
           >
             <span
               className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -175,7 +179,7 @@ exports[`Track 1`] = `
         </div>
         <div
           aria-disabled={false}
-          className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+          className="MuiButtonBase-root MuiListItem-root sc-jSgupP MuiListItem-gutters MuiListItem-button"
           onBlur={[Function]}
           onClick={[Function]}
           onDragLeave={[Function]}
@@ -192,7 +196,7 @@ exports[`Track 1`] = `
           tabIndex={0}
         >
           <div
-            className="MuiListItemText-root MuiListItemText-inset"
+            className="MuiListItemText-root sc-gKsewC MuiListItemText-inset"
           >
             <span
               className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"

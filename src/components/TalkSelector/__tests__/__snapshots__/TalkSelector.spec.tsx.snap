@@ -2,19 +2,19 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="sc-bdfBwQ gGlqbw"
+  className="sc-bdfBwQ ieqUph"
 >
   <div
-    className="sc-gsTCUz gHsGCm"
+    className="sc-gsTCUz hhRAir"
   >
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root sc-dlfnbm cULuis MuiList-padding"
+    className="MuiList-root sc-dlfnbm gTxVqv MuiList-padding"
   >
     <div
       aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button Mui-selected"
+      className="MuiButtonBase-root MuiListItem-root sc-hKgILt MuiListItem-gutters MuiListItem-button Mui-selected"
       onBlur={[Function]}
       onClick={[Function]}
       onDragLeave={[Function]}
@@ -31,7 +31,7 @@ exports[`TalkSelector 1`] = `
       tabIndex={0}
     >
       <div
-        className="MuiListItemText-root MuiListItemText-inset"
+        className="MuiListItemText-root sc-eCssSg MuiListItemText-inset"
       >
         <span
           className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -42,7 +42,7 @@ exports[`TalkSelector 1`] = `
     </div>
     <div
       aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+      className="MuiButtonBase-root MuiListItem-root sc-hKgILt MuiListItem-gutters MuiListItem-button"
       onBlur={[Function]}
       onClick={[Function]}
       onDragLeave={[Function]}
@@ -59,7 +59,7 @@ exports[`TalkSelector 1`] = `
       tabIndex={0}
     >
       <div
-        className="MuiListItemText-root MuiListItemText-inset"
+        className="MuiListItemText-root sc-eCssSg MuiListItemText-inset"
       >
         <span
           className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
@@ -70,7 +70,7 @@ exports[`TalkSelector 1`] = `
     </div>
     <div
       aria-disabled={false}
-      className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+      className="MuiButtonBase-root MuiListItem-root sc-hKgILt MuiListItem-gutters MuiListItem-button"
       onBlur={[Function]}
       onClick={[Function]}
       onDragLeave={[Function]}
@@ -87,7 +87,7 @@ exports[`TalkSelector 1`] = `
       tabIndex={0}
     >
       <div
-        className="MuiListItemText-root MuiListItemText-inset"
+        className="MuiListItemText-root sc-eCssSg MuiListItemText-inset"
       >
         <span
           className="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
