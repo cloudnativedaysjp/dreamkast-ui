@@ -5,7 +5,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import ChatMessageForm from "./ChatMessageForm";
 import ChatMessage from "./ChatMessage";
-// @ts-ignore
 import ActionCable from 'actioncable'
 import {ChatMessageClass} from "./index";
 
