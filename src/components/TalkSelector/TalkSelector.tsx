@@ -1,8 +1,6 @@
 import React from 'react'
 import * as Styled from './styled'
 import { Talk } from '../../client-axios'
-import { ListItem } from '@material-ui/core'
-import { ListItemText } from '@material-ui/core'
 
 type Props = {
   selectedTrackId: number
@@ -26,14 +24,14 @@ export const TalkSelector: React.FC<Props> = ({
         {talks.map((talk) => {
           if (talk.trackId == selectedTrackId) {
             return (
-              <ListItem
+              <Styled.Item
                 button
                 key={talk.id}
                 selected={talk.id === selectedTalk?.id}
                 onClick={() => selectTalk(talk)}
               >
-                <ListItemText inset primary={talk.title} />
-              </ListItem>
+                <Styled.Text inset primary={talk.title} />
+              </Styled.Item>
             )
           }
         })}
