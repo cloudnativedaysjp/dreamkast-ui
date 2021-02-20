@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { List as OriginList } from '@material-ui/core'
+import { List as OriginList, ListItem, ListItemText } from '@material-ui/core'
 
 export const Container = styled.div`
-  padding: 10px;
+  padding: 8px;
   height: 500px;
 `
 
@@ -11,14 +11,24 @@ export const Title = styled.div`
   font-weight: bold;
   text-align: center;
   padding: 10px;
-  border: 1.5px solid;
+  border: 1.5px solid black;
   border-bottom: none;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+  background-color: #ffffff;
+  color: #037f8c;
 `
 
 export const List = styled(OriginList)`
   height: 450px;
   border: 1.5px solid;
   overflow-y: scroll;
-  border-radius: 0px 0px 5px 5px;
+  border-radius: 0px 0px 10px 10px;
+  background-color: #ffffff;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
+
+export const Item = styled(ListItem)``
+
+export const Text = styled(ListItemText)``

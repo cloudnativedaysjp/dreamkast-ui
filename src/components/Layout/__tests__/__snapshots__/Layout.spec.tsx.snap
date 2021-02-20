@@ -1,19 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Layout 1`] = `
-<div>
+<div
+  className="sc-bdfBwQ hPyAfq"
+>
   <header>
     <header
       className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
     >
       <div
-        className="MuiToolbar-root MuiToolbar-regular sc-bdfBwQ cgpluz MuiToolbar-gutters"
+        className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz hcOYnX MuiToolbar-gutters"
       >
-        <h6
-          className="MuiTypography-root makeStyles-title-1 MuiTypography-h6"
-        >
-          New Dreamkast
-        </h6>
+        <img
+          className="sc-dlfnbm gQAXJw"
+          src="/cndo2021/ui/images/CNDO2021_horizontal.png"
+        />
         <button
           className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
           disabled={false}
@@ -40,11 +41,29 @@ exports[`Layout 1`] = `
       </div>
     </header>
   </header>
-  <footer>
-    <hr />
-    <span>
-      CloudNative Days
-    </span>
+  <div
+    className="sc-hKgILt hiEIKz"
+  />
+  <footer
+    className="sc-eCssSg VzzCB"
+  >
+    <a
+      className="sc-gKsewC giTXZJ"
+      href="https://event.cloudnativedays.jp/cndo2021/privacy"
+    >
+      プライバシーポリシー
+    </a>
+    <a
+      className="sc-gKsewC giTXZJ"
+      href="https://event.cloudnativedays.jp/cndo2021/coc"
+    >
+      行動規範
+    </a>
+    <div
+      className="sc-jSgupP dTmTMX"
+    >
+      © CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)
+    </div>
   </footer>
 </div>
 `;

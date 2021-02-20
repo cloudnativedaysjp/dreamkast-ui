@@ -26,7 +26,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   return (
-    <Layout title="Dreamkast">
+    <Layout title="CloudNative Days 2021">
       <TrackSelector
         tracks={tracks}
         selectedTrackId={selectedTrackId}

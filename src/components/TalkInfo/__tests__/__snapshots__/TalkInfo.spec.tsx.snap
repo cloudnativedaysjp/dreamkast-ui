@@ -1,17 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TalkInfo 1`] = `
-<section
-  className="sc-bdfBwQ"
+<div
+  className="sc-gsTCUz qkhkd"
 >
-  <h2>
-    ほげふが
-  </h2>
-  <h3>
-    alice / bob
-  </h3>
-  <div>
-    ぴよぴよ
+  <div
+    className="sc-bdfBwQ kOLHZB"
+  >
+    <h2>
+      ほげふが
+    </h2>
+    <h3>
+      alice / bob
+    </h3>
+    <div>
+      ぴよぴよ
+    </div>
   </div>
-</section>
+</div>
 `;
