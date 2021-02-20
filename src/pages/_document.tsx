@@ -7,7 +7,8 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from 'next/document'
-import { ServerStyleSheets } from '@material-ui/core/styles'
+import { ServerStyleSheet } from 'styled-components'
+import { ServerStyleSheets as MUIServerStyleSheets } from '@material-ui/core/styles'
 import theme from '../styles/theme'
 
 export default class MyDocument extends Document {
@@ -33,12 +34,16 @@ export default class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext,
   ): Promise<DocumentInitialProps> {
-    const sheet = new ServerStyleSheets()
+    const styledComponentsSheet = new ServerStyleSheet()
+    const materialUiSheets = new MUIServerStyleSheets()
     const originalRenderPage = ctx.renderPage
 
     ctx.renderPage = () =>
       originalRenderPage({
-        enhanceApp: (App) => (props) => sheet.collect(<App {...props} />),
+        enhanceApp: (App) => (props) =>
+          styledComponentsSheet.collectStyles(
+            materialUiSheets.collect(<App {...props} />),
+          ),
       })
 
     const initialProps = await Document.getInitialProps(ctx)
@@ -47,7 +52,8 @@ export default class MyDocument extends Document {
       styles: (
         <>
           {initialProps.styles}
-          {sheet.getStyleElement()}
+          {styledComponentsSheet.getStyleElement()}
+          {materialUiSheets.getStyleElement()}
         </>
       ),
     }

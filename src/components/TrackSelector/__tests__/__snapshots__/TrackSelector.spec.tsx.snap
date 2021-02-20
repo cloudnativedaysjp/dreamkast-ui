@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrackSelector 1`] = `
+<div
+  className="MuiToggleButtonGroup-root sc-bdfBwQ imAQAC"
+  color="primary"
+  role="group"
+>
+  <button
+    aria-pressed={false}
+    className="MuiButtonBase-root MuiToggleButton-root sc-gsTCUz gpnsFw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    disabled={false}
+    onBlur={[Function]}
+    onChange={[Function]}
+    onClick={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+    value={10}
+  >
+    <span
+      className="MuiToggleButton-label"
+    >
+      A
+    </span>
+  </button>
+  <button
+    aria-pressed={false}
+    className="MuiButtonBase-root MuiToggleButton-root sc-gsTCUz gpnsFw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    disabled={false}
+    onBlur={[Function]}
+    onChange={[Function]}
+    onClick={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+    value={11}
+  >
+    <span
+      className="MuiToggleButton-label"
+    >
+      B
+    </span>
+  </button>
+  <button
+    aria-pressed={false}
+    className="MuiButtonBase-root MuiToggleButton-root sc-gsTCUz gpnsFw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    disabled={false}
+    onBlur={[Function]}
+    onChange={[Function]}
+    onClick={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+    value={12}
+  >
+    <span
+      className="MuiToggleButton-label"
+    >
+      C
+    </span>
+  </button>
+</div>
+`;

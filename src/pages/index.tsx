@@ -1,20 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
-import Layout from '../components/Layout'
-import TrackSelector from '../components/TrackSelector'
-import TrackView from '../components/Track'
-import { makeStyles } from '@material-ui/core/styles'
-import Grid from '@material-ui/core/Grid'
+import { Layout } from '../components/Layout'
+import { TrackSelector } from '../components/TrackSelector'
+import { TrackView } from '../components/Track'
 import { Track, TrackApi } from '../client-axios'
 
-const useStyles = makeStyles({
-  debug: {
-    //backgroundColor: "#C00",
-  },
-})
-
 const IndexPage: React.FC = () => {
-  const classes = useStyles()
-
   // States
   const [selectedTrackId, setSelectedTrackId] = useState<number>(0)
   const [tracks, setTracks] = useState<Track[]>([])
@@ -37,32 +27,12 @@ const IndexPage: React.FC = () => {
 
   return (
     <Layout title="Dreamkast">
-      <Grid
-        container
-        spacing={0}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
-      >
-        <Grid
-          item
-          xs={12}
-          md={8}
-          className={classes.debug}
-          justify="center"
-          alignItems="center"
-          alignContent="center"
-        >
-          <TrackSelector
-            tracks={tracks}
-            selectedTrackId={selectedTrackId}
-            selectTrack={selectTrack}
-          />
-        </Grid>
-        <Grid item xs={12} md={12} className={classes.debug} justify="center">
-          <TrackView selectedTrackId={selectedTrackId} />
-        </Grid>
-      </Grid>
+      <TrackSelector
+        tracks={tracks}
+        selectedTrackId={selectedTrackId}
+        selectTrack={selectTrack}
+      />
+      <TrackView selectedTrackId={selectedTrackId} />
     </Layout>
   )
 }

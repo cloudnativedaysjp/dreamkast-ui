@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout 1`] = `
+<div>
+  <header>
+    <header
+      className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+    >
+      <div
+        className="MuiToolbar-root MuiToolbar-regular sc-bdfBwQ cgpluz MuiToolbar-gutters"
+      >
+        <h6
+          className="MuiTypography-root makeStyles-title-1 MuiTypography-h6"
+        >
+          New Dreamkast
+        </h6>
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+          disabled={false}
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            Login
+          </span>
+        </button>
+      </div>
+    </header>
+  </header>
+  <footer>
+    <hr />
+    <span>
+      CloudNative Days
+    </span>
+  </footer>
+</div>
+`;
