@@ -38,14 +38,13 @@ const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   useEffect(() => {
-    fetchChatMessagesFromAPI()
-  }, [])
-
-  useEffect(() => {
     if (!talk) return
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const actionCable = require('actioncable')
+
     setMessages([])
     fetchChatMessagesFromAPI()
-    const cableApp: ActionCable.Cable = ActionCable.createConsumer(
+    const cableApp: ActionCable.Cable = actionCable.createConsumer(
       'ws://localhost:8080/cable',
     )
     if (cableApp) {
