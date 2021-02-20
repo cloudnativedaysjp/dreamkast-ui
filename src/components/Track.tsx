@@ -61,9 +61,6 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
         xs={12}
         md={8}
         className={classes.player}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
       >
         <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
       </Grid>
@@ -72,9 +69,6 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
         xs={12}
         md={3}
         className={classes.chat}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
       >
         <Chat talk={selectedTalk} />
       </Grid>
@@ -83,9 +77,6 @@ const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
         xs={12}
         md={8}
         className={classes.player}
-        justify="center"
-        alignItems="center"
-        alignContent="center"
       >
         <TalkInfo selectedTalk={selectedTalk} />
       </Grid>

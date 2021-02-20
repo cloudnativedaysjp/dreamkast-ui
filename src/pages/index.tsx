@@ -49,9 +49,6 @@ const IndexPage: React.FC = () => {
           xs={12}
           md={8}
           className={classes.debug}
-          justify="center"
-          alignItems="center"
-          alignContent="center"
         >
           <TrackSelector
             tracks={tracks}
@@ -59,7 +56,7 @@ const IndexPage: React.FC = () => {
             selectTrack={selectTrack}
           />
         </Grid>
-        <Grid item xs={12} md={12} className={classes.debug} justify="center">
+        <Grid item xs={12} md={12} className={classes.debug}>
           <TrackView selectedTrackId={selectedTrackId} />
         </Grid>
       </Grid>
