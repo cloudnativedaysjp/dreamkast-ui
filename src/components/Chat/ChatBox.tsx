@@ -1,10 +1,9 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import * as Styled from './styled'
 import {
   ChatMessage as ChatMessageInterface,
   ChatMessageMessageTypeEnum,
 } from '../../client-axios'
-import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import ChatMessage from './ChatMessage'
 
@@ -12,18 +11,8 @@ type Props = {
   messages: ChatMessageInterface[]
   messageTypes: ChatMessageMessageTypeEnum[]
 }
-const useStyles = makeStyles((theme) => ({
-  box: {
-    height: '400px',
-  },
-  paper: {
-    padding: theme.spacing(2),
-    color: theme.palette.text.secondary,
-  },
-}))
 
 export const ChatBox: React.FC<Props> = ({ messages, messageTypes }) => {
-  const classes = useStyles()
   const setLastMessageElement = (
     chatMessage: ChatMessageInterface,
     ref: React.RefObject<HTMLDivElement>,
@@ -35,7 +24,7 @@ export const ChatBox: React.FC<Props> = ({ messages, messageTypes }) => {
   }
 
   return (
-    <Box component="div" overflow="scroll" className={classes.box}>
+    <Styled.Box overflow="scroll">
       <Grid container spacing={3}>
         <Grid item xs={12}>
           {messages.map((chatMessage) => {
@@ -50,6 +39,6 @@ export const ChatBox: React.FC<Props> = ({ messages, messageTypes }) => {
           })}
         </Grid>
       </Grid>
-    </Box>
+    </Styled.Box>
   )
 }
