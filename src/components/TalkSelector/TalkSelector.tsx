@@ -30,7 +30,7 @@ export const TalkSelector: React.FC<Props> = ({
                 selected={talk.id === selectedTalk?.id}
                 onClick={() => selectTalk(talk)}
               >
-                <Styled.Text inset primary={talk.title} />
+                <Styled.Text>{talk.title}</Styled.Text>
               </Styled.Item>
             )
           }
