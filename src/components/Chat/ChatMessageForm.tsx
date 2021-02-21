@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChatMessageApi } from '../../client-axios'
+import { ChatMessageApi, ChatMessageMessageTypeEnum } from '../../client-axios'
 
 type Props = {
     roomId?: number
@@ -8,6 +8,7 @@ type Props = {
 
 type Inputs = {
     chatMessage: string
+    isQuestion: boolean
 }
 
 const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
@@ -22,12 +23,17 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
 
     const onSubmit = (data: Inputs) => {
         if (!roomId) return
+        console.log(data)
         setSubmittedData(data)
         const msg = {
             eventAbbr: 'cndo2021',
             roomId: roomId,
             roomType: 'talk',
             body: data.chatMessage,
+            messageType: ChatMessageMessageTypeEnum.Chat,
+        }
+        if (data.isQuestion) {
+            msg.messageType = ChatMessageMessageTypeEnum.Qa
         }
         api.apiV1ChatMessagesPost(msg)
     }
@@ -38,10 +44,11 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
     }, [isSubmitSuccessful, submittedData, reset])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input name="chatMessage" ref={register} />
-            <input type="submit" />
-        </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+          <input name="chatMessage" ref={register} />
+          <input type="submit" /><br/>
+          <input type="checkbox" name="isQuestion" ref={register}/>質問を送る
+      </form>
     )
 }
 
