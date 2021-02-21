@@ -29,7 +29,9 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   useEffect(() => {
-    const api = new ChatMessageApi(new Configuration({basePath: window.location.origin}))
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
 
     if (!talk) return
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -37,10 +39,10 @@ export const Chat: React.FC<Props> = ({ talk }) => {
 
     setMessages([])
     fetchChatMessagesFromAPI(api)
-    let wsUrl = ""
-    if(window.location.protocol == "http:"){
+    let wsUrl = ''
+    if (window.location.protocol == 'http:') {
       wsUrl = `ws://${window.location.host}/cable`
-    }else{
+    } else {
       wsUrl = `wss://${window.location.host}/cable`
     }
     const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
@@ -78,7 +80,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
 
   const [selectedTab, setSelectedTab] = useState('0')
 
-  function a11yProps(index: any) {
+  function a11yProps(index: number) {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
