@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Paper } from '@material-ui/core'
-import { ChatMessage as ChatMessageObject } from '../../client-axios/api'
+import { ChatMessage as ChatMessageObject, ChatMessageMessageTypeEnum } from '../../client-axios/api'
 import { makeStyles } from '@material-ui/core/styles'
 
 type Props = {
@@ -15,11 +15,18 @@ const useStyles = makeStyles((theme) => ({
     box: {
         height: '400px',
     },
-    paper: {
+    chat: {
         padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
+        background: '#ffffff',
+        whiteSpace: 'pre-wrap',
+    },
+    qa: {
+        padding: theme.spacing(2),
+        background: '#f5f5f5',
+        whiteSpace: 'pre-wrap',
     },
 }))
+
 
 const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
     const ref = useRef<HTMLDivElement>(null)
@@ -38,7 +45,7 @@ const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
 
     return (
         <div ref={ref}>
-            <Paper className={classes.paper}>{isSpeakerMessage() ? "[S] " : ""}{chatMessage.body}</Paper>
+            <Paper className={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat ? classes.chat : classes.qa}>{isSpeakerMessage() ? "[S] " : ""}{chatMessage.body}</Paper>
         </div>
     )
 }
