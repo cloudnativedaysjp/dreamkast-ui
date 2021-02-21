@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Paper, Box as MaterialUIBox } from '@material-ui/core'
 
 export const Box = styled(MaterialUIBox)`
@@ -7,13 +7,6 @@ export const Box = styled(MaterialUIBox)`
 
 export const ChatMessage = styled(Paper)<{ isChat: boolean }>`
   padding: 10px;
-  background: #ffffff;
+  background: ${({ isChat }) => (isChat ? '#ffffff' : '#f5f5f5')};
   white-sace: pre-wrap;
-
-  ${(props) =>
-    props.isChat
-      ? css`
-          background: #f5f5f5;
-        `
-      : ''}
 `
