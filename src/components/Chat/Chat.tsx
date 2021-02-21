@@ -5,6 +5,7 @@ import {
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Talk,
+  Configuration,
 } from '../../client-axios'
 import ChatMessageForm from './ChatMessageForm'
 import ActionCable from 'actioncable'
@@ -17,9 +18,8 @@ type Props = {
 }
 
 export const Chat: React.FC<Props> = ({ talk }) => {
-  const api = new ChatMessageApi()
   const [messages, setMessages] = useState<ChatMessageInterface[]>([])
-  const fetchChatMessagesFromAPI = () => {
+  const fetchChatMessagesFromAPI = (api: ChatMessageApi) => {
     if (!talk) return
     api
       .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
@@ -29,15 +29,21 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   useEffect(() => {
+    const api = new ChatMessageApi(new Configuration({basePath: window.location.origin}))
+
     if (!talk) return
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
 
     setMessages([])
-    fetchChatMessagesFromAPI()
-    const cableApp: ActionCable.Cable = actionCable.createConsumer(
-      'ws://localhost:8080/cable',
-    )
+    fetchChatMessagesFromAPI(api)
+    let wsUrl = ""
+    if(window.location.protocol == "http:"){
+      wsUrl = `ws://${window.location.host}/cable`
+    }else{
+      wsUrl = `wss://${window.location.host}/cable`
+    }
+    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
     if (cableApp) {
       cableApp.disconnect()
     }

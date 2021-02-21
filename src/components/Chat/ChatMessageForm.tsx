@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChatMessageApi, ChatMessageMessageTypeEnum } from '../../client-axios'
+import {
+  ChatMessageApi,
+  ChatMessageMessageTypeEnum,
+  Configuration,
+} from '../../client-axios'
 import Button from '@material-ui/core/Button'
 
 type Props = {
@@ -28,7 +32,6 @@ const ChatMessageRequest = (
 }
 
 const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
-  const api = new ChatMessageApi()
   const {
     register,
     handleSubmit,
@@ -38,6 +41,10 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
   const [submittedData, setSubmittedData] = useState({})
 
   const onSubmit = (data: Inputs) => {
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+
     if (!roomId) return
     setSubmittedData(data)
     const msg = ChatMessageRequest('cndo2021', roomId, 'talk', data.chatMessage)
@@ -49,16 +56,28 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
 
   const onThumbsUp = () => {
     if (!roomId) return
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+
     const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👍')
     api.apiV1ChatMessagesPost(msg)
   }
   const onClap = () => {
     if (!roomId) return
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+
     const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👏')
     api.apiV1ChatMessagesPost(msg)
   }
   const onPartyPopper = () => {
     if (!roomId) return
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+
     const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '🎉')
     api.apiV1ChatMessagesPost(msg)
   }
