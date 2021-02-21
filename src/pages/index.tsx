@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Layout } from '../components/Layout'
 import { TrackSelector } from '../components/TrackSelector'
 import { TrackView } from '../components/Track'
-import { Track, TrackApi } from '../client-axios'
+import { Track, TrackApi, Configuration } from '../client-axios'
 
 const IndexPage: React.FC = () => {
   // States
@@ -15,7 +15,7 @@ const IndexPage: React.FC = () => {
   }
 
   const getTracks = useCallback(async () => {
-    const api = new TrackApi()
+    const api = new TrackApi(new Configuration({basePath: window.location.origin}))
     const { data } = await api.apiV1TracksGet('cndo2021')
     setTracks(data)
     setSelectedTrackId(data[0].id)

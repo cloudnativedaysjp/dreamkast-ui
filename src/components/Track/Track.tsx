@@ -3,7 +3,7 @@ import { Player } from '../Player'
 import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import { Talk, TalkApi } from '../../client-axios'
+import { Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 
 type Props = {
@@ -16,7 +16,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
   const getTalks = useCallback(async () => {
-    const api = new TalkApi()
+    const api = new TalkApi(new Configuration({basePath: window.location.origin}))
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrackId),
