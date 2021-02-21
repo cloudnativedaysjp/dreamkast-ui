@@ -16,7 +16,9 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
   const getTalks = useCallback(async () => {
-    const api = new TalkApi(new Configuration({basePath: window.location.origin}))
+    const api = new TalkApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrackId),
