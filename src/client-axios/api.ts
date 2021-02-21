@@ -35,6 +35,18 @@ export interface ChatMessage {
     id?: number;
     /**
      * 
+     * @type {number}
+     * @memberof ChatMessage
+     */
+    profile_id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessage
+     */
+    speaker_id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ChatMessage
      */
@@ -63,7 +75,23 @@ export interface ChatMessage {
      * @memberof ChatMessage
      */
     createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessage
+     */
+    messageType: ChatMessageMessageTypeEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ChatMessageMessageTypeEnum {
+    Chat = 'chat',
+    Qa = 'qa'
+}
+
 /**
  * 
  * @export

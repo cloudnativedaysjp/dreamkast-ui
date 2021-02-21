@@ -24,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
 const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
     const ref = useRef<HTMLDivElement>(null)
     const classes = useStyles()
+    const isSpeakerMessage = () => {
+        if (chatMessage.speaker_id) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     useEffect(() => {
         setRef(chatMessage, ref)
@@ -31,7 +38,7 @@ const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
 
     return (
         <div ref={ref}>
-            <Paper className={classes.paper}>{chatMessage.body}</Paper>
+            <Paper className={classes.paper}>{isSpeakerMessage() ? "[S] " : ""}{chatMessage.body}</Paper>
         </div>
     )
 }

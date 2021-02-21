@@ -1,29 +1,23 @@
-import React, {useEffect, useState} from 'react'
-import {Box} from '@material-ui/core'
-import {ChatMessage as ChatMessageInterface, ChatMessageApi, Talk} from '../../client-axios'
-import {makeStyles} from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import ChatMessageForm from "./ChatMessageForm";
-import ChatMessage from "./ChatMessage";
+import React, { useEffect, useState } from 'react'
+import { Tab, Tabs } from '@material-ui/core'
+import {
+    ChatMessage as ChatMessageInterface,
+    ChatMessageApi,
+    ChatMessageMessageTypeEnum,
+    Talk,
+} from '../../client-axios'
+import ChatMessageForm from './ChatMessageForm'
 import ActionCable from 'actioncable'
-import {ChatMessageClass} from "./index";
+import { ChatMessageClass } from './index'
+import { TabContext, TabPanel } from '@material-ui/lab'
+import { ChatBox } from './ChatBox'
 
 type Props = {
   talk?: Talk
 }
-const useStyles = makeStyles((theme) => ({
-    box: {
-        height: '400px',
-    },
-    paper: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-    },
-}))
 
 export const Chat: React.FC<Props> = ({ talk }) => {
     const api = new ChatMessageApi()
-    const classes = useStyles()
     const [messages, setMessages] = useState<ChatMessageInterface[]>([])
     const fetchChatMessagesFromAPI = () => {
         if (!talk) return
@@ -49,16 +43,24 @@ export const Chat: React.FC<Props> = ({ talk }) => {
             { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
             {
                 received(receivedMsg: {
+                    id: number
+                    profileId: number
+                    speakerId: number
                     eventAbbr: string
                     roomId: number
                     roomType: string
                     body: string
+                    messageType: ChatMessageMessageTypeEnum
                 }) {
                     const msg = new ChatMessageClass(
-                        receivedMsg.eventAbbr,
-                        receivedMsg.roomId,
-                        receivedMsg.roomType,
-                        receivedMsg.body,
+                      receivedMsg.id,
+                      receivedMsg.profileId,
+                      receivedMsg.speakerId,
+                      receivedMsg.eventAbbr,
+                      receivedMsg.roomId,
+                      receivedMsg.roomType,
+                      receivedMsg.body,
+                      receivedMsg.messageType,
                     )
                     setMessages((messages) => messages.concat(msg))
                 },
@@ -66,35 +68,36 @@ export const Chat: React.FC<Props> = ({ talk }) => {
         )
     }, [talk])
 
-    const setLastMessageElement = (
-        chatMessage: ChatMessageInterface,
-        ref: React.RefObject<HTMLDivElement>,
-    ) => {
-        const lastChat = messages[messages.length - 1]
-        if (chatMessage.id === lastChat.id) {
-            ref && ref.current && ref.current.scrollIntoView()
-        }
-    }
+    const [selectedTab, setSelectedTab] = useState("0");
 
+    function a11yProps(index: any) {
+        return {
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
+        };
+    }
+    const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+        setSelectedTab(newValue);
+    };
     return (
-        <div>
-            <h2>Chat / QA</h2>
-            <h3>{talk?.title}</h3>
-            <Box component="div" overflow="scroll" className={classes.box}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        {messages.map((chatMessage) => {
-                            return (
-                                <ChatMessage
-                                    chatMessage={chatMessage}
-                                    setRef={setLastMessageElement}
-                                />
-                            )
-                        })}
-                    </Grid>
-                </Grid>
-            </Box>
-            <ChatMessageForm roomId={talk?.id} />
-        </div>
+      <div>
+          <TabContext value={selectedTab}>
+
+              <Tabs value={selectedTab} onChange={handleChange} aria-label="simple tabs example">
+                  <Tab label="Chat / QA" value="0"  {...a11yProps(0)}/>
+                  <Tab label="QA Only" value="1"   {...a11yProps(1)}/>
+              </Tabs>
+
+              <TabPanel value="0">
+                  <ChatBox messages={messages} messageTypes={[ChatMessageMessageTypeEnum.Chat, ChatMessageMessageTypeEnum.Qa]}/>
+                  <ChatMessageForm roomId={talk?.id} />
+              </TabPanel>
+              <TabPanel value="1">
+                  <ChatBox messages={messages} messageTypes={[ChatMessageMessageTypeEnum.Qa]}/>
+                  <ChatMessageForm roomId={talk?.id} />
+              </TabPanel>
+
+          </TabContext>
+      </div>
     )
 }
