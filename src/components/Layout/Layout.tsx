@@ -25,7 +25,7 @@ export const Layout: React.FC<Props> = ({
         <AppBar position="static">
           <Styled.Header>
             <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
-            <Button color="inherit">Login</Button>
+            <Button style={{ color: '#037f8c' }}>Login</Button>
           </Styled.Header>
         </AppBar>
       </header>
