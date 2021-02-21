@@ -4,11 +4,11 @@ import { ChatMessage as ChatMessageObject, ChatMessageMessageTypeEnum } from '..
 import { makeStyles } from '@material-ui/core/styles'
 
 type Props = {
-  chatMessage: ChatMessageObject
-  setRef: (
-    chatMessage: ChatMessageObject,
-    ref: React.RefObject<HTMLDivElement>,
-  ) => void
+    chatMessage: ChatMessageObject
+    setRef: (
+      chatMessage: ChatMessageObject,
+      ref: React.RefObject<HTMLDivElement>,
+    ) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,9 +44,9 @@ const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
     }, [setRef, chatMessage, ref])
 
     return (
-        <div ref={ref}>
-            <Paper className={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat ? classes.chat : classes.qa}>{isSpeakerMessage() ? "[S] " : ""}{chatMessage.body}</Paper>
-        </div>
+      <div ref={ref}>
+          <Paper className={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat ? classes.chat : classes.qa}>{isSpeakerMessage() ? "[S] " : ""}{chatMessage.body}</Paper>
+      </div>
     )
 }
 

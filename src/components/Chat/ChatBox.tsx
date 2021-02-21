@@ -10,13 +10,13 @@ type Props = {
   messageTypes: ChatMessageMessageTypeEnum[]
 }
 const useStyles = makeStyles((theme) => ({
-    box: {
-        height: '400px',
-    },
-    paper: {
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-    },
+  box: {
+    height: '400px',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    color: theme.palette.text.secondary,
+  },
 }))
 
 export const ChatBox: React.FC<Props> = ({ messages, messageTypes }) => {

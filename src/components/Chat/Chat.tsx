@@ -13,7 +13,7 @@ import { TabContext, TabPanel } from '@material-ui/lab'
 import { ChatBox } from './ChatBox'
 
 type Props = {
-  talk?: Talk
+    talk?: Talk
 }
 
 export const Chat: React.FC<Props> = ({ talk }) => {
@@ -34,37 +34,37 @@ export const Chat: React.FC<Props> = ({ talk }) => {
         setMessages([])
         fetchChatMessagesFromAPI()
         const cableApp: ActionCable.Cable = actionCable.createConsumer(
-            'ws://localhost:8080/cable',
+          'ws://localhost:8080/cable',
         )
         if (cableApp) {
             cableApp.disconnect()
         }
         cableApp.subscriptions.create(
-            { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
-            {
-                received(receivedMsg: {
-                    id: number
-                    profileId: number
-                    speakerId: number
-                    eventAbbr: string
-                    roomId: number
-                    roomType: string
-                    body: string
-                    messageType: ChatMessageMessageTypeEnum
-                }) {
-                    const msg = new ChatMessageClass(
-                      receivedMsg.id,
-                      receivedMsg.profileId,
-                      receivedMsg.speakerId,
-                      receivedMsg.eventAbbr,
-                      receivedMsg.roomId,
-                      receivedMsg.roomType,
-                      receivedMsg.body,
-                      receivedMsg.messageType,
-                    )
-                    setMessages((messages) => messages.concat(msg))
-                },
-            },
+          { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
+          {
+              received(receivedMsg: {
+                  id: number
+                  profileId: number
+                  speakerId: number
+                  eventAbbr: string
+                  roomId: number
+                  roomType: string
+                  body: string
+                  messageType: ChatMessageMessageTypeEnum
+              }) {
+                  const msg = new ChatMessageClass(
+                    receivedMsg.id,
+                    receivedMsg.profileId,
+                    receivedMsg.speakerId,
+                    receivedMsg.eventAbbr,
+                    receivedMsg.roomId,
+                    receivedMsg.roomType,
+                    receivedMsg.body,
+                    receivedMsg.messageType,
+                  )
+                  setMessages((messages) => messages.concat(msg))
+              },
+          },
         )
     }, [talk])
 
