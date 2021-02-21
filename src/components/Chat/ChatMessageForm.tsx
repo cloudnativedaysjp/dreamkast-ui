@@ -45,7 +45,7 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
 
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
-          <input name="chatMessage" ref={register} />
+          <textarea name="chatMessage" ref={register} />
           <input type="submit" /><br/>
           <input type="checkbox" name="isQuestion" ref={register}/>質問を送る
       </form>
