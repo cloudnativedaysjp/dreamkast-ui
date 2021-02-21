@@ -4,7 +4,7 @@ import { ChatMessageApi, ChatMessageMessageTypeEnum } from '../../client-axios'
 import Button from '@material-ui/core/Button'
 
 type Props = {
-  roomId?: number
+    roomId?: number
 }
 
 type Inputs = {

@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import { ThemeProvider as SCThemeProvider } from 'styled-components'
+import {
+  ThemeProvider as SCThemeProvider,
+  createGlobalStyle,
+} from 'styled-components'
 import {
   ThemeProvider as MUIThemeProvider,
   StylesProvider,
@@ -8,6 +11,24 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import { AppProps } from 'next/app'
+
+const GlobalStyle = createGlobalStyle`
+  html, body {
+    padding: 0;
+    margin: 0;
+    scrollbar-width: none;
+    height: 100%;
+  }
+  body {
+    background-image: url('/cndo2021/ui/images/background.jpg');
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  body::-webkit-scrollbar {
+    display:none;
+  }`
 
 export default function Dreamkast({
   Component,
@@ -34,6 +55,7 @@ export default function Dreamkast({
         <MUIThemeProvider theme={theme}>
           <SCThemeProvider theme={theme}>
             <CssBaseline />
+            <GlobalStyle />
             <Component {...pageProps} />
           </SCThemeProvider>
         </MUIThemeProvider>

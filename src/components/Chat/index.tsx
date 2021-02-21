@@ -23,11 +23,18 @@ export class ChatMessageClass implements ChatMessageInterface {
         this.messageType = messageType
     }
 
-    createFromWebSocket(id: number, eventAbbr: string, roomId: number, roomType: string, body: string) {
-        this.id = id
-        this.eventAbbr = eventAbbr;
-        this.roomId = roomId;
-        this.roomType = roomType;
-        this.body = body;
-    }
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  createFromWebSocket(
+    id: number,
+    eventAbbr: string,
+    roomId: number,
+    roomType: string,
+    body: string,
+  ) {
+    this.id = id
+    this.eventAbbr = eventAbbr
+    this.roomId = roomId
+    this.roomType = roomType
+    this.body = body
+  }
 }
