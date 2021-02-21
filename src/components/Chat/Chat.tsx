@@ -4,6 +4,7 @@ import {
   ChatMessage as ChatMessageInterface,
   ChatMessageApi,
   Talk,
+  Configuration,
 } from '../../client-axios'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -26,10 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const Chat: React.FC<Props> = ({ talk }) => {
-  const api = new ChatMessageApi()
   const classes = useStyles()
   const [messages, setMessages] = useState<ChatMessageInterface[]>([])
-  const fetchChatMessagesFromAPI = () => {
+  const fetchChatMessagesFromAPI = (api: ChatMessageApi) => {
     if (!talk) return
     api
       .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
@@ -39,14 +39,16 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   useEffect(() => {
+    const api = new ChatMessageApi(new Configuration({basePath: window.location.origin}))
+
     if (!talk) return
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
 
     setMessages([])
-    fetchChatMessagesFromAPI()
+    fetchChatMessagesFromAPI(api)
     const cableApp: ActionCable.Cable = actionCable.createConsumer(
-      'ws://localhost:8080/cable',
+      `ws://${window.location.host}/cable`,
     )
     if (cableApp) {
       cableApp.disconnect()

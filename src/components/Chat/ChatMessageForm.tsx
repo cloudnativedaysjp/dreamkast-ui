@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChatMessageApi } from '../../client-axios'
+import { ChatMessageApi, Configuration } from '../../client-axios'
 
 type Props = {
   roomId?: number
@@ -11,7 +11,6 @@ type Inputs = {
 }
 
 const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
-  const api = new ChatMessageApi()
   const {
     register,
     handleSubmit,
@@ -21,6 +20,8 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
   const [submittedData, setSubmittedData] = useState({})
 
   const onSubmit = (data: Inputs) => {
+    const api = new ChatMessageApi(new Configuration({basePath: window.location.origin}))
+
     if (!roomId) return
     setSubmittedData(data)
     const msg = {
