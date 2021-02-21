@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { SponsorApi, Sponsor, Configuration } from "../../client-axios"
 import * as Styled from './styled'
 
-type Props = {}
-
-export const Sponsors: React.FC<Props> = () => {
+export const Sponsors: React.FC = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -15,7 +11,8 @@ export const Sponsors: React.FC<Props> = () => {
     autoplay: true,
     speed: 50000,
     autoplaySpeed: 0,
-    cssEase: "linear"
+    cssEase: "linear",
+    arrows: false
   };
 
   const [data, setData] = useState<Sponsor[]>([])
