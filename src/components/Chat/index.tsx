@@ -1,25 +1,36 @@
 export { Chat } from './Chat'
-import { ChatMessage as ChatMessageInterface, ChatMessageMessageTypeEnum } from '../../client-axios'
-
+import {
+  ChatMessage as ChatMessageInterface,
+  ChatMessageMessageTypeEnum,
+} from '../../client-axios'
 
 export class ChatMessageClass implements ChatMessageInterface {
-  id?: number;
-  profileId? :number;
-  speakerId?: number;
-  eventAbbr: string;
-  roomId?: number;
-  roomType?: string;
-  body: string;
-  messageType: ChatMessageMessageTypeEnum;
+  id?: number
+  profileId?: number
+  speakerId?: number
+  eventAbbr: string
+  roomId?: number
+  roomType?: string
+  body: string
+  messageType: ChatMessageMessageTypeEnum
 
-  constructor(id: number, profileId: number, speakerId: number, eventAbbr: string, roomId: number, roomType: string, body: string, messageType: ChatMessageMessageTypeEnum) {
-    this.id = id;
-    this.profileId = profileId;
-    this.speakerId = speakerId;
-    this.eventAbbr = eventAbbr;
-    this.roomId = roomId;
-    this.roomType = roomType;
-    this.body = body;
+  constructor(
+    id: number,
+    profileId: number,
+    speakerId: number,
+    eventAbbr: string,
+    roomId: number,
+    roomType: string,
+    body: string,
+    messageType: ChatMessageMessageTypeEnum,
+  ) {
+    this.id = id
+    this.profileId = profileId
+    this.speakerId = speakerId
+    this.eventAbbr = eventAbbr
+    this.roomId = roomId
+    this.roomType = roomType
+    this.body = body
     this.messageType = messageType
   }
 

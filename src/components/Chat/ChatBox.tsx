@@ -1,9 +1,12 @@
 import React from 'react'
-import { Box} from '@material-ui/core'
-import { ChatMessage as ChatMessageInterface, ChatMessageMessageTypeEnum } from '../../client-axios'
-import {makeStyles} from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import ChatMessage from "./ChatMessage";
+import { Box } from '@material-ui/core'
+import {
+  ChatMessage as ChatMessageInterface,
+  ChatMessageMessageTypeEnum,
+} from '../../client-axios'
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import ChatMessage from './ChatMessage'
 
 type Props = {
   messages: ChatMessageInterface[]

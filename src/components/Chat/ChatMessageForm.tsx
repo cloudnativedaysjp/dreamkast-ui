@@ -4,7 +4,7 @@ import { ChatMessageApi, ChatMessageMessageTypeEnum } from '../../client-axios'
 import Button from '@material-ui/core/Button'
 
 type Props = {
-    roomId?: number
+  roomId?: number
 }
 
 type Inputs = {
@@ -12,7 +12,12 @@ type Inputs = {
   isQuestion: boolean
 }
 
-const ChatMessageRequest = (eventAbbr: string, roomId: number, roomType: string, body: string) => {
+const ChatMessageRequest = (
+  eventAbbr: string,
+  roomId: number,
+  roomType: string,
+  body: string,
+) => {
   return {
     eventAbbr: eventAbbr,
     roomId: roomId,
@@ -44,17 +49,17 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
 
   const onThumbsUp = () => {
     if (!roomId) return
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', "👍")
+    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👍')
     api.apiV1ChatMessagesPost(msg)
   }
   const onClap = () => {
     if (!roomId) return
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', "👏")
+    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👏')
     api.apiV1ChatMessagesPost(msg)
   }
   const onPartyPopper = () => {
     if (!roomId) return
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', "🎉")
+    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '🎉')
     api.apiV1ChatMessagesPost(msg)
   }
 
@@ -67,11 +72,20 @@ const ChatMessageForm: React.FC<Props> = ({ roomId }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <textarea name="chatMessage" ref={register} />
-      <input type="submit" /><br/>
-      <input type="checkbox" name="isQuestion" ref={register}/>質問を送る<br/>
-      <Button onClick={onThumbsUp} variant="contained">👍</Button>
-      <Button onClick={onClap} variant="contained">👏</Button>
-      <Button onClick={onPartyPopper} variant="contained">🎉</Button>
+      <input type="submit" />
+      <br />
+      <input type="checkbox" name="isQuestion" ref={register} />
+      質問を送る
+      <br />
+      <Button onClick={onThumbsUp} variant="contained">
+        👍
+      </Button>
+      <Button onClick={onClap} variant="contained">
+        👏
+      </Button>
+      <Button onClick={onPartyPopper} variant="contained">
+        🎉
+      </Button>
     </form>
   )
 }
