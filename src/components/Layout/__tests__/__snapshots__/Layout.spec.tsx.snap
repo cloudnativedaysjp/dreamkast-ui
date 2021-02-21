@@ -2,7 +2,7 @@
 
 exports[`Layout 1`] = `
 <div
-  className="sc-bdfBwQ hPyAfq"
+  className="sc-bdfBwQ cfTGtS"
 >
   <header>
     <header
@@ -16,7 +16,7 @@ exports[`Layout 1`] = `
           src="/cndo2021/ui/images/CNDO2021_horizontal.png"
         />
         <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text"
           disabled={false}
           onBlur={[Function]}
           onDragLeave={[Function]}
@@ -29,6 +29,11 @@ exports[`Layout 1`] = `
           onTouchEnd={[Function]}
           onTouchMove={[Function]}
           onTouchStart={[Function]}
+          style={
+            Object {
+              "color": "#037f8c",
+            }
+          }
           tabIndex={0}
           type="button"
         >
@@ -42,10 +47,10 @@ exports[`Layout 1`] = `
     </header>
   </header>
   <div
-    className="sc-hKgILt hiEIKz"
+    className="sc-hKgILt"
   />
   <footer
-    className="sc-eCssSg VzzCB"
+    className="sc-eCssSg csAIkT"
   >
     <a
       className="sc-gKsewC giTXZJ"
