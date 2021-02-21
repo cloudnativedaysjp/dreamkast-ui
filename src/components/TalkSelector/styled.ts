@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { List as OriginList, ListItem, ListItemText } from '@material-ui/core'
+import { List as OriginList, ListItem } from '@material-ui/core'
 
 export const Container = styled.div`
   padding: 8px;
