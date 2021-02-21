@@ -15,13 +15,7 @@ type Props = {
 
 const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const isSpeakerMessage = () => {
-    if (chatMessage.speaker_id) {
-      return true
-    } else {
-      return false
-    }
-  }
+  const isSpeakerMessage = !!chatMessage.speaker_id
 
   useEffect(() => {
     setRef(chatMessage, ref)
@@ -32,7 +26,7 @@ const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
       <Styled.ChatMessage
         isChat={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat}
       >
-        {isSpeakerMessage() ? '[S] ' : ''}
+        {isSpeakerMessage ? '[S] ' : ''}
         {chatMessage.body}
       </Styled.ChatMessage>
     </div>
