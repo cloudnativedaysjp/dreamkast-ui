@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { SponsorApi, Sponsor } from "../../client-axios"
+import { SponsorApi, Sponsor, Configuration } from "../../client-axios"
 import * as Styled from './styled'
 
 type Props = {}
@@ -21,7 +21,7 @@ export const Sponsors: React.FC<Props> = () => {
   const [data, setData] = useState<Sponsor[]>([])
 
   useEffect(() => {
-    new SponsorApi().apiV1SponsorsGet("cndo2021").then((res) => {
+    new SponsorApi(new Configuration({basePath: window.location.origin})).apiV1SponsorsGet("cndo2021").then((res) => {
       setData(res.data);
     })
   },[])
