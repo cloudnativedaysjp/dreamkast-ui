@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as Styled from './styled'
 import { Track } from '../../client-axios'
 
@@ -14,6 +14,10 @@ export const TrackSelector: React.FC<Props> = ({
   selectTrack,
 }) => {
   const [item, setItem] = useState(selectedTrackId)
+
+  useEffect(() => {
+    setItem(selectedTrackId)
+  }, [selectedTrackId])
 
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,

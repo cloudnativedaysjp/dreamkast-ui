@@ -12,5 +12,13 @@ export const Container = styled.div`
 `
 
 export const OuterContainer = styled.div`
+  padding: 0 0 43px 0;
+`
+
+export const Title = styled.h2`
+  color: #037f8c;
+`
+
+export const Content = styled.div`
   padding: 10px 0;
 `

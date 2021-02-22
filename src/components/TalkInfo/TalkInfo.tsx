@@ -9,9 +9,9 @@ type Props = {
 export const TalkInfo: React.FC<Props> = ({ selectedTalk }) => (
   <Styled.OuterContainer>
     <Styled.Container>
-      <h2>{selectedTalk?.title}</h2>
+      <Styled.Title>{selectedTalk?.title}</Styled.Title>
       <h3>{selectedTalk?.speakers.join(' / ')}</h3>
-      <div>{selectedTalk?._abstract}</div>
+      <Styled.Content>{selectedTalk?._abstract}</Styled.Content>
     </Styled.Container>
   </Styled.OuterContainer>
 )

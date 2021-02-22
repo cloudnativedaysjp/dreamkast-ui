@@ -13,4 +13,17 @@ export const MenuItem = styled(ToggleButton)`
   border: 1.5px solid !important;
   border-radius: 5px !important;
   background-color: #ffffff;
+  &:hover {
+    border: 1.5px solid rgba(217, 72, 125, 0.5) !important;
+    color: rgba(217, 72, 125, 0.5);
+    background-color: rgba(242, 182, 198, 0.3);
+  }
+  &.Mui-selected {
+    border: 1.5px solid rgba(217, 72, 125, 1) !important;
+    color: rgba(217, 72, 125, 1);
+    background-color: rgba(242, 182, 198, 0.5);
+    :hover {
+      background-color: rgba(242, 182, 198, 0.3);
+    }
+  }
 `
