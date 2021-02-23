@@ -161,6 +161,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               ChatMessageMessageTypeEnum.Chat,
               ChatMessageMessageTypeEnum.Qa,
             ]}
+            selectedMessage={selectedMessage}
             onClickMessage={onClickMessage}
           />
           <ChatMessageForm
@@ -174,6 +175,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           <ChatBox
             messages={messages}
             messageTypes={[ChatMessageMessageTypeEnum.Qa]}
+            selectedMessage={selectedMessage}
             onClickMessage={onClickMessage}
           />
           <ChatMessageForm

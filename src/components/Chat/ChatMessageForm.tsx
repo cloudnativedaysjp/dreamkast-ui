@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import * as Styled from './styled'
 import {
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
@@ -65,10 +66,6 @@ const ChatMessageForm: React.FC<Props> = ({
     }
     return req
   }
-  useEffect(() => {
-    console.log(selectedMessage)
-    console.log(messageSelected)
-  }, [])
 
   const onSubmit = (data: Inputs) => {
     if (!roomId) return
@@ -115,7 +112,14 @@ const ChatMessageForm: React.FC<Props> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {messageSelected && <p onClick={onClickCloseButton}>Close</p>}
+      {messageSelected && (
+        <div>
+          Reply To:{' '}
+          <Styled.CloseReplyButton onClick={onClickCloseButton}>
+            Close
+          </Styled.CloseReplyButton>
+        </div>
+      )}
       {messageSelected && <p>{selectedMessage.body}</p>}
       <textarea name="chatMessage" ref={register} />
       <input type="submit" />

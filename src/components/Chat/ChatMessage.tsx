@@ -1,38 +1,39 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import * as Styled from './styled'
 import { ChatMessageMessageTypeEnum } from '../../client-axios/api'
 import { ChatMessageClass } from './index'
 
 type Props = {
-  chatMessage: ChatMessageClass
-  setRef: (
-    chatMessage: ChatMessageClass,
-    ref: React.RefObject<HTMLDivElement>,
-  ) => void
+  chatMessage?: ChatMessageClass
+  selected: boolean
   onClickMessage: (event: any) => void
 }
 
 const ChatMessage: React.FC<Props> = ({
   chatMessage,
-  setRef,
+  selected,
   onClickMessage,
 }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const isSpeakerMessage = !!chatMessage.speakerId
-
-  useEffect(() => {
-    setRef(chatMessage, ref)
-  }, [setRef, chatMessage, ref])
+  const isSpeakerMessage = !!chatMessage?.speakerId
 
   return (
-    <div ref={ref} onClick={onClickMessage} data-messageId={chatMessage.id}>
-      <Styled.ChatMessage
-        isChat={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat}
-      >
-        {isSpeakerMessage ? '[S] ' : ''}
-        {chatMessage.body}
-      </Styled.ChatMessage>
-      {chatMessage.children?.map((msg) => {
+    <div onClick={onClickMessage} data-messageId={chatMessage?.id}>
+      {selected ? (
+        <Styled.ChatSelectedMessage
+          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
+        >
+          {isSpeakerMessage ? '[S] ' : ''}
+          {chatMessage?.body}
+        </Styled.ChatSelectedMessage>
+      ) : (
+        <Styled.ChatMessage
+          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
+        >
+          {isSpeakerMessage ? '[S] ' : ''}
+          {chatMessage?.body}
+        </Styled.ChatMessage>
+      )}
+      {chatMessage?.children?.map((msg) => {
         return (
           <Styled.ChatReplyMessage
             isChat={msg.messageType == ChatMessageMessageTypeEnum.Chat}

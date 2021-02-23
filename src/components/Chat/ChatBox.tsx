@@ -9,40 +9,33 @@ import { ChatMessageClass } from './index'
 type Props = {
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
+  selectedMessage: ChatMessageClass
   onClickMessage: (e: any) => void
 }
 
 export const ChatBox: React.FC<Props> = ({
   messages,
   messageTypes,
+  selectedMessage,
   onClickMessage,
 }) => {
-  const setLastMessageElement = (
-    chatMessage: ChatMessageClass,
-    ref: React.RefObject<HTMLDivElement>,
-  ) => {
-    if (!messages) return
-    const lastChat = Array.from(messages)[messages.size - 1][1]
-    if (chatMessage.id === lastChat.id) {
-      ref && ref.current && ref.current.scrollIntoView()
-    }
-  }
-
   return (
     <Styled.Box overflow="scroll">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {Array.from(messages).map(([_id, chatMessage]) => {
-            if (messageTypes.includes(chatMessage.messageType)) {
-              return (
-                <ChatMessage
-                  chatMessage={chatMessage}
-                  setRef={setLastMessageElement}
-                  onClickMessage={onClickMessage}
-                />
-              )
-            }
-          })}
+          {Array.from(messages)
+            .reverse()
+            .map(([_id, chatMessage]) => {
+              if (messageTypes.includes(chatMessage.messageType)) {
+                return (
+                  <ChatMessage
+                    chatMessage={chatMessage}
+                    selected={chatMessage.id == selectedMessage?.id}
+                    onClickMessage={onClickMessage}
+                  />
+                )
+              }
+            })}
         </Grid>
       </Grid>
     </Styled.Box>
