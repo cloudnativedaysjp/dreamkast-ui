@@ -1,42 +1,40 @@
 import React from 'react'
 import * as Styled from './styled'
-import {
-  ChatMessage as ChatMessageInterface,
-  ChatMessageMessageTypeEnum,
-} from '../../client-axios'
+import { ChatMessageMessageTypeEnum } from '../../client-axios'
 import Grid from '@material-ui/core/Grid'
 import ChatMessage from './ChatMessage'
+import { ChatMessageClass, ChatMessageMap } from './index'
 
 type Props = {
-  messages: ChatMessageInterface[]
+  messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
+  selectedMessage: ChatMessageClass
+  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-export const ChatBox: React.FC<Props> = ({ messages, messageTypes }) => {
-  const setLastMessageElement = (
-    chatMessage: ChatMessageInterface,
-    ref: React.RefObject<HTMLDivElement>,
-  ) => {
-    const lastChat = messages[messages.length - 1]
-    if (chatMessage.id === lastChat.id) {
-      ref && ref.current && ref.current.scrollIntoView()
-    }
-  }
-
+export const ChatBox: React.FC<Props> = ({
+  messages,
+  messageTypes,
+  selectedMessage,
+  onClickMessage,
+}) => {
   return (
     <Styled.Box overflow="scroll">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {messages.map((chatMessage) => {
-            if (messageTypes.includes(chatMessage.messageType)) {
-              return (
-                <ChatMessage
-                  chatMessage={chatMessage}
-                  setRef={setLastMessageElement}
-                />
-              )
-            }
-          })}
+          {Array.from(messages)
+            .reverse()
+            .map(([, chatMessage]) => {
+              if (messageTypes.includes(chatMessage.messageType)) {
+                return (
+                  <ChatMessage
+                    chatMessage={chatMessage}
+                    selected={chatMessage.id == selectedMessage?.id}
+                    onClickMessage={onClickMessage}
+                  />
+                )
+              }
+            })}
         </Grid>
       </Grid>
     </Styled.Box>
