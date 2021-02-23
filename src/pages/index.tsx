@@ -15,7 +15,9 @@ const IndexPage: React.FC = () => {
   }
 
   const getTracks = useCallback(async () => {
-    const api = new TrackApi(new Configuration({basePath: window.location.origin}))
+    const api = new TrackApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
     const { data } = await api.apiV1TracksGet('cndo2021')
     setTracks(data)
     setSelectedTrackId(data[0].id)

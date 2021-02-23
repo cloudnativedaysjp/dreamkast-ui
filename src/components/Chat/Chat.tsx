@@ -37,7 +37,6 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
 
-    setMessages([])
     fetchChatMessagesFromAPI(api)
     let wsUrl = ''
     if (window.location.protocol == 'http:') {
@@ -86,6 +85,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       'aria-controls': `simple-tabpanel-${index}`,
     }
   }
+  // eslint-disable-next-line @typescript-eslint/ban-types
   const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
     setSelectedTab(newValue)
   }

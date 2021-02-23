@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { List as OriginList, ListItem } from '@material-ui/core'
 
 export const Container = styled.div`
-  padding: 0 8px 0 8px;
-  height: 500px;
+  padding: 0 8px 10px 8px;
+  height: 450px;
 `
 
 export const Title = styled.div`
@@ -19,7 +19,7 @@ export const Title = styled.div`
 `
 
 export const List = styled(OriginList)`
-  height: 450px;
+  height: 405px;
   border: 1.5px solid;
   overflow-y: scroll;
   border-radius: 0px 0px 10px 10px;

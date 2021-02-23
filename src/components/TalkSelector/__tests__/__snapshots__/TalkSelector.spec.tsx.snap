@@ -2,7 +2,7 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="sc-bdfBwQ dmGxKJ"
+  className="sc-bdfBwQ cKbKdI"
 >
   <div
     className="sc-gsTCUz hhRAir"
@@ -10,7 +10,7 @@ exports[`TalkSelector 1`] = `
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root sc-dlfnbm dEvPtC MuiList-padding"
+    className="MuiList-root sc-dlfnbm kskwDK MuiList-padding"
   >
     <div
       aria-disabled={false}

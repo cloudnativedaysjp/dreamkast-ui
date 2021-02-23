@@ -9,17 +9,14 @@ type Props = {
 export const Player: React.FC<Props> = ({ vimeoId, autoplay }) => {
   return (
     <Styled.Container
-      src={
-        'https://player.vimeo.com/video/' +
-        vimeoId +
-        '?autoplay=' +
-        Number(autoplay)
-      }
+      src={`https://player.vimeo.com/video/${vimeoId}?autoplay=${Number(
+        autoplay,
+      )}`}
       frameBorder="0"
       allow="autoplay; fullscreen"
       //webkitallowfullscreen
       //mozallowfullscreen
       allowFullScreen
-    ></Styled.Container>
+    />
   )
 }
