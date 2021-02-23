@@ -41,6 +41,13 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   const [selectedMessage, setSelectedMessage] = useState<ChatMessageClass>(
     initialChatMessage,
   )
+  const actionCableUrl = () => {
+    if (window.location.protocol == 'http:') {
+      return `ws://${window.location.host}/cable`
+    } else {
+      return `wss://${window.location.host}/cable`
+    }
+  }
   const fetchChatMessagesFromAPI = (api: ChatMessageApi) => {
     if (!talk || !messages) return
     api
@@ -64,12 +71,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     const actionCable = require('actioncable')
 
     fetchChatMessagesFromAPI(api)
-    let wsUrl = ''
-    if (window.location.protocol == 'http:') {
-      wsUrl = `ws://${window.location.host}/cable`
-    } else {
-      wsUrl = `wss://${window.location.host}/cable`
-    }
+    const wsUrl = actionCableUrl()
     const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
     if (cableApp) {
       cableApp.disconnect()
