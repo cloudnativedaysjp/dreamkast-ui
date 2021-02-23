@@ -4,6 +4,26 @@ import {
   ChatMessageMessageTypeEnum,
 } from '../../client-axios'
 
+export class ChatMessageMap extends Map<number, ChatMessageClass> {
+  addMessage = (msg: ChatMessageClass) => {
+    if (!msg.id) return
+
+    if (msg.replyTo) {
+      const parent = this.get(msg.replyTo)
+      if (parent) {
+        if (!parent.children) {
+          parent.children = []
+        }
+        parent.children.push(msg)
+      } else {
+        this.set(msg.id, msg)
+      }
+    } else {
+      this.set(msg.id, msg)
+    }
+  }
+}
+
 export class ChatMessageClass implements ChatMessageInterface {
   id?: number
   profileId?: number

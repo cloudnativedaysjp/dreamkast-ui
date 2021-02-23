@@ -8,7 +8,7 @@ import {
 } from '../../client-axios'
 import ChatMessageForm from './ChatMessageForm'
 import ActionCable from 'actioncable'
-import { ChatMessageClass } from './index'
+import { ChatMessageClass, ChatMessageMap } from './index'
 import { TabContext, TabPanel } from '@material-ui/lab'
 import { ChatBox } from './ChatBox'
 
@@ -26,26 +26,6 @@ type ReceivedMsg = {
   body: string
   messageType: ChatMessageMessageTypeEnum
   replyTo: number
-}
-
-export class ChatMessageMap extends Map<number, ChatMessageClass> {
-  addMessage = (msg: ChatMessageClass) => {
-    if (!msg.id) return
-
-    if (msg.replyTo) {
-      const parent = this.get(msg.replyTo)
-      if (parent) {
-        if (!parent.children) {
-          parent.children = []
-        }
-        parent.children.push(msg)
-      } else {
-        this.set(msg.id, msg)
-      }
-    } else {
-      this.set(msg.id, msg)
-    }
-  }
 }
 
 export const Chat: React.FC<Props> = ({ talk }) => {
