@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs } from '@material-ui/core'
 import {
-  ChatMessage as ChatMessageInterface,
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Talk,
@@ -9,7 +8,7 @@ import {
 } from '../../client-axios'
 import ChatMessageForm from './ChatMessageForm'
 import ActionCable from 'actioncable'
-import { ChatMessageClass } from './index'
+import { ChatMessageClass, ChatMessageMap } from './index'
 import { TabContext, TabPanel } from '@material-ui/lab'
 import { ChatBox } from './ChatBox'
 
@@ -17,34 +16,79 @@ type Props = {
   talk?: Talk
 }
 
-export const Chat: React.FC<Props> = ({ talk }) => {
-  const [messages, setMessages] = useState<ChatMessageInterface[]>([])
-  const fetchChatMessagesFromAPI = (api: ChatMessageApi) => {
-    if (!talk) return
-    api
-      .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
-      .then((res) => {
-        setMessages(res.data)
-      })
-  }
+type ReceivedMsg = {
+  id: number
+  profileId: number
+  speakerId: number
+  eventAbbr: string
+  roomId: number
+  roomType: string
+  body: string
+  messageType: ChatMessageMessageTypeEnum
+  replyTo: number
+}
 
-  useEffect(() => {
+export const Chat: React.FC<Props> = ({ talk }) => {
+  const initialChatMessageMap = new ChatMessageMap()
+  const initialChatMessage = {
+    eventAbbr: 'cndo2021',
+    body: '',
+    messageType: ChatMessageMessageTypeEnum.Chat,
+  }
+  const [selectedTab, setSelectedTab] = useState('0')
+  const [messages, setMessages] = useState<ChatMessageMap>(
+    initialChatMessageMap,
+  )
+  const [selectedMessage, setSelectedMessage] = useState<ChatMessageClass>(
+    initialChatMessage,
+  )
+  const actionCableUrl = () => {
+    if (window.location.protocol == 'http:') {
+      return `ws://${window.location.host}/cable`
+    } else {
+      return `wss://${window.location.host}/cable`
+    }
+  }
+  const fetchChatMessagesFromAPI = () => {
     const api = new ChatMessageApi(
       new Configuration({ basePath: window.location.origin }),
     )
+    return api
+      .apiV1ChatMessagesGet('cndo2021', String(talk?.id), 'talk')
+      .then((res) => {
+        if (!messages) setMessages(new ChatMessageMap())
+        messages.clear()
+        res.data.forEach((receivedMsg) => {
+          messages.addMessage(receivedMsg)
+        })
+        setMessages(new ChatMessageMap(messages))
+      })
+  }
 
-    if (!talk) return
+  const cableReceived = (receivedMsg: ReceivedMsg) => {
+    if (!messages) return
+    const msg = new ChatMessageClass(
+      receivedMsg.id,
+      receivedMsg.profileId,
+      receivedMsg.speakerId,
+      receivedMsg.eventAbbr,
+      receivedMsg.roomId,
+      receivedMsg.roomType,
+      receivedMsg.body,
+      receivedMsg.messageType,
+      receivedMsg.replyTo,
+    )
+    messages.addMessage(msg)
+    setMessages(messages)
+  }
+
+  useEffect(() => {
+    if (!talk || !messages) return
+    setSelectedMessage(initialChatMessage)
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
-
-    setMessages([])
-    fetchChatMessagesFromAPI(api)
-    let wsUrl = ''
-    if (window.location.protocol == 'http:') {
-      wsUrl = `ws://${window.location.host}/cable`
-    } else {
-      wsUrl = `wss://${window.location.host}/cable`
-    }
+    fetchChatMessagesFromAPI()
+    const wsUrl = actionCableUrl()
     const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
     if (cableApp) {
       cableApp.disconnect()
@@ -52,33 +96,10 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     cableApp.subscriptions.create(
       { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
       {
-        received(receivedMsg: {
-          id: number
-          profileId: number
-          speakerId: number
-          eventAbbr: string
-          roomId: number
-          roomType: string
-          body: string
-          messageType: ChatMessageMessageTypeEnum
-        }) {
-          const msg = new ChatMessageClass(
-            receivedMsg.id,
-            receivedMsg.profileId,
-            receivedMsg.speakerId,
-            receivedMsg.eventAbbr,
-            receivedMsg.roomId,
-            receivedMsg.roomType,
-            receivedMsg.body,
-            receivedMsg.messageType,
-          )
-          setMessages((messages) => messages.concat(msg))
-        },
+        received: cableReceived,
       },
     )
   }, [talk])
-
-  const [selectedTab, setSelectedTab] = useState('0')
 
   function a11yProps(index: number) {
     return {
@@ -86,9 +107,26 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       'aria-controls': `simple-tabpanel-${index}`,
     }
   }
-  const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (
+    _event: React.ChangeEvent<Record<string, never>>,
+    newValue: string,
+  ) => {
     setSelectedTab(newValue)
   }
+
+  const onClickMessage = (e: React.MouseEvent<HTMLInputElement>) => {
+    if (!messages || Object.keys(messages).length == 0) return
+    const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
+    if (!selectedMessageId) return
+    const msg = messages.get(Number(selectedMessageId))
+    if (!msg) return
+    setSelectedMessage(msg)
+  }
+
+  const onClickCloseButton = () => {
+    setSelectedMessage(initialChatMessage)
+  }
+
   return (
     <div>
       <TabContext value={selectedTab}>
@@ -108,15 +146,28 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               ChatMessageMessageTypeEnum.Chat,
               ChatMessageMessageTypeEnum.Qa,
             ]}
+            selectedMessage={selectedMessage}
+            onClickMessage={onClickMessage}
           />
-          <ChatMessageForm roomId={talk?.id} />
+          <ChatMessageForm
+            roomId={talk?.id}
+            selectedMessage={selectedMessage}
+            onClickCloseButton={onClickCloseButton}
+          />
         </TabPanel>
+
         <TabPanel value="1">
           <ChatBox
             messages={messages}
             messageTypes={[ChatMessageMessageTypeEnum.Qa]}
+            selectedMessage={selectedMessage}
+            onClickMessage={onClickMessage}
           />
-          <ChatMessageForm roomId={talk?.id} />
+          <ChatMessageForm
+            roomId={talk?.id}
+            selectedMessage={selectedMessage}
+            onClickCloseButton={onClickCloseButton}
+          />
         </TabPanel>
       </TabContext>
     </div>

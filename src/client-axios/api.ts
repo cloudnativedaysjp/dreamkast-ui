@@ -38,13 +38,13 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    profile_id?: number;
+    profileId?: number;
     /**
      * 
      * @type {number}
      * @memberof ChatMessage
      */
-    speaker_id?: number;
+    speakerId?: number;
     /**
      * 
      * @type {string}

@@ -1,34 +1,55 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import * as Styled from './styled'
-import {
-  ChatMessage as ChatMessageObject,
-  ChatMessageMessageTypeEnum,
-} from '../../client-axios/api'
+import { ChatMessageMessageTypeEnum } from '../../client-axios/api'
+import { ChatMessageClass } from './index'
+import ReplyIcon from '@material-ui/icons/Reply'
 
 type Props = {
-  chatMessage: ChatMessageObject
-  setRef: (
-    chatMessage: ChatMessageObject,
-    ref: React.RefObject<HTMLDivElement>,
-  ) => void
+  chatMessage?: ChatMessageClass
+  selected: boolean
+  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-const ChatMessage: React.FC<Props> = ({ chatMessage, setRef }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const isSpeakerMessage = !!chatMessage.speaker_id
-
-  useEffect(() => {
-    setRef(chatMessage, ref)
-  }, [setRef, chatMessage, ref])
+const ChatMessage: React.FC<Props> = ({
+  chatMessage,
+  selected,
+  onClickMessage,
+}) => {
+  const isSpeakerMessage = !!chatMessage?.speakerId
 
   return (
-    <div ref={ref}>
-      <Styled.ChatMessage
-        isChat={chatMessage.messageType == ChatMessageMessageTypeEnum.Chat}
-      >
-        {isSpeakerMessage ? '[S] ' : ''}
-        {chatMessage.body}
-      </Styled.ChatMessage>
+    <div>
+      {selected ? (
+        <Styled.ChatSelectedMessage
+          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
+        >
+          {isSpeakerMessage ? '[S] ' : ''}
+          {chatMessage?.body}
+        </Styled.ChatSelectedMessage>
+      ) : (
+        <Styled.ChatMessage
+          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
+        >
+          {isSpeakerMessage ? '[S] ' : ''}
+          {chatMessage?.body}
+          <Styled.ReplyButton
+            data-messageId={chatMessage?.id}
+            onClick={onClickMessage}
+          >
+            <ReplyIcon fontSize="small" />
+          </Styled.ReplyButton>
+        </Styled.ChatMessage>
+      )}
+      {chatMessage?.children?.map((msg) => {
+        return (
+          <Styled.ChatReplyMessage
+            isChat={msg.messageType == ChatMessageMessageTypeEnum.Chat}
+          >
+            {isSpeakerMessage ? '[S] ' : ''}
+            {msg.body}
+          </Styled.ChatReplyMessage>
+        )
+      })}
     </div>
   )
 }
