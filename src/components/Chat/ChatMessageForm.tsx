@@ -6,8 +6,8 @@ import {
   ChatMessageMessageTypeEnum,
   Configuration,
 } from '../../client-axios'
-import Button from '@material-ui/core/Button'
 import { ChatMessageClass } from './index'
+import ReactButton from './ReactButton'
 
 type Props = {
   roomId?: number
@@ -20,7 +20,7 @@ type Inputs = {
   isQuestion: boolean
 }
 
-const ChatMessageRequest = (
+export const ChatMessageRequest = (
   eventAbbr: string,
   roomId: number,
   roomType: string,
@@ -75,35 +75,6 @@ const ChatMessageForm: React.FC<Props> = ({
     setSubmittedData(data)
     api.apiV1ChatMessagesPost(createChatMessageRequest(data, roomId))
   }
-
-  const onThumbsUp = () => {
-    if (!roomId) return
-    const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👍', null)
-    api.apiV1ChatMessagesPost(msg)
-  }
-  const onClap = () => {
-    if (!roomId) return
-    const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '👏', null)
-    api.apiV1ChatMessagesPost(msg)
-  }
-  const onPartyPopper = () => {
-    if (!roomId) return
-    const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-
-    const msg = ChatMessageRequest('cndo2021', roomId, 'talk', '🎉', null)
-    api.apiV1ChatMessagesPost(msg)
-  }
-
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset({ chatMessage: '' })
@@ -111,7 +82,7 @@ const ChatMessageForm: React.FC<Props> = ({
   }, [isSubmitSuccessful, submittedData, reset])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Styled.ChatMessageForm onSubmit={handleSubmit(onSubmit)}>
       {messageSelected && (
         <div>
           Reply To:{' '}
@@ -131,16 +102,10 @@ const ChatMessageForm: React.FC<Props> = ({
           <br />
         </div>
       )}
-      <Button onClick={onThumbsUp} variant="contained">
-        👍
-      </Button>
-      <Button onClick={onClap} variant="contained">
-        👏
-      </Button>
-      <Button onClick={onPartyPopper} variant="contained">
-        🎉
-      </Button>
-    </form>
+      <ReactButton reactEmoji="👍" roomId={roomId} />
+      <ReactButton reactEmoji="👏" roomId={roomId} />
+      <ReactButton reactEmoji="🎉" roomId={roomId} />
+    </Styled.ChatMessageForm>
   )
 }
 
