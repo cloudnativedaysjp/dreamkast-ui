@@ -59,10 +59,8 @@
     },
     "lint-staged": {
         "*.{ts,tsx}": [
-            "eslint --fix --max-warnings=0",
-            "prettier -cw",
-            "jest --findRelatedTests --passWithNoTests",
-            "git add"
+            "eslint --fix --max-warnings=0 --config .eslintrc.js --ignore-path .eslintignore",
+            "jest --findRelatedTests --passWithNoTests"
         ]
     },
     "husky": {
