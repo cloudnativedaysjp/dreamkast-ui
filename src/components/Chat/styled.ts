@@ -10,3 +10,6 @@ export const ChatMessage = styled(Paper)<{ isChat: boolean }>`
   background: ${({ isChat }) => (isChat ? '#ffffff' : '#f5f5f5')};
   white-sace: pre-wrap;
 `
+export const ChatReplyMessage = styled(ChatMessage)`
+  margin-left: 20px;
+`

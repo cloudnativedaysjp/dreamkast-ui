@@ -13,6 +13,8 @@ export class ChatMessageClass implements ChatMessageInterface {
   roomType?: string
   body: string
   messageType: ChatMessageMessageTypeEnum
+  replyTo?: number
+  children?: ChatMessageClass[]
 
   constructor(
     id: number,
@@ -23,6 +25,7 @@ export class ChatMessageClass implements ChatMessageInterface {
     roomType: string,
     body: string,
     messageType: ChatMessageMessageTypeEnum,
+    replyTo: number,
   ) {
     this.id = id
     this.profileId = profileId
@@ -32,20 +35,7 @@ export class ChatMessageClass implements ChatMessageInterface {
     this.roomType = roomType
     this.body = body
     this.messageType = messageType
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  createFromWebSocket(
-    id: number,
-    eventAbbr: string,
-    roomId: number,
-    roomType: string,
-    body: string,
-  ) {
-    this.id = id
-    this.eventAbbr = eventAbbr
-    this.roomId = roomId
-    this.roomType = roomType
-    this.body = body
+    this.replyTo = replyTo
+    this.children = []
   }
 }

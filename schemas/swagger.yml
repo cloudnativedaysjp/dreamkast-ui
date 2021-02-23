@@ -370,9 +370,9 @@ components:
       properties:
         id:
           type: number
-        profile_id:
+        profileId:
           type: number
-        speaker_id:
+        speakerId:
           type: number
         eventAbbr:
           type: string
