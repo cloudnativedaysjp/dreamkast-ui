@@ -113,7 +113,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedTab(newValue);
   };
 
-  const onClickMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onClickMessage = (e: React.MouseEvent<HTMLInputElement>) => {
     if (!messages || Object.keys(messages).length == 0) return;
     const selectedMessageId = e.currentTarget.getAttribute("data-messageId");
     if (!selectedMessageId) return;

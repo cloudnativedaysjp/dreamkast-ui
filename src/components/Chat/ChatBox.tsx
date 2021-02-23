@@ -1,17 +1,16 @@
-import React from 'react'
-import * as Styled from './styled'
-import { ChatMessageMessageTypeEnum } from '../../client-axios'
-import Grid from '@material-ui/core/Grid'
-import ChatMessage from './ChatMessage'
-import { ChatMessageMap } from './Chat'
-import { ChatMessageClass } from './index'
+import React from "react";
+import * as Styled from "./styled";
+import { ChatMessageMessageTypeEnum } from "../../client-axios";
+import Grid from "@material-ui/core/Grid";
+import ChatMessage from "./ChatMessage";
+import { ChatMessageClass, ChatMessageMap } from "./index";
 
 type Props = {
-  messages: ChatMessageMap
-  messageTypes: ChatMessageMessageTypeEnum[]
-  selectedMessage: ChatMessageClass
-  onClickMessage: (e: any) => void
-}
+  messages: ChatMessageMap;
+  messageTypes: ChatMessageMessageTypeEnum[];
+  selectedMessage: ChatMessageClass;
+  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void;
+};
 
 export const ChatBox: React.FC<Props> = ({
   messages,
@@ -25,7 +24,7 @@ export const ChatBox: React.FC<Props> = ({
         <Grid item xs={12}>
           {Array.from(messages)
             .reverse()
-            .map(([_id, chatMessage]) => {
+            .map(([, chatMessage]) => {
               if (messageTypes.includes(chatMessage.messageType)) {
                 return (
                   <ChatMessage
@@ -33,11 +32,11 @@ export const ChatBox: React.FC<Props> = ({
                     selected={chatMessage.id == selectedMessage?.id}
                     onClickMessage={onClickMessage}
                   />
-                )
+                );
               }
             })}
         </Grid>
       </Grid>
     </Styled.Box>
-  )
-}
+  );
+};
