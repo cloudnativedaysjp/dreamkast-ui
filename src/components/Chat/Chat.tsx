@@ -49,30 +49,44 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       return `wss://${window.location.host}/cable`
     }
   }
-  const fetchChatMessagesFromAPI = (api: ChatMessageApi) => {
-    if (!talk || !messages) return
-    api
-      .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
-      .then((res) => {
-        if (!messages) setMessages(new ChatMessageMap())
-        const newMessages = new ChatMessageMap()
-        res.data.forEach((receivedMsg) => {
-          newMessages.addMessage(receivedMsg)
-        })
-        setMessages(new ChatMessageMap(newMessages))
-      })
-  }
-
-  useEffect(() => {
+  const fetchChatMessagesFromAPI = () => {
     const api = new ChatMessageApi(
       new Configuration({ basePath: window.location.origin }),
     )
+    return api
+      .apiV1ChatMessagesGet('cndo2021', String(talk?.id), 'talk')
+      .then((res) => {
+        if (!messages) setMessages(new ChatMessageMap())
+        messages.clear()
+        res.data.forEach((receivedMsg) => {
+          messages.addMessage(receivedMsg)
+        })
+        setMessages(new ChatMessageMap(messages))
+      })
+  }
 
-    if (!talk) return
+  const cableReceived = (receivedMsg: ReceivedMsg) => {
+    if (!messages) return
+    const msg = new ChatMessageClass(
+      receivedMsg.id,
+      receivedMsg.profileId,
+      receivedMsg.speakerId,
+      receivedMsg.eventAbbr,
+      receivedMsg.roomId,
+      receivedMsg.roomType,
+      receivedMsg.body,
+      receivedMsg.messageType,
+      receivedMsg.replyTo,
+    )
+    messages.addMessage(msg)
+    setMessages(messages)
+  }
+
+  useEffect(() => {
+    if (!talk || !messages) return
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
-
-    fetchChatMessagesFromAPI(api)
+    fetchChatMessagesFromAPI()
     const wsUrl = actionCableUrl()
     const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
     if (cableApp) {
@@ -81,22 +95,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     cableApp.subscriptions.create(
       { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
       {
-        received(receivedMsg: ReceivedMsg) {
-          if (!messages) return
-          const msg = new ChatMessageClass(
-            receivedMsg.id,
-            receivedMsg.profileId,
-            receivedMsg.speakerId,
-            receivedMsg.eventAbbr,
-            receivedMsg.roomId,
-            receivedMsg.roomType,
-            receivedMsg.body,
-            receivedMsg.messageType,
-            receivedMsg.replyTo,
-          )
-          messages.addMessage(msg)
-          setMessages(new ChatMessageMap(messages))
-        },
+        received: cableReceived,
       },
     )
   }, [talk])
