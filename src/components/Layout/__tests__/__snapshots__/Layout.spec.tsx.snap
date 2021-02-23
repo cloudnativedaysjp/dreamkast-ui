@@ -18,6 +18,7 @@ exports[`Layout 1`] = `
         <button
           className="MuiButtonBase-root MuiButton-root MuiButton-text"
           disabled={false}
+          href=""
           onBlur={[Function]}
           onDragLeave={[Function]}
           onFocus={[Function]}
@@ -40,7 +41,7 @@ exports[`Layout 1`] = `
           <span
             className="MuiButton-label"
           >
-            Login
+            Logout
           </span>
         </button>
       </div>

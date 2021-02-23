@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import Head from 'next/head'
 import Button from '@material-ui/core/Button'
@@ -13,6 +13,14 @@ export const Layout: React.FC<Props> = ({
   children,
   title = 'This is the default title',
 }) => {
+  const [url, setUrl] = useState<string>('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUrl(`${window.location.href.replace('/cndo2021/ui', '/logout')}`)
+    }
+  }, [])
+
   return (
     <Styled.Container>
       <Head>
@@ -25,7 +33,9 @@ export const Layout: React.FC<Props> = ({
         <AppBar position="static">
           <Styled.Header>
             <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
-            <Button style={{ color: '#037f8c' }}>Login</Button>
+            <Button href={url} style={{ color: '#037f8c' }}>
+              Logout
+            </Button>
           </Styled.Header>
         </AppBar>
       </header>

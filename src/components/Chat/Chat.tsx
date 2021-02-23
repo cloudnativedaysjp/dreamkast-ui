@@ -24,6 +24,10 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     api
       .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
       .then((res) => {
+        if (typeof res.data !== 'object') {
+          // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
+          window.location.href = `${window.location.href.replace(/ui/g, '')}`
+        }
         setMessages(res.data)
       })
   }
