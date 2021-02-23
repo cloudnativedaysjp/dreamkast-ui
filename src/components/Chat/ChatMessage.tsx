@@ -2,6 +2,7 @@ import React from 'react'
 import * as Styled from './styled'
 import { ChatMessageMessageTypeEnum } from '../../client-axios/api'
 import { ChatMessageClass } from './index'
+import ReplyIcon from '@material-ui/icons/Reply'
 
 type Props = {
   chatMessage?: ChatMessageClass
@@ -17,7 +18,7 @@ const ChatMessage: React.FC<Props> = ({
   const isSpeakerMessage = !!chatMessage?.speakerId
 
   return (
-    <div onClick={onClickMessage} data-messageId={chatMessage?.id}>
+    <div>
       {selected ? (
         <Styled.ChatSelectedMessage
           isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
@@ -31,6 +32,12 @@ const ChatMessage: React.FC<Props> = ({
         >
           {isSpeakerMessage ? '[S] ' : ''}
           {chatMessage?.body}
+          <Styled.ReplyButton
+            data-messageId={chatMessage?.id}
+            onClick={onClickMessage}
+          >
+            <ReplyIcon fontSize="small" />
+          </Styled.ReplyButton>
         </Styled.ChatMessage>
       )}
       {chatMessage?.children?.map((msg) => {

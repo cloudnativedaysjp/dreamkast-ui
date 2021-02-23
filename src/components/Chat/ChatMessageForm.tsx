@@ -82,30 +82,43 @@ const ChatMessageForm: React.FC<Props> = ({
   }, [isSubmitSuccessful, submittedData, reset])
 
   return (
-    <Styled.ChatMessageForm onSubmit={handleSubmit(onSubmit)}>
-      {messageSelected && (
-        <div>
-          Reply To:{' '}
-          <Styled.CloseReplyButton onClick={onClickCloseButton}>
-            Close
-          </Styled.CloseReplyButton>
-        </div>
-      )}
-      {messageSelected && <p>{selectedMessage.body}</p>}
-      <textarea name="chatMessage" ref={register} />
-      <input type="submit" />
-      <br />
-      {!messageSelected && (
-        <div>
-          <input type="checkbox" name="isQuestion" ref={register} />
-          質問を送る
-          <br />
-        </div>
-      )}
-      <ReactButton reactEmoji="👍" roomId={roomId} />
-      <ReactButton reactEmoji="👏" roomId={roomId} />
-      <ReactButton reactEmoji="🎉" roomId={roomId} />
-    </Styled.ChatMessageForm>
+    <div>
+      <Styled.ReplyMessageInfo>
+        {messageSelected && (
+          <div>
+            Reply To:
+            <Styled.CloseReplyButton onClick={onClickCloseButton}>
+              Close
+            </Styled.CloseReplyButton>
+          </div>
+        )}
+        {messageSelected && (
+          <Styled.ChatMessage
+            isChat={
+              selectedMessage?.messageType == ChatMessageMessageTypeEnum.Chat
+            }
+          >
+            {selectedMessage?.body}
+          </Styled.ChatMessage>
+        )}
+      </Styled.ReplyMessageInfo>
+
+      <Styled.ChatMessageForm onSubmit={handleSubmit(onSubmit)}>
+        <textarea name="chatMessage" ref={register} />
+        <input type="submit" />
+        <br />
+        {!messageSelected && (
+          <div>
+            <input type="checkbox" name="isQuestion" ref={register} />
+            質問を送る
+            <br />
+          </div>
+        )}
+        <ReactButton reactEmoji="👍" roomId={roomId} />
+        <ReactButton reactEmoji="👏" roomId={roomId} />
+        <ReactButton reactEmoji="🎉" roomId={roomId} />
+      </Styled.ChatMessageForm>
+    </div>
   )
 }
 
