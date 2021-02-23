@@ -84,6 +84,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
 
   useEffect(() => {
     if (!talk || !messages) return
+    setSelectedMessage(initialChatMessage)
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     fetchChatMessagesFromAPI()
