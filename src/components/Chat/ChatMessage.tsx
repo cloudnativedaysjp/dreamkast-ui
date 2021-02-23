@@ -1,21 +1,21 @@
-import React from "react";
-import * as Styled from "./styled";
-import { ChatMessageMessageTypeEnum } from "../../client-axios/api";
-import { ChatMessageClass } from "./index";
-import ReplyIcon from "@material-ui/icons/Reply";
+import React from 'react'
+import * as Styled from './styled'
+import { ChatMessageMessageTypeEnum } from '../../client-axios/api'
+import { ChatMessageClass } from './index'
+import ReplyIcon from '@material-ui/icons/Reply'
 
 type Props = {
-  chatMessage?: ChatMessageClass;
-  selected: boolean;
-  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void;
-};
+  chatMessage?: ChatMessageClass
+  selected: boolean
+  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+}
 
 const ChatMessage: React.FC<Props> = ({
   chatMessage,
   selected,
   onClickMessage,
 }) => {
-  const isSpeakerMessage = !!chatMessage?.speakerId;
+  const isSpeakerMessage = !!chatMessage?.speakerId
 
   return (
     <div>
@@ -23,14 +23,14 @@ const ChatMessage: React.FC<Props> = ({
         <Styled.ChatSelectedMessage
           isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
         >
-          {isSpeakerMessage ? "[S] " : ""}
+          {isSpeakerMessage ? '[S] ' : ''}
           {chatMessage?.body}
         </Styled.ChatSelectedMessage>
       ) : (
         <Styled.ChatMessage
           isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
         >
-          {isSpeakerMessage ? "[S] " : ""}
+          {isSpeakerMessage ? '[S] ' : ''}
           {chatMessage?.body}
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
@@ -45,13 +45,13 @@ const ChatMessage: React.FC<Props> = ({
           <Styled.ChatReplyMessage
             isChat={msg.messageType == ChatMessageMessageTypeEnum.Chat}
           >
-            {isSpeakerMessage ? "[S] " : ""}
+            {isSpeakerMessage ? '[S] ' : ''}
             {msg.body}
           </Styled.ChatReplyMessage>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default ChatMessage;
+export default ChatMessage
