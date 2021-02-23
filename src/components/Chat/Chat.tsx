@@ -55,10 +55,11 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       .apiV1ChatMessagesGet('cndo2021', String(talk.id), 'talk')
       .then((res) => {
         if (!messages) setMessages(new ChatMessageMap())
+        const newMessages = new ChatMessageMap()
         res.data.forEach((receivedMsg) => {
-          messages.addMessage(receivedMsg)
+          newMessages.addMessage(receivedMsg)
         })
-        setMessages(new ChatMessageMap(messages))
+        setMessages(new ChatMessageMap(newMessages))
       })
   }
 
