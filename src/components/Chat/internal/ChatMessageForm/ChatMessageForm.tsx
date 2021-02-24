@@ -5,9 +5,9 @@ import {
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Configuration,
-} from '../../client-axios'
-import { ChatMessageClass } from './index'
-import ReactButton from './ReactButton'
+} from '../../../../client-axios'
+import { ChatMessageClass } from '../../../../util/chat'
+import { ReactButton } from './internal/ReactButton'
 
 type Props = {
   roomId?: number
@@ -44,7 +44,7 @@ export const ChatMessageRequest = (
   }
 }
 
-const ChatMessageForm: React.FC<Props> = ({
+export const ChatMessageForm: React.FC<Props> = ({
   roomId,
   selectedMessage,
   onClickCloseButton,
@@ -89,7 +89,7 @@ const ChatMessageForm: React.FC<Props> = ({
   }, [isSubmitSuccessful, submittedData, reset])
 
   return (
-    <div>
+    <Styled.Container>
       <Styled.ReplyMessageInfo>
         {messageSelected && (
           <div>
@@ -125,8 +125,6 @@ const ChatMessageForm: React.FC<Props> = ({
         <ReactButton reactEmoji="👏" roomId={roomId} />
         <ReactButton reactEmoji="🎉" roomId={roomId} />
       </Styled.ChatMessageForm>
-    </div>
+    </Styled.Container>
   )
 }
-
-export default ChatMessageForm

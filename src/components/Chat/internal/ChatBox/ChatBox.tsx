@@ -1,9 +1,9 @@
 import React from 'react'
 import * as Styled from './styled'
-import { ChatMessageMessageTypeEnum } from '../../client-axios'
+import { ChatMessageMessageTypeEnum } from '../../../../client-axios'
 import Grid from '@material-ui/core/Grid'
-import ChatMessage from './ChatMessage'
-import { ChatMessageClass, ChatMessageMap } from './index'
+import { ChatMessage } from './internal/ChatMessage'
+import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
 
 type Props = {
   messages: ChatMessageMap

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import * as Styled from './styled'
 import { Tab, Tabs } from '@material-ui/core'
 import {
   ChatMessageApi,
@@ -6,11 +7,11 @@ import {
   Talk,
   Configuration,
 } from '../../client-axios'
-import ChatMessageForm from './ChatMessageForm'
+import { ChatMessageForm } from './internal/ChatMessageForm'
 import ActionCable from 'actioncable'
-import { ChatMessageClass, ChatMessageMap } from './index'
+import { ChatMessageClass, ChatMessageMap } from '../../util/chat'
 import { TabContext, TabPanel } from '@material-ui/lab'
-import { ChatBox } from './ChatBox'
+import { ChatBox } from './internal/ChatBox'
 
 type Props = {
   talk?: Talk
@@ -135,7 +136,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   return (
-    <div>
+    <Styled.Container>
       <TabContext value={selectedTab}>
         <Tabs
           value={selectedTab}
@@ -177,6 +178,6 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           />
         </TabPanel>
       </TabContext>
-    </div>
+    </Styled.Container>
   )
 }

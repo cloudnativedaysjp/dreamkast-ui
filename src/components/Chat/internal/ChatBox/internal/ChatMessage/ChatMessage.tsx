@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Styled from './styled'
-import { ChatMessageMessageTypeEnum } from '../../client-axios/api'
-import { ChatMessageClass } from './index'
+import { ChatMessageMessageTypeEnum } from '../../../../../../client-axios/api'
+import { ChatMessageClass } from '../../../../../../util/chat'
 import ReplyIcon from '@material-ui/icons/Reply'
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
   onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
 }
 
-const ChatMessage: React.FC<Props> = ({
+export const ChatMessage: React.FC<Props> = ({
   chatMessage,
   selected,
   onClickMessage,
@@ -53,5 +53,3 @@ const ChatMessage: React.FC<Props> = ({
     </div>
   )
 }
-
-export default ChatMessage
