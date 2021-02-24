@@ -58,7 +58,10 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       .then((res) => {
         if (typeof res.data !== 'object') {
           // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
-          window.location.href = `${window.location.href.replace(/\/ui\//g, '')}`
+          window.location.href = `${window.location.href.replace(
+            /\/ui\//g,
+            '',
+          )}`
         }
         if (!messages) setMessages(new ChatMessageMap())
         messages.clear()
