@@ -5,7 +5,7 @@ import {
 } from '../../client-axios'
 
 export class ChatMessageMap extends Map<number, ChatMessageClass> {
-  addMessage = (msg: ChatMessageClass) => {
+  addMessage = (msg: ChatMessageClass): void => {
     if (!msg.id) return
 
     if (msg.replyTo) {

@@ -26,7 +26,14 @@ export const ChatMessageRequest = (
   roomType: string,
   body: string,
   replyTo: number | null,
-) => {
+): {
+  eventAbbr: string
+  roomId: number
+  roomType: string
+  body: string
+  messageType: ChatMessageMessageTypeEnum
+  replyTo: number | null
+} => {
   return {
     eventAbbr: eventAbbr,
     roomId: roomId,
