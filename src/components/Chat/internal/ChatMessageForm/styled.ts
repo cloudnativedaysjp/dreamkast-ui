@@ -13,12 +13,7 @@ export const ChatMessage = styled(Paper)<{ isChat: boolean }>`
   background-color: ${({ isChat }) => (isChat ? '#ffffff' : '#c8f2f7')};
   white-space: pre-wrap;
   overflow-y: hidden;
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-  }
+  word-break: break-word;
 `
 
 export const ReplyMessageInfo = styled.div`
