@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
-import { Tab, Tabs } from '@material-ui/core'
 import {
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
@@ -10,7 +9,7 @@ import {
 import { ChatMessageForm } from './internal/ChatMessageForm'
 import ActionCable from 'actioncable'
 import { ChatMessageClass, ChatMessageMap } from '../../util/chat'
-import { TabContext, TabPanel } from '@material-ui/lab'
+import { TabContext } from '@material-ui/lab'
 import { ChatBox } from './internal/ChatBox'
 
 type Props = {
@@ -50,27 +49,25 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       return `wss://${window.location.host}/cable`
     }
   }
-  const fetchChatMessagesFromAPI = () => {
+  const fetchChatMessagesFromAPI = async () => {
     const api = new ChatMessageApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    return api
-      .apiV1ChatMessagesGet('cndo2021', String(talk?.id), 'talk')
-      .then((res) => {
-        if (typeof res.data !== 'object') {
-          // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
-          window.location.href = `${window.location.href.replace(
-            /\/ui\//g,
-            '',
-          )}`
-        }
-        if (!messages) setMessages(new ChatMessageMap())
-        messages.clear()
-        res.data.forEach((receivedMsg) => {
-          messages.addMessage(receivedMsg)
-        })
-        setMessages(new ChatMessageMap(messages))
-      })
+    const { data } = await api.apiV1ChatMessagesGet(
+      'cndo2021',
+      String(talk?.id),
+      'talk',
+    )
+    if (typeof data !== 'object') {
+      // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
+      window.location.href = `${window.location.href.replace(/\/ui\//g, '')}`
+    }
+    if (!messages) setMessages(new ChatMessageMap())
+    messages.clear()
+    data.forEach((receivedMsg) => {
+      messages.addMessage(receivedMsg)
+    })
+    setMessages(new ChatMessageMap(messages))
   }
 
   const cableReceived = (receivedMsg: ReceivedMsg) => {
@@ -136,48 +133,44 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   }
 
   return (
-    <Styled.Container>
-      <TabContext value={selectedTab}>
-        <Tabs
-          value={selectedTab}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
-          <Tab label="Chat / QA" value="0" {...a11yProps(0)} />
-          <Tab label="QA Only" value="1" {...a11yProps(1)} />
-        </Tabs>
-
-        <TabPanel value="0">
-          <ChatBox
-            messages={messages}
-            messageTypes={[
-              ChatMessageMessageTypeEnum.Chat,
-              ChatMessageMessageTypeEnum.Qa,
-            ]}
-            selectedMessage={selectedMessage}
-            onClickMessage={onClickMessage}
-          />
-          <ChatMessageForm
-            roomId={talk?.id}
-            selectedMessage={selectedMessage}
-            onClickCloseButton={onClickCloseButton}
-          />
-        </TabPanel>
-
-        <TabPanel value="1">
-          <ChatBox
-            messages={messages}
-            messageTypes={[ChatMessageMessageTypeEnum.Qa]}
-            selectedMessage={selectedMessage}
-            onClickMessage={onClickMessage}
-          />
-          <ChatMessageForm
-            roomId={talk?.id}
-            selectedMessage={selectedMessage}
-            onClickCloseButton={onClickCloseButton}
-          />
-        </TabPanel>
-      </TabContext>
-    </Styled.Container>
+    <Styled.Outer>
+      <Styled.Container>
+        <TabContext value={selectedTab}>
+          <Styled.TabContainer
+            value={selectedTab}
+            onChange={handleChange}
+            textColor="secondary"
+            aria-label="simple tabs example"
+          >
+            <Styled.Tab label="Chat / QA" value="0" {...a11yProps(0)} />
+            <Styled.Tab label="QA Only" value="1" {...a11yProps(1)} />
+          </Styled.TabContainer>
+          <Styled.TabPanel value="0">
+            <ChatBox
+              messages={messages}
+              messageTypes={[
+                ChatMessageMessageTypeEnum.Chat,
+                ChatMessageMessageTypeEnum.Qa,
+              ]}
+              selectedMessage={selectedMessage}
+              onClickMessage={onClickMessage}
+            />
+          </Styled.TabPanel>
+          <Styled.TabPanel value="1">
+            <ChatBox
+              messages={messages}
+              messageTypes={[ChatMessageMessageTypeEnum.Qa]}
+              selectedMessage={selectedMessage}
+              onClickMessage={onClickMessage}
+            />
+          </Styled.TabPanel>
+        </TabContext>
+        <ChatMessageForm
+          roomId={talk?.id}
+          selectedMessage={selectedMessage}
+          onClickCloseButton={onClickCloseButton}
+        />
+      </Styled.Container>
+    </Styled.Outer>
   )
 }

@@ -30,7 +30,7 @@ export const Sponsors: React.FC = () => {
       <Styled.Container>
         <Styled.CNDOSlider {...settings}>
           {data.map((sponsor) => (
-            <Styled.Sponsor>
+            <Styled.Sponsor key={sponsor.id}>
               <a href={sponsor.url} target="_blank">
                 <Styled.SponsorImg src={sponsor.logo_url} />
               </a>

@@ -8,6 +8,8 @@ import {
 } from '../../../../client-axios'
 import { ChatMessageClass } from '../../../../util/chat'
 import { ReactButton } from './internal/ReactButton'
+import { Button, Checkbox, IconButton } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
 
 type Props = {
   roomId?: number
@@ -55,8 +57,11 @@ export const ChatMessageForm: React.FC<Props> = ({
     reset,
     formState: { isSubmitSuccessful },
   } = useForm<Inputs>()
+
   const [submittedData, setSubmittedData] = useState({})
   const messageSelected = !!selectedMessage.id
+  const isChat = selectedMessage?.messageType == ChatMessageMessageTypeEnum.Chat
+
   const createChatMessageRequest = (data: Inputs, roomId: number) => {
     const req = ChatMessageRequest(
       'cndo2021',
@@ -90,40 +95,50 @@ export const ChatMessageForm: React.FC<Props> = ({
 
   return (
     <Styled.Container>
-      <Styled.ReplyMessageInfo>
-        {messageSelected && (
-          <div>
+      {messageSelected && (
+        <Styled.ReplyMessageInfo>
+          <Styled.ReplyTitleContainer>
             Reply To:
-            <Styled.CloseReplyButton onClick={onClickCloseButton}>
-              Close
-            </Styled.CloseReplyButton>
-          </div>
-        )}
-        {messageSelected && (
-          <Styled.ChatMessage
-            isChat={
-              selectedMessage?.messageType == ChatMessageMessageTypeEnum.Chat
-            }
-          >
+            <IconButton
+              aria-label="close"
+              size="small"
+              onClick={onClickCloseButton}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Styled.ReplyTitleContainer>
+          <Styled.ChatMessage isChat={isChat}>
             {selectedMessage?.body}
           </Styled.ChatMessage>
-        )}
-      </Styled.ReplyMessageInfo>
-
+        </Styled.ReplyMessageInfo>
+      )}
       <Styled.ChatMessageForm onSubmit={handleSubmit(onSubmit)}>
-        <textarea name="chatMessage" ref={register} />
-        <input type="submit" />
-        <br />
+        <Styled.TextField
+          name="chatMessage"
+          color="secondary"
+          size="small"
+          inputRef={register}
+          multiline
+        />
         {!messageSelected && (
-          <div>
-            <input type="checkbox" name="isQuestion" ref={register} />
+          <Styled.QuestionChecker>
+            <Checkbox
+              color="secondary"
+              size="small"
+              name="isQuestion"
+              inputRef={register}
+            />
             質問を送る
-            <br />
-          </div>
+          </Styled.QuestionChecker>
         )}
-        <ReactButton reactEmoji="👍" roomId={roomId} />
-        <ReactButton reactEmoji="👏" roomId={roomId} />
-        <ReactButton reactEmoji="🎉" roomId={roomId} />
+        <Styled.ButtonContainer>
+          <ReactButton reactEmoji="👍" roomId={roomId} />
+          <ReactButton reactEmoji="👏" roomId={roomId} />
+          <ReactButton reactEmoji="🎉" roomId={roomId} />
+          <Button type="submit" variant="contained">
+            送信
+          </Button>
+        </Styled.ButtonContainer>
       </Styled.ChatMessageForm>
     </Styled.Container>
   )

@@ -16,37 +16,31 @@ export const ChatMessage: React.FC<Props> = ({
   onClickMessage,
 }) => {
   const isSpeakerMessage = !!chatMessage?.speakerId
+  const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
   return (
     <div>
-      {selected ? (
-        <Styled.ChatSelectedMessage
-          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
-        >
+      <Styled.ChatMessage isChat={isChat} isSelected={selected}>
+        <Styled.MessageBody>
           {isSpeakerMessage ? '[S] ' : ''}
           {chatMessage?.body}
-        </Styled.ChatSelectedMessage>
-      ) : (
-        <Styled.ChatMessage
-          isChat={chatMessage?.messageType == ChatMessageMessageTypeEnum.Chat}
-        >
-          {isSpeakerMessage ? '[S] ' : ''}
-          {chatMessage?.body}
+        </Styled.MessageBody>
+        {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
             onClick={onClickMessage}
           >
             <ReplyIcon fontSize="small" />
           </Styled.ReplyButton>
-        </Styled.ChatMessage>
-      )}
+        )}
+      </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
         return (
-          <Styled.ChatReplyMessage
-            isChat={msg.messageType == ChatMessageMessageTypeEnum.Chat}
-          >
-            {isSpeakerMessage ? '[S] ' : ''}
-            {msg.body}
+          <Styled.ChatReplyMessage key={msg.id} isChat={isChat}>
+            <Styled.MessageBody>
+              {isSpeakerMessage ? '[S] ' : ''}
+              {msg.body}
+            </Styled.MessageBody>
           </Styled.ChatReplyMessage>
         )
       })}

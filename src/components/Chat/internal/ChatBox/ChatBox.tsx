@@ -1,7 +1,6 @@
 import React from 'react'
 import * as Styled from './styled'
 import { ChatMessageMessageTypeEnum } from '../../../../client-axios'
-import Grid from '@material-ui/core/Grid'
 import { ChatMessage } from './internal/ChatMessage'
 import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
 
@@ -20,23 +19,20 @@ export const ChatBox: React.FC<Props> = ({
 }) => {
   return (
     <Styled.Box overflow="scroll">
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          {Array.from(messages)
-            .reverse()
-            .map(([, chatMessage]) => {
-              if (messageTypes.includes(chatMessage.messageType)) {
-                return (
-                  <ChatMessage
-                    chatMessage={chatMessage}
-                    selected={chatMessage.id == selectedMessage?.id}
-                    onClickMessage={onClickMessage}
-                  />
-                )
-              }
-            })}
-        </Grid>
-      </Grid>
+      {Array.from(messages)
+        .reverse()
+        .map(([, chatMessage]) => {
+          if (messageTypes.includes(chatMessage.messageType)) {
+            return (
+              <ChatMessage
+                key={chatMessage.id}
+                chatMessage={chatMessage}
+                selected={chatMessage.id == selectedMessage?.id}
+                onClickMessage={onClickMessage}
+              />
+            )
+          }
+        })}
     </Styled.Box>
   )
 }

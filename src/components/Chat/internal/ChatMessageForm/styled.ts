@@ -1,27 +1,52 @@
 import styled from 'styled-components'
-import { Paper, Button } from '@material-ui/core'
+import { Paper, TextField as MuiTextField } from '@material-ui/core'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  background-color: #fff;
+  border-top: 1px solid lightgray;
+  border-radius: 0 0 10px 10px;
+`
 
 export const ChatMessage = styled(Paper)<{ isChat: boolean }>`
   padding: 10px;
   margin: 5px;
-  background: ${({ isChat }) => (isChat ? '#ffffff' : '#f5f5f5')};
+  background-color: ${({ isChat }) => (isChat ? '#ffffff' : '#c8f2f7')};
   white-space: pre-wrap;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: lightgrey;
+  }
 `
 
 export const ReplyMessageInfo = styled.div`
-  background: rgba(255, 255, 255, 0.7);
   padding: 10px;
 `
 
-export const CloseReplyButton = styled(Button)`
-  cursor: pointer;
-  float: right;
-  width: 20px;
+export const ReplyTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `
 
-export const ChatMessageForm = styled.form`
-  background: rgba(255, 255, 255, 0.7);
-  padding: 5px;
+export const QuestionChecker = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ChatMessageForm = styled.form``
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+`
+
+export const TextField = styled(MuiTextField)`
+  width: 100%;
+  padding: 10px !important;
 `
