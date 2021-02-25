@@ -84,7 +84,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       receivedMsg.replyTo,
     )
     messages.addMessage(msg)
-    setMessages(messages)
+    setMessages(new ChatMessageMap(messages))
   }
 
   useEffect(() => {
