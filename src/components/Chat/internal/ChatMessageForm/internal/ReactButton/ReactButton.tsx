@@ -1,14 +1,14 @@
 import React from 'react'
 import * as Styled from './styled'
-import { ChatMessageApi, Configuration } from '../../client-axios'
-import { ChatMessageRequest } from './ChatMessageForm'
+import { ChatMessageApi, Configuration } from '../../../../../../client-axios'
+import { ChatMessageRequest } from '../../ChatMessageForm'
 
 type Props = {
   reactEmoji: string
   roomId?: number
 }
 
-const ReactButton: React.FC<Props> = ({ reactEmoji, roomId }) => {
+export const ReactButton: React.FC<Props> = ({ reactEmoji, roomId }) => {
   const onClick = () => {
     if (!roomId) return
     const api = new ChatMessageApi(
@@ -25,5 +25,3 @@ const ReactButton: React.FC<Props> = ({ reactEmoji, roomId }) => {
     </Styled.ReactButton>
   )
 }
-
-export default ReactButton
