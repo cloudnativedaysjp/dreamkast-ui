@@ -304,6 +304,18 @@ export interface Talk {
      * @memberof Talk
      */
     documentUrl?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Talk
+     */
+    conferenceDayId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Talk
+     */
+    conferenceDayDate?: string;
 }
 /**
  * 
@@ -753,10 +765,11 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {string} eventAbbr abbr of event (e.g. cndt2020)
          * @param {string} [trackId] ID of track
+         * @param {string} [conferenceDayIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksGet: async (eventAbbr: string, trackId?: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1TalksGet: async (eventAbbr: string, trackId?: string, conferenceDayIds?: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1TalksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/talks`;
@@ -777,6 +790,10 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (trackId !== undefined) {
                 localVarQueryParameter['trackId'] = trackId;
+            }
+
+            if (conferenceDayIds !== undefined) {
+                localVarQueryParameter['conferenceDayIds'] = conferenceDayIds;
             }
 
 
@@ -837,11 +854,12 @@ export const TalkApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} eventAbbr abbr of event (e.g. cndt2020)
          * @param {string} [trackId] ID of track
+         * @param {string} [conferenceDayIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TalksGet(eventAbbr: string, trackId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Talk>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksGet(eventAbbr, trackId, options);
+        async apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Talk>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksGet(eventAbbr, trackId, conferenceDayIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -868,11 +886,12 @@ export const TalkApiFactory = function (configuration?: Configuration, basePath?
          * 
          * @param {string} eventAbbr abbr of event (e.g. cndt2020)
          * @param {string} [trackId] ID of track
+         * @param {string} [conferenceDayIds] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksGet(eventAbbr: string, trackId?: string, options?: any): AxiosPromise<Array<Talk>> {
-            return localVarFp.apiV1TalksGet(eventAbbr, trackId, options).then((request) => request(axios, basePath));
+        apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: any): AxiosPromise<Array<Talk>> {
+            return localVarFp.apiV1TalksGet(eventAbbr, trackId, conferenceDayIds, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -897,12 +916,13 @@ export class TalkApi extends BaseAPI {
      * 
      * @param {string} eventAbbr abbr of event (e.g. cndt2020)
      * @param {string} [trackId] ID of track
+     * @param {string} [conferenceDayIds] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TalkApi
      */
-    public apiV1TalksGet(eventAbbr: string, trackId?: string, options?: any) {
-        return TalkApiFp(this.configuration).apiV1TalksGet(eventAbbr, trackId, options).then((request) => request(this.axios, this.basePath));
+    public apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: any) {
+        return TalkApiFp(this.configuration).apiV1TalksGet(eventAbbr, trackId, conferenceDayIds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
