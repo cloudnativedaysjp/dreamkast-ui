@@ -54,6 +54,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   }
 
   useEffect(() => {
+    if (!selectedTrack) return
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const wsUrl = actionCableUrl()
@@ -65,14 +66,14 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
-          if (!msg[selectedTrackId] && !selectedTalk) return
-          if (selectedTalk?.id != msg[selectedTrackId].id) {
-            setSelectedTalk(msg[selectedTrackId])
+          if (!msg[selectedTrack.id] && !selectedTalk) return
+          if (selectedTalk?.id != msg[selectedTrack.id].id) {
+            setSelectedTalk(msg[selectedTrack.id])
           }
         },
       },
     )
-  }, [selectedTrackId])
+  }, [selectedTrack])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
