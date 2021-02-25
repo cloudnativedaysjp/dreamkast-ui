@@ -243,7 +243,7 @@ export interface Talk {
      * @type {string}
      * @memberof Talk
      */
-    _abstract: string;
+    abstract: string;
     /**
      * array of speakers name
      * @type {Array<string>}
