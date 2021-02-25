@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import { Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { Sponsors } from '../Sponsors'
+import ActionCable from 'actioncable'
 
 type Props = {
   selectedTrackId: number
@@ -39,6 +40,35 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
   }, [talks])
+
+  const actionCableUrl = () => {
+    if (window.location.protocol == 'http:') {
+      return `ws://${window.location.host}/cable`
+    } else {
+      return `wss://${window.location.host}/cable`
+    }
+  }
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const actionCable = require('actioncable')
+    const wsUrl = actionCableUrl()
+    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
+    if (cableApp) {
+      cableApp.disconnect()
+    }
+    cableApp.subscriptions.create(
+      { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
+      {
+        received: (msg: { [trackId: number]: Talk }) => {
+          if (!msg[selectedTrackId] && !selectedTalk) return
+          if (selectedTalk?.id != msg[selectedTrackId].id) {
+            setSelectedTalk(msg[selectedTrackId])
+          }
+        },
+      },
+    )
+  }, [selectedTrackId])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
