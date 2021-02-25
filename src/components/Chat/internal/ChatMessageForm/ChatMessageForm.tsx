@@ -55,12 +55,14 @@ export const ChatMessageForm: React.FC<Props> = ({
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { isSubmitSuccessful },
   } = useForm<Inputs>()
 
   const [submittedData, setSubmittedData] = useState({})
   const messageSelected = !!selectedMessage.id
   const isChat = selectedMessage?.messageType == ChatMessageMessageTypeEnum.Chat
+  const watchChatMessage = watch('chatMessage')
 
   const createChatMessageRequest = (data: Inputs, roomId: number) => {
     const req = ChatMessageRequest(
@@ -135,7 +137,11 @@ export const ChatMessageForm: React.FC<Props> = ({
           <ReactButton reactEmoji="👍" roomId={roomId} />
           <ReactButton reactEmoji="👏" roomId={roomId} />
           <ReactButton reactEmoji="🎉" roomId={roomId} />
-          <Button type="submit" variant="contained">
+          <Button
+            type="submit"
+            disabled={!watchChatMessage}
+            variant="contained"
+          >
             送信
           </Button>
         </Styled.ButtonContainer>
