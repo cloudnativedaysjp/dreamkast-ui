@@ -6,6 +6,7 @@ export const ChatMessage = styled(Paper)<{
   isSelected?: boolean
 }>`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px;
   margin: 8px;
@@ -16,16 +17,9 @@ export const ChatMessage = styled(Paper)<{
 
 export const MessageBody = styled.div`
   display: flex;
+  word-break: break-word;
   align-items: center;
-  overflow-y: hidden;
-  height: 24px;
   width: 90%;
-  &::-webkit-scrollbar {
-    height: 4px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: lightgrey;
-  }
 `
 
 export const ChatReplyMessage = styled(ChatMessage)`
