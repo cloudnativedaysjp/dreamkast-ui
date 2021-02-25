@@ -61,6 +61,17 @@ docker-compose up -d
 
 You can access dreamkast and dreamkast-ui `http://localhost:8080/`
 
+## Generate Client from OpenAPI schema
+
+```
+$ docker run --rm -v (PWD):/local openapitools/openapi-generator-cli generate \
+      -g typescript-axios \
+      --reserved-words-mappings abstract=abstract \
+      -i ./local/schemas/swagger.yml \
+      -o ./local/src/client-axios
+
+```
+
 ## License
 
 MIT License 
