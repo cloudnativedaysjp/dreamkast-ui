@@ -14,6 +14,7 @@ type Props = {
 
 export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
+  const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
   const getTalks = useCallback(async () => {
@@ -33,21 +34,20 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
 
   const selectTalk = (talk: Talk) => {
     setSelectedTalk(talk)
+    setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
 
   useEffect(() => {
-    let onAirTalk = talks.find((talk) => talk.onAir)
-    if (!onAirTalk) {
-      // onAirがtrueのTalkがなければTrackに登録されたVideoIdと一致するTalkを渡す
-      onAirTalk = talks.find((talk) => talk.videoId === selectedTrack?.videoId)
-    }
-    setSelectedTalk(onAirTalk)
+    if (!talks.length) return
+    const onAirTalk = talks.find((talk) => talk.onAir)
+    setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
+    setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
   }, [talks])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <Player vimeoId={selectedTalk?.videoId} autoplay={true}></Player>
+        <Player vimeoId={videoId} autoplay={true}></Player>
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={3}>
