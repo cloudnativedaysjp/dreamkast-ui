@@ -3,7 +3,7 @@ import * as Styled from './styled'
 import { Talk } from '../../client-axios'
 
 type Props = {
-  selectedTrackId: number
+  selectedTrackId?: number
   selectedTalk?: Talk
   talks: Talk[]
   selectTalk: (talk: Talk) => void

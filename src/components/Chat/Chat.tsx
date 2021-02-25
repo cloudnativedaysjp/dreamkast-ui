@@ -95,9 +95,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     fetchChatMessagesFromAPI()
     const wsUrl = actionCableUrl()
     const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
-    if (cableApp) {
-      cableApp.disconnect()
-    }
+    if (cableApp) cableApp.disconnect()
     cableApp.subscriptions.create(
       { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
       {
