@@ -11,7 +11,7 @@ export const TalkInfo: React.FC<Props> = ({ selectedTalk }) => (
     <Styled.Container>
       <Styled.Title>{selectedTalk?.title}</Styled.Title>
       <h3>{selectedTalk?.speakers.join(' / ')}</h3>
-      <Styled.Content>{selectedTalk?._abstract}</Styled.Content>
+      <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
     </Styled.Container>
   </Styled.OuterContainer>
 )
