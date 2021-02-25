@@ -6,12 +6,12 @@ import { Track, TrackApi, Configuration } from '../client-axios'
 
 const IndexPage: React.FC = () => {
   // States
-  const [selectedTrackId, setSelectedTrackId] = useState<number>(0)
+  const [selectedTrack, setSelectedTrack] = useState<Track>()
   const [tracks, setTracks] = useState<Track[]>([])
 
   // Handlers
-  const selectTrack = (selectedId: number) => {
-    setSelectedTrackId(selectedId)
+  const selectTrack = (selectedTrack: Track) => {
+    setSelectedTrack(selectedTrack)
   }
 
   const getTracks = useCallback(async () => {
@@ -20,7 +20,7 @@ const IndexPage: React.FC = () => {
     )
     const { data } = await api.apiV1TracksGet('cndo2021')
     setTracks(data)
-    setSelectedTrackId(data[0].id)
+    setSelectedTrack(data[0])
   }, [])
 
   useEffect(() => {
@@ -31,10 +31,10 @@ const IndexPage: React.FC = () => {
     <Layout title="CloudNative Days 2021">
       <TrackSelector
         tracks={tracks}
-        selectedTrackId={selectedTrackId}
+        selectedTrack={selectedTrack}
         selectTrack={selectTrack}
       />
-      <TrackView selectedTrackId={selectedTrackId} />
+      <TrackView selectedTrack={selectedTrack} />
     </Layout>
   )
 }

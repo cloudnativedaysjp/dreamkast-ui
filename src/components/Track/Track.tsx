@@ -3,16 +3,16 @@ import { Player } from '../Player'
 import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import { Talk, TalkApi, Configuration } from '../../client-axios'
+import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { Sponsors } from '../Sponsors'
 
 type Props = {
-  selectedTrackId: number
+  selectedTrack?: Track
   propTalks?: Talk[]
 }
 
-export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
+export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
 
@@ -22,10 +22,10 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
     )
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
-      String(selectedTrackId),
+      String(selectedTrack?.id),
     )
     setTalks(data)
-  }, [selectedTrackId])
+  }, [selectedTrack])
 
   useEffect(() => {
     if (!propTalks) getTalks()
@@ -37,13 +37,20 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
 
   useEffect(() => {
     const onAirTalk = talks.find((talk) => talk.onAir)
-    setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
+    setSelectedTalk(onAirTalk)
   }, [talks])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <Player vimeoId={selectedTalk?.videoId} autoplay={false}></Player>
+        <Player
+          vimeoId={
+            selectedTalk?.videoId
+              ? selectedTalk.videoId
+              : selectedTrack?.videoId
+          }
+          autoplay={true}
+        ></Player>
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={3}>
@@ -55,7 +62,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrackId, propTalks }) => {
       <Grid item xs={12} md={3}>
         <TalkSelector
           selectedTalk={selectedTalk}
-          selectedTrackId={selectedTrackId}
+          selectedTrackId={selectedTrack?.id}
           talks={talks}
           selectTalk={selectTalk}
         />

@@ -4,28 +4,31 @@ import { Track } from '../../client-axios'
 
 type Props = {
   tracks: Track[]
-  selectedTrackId: number
-  selectTrack: (selectedId: number) => void
+  selectedTrack?: Track
+  selectTrack: (track: Track) => void
 }
 
 export const TrackSelector: React.FC<Props> = ({
   tracks,
-  selectedTrackId,
+  selectedTrack,
   selectTrack,
 }) => {
-  const [item, setItem] = useState(selectedTrackId)
+  const [item, setItem] = useState<number>(0)
 
   useEffect(() => {
-    setItem(selectedTrackId)
-  }, [selectedTrackId])
+    if (selectedTrack) setItem(selectedTrack.id)
+  }, [selectedTrack])
 
   const handleChange = (
     _event: React.MouseEvent<HTMLElement>,
     selectItem: number | null,
   ) => {
     if (selectItem !== null) {
-      setItem(selectItem)
-      selectTrack(selectItem as number)
+      const selectedTrack = tracks.find(
+        (track) => track.id === selectItem,
+      ) as Track
+      setItem(selectedTrack.id)
+      selectTrack(selectedTrack)
     }
   }
   return (
