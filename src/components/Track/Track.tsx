@@ -36,21 +36,18 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   }
 
   useEffect(() => {
-    const onAirTalk = talks.find((talk) => talk.onAir)
+    let onAirTalk = talks.find((talk) => talk.onAir)
+    if (!onAirTalk) {
+      // onAirがtrueのTalkがなければTrackに登録されたVideoIdと一致するTalkを渡す
+      onAirTalk = talks.find((talk) => talk.videoId === selectedTrack?.videoId)
+    }
     setSelectedTalk(onAirTalk)
   }, [talks])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <Player
-          vimeoId={
-            selectedTalk?.videoId
-              ? selectedTalk.videoId
-              : selectedTrack?.videoId
-          }
-          autoplay={true}
-        ></Player>
+        <Player vimeoId={selectedTalk?.videoId} autoplay={true}></Player>
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={3}>
