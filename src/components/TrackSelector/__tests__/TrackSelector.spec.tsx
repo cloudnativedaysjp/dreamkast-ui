@@ -7,7 +7,7 @@ test('TrackSelector', () => {
   const component = renderer.create(
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     <TrackSelector
-      selectedTrackId={1}
+      selectedTrack={Tracks[0]}
       tracks={Tracks}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       selectTrack={() => {}}
