@@ -32,7 +32,12 @@ export const Layout: React.FC<Props> = ({
       <header>
         <AppBar position="static">
           <Styled.Header>
-            <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
+            <a href="/cndo2021">
+              <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
+            </a>
+            <Styled.MenuButton href="/cndo2021/timetables">
+              Timetable
+            </Styled.MenuButton>
             <Button href={url} style={{ color: '#037f8c' }}>
               Logout
             </Button>

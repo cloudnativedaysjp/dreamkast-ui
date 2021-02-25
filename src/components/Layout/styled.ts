@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import Toolbar from '@material-ui/core/Toolbar'
+import { Button } from '@material-ui/core'
 
 export const Container = styled.div`
   background: rgba(255, 255, 255, 0.6);
@@ -40,4 +41,8 @@ export const FooterLink = styled.a`
   text-decoration: none;
   font-size: 14px;
   color: gray;
+`
+
+export const MenuButton = styled(Button)`
+  margin-left: auto;
 `

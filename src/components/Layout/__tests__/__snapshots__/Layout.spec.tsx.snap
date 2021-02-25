@@ -11,10 +11,37 @@ exports[`Layout 1`] = `
       <div
         className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz hcOYnX MuiToolbar-gutters"
       >
-        <img
-          className="sc-dlfnbm gQAXJw"
-          src="/cndo2021/ui/images/CNDO2021_horizontal.png"
-        />
+        <a
+          href="/cndo2021"
+        >
+          <img
+            className="sc-dlfnbm gQAXJw"
+            src="/cndo2021/ui/images/CNDO2021_horizontal.png"
+          />
+        </a>
+        <a
+          aria-disabled={false}
+          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-iBPRYJ fjKNPE"
+          href="/cndo2021/timetables"
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+        >
+          <span
+            className="MuiButton-label"
+          >
+            Timetable
+          </span>
+        </a>
         <button
           className="MuiButtonBase-root MuiButton-root MuiButton-text"
           disabled={false}
