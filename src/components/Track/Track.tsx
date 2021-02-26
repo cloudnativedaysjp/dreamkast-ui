@@ -68,7 +68,10 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       {
         received: (msg: { [trackId: number]: Talk }) => {
           if (!msg[selectedTrack.id] && !selectedTalk) return
-          if (selectedTalk?.id != msg[selectedTrack.id].id) {
+          if (
+            selectedTrack.id == msg[selectedTrack.id].trackId &&
+            selectedTalk?.id != msg[selectedTrack.id].id
+          ) {
             setSelectedTalk(msg[selectedTrack.id])
             setVideoId(msg[selectedTrack.id].videoId)
           }
