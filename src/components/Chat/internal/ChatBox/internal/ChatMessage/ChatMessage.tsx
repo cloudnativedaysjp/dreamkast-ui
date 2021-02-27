@@ -41,7 +41,7 @@ export const ChatMessage: React.FC<Props> = ({
   return (
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
-        {moment(chatMessage?.createdAt).format('YYYY-MM-DD HH:MM')}
+        {moment(chatMessage?.createdAt).format('HH:MM')}
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
