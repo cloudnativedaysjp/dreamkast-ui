@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
 import { ChatMessageClass } from '../../../../util/chat'
 import { ReactButton } from './internal/ReactButton'
-import { Button, Checkbox } from '@material-ui/core'
+import { Button, Input } from '@material-ui/core'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
@@ -11,9 +11,14 @@ type Props = {
   selectedMessage: ChatMessageClass
   onClickCloseButton: () => void
   onSendMessage: (data: MessageInputs) => void
+  onSendQuestion: (data: MessageInputs) => void
 }
 
-export const ChatMessageForm: React.FC<Props> = ({ roomId, onSendMessage }) => {
+export const ChatMessageForm: React.FC<Props> = ({
+  roomId,
+  onSendMessage,
+  onSendQuestion,
+}) => {
   const {
     register,
     handleSubmit,
@@ -32,7 +37,7 @@ export const ChatMessageForm: React.FC<Props> = ({ roomId, onSendMessage }) => {
 
   return (
     <Styled.Container>
-      <Styled.ChatMessageForm onSubmit={handleSubmit(onSendMessage)}>
+      <Styled.ChatMessageForm>
         <Styled.TextField
           name="chatMessage"
           color="secondary"
@@ -40,15 +45,7 @@ export const ChatMessageForm: React.FC<Props> = ({ roomId, onSendMessage }) => {
           inputRef={register}
           multiline
         />
-        <Styled.QuestionChecker>
-          <Checkbox
-            color="secondary"
-            size="small"
-            name="isQuestion"
-            inputRef={register}
-          />
-          質問を送る
-        </Styled.QuestionChecker>
+        <Input type="hidden" name="isQuestion" inputRef={register} />
         <Styled.ButtonContainer>
           <ReactButton reactEmoji="👍" roomId={roomId} />
           <ReactButton reactEmoji="👏" roomId={roomId} />
@@ -57,8 +54,17 @@ export const ChatMessageForm: React.FC<Props> = ({ roomId, onSendMessage }) => {
             type="submit"
             disabled={!watchChatMessage}
             variant="contained"
+            onClick={handleSubmit(onSendMessage)}
           >
             送信
+          </Button>
+          <Button
+            type="submit"
+            disabled={!watchChatMessage}
+            variant="contained"
+            onClick={handleSubmit(onSendQuestion)}
+          >
+            質問する
           </Button>
         </Styled.ButtonContainer>
       </Styled.ChatMessageForm>

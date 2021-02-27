@@ -145,6 +145,11 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedMessage(initialChatMessage)
   }
 
+  const onSendQuestion = (data: MessageInputs) => {
+    data.isQuestion = true
+    onSendReply(data)
+  }
+
   const onSendReply = (data: MessageInputs) => {
     if (!talk) return
     const api = new ChatMessageApi(
@@ -205,6 +210,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
           onSendMessage={onSendReply}
+          onSendQuestion={onSendQuestion}
         />
       </Styled.Container>
     </Styled.Outer>
