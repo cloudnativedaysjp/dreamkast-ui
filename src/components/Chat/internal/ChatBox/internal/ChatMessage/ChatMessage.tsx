@@ -9,6 +9,7 @@ import ReplyIcon from '@material-ui/icons/Reply'
 import moment from 'moment/moment'
 import { ChatReplyForm } from '../../../ChatReplyForm'
 import { MessageInputs } from '../../../ChatMessageRequest'
+import Linkify from 'linkifyjs/react'
 
 type Props = {
   talk?: Talk
@@ -52,7 +53,7 @@ export const ChatMessage: React.FC<Props> = ({
         )}
         <Styled.MessageBody>
           {isSpeakerMessage() ? '[スピーカー] ' : ''}
-          {chatMessage?.body}
+          <Linkify>{chatMessage?.body}</Linkify>
         </Styled.MessageBody>
       </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
