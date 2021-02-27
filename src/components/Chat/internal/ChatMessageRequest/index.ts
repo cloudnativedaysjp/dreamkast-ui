@@ -12,7 +12,7 @@ type ChatMessageRequestClass = {
   roomType: string
   body: string
   messageType: ChatMessageMessageTypeEnum
-  replyTo: number | null
+  replyTo: number | undefined
 }
 
 export const ChatMessageRequest = (
@@ -20,7 +20,7 @@ export const ChatMessageRequest = (
   roomId: number,
   roomType: string,
   body: string,
-  replyTo: number | null,
+  replyTo: number | undefined,
 ): ChatMessageRequestClass => {
   return {
     eventAbbr: eventAbbr,
@@ -38,7 +38,13 @@ export const CreateChatMessageRequest = (
   isQuestion: boolean,
   selectedMessage?: ChatMessageClass,
 ): ChatMessageRequestClass => {
-  const req = ChatMessageRequest('cndo2021', roomId, 'talk', chatMessage, null)
+  const req = ChatMessageRequest(
+    'cndo2021',
+    roomId,
+    'talk',
+    chatMessage,
+    undefined,
+  )
   if (selectedMessage && selectedMessage.id) {
     req.replyTo = selectedMessage.id
   }

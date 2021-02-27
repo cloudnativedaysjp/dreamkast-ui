@@ -4,6 +4,7 @@ import * as Styled from './styled'
 import { Button, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import { MessageInputs } from '../ChatMessageRequest'
+import { ReactionButton } from '../ReactionButton'
 
 type Props = {
   onClickCloseButton: () => void
@@ -39,6 +40,7 @@ export const ChatReplyForm: React.FC<Props> = ({
           <CloseIcon fontSize="small" />
         </IconButton>
         <Styled.ButtonContainer>
+          <ReactionButton reactEmoji="👍" onSendReply={onSendReply} />
           <Button
             type="submit"
             disabled={!watchChatMessage}

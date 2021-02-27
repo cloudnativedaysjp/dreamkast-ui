@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
 import { ChatMessageClass } from '../../../../util/chat'
-import { ReactButton } from './internal/ReactButton'
+import { ReactionButton } from '../ReactionButton'
 import { Button, Input } from '@material-ui/core'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
-  roomId?: number
   selectedMessage: ChatMessageClass
   onClickCloseButton: () => void
   onSendMessage: (data: MessageInputs) => void
@@ -15,7 +14,6 @@ type Props = {
 }
 
 export const ChatMessageForm: React.FC<Props> = ({
-  roomId,
   onSendMessage,
   onSendQuestion,
 }) => {
@@ -47,9 +45,9 @@ export const ChatMessageForm: React.FC<Props> = ({
         />
         <Input type="hidden" name="isQuestion" inputRef={register} />
         <Styled.ButtonContainer>
-          <ReactButton reactEmoji="👍" roomId={roomId} />
-          <ReactButton reactEmoji="👏" roomId={roomId} />
-          <ReactButton reactEmoji="🎉" roomId={roomId} />
+          <ReactionButton reactEmoji="👍" onSendReply={onSendMessage} />
+          <ReactionButton reactEmoji="👏" onSendReply={onSendMessage} />
+          <ReactionButton reactEmoji="🎉" onSendReply={onSendMessage} />
           <Button
             type="submit"
             disabled={!watchChatMessage}

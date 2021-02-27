@@ -206,7 +206,6 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           </Styled.TabPanel>
         </TabContext>
         <ChatMessageForm
-          roomId={talk?.id}
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
           onSendMessage={onSendReply}
