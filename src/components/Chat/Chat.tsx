@@ -125,7 +125,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       'aria-controls': `simple-tabpanel-${index}`,
     }
   }
-  const handleChange = (
+  const onTabSelected = (
     _event: React.ChangeEvent<Record<string, never>>,
     newValue: string,
   ) => {
@@ -167,7 +167,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
         <TabContext value={selectedTab}>
           <Styled.TabContainer
             value={selectedTab}
-            onChange={handleChange}
+            onChange={onTabSelected}
             textColor="secondary"
             aria-label="simple tabs example"
           >
