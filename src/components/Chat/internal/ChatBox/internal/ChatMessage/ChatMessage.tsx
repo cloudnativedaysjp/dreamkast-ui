@@ -34,10 +34,7 @@ export const ChatMessage: React.FC<Props> = ({
   return (
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
-        <Styled.MessageBody>
-          {isSpeakerMessage() ? '[スピーカー] ' : ''}
-          {chatMessage?.body}
-        </Styled.MessageBody>
+        {moment(chatMessage?.createdAt).format('YYYY-MM-DD HH:MM')}
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
@@ -46,6 +43,10 @@ export const ChatMessage: React.FC<Props> = ({
             <ReplyIcon fontSize="small" />
           </Styled.ReplyButton>
         )}
+        <Styled.MessageBody>
+          {isSpeakerMessage() ? '[スピーカー] ' : ''}
+          {chatMessage?.body}
+        </Styled.MessageBody>
       </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
         return (

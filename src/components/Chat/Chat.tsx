@@ -23,6 +23,7 @@ type ReceivedMsg = {
   eventAbbr: string
   roomId: number
   roomType: string
+  createdAt: string
   body: string
   messageType: ChatMessageMessageTypeEnum
   replyTo: number
@@ -80,6 +81,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       receivedMsg.eventAbbr,
       receivedMsg.roomId,
       receivedMsg.roomType,
+      receivedMsg.createdAt,
       receivedMsg.body,
       receivedMsg.messageType,
       receivedMsg.replyTo,

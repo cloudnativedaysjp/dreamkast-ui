@@ -30,6 +30,7 @@ export class ChatMessageClass implements ChatMessageInterface {
   eventAbbr: string
   roomId?: number
   roomType?: string
+  createdAt?: string
   body: string
   messageType: ChatMessageMessageTypeEnum
   replyTo?: number
@@ -42,6 +43,7 @@ export class ChatMessageClass implements ChatMessageInterface {
     eventAbbr: string,
     roomId: number,
     roomType: string,
+    createdAt: string,
     body: string,
     messageType: ChatMessageMessageTypeEnum,
     replyTo: number,
@@ -52,6 +54,7 @@ export class ChatMessageClass implements ChatMessageInterface {
     this.eventAbbr = eventAbbr
     this.roomId = roomId
     this.roomType = roomType
+    this.createdAt = createdAt
     this.body = body
     this.messageType = messageType
     this.replyTo = replyTo
