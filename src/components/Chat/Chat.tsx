@@ -132,7 +132,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedTab(newValue)
   }
 
-  const onClickMessage = (e: React.MouseEvent<HTMLInputElement>) => {
+  const onClickReplyButton = (e: React.MouseEvent<HTMLInputElement>) => {
     if (!messages || Object.keys(messages).length == 0) return
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
     if (!selectedMessageId) return
@@ -183,7 +183,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
                 ChatMessageMessageTypeEnum.Qa,
               ]}
               selectedMessage={selectedMessage}
-              onClickMessage={onClickMessage}
+              onClickReplyButton={onClickReplyButton}
               onSendReply={onSendReply}
               onClickCloseButton={onClickCloseButton}
             />
@@ -194,7 +194,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}
-              onClickMessage={onClickMessage}
+              onClickReplyButton={onClickReplyButton}
               onClickCloseButton={onClickCloseButton}
               onSendReply={onSendReply}
             />

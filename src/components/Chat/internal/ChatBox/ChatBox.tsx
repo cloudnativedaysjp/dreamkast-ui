@@ -10,7 +10,7 @@ type Props = {
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
   selectedMessage: ChatMessageClass
-  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
   onClickCloseButton: () => void
   onSendReply: (data: MessageInputs) => void
 }
@@ -21,7 +21,7 @@ export const ChatBox: React.FC<Props> = ({
   messageTypes,
   selectedMessage,
   onClickCloseButton,
-  onClickMessage,
+  onClickReplyButton,
   onSendReply,
 }) => {
   return (
@@ -36,7 +36,7 @@ export const ChatBox: React.FC<Props> = ({
                 key={chatMessage.id}
                 chatMessage={chatMessage}
                 selected={chatMessage.id == selectedMessage?.id}
-                onClickMessage={onClickMessage}
+                onClickReplyButton={onClickReplyButton}
                 onClickCloseButton={onClickCloseButton}
                 onSendReply={onSendReply}
               />

@@ -14,7 +14,7 @@ type Props = {
   talk?: Talk
   chatMessage?: ChatMessageClass
   selected: boolean
-  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
   onClickCloseButton: () => void
   onSendReply: (data: MessageInputs) => void
 }
@@ -23,7 +23,7 @@ export const ChatMessage: React.FC<Props> = ({
   talk,
   chatMessage,
   selected,
-  onClickMessage,
+  onClickReplyButton,
   onClickCloseButton,
   onSendReply,
 }) => {
@@ -45,7 +45,7 @@ export const ChatMessage: React.FC<Props> = ({
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
-            onClick={onClickMessage}
+            onClick={onClickReplyButton}
           >
             <ReplyIcon fontSize="small" />
           </Styled.ReplyButton>
