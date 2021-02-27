@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Styled from './styled'
 import { ChatMessageApi, Configuration } from '../../../../../../client-axios'
-import { ChatMessageRequest } from '../../ChatMessageForm'
+import { ChatMessageRequest } from '../../../ChatMessageRequest'
 
 type Props = {
   reactEmoji: string

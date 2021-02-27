@@ -11,6 +11,10 @@ import ActionCable from 'actioncable'
 import { ChatMessageClass, ChatMessageMap } from '../../util/chat'
 import { TabContext } from '@material-ui/lab'
 import { ChatBox } from './internal/ChatBox'
+import {
+  CreateChatMessageRequest,
+  MessageInputs,
+} from './internal/ChatMessageRequest'
 
 type Props = {
   talk?: Talk
@@ -141,6 +145,22 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedMessage(initialChatMessage)
   }
 
+  const onSendReply = (data: MessageInputs) => {
+    if (!talk) return
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+    api.apiV1ChatMessagesPost(
+      CreateChatMessageRequest(
+        data.chatMessage,
+        talk.id,
+        data.isQuestion,
+        selectedMessage,
+      ),
+    )
+    setSelectedMessage(initialChatMessage)
+  }
+
   return (
     <Styled.Outer>
       <Styled.Container>
@@ -164,6 +184,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               ]}
               selectedMessage={selectedMessage}
               onClickMessage={onClickMessage}
+              onSendReply={onSendReply}
+              onClickCloseButton={onClickCloseButton}
             />
           </Styled.TabPanel>
           <Styled.TabPanel value="1">
@@ -173,6 +195,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}
               onClickMessage={onClickMessage}
+              onClickCloseButton={onClickCloseButton}
+              onSendReply={onSendReply}
             />
           </Styled.TabPanel>
         </TabContext>
@@ -180,6 +204,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           roomId={talk?.id}
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
+          onSendMessage={onSendReply}
         />
       </Styled.Container>
     </Styled.Outer>

@@ -1,1 +1,1 @@
-export { ChatMessageForm, ChatMessageRequest } from './ChatMessageForm'
+export { ChatMessageForm } from './ChatMessageForm'

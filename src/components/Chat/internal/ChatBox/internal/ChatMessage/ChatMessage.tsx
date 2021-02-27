@@ -6,12 +6,17 @@ import {
 } from '../../../../../../client-axios/api'
 import { ChatMessageClass } from '../../../../../../util/chat'
 import ReplyIcon from '@material-ui/icons/Reply'
+import moment from 'moment/moment'
+import { ChatReplyForm } from '../../../ChatReplyForm'
+import { MessageInputs } from '../../../ChatMessageRequest'
 
 type Props = {
   talk?: Talk
   chatMessage?: ChatMessageClass
   selected: boolean
   onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickCloseButton: () => void
+  onSendReply: (data: MessageInputs) => void
 }
 
 export const ChatMessage: React.FC<Props> = ({
@@ -19,6 +24,8 @@ export const ChatMessage: React.FC<Props> = ({
   chatMessage,
   selected,
   onClickMessage,
+  onClickCloseButton,
+  onSendReply,
 }) => {
   const isSpeakerMessage = () => {
     const speakerIds = talk?.speakers.map((speaker) => {
@@ -58,6 +65,12 @@ export const ChatMessage: React.FC<Props> = ({
           </Styled.ChatReplyMessage>
         )
       })}
+      {selected && (
+        <ChatReplyForm
+          onClickCloseButton={onClickCloseButton}
+          onSendReply={onSendReply}
+        />
+      )}
     </div>
   )
 }
