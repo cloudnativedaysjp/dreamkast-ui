@@ -32,12 +32,16 @@ export const Layout: React.FC<Props> = ({
       <header>
         <AppBar position="static">
           <Styled.Header>
-            <a href="/cndo2021">
+            <a href="/cndo2021" target="_blank" rel="noopener noreferrer">
               <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
             </a>
-            <Styled.MenuButton href="/cndo2021/timetables">
-              Timetable
-            </Styled.MenuButton>
+            <Styled.MenuLink
+              href="/cndo2021/timetables"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button style={{ color: '#037f8c' }}>Timetable</Button>
+            </Styled.MenuLink>
             <Button href={url} style={{ color: '#037f8c' }}>
               Logout
             </Button>
@@ -46,10 +50,18 @@ export const Layout: React.FC<Props> = ({
       </header>
       <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>
       <Styled.Footer>
-        <Styled.FooterLink href="https://event.cloudnativedays.jp/cndo2021/privacy">
+        <Styled.FooterLink
+          href="https://event.cloudnativedays.jp/cndo2021/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           プライバシーポリシー
         </Styled.FooterLink>
-        <Styled.FooterLink href="https://event.cloudnativedays.jp/cndo2021/coc">
+        <Styled.FooterLink
+          href="https://event.cloudnativedays.jp/cndo2021/coc"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           行動規範
         </Styled.FooterLink>
         <Styled.FooterText>
