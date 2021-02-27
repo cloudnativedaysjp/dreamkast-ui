@@ -154,6 +154,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           </Styled.TabContainer>
           <Styled.TabPanel value="0">
             <ChatBox
+              talk={talk}
               messages={messages}
               messageTypes={[
                 ChatMessageMessageTypeEnum.Chat,
@@ -165,6 +166,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           </Styled.TabPanel>
           <Styled.TabPanel value="1">
             <ChatBox
+              talk={talk}
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}

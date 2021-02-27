@@ -1,10 +1,11 @@
 import React from 'react'
 import * as Styled from './styled'
-import { ChatMessageMessageTypeEnum } from '../../../../client-axios'
+import { ChatMessageMessageTypeEnum, Talk } from '../../../../client-axios'
 import { ChatMessage } from './internal/ChatMessage'
 import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
 
 type Props = {
+  talk?: Talk
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
   selectedMessage: ChatMessageClass
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export const ChatBox: React.FC<Props> = ({
+  talk,
   messages,
   messageTypes,
   selectedMessage,
@@ -25,6 +27,7 @@ export const ChatBox: React.FC<Props> = ({
           if (messageTypes.includes(chatMessage.messageType)) {
             return (
               <ChatMessage
+                talk={talk}
                 key={chatMessage.id}
                 chatMessage={chatMessage}
                 selected={chatMessage.id == selectedMessage?.id}
