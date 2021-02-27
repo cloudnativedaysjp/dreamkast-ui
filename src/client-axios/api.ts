@@ -246,10 +246,10 @@ export interface Talk {
     abstract: string;
     /**
      * array of speakers name
-     * @type {Array<string>}
+     * @type {Array<TalkSpeakers>}
      * @memberof Talk
      */
-    speakers: Array<string>;
+    speakers: Array<TalkSpeakers>;
     /**
      * 
      * @type {number}
@@ -316,6 +316,25 @@ export interface Talk {
      * @memberof Talk
      */
     conferenceDayDate?: string;
+}
+/**
+ * 
+ * @export
+ * @interface TalkSpeakers
+ */
+export interface TalkSpeakers {
+    /**
+     * 
+     * @type {number}
+     * @memberof TalkSpeakers
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TalkSpeakers
+     */
+    name?: string;
 }
 /**
  * 
