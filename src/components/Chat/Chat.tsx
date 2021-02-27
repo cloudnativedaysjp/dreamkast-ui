@@ -42,6 +42,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
   const [selectedMessage, setSelectedMessage] = useState<ChatMessageClass>(
     initialChatMessage,
   )
+  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
       return `ws://${window.location.host}/cable`
@@ -89,16 +90,24 @@ export const Chat: React.FC<Props> = ({ talk }) => {
 
   useEffect(() => {
     if (!talk || !messages) return
+    if (chatCable) chatCable.disconnect()
+
     setSelectedMessage(initialChatMessage)
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     fetchChatMessagesFromAPI()
     const wsUrl = actionCableUrl()
-    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
-    if (cableApp) cableApp.disconnect()
-    cableApp.subscriptions.create(
+    const cable = actionCable.createConsumer(wsUrl)
+    setChatCable(cable)
+    cable.subscriptions.create(
       { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
       {
+        connected: () => {
+          console.log('connected: ' + talk.id)
+        },
+        disconnected: () => {
+          console.log('disconnected: ' + talk.id)
+        },
         received: cableReceived,
       },
     )
