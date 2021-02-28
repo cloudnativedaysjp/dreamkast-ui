@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { Talk } from '../../client-axios'
 import dayjs from 'dayjs'
-import 'dayjs/plugin/utc'
-import 'dayjs/plugin/timezone'
 
 type Props = {
   selectedTrackId?: number
