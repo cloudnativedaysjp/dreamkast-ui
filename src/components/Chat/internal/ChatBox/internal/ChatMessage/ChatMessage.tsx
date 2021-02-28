@@ -28,14 +28,12 @@ export const ChatMessage: React.FC<Props> = ({
   onClickCloseButton,
   onSendReply,
 }) => {
-  const isSpeakerMessage = () => {
+  const isSpeakerMessage = (msg?: ChatMessageClass) => {
     const speakerIds = talk?.speakers.map((speaker) => {
       return speaker.id
     })
-    if (!speakerIds) return false
-    return (
-      !!chatMessage?.speakerId && speakerIds.includes(chatMessage.speakerId)
-    )
+    if (!speakerIds || !msg) return false
+    return !!msg?.speakerId && speakerIds.includes(msg.speakerId)
   }
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
@@ -43,6 +41,10 @@ export const ChatMessage: React.FC<Props> = ({
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
         {moment(chatMessage?.createdAt).format('HH:MM')}
+        <Styled.MessageBody>
+          {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
+          <Linkify>{chatMessage?.body}</Linkify>
+        </Styled.MessageBody>
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
@@ -51,16 +53,12 @@ export const ChatMessage: React.FC<Props> = ({
             <ReplyIcon fontSize="small" />
           </Styled.ReplyButton>
         )}
-        <Styled.MessageBody>
-          {isSpeakerMessage() ? '[スピーカー] ' : ''}
-          <Linkify>{chatMessage?.body}</Linkify>
-        </Styled.MessageBody>
       </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
         return (
           <Styled.ChatReplyMessage key={msg.id} isChat={isChat}>
             <Styled.MessageBody>
-              {isSpeakerMessage() ? '[スピーカー] ' : ''}
+              {isSpeakerMessage(msg) ? '[スピーカー] ' : ''}
               {msg.body}
             </Styled.MessageBody>
           </Styled.ChatReplyMessage>
