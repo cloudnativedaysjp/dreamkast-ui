@@ -25,14 +25,26 @@ export const TalkSelector: React.FC<Props> = ({
   const [talksWithAvailableState, setTalksWithAvailableState] = useState<
     TalkWithAvailable[]
   >([])
+  const [now, setNow] = useState<number>(dayjs().unix())
+  const [id, setId] = useState<number>()
+
   useEffect(() => {
-    const now = dayjs().unix()
+    if (!process.browser) return
+    setId(
+      window.setInterval(() => {
+        setNow(dayjs().unix())
+      }, 1000),
+    )
+    return window.clearInterval(id)
+  }, [])
+
+  useEffect(() => {
     setTalksWithAvailableState(
       talks.map((talk) => {
         return { ...talk, available: now - dayjs(talk.startTime).unix() >= 0 }
       }),
     )
-  }, [talks])
+  }, [talks, now])
 
   return (
     <Styled.Container>
