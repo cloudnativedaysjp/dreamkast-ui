@@ -20,14 +20,12 @@ export const ChatMessage: React.FC<Props> = ({
   selected,
   onClickMessage,
 }) => {
-  const isSpeakerMessage = () => {
+  const isSpeakerMessage = (msg?: ChatMessageClass) => {
     const speakerIds = talk?.speakers.map((speaker) => {
       return speaker.id
     })
-    if (!speakerIds) return false
-    return (
-      !!chatMessage?.speakerId && speakerIds.includes(chatMessage.speakerId)
-    )
+    if (!speakerIds || !msg) return false
+    return !!msg?.speakerId && speakerIds.includes(msg.speakerId)
   }
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
@@ -35,7 +33,7 @@ export const ChatMessage: React.FC<Props> = ({
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
         <Styled.MessageBody>
-          {isSpeakerMessage() ? '[スピーカー] ' : ''}
+          {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
           {chatMessage?.body}
         </Styled.MessageBody>
         {!selected && (
@@ -51,7 +49,7 @@ export const ChatMessage: React.FC<Props> = ({
         return (
           <Styled.ChatReplyMessage key={msg.id} isChat={isChat}>
             <Styled.MessageBody>
-              {isSpeakerMessage() ? '[スピーカー] ' : ''}
+              {isSpeakerMessage(msg) ? '[スピーカー] ' : ''}
               {msg.body}
             </Styled.MessageBody>
           </Styled.ChatReplyMessage>
