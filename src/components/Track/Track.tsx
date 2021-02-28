@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import * as Styled from './styled'
 import { Player } from '../Player'
 import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
@@ -8,6 +7,7 @@ import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
+import * as Styled from './styled'
 
 type Props = {
   selectedTrack?: Track
@@ -80,7 +80,6 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       },
     )
   }, [selectedTrack])
-
   const twitterURL = (trackName?: string) => {
     const base =
       'http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021'
@@ -93,6 +92,12 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       <Grid item xs={12} md={8}>
         <Player vimeoId={videoId} autoplay={true}></Player>
         <Sponsors />
+      </Grid>
+      <Grid item xs={12} md={3}>
+        <Chat talk={selectedTalk} />
+      </Grid>
+      <Grid item xs={10} md={8}>
+        <TalkInfo selectedTalk={selectedTalk} />
         <Styled.ShareButton>
           <a href="https://discord.gg/bvuTMNQ" target="_blank">
             Ask the speaker
@@ -111,12 +116,6 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
             #CNDT2020_{selectedTrack?.name}
           </a>
         </Styled.ShareButton>
-      </Grid>
-      <Grid item xs={12} md={3}>
-        <Chat talk={selectedTalk} />
-      </Grid>
-      <Grid item xs={10} md={8}>
-        <TalkInfo selectedTalk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={3}>
         <TalkSelector

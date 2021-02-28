@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 
 export const ShareButton = styled(Button)`
-  margin: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
   width: 20%;
   height: 50px;
   border: none !important;
