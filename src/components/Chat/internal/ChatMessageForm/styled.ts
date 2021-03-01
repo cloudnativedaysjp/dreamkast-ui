@@ -5,6 +5,7 @@ export const Container = styled.div`
   background-color: #fff;
   border-top: 1px solid lightgray;
   border-radius: 0 0 10px 10px;
+  min-height: 20px;
 `
 
 export const ChatMessage = styled(Paper)<{ isChat: boolean }>`
