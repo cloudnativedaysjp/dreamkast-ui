@@ -399,6 +399,7 @@ components:
           type: string
         createdAt:
           type: string
+          format: date-time
         messageType:
           type: string
           enum: [chat, qa]

@@ -11,6 +11,10 @@ import ActionCable from 'actioncable'
 import { ChatMessageClass, ChatMessageMap } from '../../util/chat'
 import { TabContext } from '@material-ui/lab'
 import { ChatBox } from './internal/ChatBox'
+import {
+  CreateChatMessageRequest,
+  MessageInputs,
+} from './internal/ChatMessageRequest'
 
 type Props = {
   talk?: Talk
@@ -23,6 +27,7 @@ type ReceivedMsg = {
   eventAbbr: string
   roomId: number
   roomType: string
+  createdAt: string
   body: string
   messageType: ChatMessageMessageTypeEnum
   replyTo: number
@@ -80,6 +85,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       receivedMsg.eventAbbr,
       receivedMsg.roomId,
       receivedMsg.roomType,
+      receivedMsg.createdAt,
       receivedMsg.body,
       receivedMsg.messageType,
       receivedMsg.replyTo,
@@ -119,14 +125,14 @@ export const Chat: React.FC<Props> = ({ talk }) => {
       'aria-controls': `simple-tabpanel-${index}`,
     }
   }
-  const handleChange = (
+  const onTabSelected = (
     _event: React.ChangeEvent<Record<string, never>>,
     newValue: string,
   ) => {
     setSelectedTab(newValue)
   }
 
-  const onClickMessage = (e: React.MouseEvent<HTMLInputElement>) => {
+  const onClickReplyButton = (e: React.MouseEvent<HTMLInputElement>) => {
     if (!messages || Object.keys(messages).length == 0) return
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
     if (!selectedMessageId) return
@@ -139,13 +145,34 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedMessage(initialChatMessage)
   }
 
+  const onSendQuestion = (data: MessageInputs) => {
+    data.isQuestion = true
+    onSendReply(data)
+  }
+
+  const onSendReply = (data: MessageInputs) => {
+    if (!talk) return
+    const api = new ChatMessageApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+    api.apiV1ChatMessagesPost(
+      CreateChatMessageRequest(
+        data.chatMessage,
+        talk.id,
+        data.isQuestion,
+        selectedMessage,
+      ),
+    )
+    setSelectedMessage(initialChatMessage)
+  }
+
   return (
     <Styled.Outer>
       <Styled.Container>
         <TabContext value={selectedTab}>
           <Styled.TabContainer
             value={selectedTab}
-            onChange={handleChange}
+            onChange={onTabSelected}
             textColor="secondary"
             aria-label="simple tabs example"
           >
@@ -161,7 +188,9 @@ export const Chat: React.FC<Props> = ({ talk }) => {
                 ChatMessageMessageTypeEnum.Qa,
               ]}
               selectedMessage={selectedMessage}
-              onClickMessage={onClickMessage}
+              onClickReplyButton={onClickReplyButton}
+              onSendReply={onSendReply}
+              onClickCloseButton={onClickCloseButton}
             />
           </Styled.TabPanel>
           <Styled.TabPanel value="1">
@@ -170,14 +199,17 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}
-              onClickMessage={onClickMessage}
+              onClickReplyButton={onClickReplyButton}
+              onClickCloseButton={onClickCloseButton}
+              onSendReply={onSendReply}
             />
           </Styled.TabPanel>
         </TabContext>
         <ChatMessageForm
-          roomId={talk?.id}
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
+          onSendMessage={onSendReply}
+          onSendQuestion={onSendQuestion}
         />
       </Styled.Container>
     </Styled.Outer>

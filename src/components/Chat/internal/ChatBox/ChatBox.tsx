@@ -3,13 +3,16 @@ import * as Styled from './styled'
 import { ChatMessageMessageTypeEnum, Talk } from '../../../../client-axios'
 import { ChatMessage } from './internal/ChatMessage'
 import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
+import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
   talk?: Talk
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
   selectedMessage: ChatMessageClass
-  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickCloseButton: () => void
+  onSendReply: (data: MessageInputs) => void
 }
 
 export const ChatBox: React.FC<Props> = ({
@@ -17,7 +20,9 @@ export const ChatBox: React.FC<Props> = ({
   messages,
   messageTypes,
   selectedMessage,
-  onClickMessage,
+  onClickCloseButton,
+  onClickReplyButton,
+  onSendReply,
 }) => {
   return (
     <Styled.Box overflow="scroll">
@@ -31,7 +36,9 @@ export const ChatBox: React.FC<Props> = ({
                 key={chatMessage.id}
                 chatMessage={chatMessage}
                 selected={chatMessage.id == selectedMessage?.id}
-                onClickMessage={onClickMessage}
+                onClickReplyButton={onClickReplyButton}
+                onClickCloseButton={onClickCloseButton}
+                onSendReply={onSendReply}
               />
             )
           }
