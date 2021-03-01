@@ -8,6 +8,7 @@ import {
 } from '../../client-axios'
 import { ChatMessageForm } from './internal/ChatMessageForm'
 import ActionCable from 'actioncable'
+import dayjs from 'dayjs'
 import { ChatMessageClass, ChatMessageMap } from '../../util/chat'
 import { TabContext } from '@material-ui/lab'
 import { ChatBox } from './internal/ChatBox'
@@ -48,6 +49,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     initialChatMessage,
   )
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+
+  const isArchive = dayjs().unix() - dayjs(talk?.endTime).unix() >= 0
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
       return `ws://${window.location.host}/cable`
@@ -206,6 +209,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           </Styled.TabPanel>
         </TabContext>
         <ChatMessageForm
+          isArchive={isArchive}
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
           onSendMessage={onSendReply}

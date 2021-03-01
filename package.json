@@ -21,6 +21,7 @@
         "@types/moment": "^2.13.0",
         "actioncable": "^5.2.4-5",
         "axios": "^0.21.1",
+        "dayjs": "^1.10.4",
         "linkifyjs": "^2.1.9",
         "moment": "^2.29.1",
         "next": "latest",
