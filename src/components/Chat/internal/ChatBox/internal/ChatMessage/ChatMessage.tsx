@@ -6,19 +6,32 @@ import {
 } from '../../../../../../client-axios/api'
 import { ChatMessageClass } from '../../../../../../util/chat'
 import ReplyIcon from '@material-ui/icons/Reply'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import { ChatReplyForm } from '../../../ChatReplyForm'
+import { MessageInputs } from '../../../ChatMessageRequest'
+import Linkify from 'linkifyjs/react'
+
+dayjs.extend(timezone)
+dayjs.extend(utc)
 
 type Props = {
   talk?: Talk
   chatMessage?: ChatMessageClass
   selected: boolean
-  onClickMessage: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
+  onClickCloseButton: () => void
+  onSendReply: (data: MessageInputs) => void
 }
 
 export const ChatMessage: React.FC<Props> = ({
   talk,
   chatMessage,
   selected,
-  onClickMessage,
+  onClickReplyButton,
+  onClickCloseButton,
+  onSendReply,
 }) => {
   const isSpeakerMessage = (msg?: ChatMessageClass) => {
     const speakerIds = talk?.speakers.map((speaker) => {
@@ -32,18 +45,19 @@ export const ChatMessage: React.FC<Props> = ({
   return (
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
-        <Styled.MessageBody>
-          {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
-          {chatMessage?.body}
-        </Styled.MessageBody>
+        {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
-            onClick={onClickMessage}
+            onClick={onClickReplyButton}
           >
             <ReplyIcon fontSize="small" />
           </Styled.ReplyButton>
         )}
+        <Styled.MessageBody>
+          {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
+          <Linkify>{chatMessage?.body}</Linkify>
+        </Styled.MessageBody>
       </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
         return (
@@ -55,6 +69,12 @@ export const ChatMessage: React.FC<Props> = ({
           </Styled.ChatReplyMessage>
         )
       })}
+      {selected && (
+        <ChatReplyForm
+          onClickCloseButton={onClickCloseButton}
+          onSendReply={onSendReply}
+        />
+      )}
     </div>
   )
 }
