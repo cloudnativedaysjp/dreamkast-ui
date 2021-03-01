@@ -18,7 +18,9 @@ export const HeaderImg = styled.img`
   height: 50px;
 `
 
-export const ChildrenContainer = styled.div``
+export const ChildrenContainer = styled.div`
+  padding-bottom: 22px;
+`
 
 export const Footer = styled.footer`
   grid-row-start: 2;
