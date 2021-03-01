@@ -1,8 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
-import { Button, IconButton } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
+import { Button } from '@material-ui/core'
 import { MessageInputs } from '../ChatMessageRequest'
 import { ReactionButton } from '../ReactionButton'
 
@@ -32,22 +31,25 @@ export const ChatReplyForm: React.FC<Props> = ({
           inputRef={register}
           multiline
         />
-        <IconButton
-          aria-label="close"
-          size="small"
-          onClick={onClickCloseButton}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
         <Styled.ButtonContainer>
           <ReactionButton reactEmoji="👍" onSendReply={onSendReply} />
-          <Button
-            type="submit"
-            disabled={!watchChatMessage}
-            variant="contained"
-          >
-            送信
-          </Button>
+          <Styled.ButtonGroupContainer>
+            <Button
+              type="submit"
+              color="primary"
+              onClick={onClickCloseButton}
+              variant="contained"
+            >
+              取消
+            </Button>
+            <Button
+              type="submit"
+              disabled={!watchChatMessage}
+              variant="contained"
+            >
+              送信
+            </Button>
+          </Styled.ButtonGroupContainer>
         </Styled.ButtonContainer>
       </Styled.ChatReplyForm>
     </Styled.Paper>

@@ -11,12 +11,18 @@ export const ChatReplyForm = styled.form``
 
 export const TextField = styled(MuiTextField)`
   width: 100%;
-  padding: 10px !important;
+  padding: 4px !important;
+`
+
+export const ButtonGroupContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 135px;
 `
 
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 4px;
   width: 100%;
 `
