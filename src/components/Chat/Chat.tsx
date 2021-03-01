@@ -49,8 +49,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     initialChatMessage,
   )
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
-
-  const isArchive = dayjs().unix() - dayjs(talk?.endTime).unix() >= 0
+  // 発表時間の幅を考慮して10分(6000000ミリ秒)余裕をもたせる
+  const isArchive = dayjs().unix() - dayjs(talk?.endTime).unix() >= 6000000
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
       return `ws://${window.location.host}/cable`
