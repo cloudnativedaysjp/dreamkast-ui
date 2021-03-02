@@ -307,16 +307,35 @@ export interface Sponsor {
     logo_url: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof Sponsor
      */
-    sponsorType?: string;
+    sponsorType?: Array<string>;
+    /**
+     * 
+     * @type {SponsorBooth}
+     * @memberof Sponsor
+     */
+    booth?: SponsorBooth;
+}
+/**
+ * 
+ * @export
+ * @interface SponsorBooth
+ */
+export interface SponsorBooth {
     /**
      * 
      * @type {number}
-     * @memberof Sponsor
+     * @memberof SponsorBooth
      */
-    boothId?: number;
+    id?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SponsorBooth
+     */
+    opened?: boolean;
 }
 /**
  * 

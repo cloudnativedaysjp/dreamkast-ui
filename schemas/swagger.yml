@@ -421,7 +421,6 @@ components:
           type: string
         createdAt:
           type: string
-          format: date-time
         messageType:
           type: string
           enum: [chat, qa]
@@ -451,9 +450,16 @@ components:
         logo_url:
           type: string
         sponsorType:
-          type: string
-        boothId:
-          type: number
+          type: array
+          items:
+            type: string
+        booth:
+          type: object
+          properties:
+            id:
+              type: number
+            opened:
+              type: boolean
       example:
         - id: 1
           conference_id: 2

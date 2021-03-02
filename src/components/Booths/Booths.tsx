@@ -15,7 +15,8 @@ export const Booths: React.FC = () => {
       })
   }, [])
 
-  const boothUrl = (id: number) => {
+  const boothUrl = (id?: number) => {
+    if (!id) return
     return '/cndo2021/ui/booths/' + id
   }
 
@@ -23,10 +24,10 @@ export const Booths: React.FC = () => {
     <Styled.Container id="foofoo">
       <GridList cellHeight={160} cols={4}>
         {data.map((sponsor) => {
-          if (sponsor.boothId) {
+          if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
             return (
               <GridListTile key={sponsor.name}>
-                <a href={boothUrl(sponsor.boothId)} target="_blank">
+                <a href={boothUrl(sponsor.booth.id)} target="_blank">
                   <Styled.SponsorImg src={sponsor.logo_url} />
                 </a>
               </GridListTile>
