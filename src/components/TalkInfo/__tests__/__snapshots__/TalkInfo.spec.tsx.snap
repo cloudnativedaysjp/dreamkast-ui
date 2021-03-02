@@ -2,20 +2,24 @@
 
 exports[`TalkInfo 1`] = `
 <div
-  className="sc-bdfBwQ bPwrbh"
+  className="sc-gsTCUz dAZNwr"
 >
-  <h2
-    className="sc-gsTCUz jmreGK"
-  >
-    ほげふが
-  </h2>
-  <h3>
-    alice / bob
-  </h3>
   <div
-    className="sc-dlfnbm bmpplm"
+    className="sc-bdfBwQ bPwrbh"
   >
-    ぴよぴよ
+    <h2
+      className="sc-dlfnbm bHmJIV"
+    >
+      ほげふが
+    </h2>
+    <h3>
+      alice / bob
+    </h3>
+    <div
+      className="sc-hKgILt cWyRM"
+    >
+      ぴよぴよ
+    </div>
   </div>
 </div>
 `;
