@@ -6,10 +6,15 @@ import {
 } from '../../../../../../client-axios/api'
 import { ChatMessageClass } from '../../../../../../util/chat'
 import ReplyIcon from '@material-ui/icons/Reply'
-import moment from 'moment/moment'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { ChatReplyForm } from '../../../ChatReplyForm'
 import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkifyjs/react'
+
+dayjs.extend(timezone)
+dayjs.extend(utc)
 
 type Props = {
   talk?: Talk
@@ -40,7 +45,7 @@ export const ChatMessage: React.FC<Props> = ({
   return (
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
-        {moment(chatMessage?.createdAt).format('HH:MM')}
+        {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
         {!selected && (
           <Styled.ReplyButton
             data-messageId={chatMessage?.id}
