@@ -42,7 +42,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   useEffect(() => {
     setInterval(function () {
       console.log('sending logs...')
-      tracker.track('watch_video', {
+      window.tracker.track('watch_video', {
         track_name: selectedTrack?.name,
         talk_id: selectedTalk?.id,
       })
