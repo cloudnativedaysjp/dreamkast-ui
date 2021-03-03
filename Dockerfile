@@ -1,14 +1,14 @@
 FROM node:15.9.0-alpine3.11 AS base
 WORKDIR /base
 COPY package*.json ./
-RUN npm install
+RUN yarn install
 COPY . .
 
 FROM base AS build
 ENV NODE_ENV=production
 WORKDIR /build
 COPY --from=base /base ./
-RUN npm run export
+RUN yarn export
 
 FROM nginx:alpine
 RUN mkdir -p /usr/share/nginx/html/cndo2021/ui
