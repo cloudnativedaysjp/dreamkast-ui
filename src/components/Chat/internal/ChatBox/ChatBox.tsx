@@ -26,23 +26,21 @@ export const ChatBox: React.FC<Props> = ({
 }) => {
   return (
     <Styled.Box overflow="scroll">
-      {Array.from(messages)
-        .reverse()
-        .map(([, chatMessage]) => {
-          if (messageTypes.includes(chatMessage.messageType)) {
-            return (
-              <ChatMessage
-                talk={talk}
-                key={chatMessage.id}
-                chatMessage={chatMessage}
-                selected={chatMessage.id == selectedMessage?.id}
-                onClickReplyButton={onClickReplyButton}
-                onClickCloseButton={onClickCloseButton}
-                onSendReply={onSendReply}
-              />
-            )
-          }
-        })}
+      {Array.from(messages).map(([, chatMessage]) => {
+        if (messageTypes.includes(chatMessage.messageType)) {
+          return (
+            <ChatMessage
+              talk={talk}
+              key={chatMessage.id}
+              chatMessage={chatMessage}
+              selected={chatMessage.id == selectedMessage?.id}
+              onClickReplyButton={onClickReplyButton}
+              onClickCloseButton={onClickCloseButton}
+              onSendReply={onSendReply}
+            />
+          )
+        }
+      })}
     </Styled.Box>
   )
 }
