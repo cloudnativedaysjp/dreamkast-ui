@@ -21,7 +21,7 @@ export const Booths: React.FC = () => {
   }
 
   return (
-    <Styled.Container id="foofoo">
+    <Styled.Container>
       <GridList cellHeight={160} cols={4}>
         {data.map((sponsor) => {
           if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
