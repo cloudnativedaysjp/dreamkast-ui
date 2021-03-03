@@ -25,7 +25,13 @@ export const SponsorImg = styled.img`
 `
 
 export const CenterContainer = styled.div`
+  width: 100%;
   text-align: center;
+`
+
+export const LogoImg = styled.img`
+  height: 100px;
+  width: auto;
 `
 
 export const HeaderContainer = styled.div`

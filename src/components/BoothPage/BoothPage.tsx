@@ -95,7 +95,7 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
 
         <Grid item xs={12} md={12}>
           <Styled.CenterContainer>
-            <img src={booth?.logoUrl} />
+            <Styled.LogoImg src={booth?.logoUrl} />
           </Styled.CenterContainer>
         </Grid>
 
