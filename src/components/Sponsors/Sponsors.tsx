@@ -10,7 +10,6 @@ export const Sponsors: React.FC = () => {
     slidesPerRow: 3,
     slidesToScroll: 1,
     vertical: true,
-    fade: true,
     autoplay: true,
     speed: 800,
     autoplaySpeed: 8000,
