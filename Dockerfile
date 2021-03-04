@@ -1,17 +1,11 @@
 FROM node:15.9.0-alpine3.11 AS base
-WORKDIR /base
-COPY package*.json ./
-RUN npm install
-COPY . .
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json yarn.lock /app/
+RUN yarn install
 
-FROM base AS build
-ENV NODE_ENV=production
-WORKDIR /build
-COPY --from=base /base ./
-RUN npm run export
+COPY . /app/
+RUN yarn build
 
-FROM nginx:alpine
-RUN mkdir -p /usr/share/nginx/html/cndo2021/ui
-COPY --from=build /build/out /usr/share/nginx/html/cndo2021/ui
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+CMD [ "yarn", "start", "-p", "3001" ]
 EXPOSE 3001
