@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
 import { ChatMessageClass } from '../../../../util/chat'
@@ -26,12 +26,16 @@ export const ChatMessageForm: React.FC<Props> = ({
     watch,
     formState: { isSubmitSuccessful },
   } = useForm<MessageInputs>()
-
+  const [sendButtonDisabled, setSendButtonDisabled] = useState(false)
   const watchChatMessage = watch('chatMessage')
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset({ chatMessage: '' })
+      setSendButtonDisabled(true)
+      setTimeout(() => {
+        setSendButtonDisabled(false)
+      }, 3000)
     }
   }, [isSubmitSuccessful, reset])
 
@@ -53,7 +57,7 @@ export const ChatMessageForm: React.FC<Props> = ({
             <ReactionButton reactEmoji="🎉" onSendReply={onSendMessage} />
             <Button
               type="submit"
-              disabled={!watchChatMessage}
+              disabled={!watchChatMessage || sendButtonDisabled}
               variant="contained"
               onClick={handleSubmit(onSendMessage)}
             >
@@ -61,7 +65,7 @@ export const ChatMessageForm: React.FC<Props> = ({
             </Button>
             <Button
               type="submit"
-              disabled={!watchChatMessage}
+              disabled={!watchChatMessage || sendButtonDisabled}
               variant="contained"
               onClick={handleSubmit(onSendQuestion)}
             >
