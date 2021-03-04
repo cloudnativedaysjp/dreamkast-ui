@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { MessageInputs } from '../ChatMessageRequest'
 import { useForm } from 'react-hook-form'
@@ -13,7 +13,21 @@ export const ReactionButton: React.FC<Props> = ({
   reactEmoji,
   onSendReply,
 }) => {
-  const { register, handleSubmit } = useForm<MessageInputs>()
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = useForm<MessageInputs>()
+  const [buttonDisabled, setButtonDisabled] = useState(false)
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setButtonDisabled(true)
+      setTimeout(() => {
+        setButtonDisabled(false)
+      }, 3000)
+    }
+  }, [isSubmitSuccessful])
 
   return (
     <Styled.ChatMessageForm>
@@ -26,6 +40,7 @@ export const ReactionButton: React.FC<Props> = ({
       <Styled.ReactButton
         type="submit"
         onClick={handleSubmit(onSendReply)}
+        disabled={buttonDisabled}
         variant="contained"
       >
         {reactEmoji}
