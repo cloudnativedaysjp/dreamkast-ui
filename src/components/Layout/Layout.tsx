@@ -2,6 +2,8 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import Head from 'next/head'
 import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import AppBar from '@material-ui/core/AppBar'
 
 type Props = {
@@ -13,13 +15,22 @@ export const Layout: React.FC<Props> = ({
   children,
   title = 'This is the default title',
 }) => {
-  const [url, setUrl] = useState<string>('')
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setUrl(`${window.location.href.replace('/cndo2021/ui', '/logout')}`)
     }
   }, [])
+
+  const [url, setUrl] = useState<string>('')
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <Styled.Container>
@@ -35,16 +46,47 @@ export const Layout: React.FC<Props> = ({
             <a href="/cndo2021" target="_blank" rel="noopener noreferrer">
               <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
             </a>
-            <Styled.MenuLink
-              href="/cndo2021/timetables"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button style={{ color: '#037f8c' }}>Timetable</Button>
-            </Styled.MenuLink>
-            <Button href={url} style={{ color: '#037f8c' }}>
-              Logout
-            </Button>
+            <Styled.DesktopMenu>
+              <Styled.MenuLink href="#booths" rel="noreferrer">
+                <Button style={{ color: '#037f8c' }}>Booths</Button>
+              </Styled.MenuLink>
+              <Styled.MenuLink
+                href="/cndo2021/timetables"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button style={{ color: '#037f8c' }}>Timetable</Button>
+              </Styled.MenuLink>
+              <Button href={url} style={{ color: '#037f8c' }}>
+                Logout
+              </Button>
+            </Styled.DesktopMenu>
+            <Styled.MobileMenu>
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                Open Menu
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>
+                  <a href={'#booths'}>Booths</a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a href={'/cndo2021/timetables'}>Timetable</a>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <a href={url}>Logout</a>
+                </MenuItem>
+              </Menu>
+            </Styled.MobileMenu>
           </Styled.Header>
         </AppBar>
       </header>

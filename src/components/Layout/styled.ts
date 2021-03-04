@@ -9,13 +9,13 @@ export const Container = styled.div`
 
 export const Header = styled(Toolbar)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   background-color: #ffffff;
   color: #282828;
 `
 
 export const HeaderImg = styled.img`
-  height: 50px;
+  height: 40px;
 `
 
 export const ChildrenContainer = styled.div`
@@ -45,6 +45,23 @@ export const FooterLink = styled.a`
 `
 
 export const MenuLink = styled.a`
-  margin-left: auto;
   text-decoration-line: none;
+`
+
+export const DesktopMenu = styled.div`
+  display: none;
+  justify-content: flex-end;
+  margin-left: auto;
+  @media (min-width: 600px) {
+    display: flex;
+  }
+`
+
+export const MobileMenu = styled.div`
+  display: none;
+  justify-content: flex-end;
+  margin-left: auto;
+  @media (max-width: 599px) {
+    display: flex;
+  }
 `

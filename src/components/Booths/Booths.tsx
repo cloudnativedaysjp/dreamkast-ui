@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Configuration, Sponsor, SponsorApi } from '../../client-axios'
 import * as Styled from './styled'
-import { GridList, GridListTile } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 export const Booths: React.FC = () => {
   const [data, setData] = useState<Sponsor[]>([])
@@ -22,19 +22,21 @@ export const Booths: React.FC = () => {
 
   return (
     <Styled.Container>
-      <GridList cellHeight={160} cols={4}>
+      <Styled.SponsorHeader>Booths</Styled.SponsorHeader>
+      <Grid container spacing={1} justify="center" alignItems="flex-start">
         {data.map((sponsor) => {
           if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
             return (
-              <GridListTile key={sponsor.name}>
-                <a href={boothUrl(sponsor.booth.id)} target="_blank">
+              <Styled.SponsorGridItem item xs={12} md={4}>
+                <Styled.SponsorLink href={boothUrl(sponsor.booth.id)} target="_blank">
                   <Styled.SponsorImg src={sponsor.logo_url} />
-                </a>
-              </GridListTile>
+                </Styled.SponsorLink>
+              </Styled.SponsorGridItem>
             )
           }
         })}
-      </GridList>
+      </Grid>
+      <a id="booths"></a>
     </Styled.Container>
   )
 }
