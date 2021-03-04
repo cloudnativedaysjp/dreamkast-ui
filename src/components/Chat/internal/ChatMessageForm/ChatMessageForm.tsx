@@ -31,7 +31,6 @@ export const ChatMessageForm: React.FC<Props> = ({
   const watchChatMessage = watch('chatMessage')
 
   const handleSendMessage = (data: MessageInputs) => {
-    console.log('!')
     setBtnDisabled(true)
     onSendMessage(data)
     setTimeout(() => {
