@@ -44,5 +44,13 @@ export const ButtonContainer = styled.div`
 
 export const TextField = styled(MuiTextField)`
   width: 100%;
-  padding: 10px !important;
+  padding: 2px 10px !important;
 `
+
+export const CheckBoxContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`
+
+export const label = styled.div``

@@ -6,11 +6,13 @@ import { Input } from '@material-ui/core'
 
 type Props = {
   reactEmoji: string
+  disabled?: boolean
   onSendReply: (data: MessageInputs) => void
 }
 
 export const ReactionButton: React.FC<Props> = ({
   reactEmoji,
+  disabled,
   onSendReply,
 }) => {
   const { register, handleSubmit } = useForm<MessageInputs>()
@@ -25,6 +27,7 @@ export const ReactionButton: React.FC<Props> = ({
       />
       <Styled.ReactButton
         type="submit"
+        disabled={disabled}
         onClick={handleSubmit(onSendReply)}
         variant="contained"
       >

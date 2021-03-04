@@ -49,6 +49,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     initialChatMessage,
   )
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+  const [checked, setChecked] = useState<boolean>(true)
+
   // 発表時間の幅を考慮して10分(6000000ミリ秒)余裕をもたせる
   const isArchive = dayjs().unix() - dayjs(talk?.endTime).unix() >= 6000000
   const actionCableUrl = () => {
@@ -169,6 +171,13 @@ export const Chat: React.FC<Props> = ({ talk }) => {
     setSelectedMessage(initialChatMessage)
   }
 
+  const onChecked = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
+    setChecked(checked)
+  }
+
   return (
     <Styled.Outer>
       <Styled.Container>
@@ -191,6 +200,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
                 ChatMessageMessageTypeEnum.Qa,
               ]}
               selectedMessage={selectedMessage}
+              checked={checked}
               onClickReplyButton={onClickReplyButton}
               onSendReply={onSendReply}
               onClickCloseButton={onClickCloseButton}
@@ -202,6 +212,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}
+              checked={checked}
               onClickReplyButton={onClickReplyButton}
               onClickCloseButton={onClickCloseButton}
               onSendReply={onSendReply}
@@ -214,6 +225,8 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           onClickCloseButton={onClickCloseButton}
           onSendMessage={onSendReply}
           onSendQuestion={onSendQuestion}
+          onCheck={onChecked}
+          checked={checked}
         />
       </Styled.Container>
     </Styled.Outer>

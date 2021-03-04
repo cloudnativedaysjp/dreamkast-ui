@@ -10,16 +10,22 @@ type Props = {
   onSendReply: (data: MessageInputs) => void
 }
 
-type Inputs = {
-  chatMessage: string
-}
-
 export const ChatReplyForm: React.FC<Props> = ({
   onClickCloseButton,
   onSendReply,
 }) => {
-  const { register, handleSubmit, watch } = useForm<Inputs>()
+  const { register, handleSubmit, watch, getValues } = useForm<MessageInputs>({
+    defaultValues: { isQuestion: false },
+  })
   const watchChatMessage = watch('chatMessage')
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      const value = getValues()
+      if (!value.chatMessage) return
+      onSendReply(value)
+    }
+  }
 
   return (
     <Styled.Paper>
@@ -29,7 +35,7 @@ export const ChatReplyForm: React.FC<Props> = ({
           color="secondary"
           size="small"
           inputRef={register}
-          multiline
+          onKeyPress={handleKeyPress}
         />
         <Styled.ButtonContainer>
           <ReactionButton reactEmoji="👍" onSendReply={onSendReply} />
