@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
 import { ChatMessageClass } from '../../../../util/chat'
@@ -26,8 +26,26 @@ export const ChatMessageForm: React.FC<Props> = ({
     watch,
     formState: { isSubmitSuccessful },
   } = useForm<MessageInputs>()
+  const [btnDisabled, setBtnDisabled] = useState<boolean>(false)
 
   const watchChatMessage = watch('chatMessage')
+
+  const handleSendMessage = (data: MessageInputs) => {
+    console.log('!')
+    setBtnDisabled(true)
+    onSendMessage(data)
+    setTimeout(() => {
+      setBtnDisabled(false)
+    }, 3000)
+  }
+
+  const handleSendQuestion = (data: MessageInputs) => {
+    setBtnDisabled(true)
+    onSendQuestion(data)
+    setTimeout(() => {
+      setBtnDisabled(false)
+    }, 3000)
+  }
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -48,22 +66,34 @@ export const ChatMessageForm: React.FC<Props> = ({
           />
           <Input type="hidden" name="isQuestion" inputRef={register} />
           <Styled.ButtonContainer>
-            <ReactionButton reactEmoji="👍" onSendReply={onSendMessage} />
-            <ReactionButton reactEmoji="👏" onSendReply={onSendMessage} />
-            <ReactionButton reactEmoji="🎉" onSendReply={onSendMessage} />
+            <ReactionButton
+              disabled={btnDisabled}
+              reactEmoji="👍"
+              onSendReply={handleSendMessage}
+            />
+            <ReactionButton
+              disabled={btnDisabled}
+              reactEmoji="👏"
+              onSendReply={handleSendMessage}
+            />
+            <ReactionButton
+              disabled={btnDisabled}
+              reactEmoji="🎉"
+              onSendReply={handleSendMessage}
+            />
             <Button
               type="submit"
-              disabled={!watchChatMessage}
+              disabled={!watchChatMessage || btnDisabled}
               variant="contained"
-              onClick={handleSubmit(onSendMessage)}
+              onClick={handleSubmit(handleSendMessage)}
             >
               送信
             </Button>
             <Button
               type="submit"
-              disabled={!watchChatMessage}
+              disabled={!watchChatMessage || btnDisabled}
               variant="contained"
-              onClick={handleSubmit(onSendQuestion)}
+              onClick={handleSubmit(handleSendQuestion)}
             >
               質問する
             </Button>
