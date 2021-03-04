@@ -31,21 +31,33 @@ export const ShareButton = styled.a`
   border: none !important;
   
   text-decoration: none;
-  color: black;
+  color: #037f8c;
   &:visited{
-    color: black;
+    color: #037f8c;
   }
   &:hover {
     background: rgba(255, 255, 255, 0.7);
   }
 `
+
+export const SocialHeader = styled.h4`
+  color: #333;
+  font-size: 1.2em;
+`
+
+export const TalkIcon = styled.img`
+  height: 1.6em;
+  vertical-align: middle;
+  margin-right: 5px;
+`
+
 export const SocialImg = styled.img`
-  height: 2em;
+  height: 1.8em;
   vertical-align: middle;
 `
 
 export const SocialText = styled.span`
-  font-size: 1.5em;
+  font-size: 1.4em;
   vertical-align: middle;
   margin-left: 10px;
 `
