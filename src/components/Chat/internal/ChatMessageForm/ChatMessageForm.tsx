@@ -3,12 +3,17 @@ import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
 import { ChatMessageClass } from '../../../../util/chat'
 import { ReactionButton } from '../ReactionButton'
-import { Button, Input } from '@material-ui/core'
+import { Button, Input, Checkbox } from '@material-ui/core'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
   selectedMessage: ChatMessageClass
   isArchive: boolean
+  checked: boolean
+  onCheck: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => void
   onClickCloseButton: () => void
   onSendMessage: (data: MessageInputs) => void
   onSendQuestion: (data: MessageInputs) => void
@@ -16,6 +21,8 @@ type Props = {
 
 export const ChatMessageForm: React.FC<Props> = ({
   isArchive,
+  checked,
+  onCheck,
   onSendMessage,
   onSendQuestion,
 }) => {
@@ -56,6 +63,10 @@ export const ChatMessageForm: React.FC<Props> = ({
     <Styled.Container>
       {isArchive && (
         <Styled.ChatMessageForm>
+          <Styled.CheckBoxContainer>
+            <Checkbox size="small" checked={checked} onChange={onCheck} />
+            <Styled.label>オートスクロール</Styled.label>
+          </Styled.CheckBoxContainer>
           <Styled.TextField
             name="chatMessage"
             color="secondary"
