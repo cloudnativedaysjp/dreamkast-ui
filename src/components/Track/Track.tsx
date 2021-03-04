@@ -7,7 +7,6 @@ import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
-import * as Styled from './styled'
 
 type Props = {
   selectedTrack?: Track
@@ -80,12 +79,6 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       },
     )
   }, [selectedTrack])
-  const twitterURL = (trackName?: string) => {
-    const base =
-      'http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021'
-    if (!trackName) return base
-    return base + '_' + trackName
-  }
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
@@ -96,26 +89,8 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       <Grid item xs={12} md={3}>
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid item xs={10} md={8}>
-        <TalkInfo selectedTalk={selectedTalk} />
-        <Styled.ShareButton>
-          <a href="https://discord.gg/bvuTMNQ" target="_blank">
-            Ask the speaker
-            <br />
-            (Discord)
-          </a>
-        </Styled.ShareButton>
-        <Styled.ShareButton variant="outlined">
-          <a
-            id="twitter"
-            href={twitterURL(selectedTrack?.name)}
-            target="_blank"
-          >
-            Twitterでつぶやく
-            <br />
-            #CNDT2020_{selectedTrack?.name}
-          </a>
-        </Styled.ShareButton>
+      <Grid item xs={12} md={8}>
+        <TalkInfo selectedTalk={selectedTalk} selectedTrackName={selectedTrack?.name} />
       </Grid>
       <Grid item xs={12} md={3}>
         <TalkSelector

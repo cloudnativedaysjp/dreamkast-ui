@@ -2,13 +2,13 @@
 
 exports[`TalkInfo 1`] = `
 <div
-  className="sc-gsTCUz dAZNwr"
+  className="sc-gsTCUz gCgpQH"
 >
   <div
-    className="sc-bdfBwQ bBbtSa"
+    className="sc-bdfBwQ eqqTko"
   >
     <h2
-      className="sc-dlfnbm bHmJIV"
+      className="sc-dlfnbm edmzhC"
     >
       ほげふが
     </h2>
@@ -16,10 +16,40 @@ exports[`TalkInfo 1`] = `
       alice / bob
     </h3>
     <div
-      className="sc-hKgILt cWyRM"
+      className="sc-hKgILt bAZhMm"
     >
       ぴよぴよ
     </div>
+    <a
+      className="sc-eCssSg cFcJpb"
+      href="https://discord.gg/bvuTMNQ"
+      target="_blank"
+    >
+      <img
+        className="sc-jSgupP iLGxcn"
+        src="/cndo2021/ui/images/discord.png"
+      />
+      <span
+        className="sc-gKsewC dCRGqw"
+      >
+        Ask the speaker
+      </span>
+    </a>
+    <a
+      className="sc-eCssSg cFcJpb"
+      href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
+      target="_blank"
+    >
+      <img
+        className="sc-jSgupP iLGxcn"
+        src="/cndo2021/ui/images/twitter.png"
+      />
+      <span
+        className="sc-gKsewC dCRGqw"
+      >
+        Twitterでつぶやく #CNDT2020_
+      </span>
+    </a>
   </div>
 </div>
 `;
