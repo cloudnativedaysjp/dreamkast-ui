@@ -11,6 +11,7 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import { AppProps } from 'next/app'
+import TagManager from 'react-gtm-module'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -36,6 +37,7 @@ export default function Dreamkast({
 }: AppProps): JSX.Element {
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles)
