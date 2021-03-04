@@ -89,8 +89,8 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       <Grid item xs={12} md={3}>
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid item xs={10} md={8}>
-        <TalkInfo selectedTalk={selectedTalk} />
+      <Grid item xs={12} md={8}>
+        <TalkInfo selectedTalk={selectedTalk} selectedTrackName={selectedTrack?.name} />
       </Grid>
       <Grid item xs={12} md={3}>
         <TalkSelector
