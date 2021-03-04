@@ -31,6 +31,7 @@ export const ChatMessageForm: React.FC<Props> = ({
     handleSubmit,
     reset,
     watch,
+    getValues,
     formState: { isSubmitSuccessful },
   } = useForm<MessageInputs>()
   const [btnDisabled, setBtnDisabled] = useState<boolean>(false)
@@ -39,7 +40,7 @@ export const ChatMessageForm: React.FC<Props> = ({
 
   const handleSendMessage = (data: MessageInputs) => {
     setBtnDisabled(true)
-    onSendMessage(data)
+    if (!btnDisabled) onSendMessage(data)
     setTimeout(() => {
       setBtnDisabled(false)
     }, 3000)
@@ -47,10 +48,19 @@ export const ChatMessageForm: React.FC<Props> = ({
 
   const handleSendQuestion = (data: MessageInputs) => {
     setBtnDisabled(true)
-    onSendQuestion(data)
+    if (!btnDisabled) onSendQuestion(data)
     setTimeout(() => {
       setBtnDisabled(false)
     }, 3000)
+  }
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      const value = getValues()
+      if (!value.chatMessage) return
+      handleSendMessage(value)
+      reset({ chatMessage: '' })
+    }
   }
 
   useEffect(() => {
@@ -72,7 +82,7 @@ export const ChatMessageForm: React.FC<Props> = ({
             color="secondary"
             size="small"
             inputRef={register}
-            multiline
+            onKeyPress={handleKeyPress}
           />
           <Input type="hidden" name="isQuestion" inputRef={register} />
           <Styled.ButtonContainer>
