@@ -17,6 +17,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
+  const [timer, setTimer] = useState<number>()
 
   const getTalks = useCallback(async () => {
     const api = new TalkApi(
@@ -79,6 +80,22 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       },
     )
   }, [selectedTrack])
+
+  useEffect(() => {
+    clearInterval(timer)
+    setTimer(
+      window.setInterval(() => {
+        // console.log('sending logs...')
+        // console.log(selectedTrack?.name)
+        // console.log(selectedTalk?.title)
+        window.tracker.track('watch_video', {
+          track_name: selectedTrack?.name,
+          talk_id: selectedTalk?.id,
+          talk_name: selectedTalk?.title,
+        })
+      }, 120 * 1000),
+    )
+  }, [selectedTrack, selectedTalk])
 
   return (
     <Grid container spacing={1} justify="center" alignItems="flex-start">
