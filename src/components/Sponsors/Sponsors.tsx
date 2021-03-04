@@ -6,13 +6,34 @@ export const Sponsors: React.FC = () => {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 4,
-    slidesToScroll: 5,
+    slidesToShow: 1,
+    slidesPerRow: 3,
+    slidesToScroll: 1,
+    vertical: true,
+    fade: true,
     autoplay: true,
-    speed: 50000,
-    autoplaySpeed: 0,
+    speed: 800,
+    autoplaySpeed: 8000,
     cssEase: 'linear',
     arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesPerRow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesPerRow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   }
 
   const [data, setData] = useState<Sponsor[]>([])

@@ -26,7 +26,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrack?.id),
-      '8',
+      '6,7',
     )
     setTalks(data)
   }, [selectedTrack])
