@@ -81,7 +81,7 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
 
   const miroEmbedUrl = (id?: string) => {
     if (!id) return
-    return 'https://miro.com/app/live-embed/' + id + '/?autoplay=yep'
+    return 'https://miro.com/app/embed/' + id + '/?autoplay=yep'
   }
 
   const leftPane = () => {
@@ -89,21 +89,14 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
       <Styled.Container>
         <Grid item xs={12} md={12}>
           <Styled.CenterContainer>
-            <h1>{booth?.sponsorName}</h1>
-          </Styled.CenterContainer>
-        </Grid>
-
-        <Grid item xs={12} md={12}>
-          <Styled.CenterContainer>
             <Styled.LogoImg src={booth?.logoUrl} />
           </Styled.CenterContainer>
-        </Grid>
-
-        <Grid item xs={12} md={12}>
+          <Styled.CenterContainer>
+            <h3>{booth?.sponsorName}</h3>
+          </Styled.CenterContainer>
           <p>{booth?.description}</p>
         </Grid>
 
-        <AttachmentImages images={booth?.keyImageUrls} />
       </Styled.Container>
     )
   }
@@ -111,19 +104,18 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
   const rightPane = () => {
     return (
       <Styled.Container>
-        <Styled.HeaderContainer>
-          <h2>ブース</h2>
-        </Styled.HeaderContainer>
-        <Grid item xs={8} md={12}>
+        <AttachmentImages images={booth?.keyImageUrls} />
+        <Grid item xs={12}>
           <Styled.CenterContainer>
             <p>{booth?.text}</p>
           </Styled.CenterContainer>
         </Grid>
 
-        <Grid item xs={12} md={12}>
+        { booth?.miroUrl &&
+        <Grid item xs={12}>
           <Styled.HeaderContainer>
             <h2>
-              オンラインホワイトボード (See the boardをクリックしてください)
+              オンラインホワイトボード (編集するには、左下のリンクをクリック)
             </h2>
           </Styled.HeaderContainer>
           <Styled.CenterContainer>
@@ -135,24 +127,29 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
             ></Styled.MiroIframe>
           </Styled.CenterContainer>
         </Grid>
-
-        <Grid item xs={12} md={12}>
+        }
+        { booth?.vimeoUrl &&
+        <Grid item xs={12}>
           <Styled.VimeoContainer>
-            <iframe
+          <Styled.VimeoIframe
               src={booth?.vimeoUrl}
-              width="640"
+              width="100%"
               height="360"
               frameBorder="0"
               allow="autoplay; fullscreen"
-              allowFullScreen
-            ></iframe>
+              allowFullScreen>
+          </Styled.VimeoIframe>
           </Styled.VimeoContainer>
         </Grid>
-
-        <Styled.HeaderContainer>
-          <h2>PDF資料ダウンロード</h2>
-        </Styled.HeaderContainer>
-        <AttachmentPdfs pdfs={booth?.pdfUrls} />
+        }
+        { booth?.pdfUrls &&
+        <Grid item xs={12}>
+          <Styled.HeaderContainer>
+            <h2>PDF資料ダウンロード</h2>
+          </Styled.HeaderContainer>
+          <AttachmentPdfs pdfs={booth?.pdfUrls} />
+        </Grid>
+        }
       </Styled.Container>
     )
   }
