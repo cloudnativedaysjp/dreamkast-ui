@@ -22,10 +22,10 @@ exports[`Layout 1`] = `
           />
         </a>
         <div
-          className="sc-fubCfw iYRuQb"
+          className="sc-fodVxV dfccac"
         >
           <a
-            className="sc-iBPRYJ kneagM"
+            className="sc-hBEYos bSCtY"
             href="#booths"
             rel="noreferrer"
           >
@@ -59,7 +59,7 @@ exports[`Layout 1`] = `
             </button>
           </a>
           <a
-            className="sc-iBPRYJ kneagM"
+            className="sc-hBEYos bSCtY"
             href="/cndo2021/timetables"
             rel="noreferrer"
             target="_blank"
@@ -124,7 +124,7 @@ exports[`Layout 1`] = `
           </button>
         </div>
         <div
-          className="sc-pFZIQ fRZBrF"
+          className="sc-fFubgz bKQXOq"
         >
           <button
             aria-controls="simple-menu"
