@@ -28,7 +28,10 @@ export const Booths: React.FC = () => {
           if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
             return (
               <Styled.SponsorGridItem item xs={12} md={4}>
-                <Styled.SponsorLink href={boothUrl(sponsor.booth.id)} target="_blank">
+                <Styled.SponsorLink
+                  href={boothUrl(sponsor.booth.id)}
+                  target="_blank"
+                >
                   <Styled.SponsorImg src={sponsor.logo_url} />
                 </Styled.SponsorLink>
               </Styled.SponsorGridItem>

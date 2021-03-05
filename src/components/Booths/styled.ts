@@ -37,7 +37,7 @@ export const SponsorGridItem = styled(Grid)`
   position: relative;
   height: 80px;
 
-  &:hover{
+  &:hover {
     background: rgba(255, 255, 255, 0.7);
   }
 `

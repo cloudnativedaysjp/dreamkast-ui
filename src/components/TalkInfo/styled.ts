@@ -29,10 +29,10 @@ export const ShareButton = styled.a`
   padding: 5px;
   display: block;
   border: none !important;
-  
+
   text-decoration: none;
   color: #037f8c;
-  &:visited{
+  &:visited {
     color: #037f8c;
   }
   &:hover {
