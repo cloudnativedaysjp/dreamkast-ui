@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Container as MuiContainer } from '@material-ui/core'
-import { Grid } from '@material-ui/core'
 
 export const BoothPageContainer = styled.div`
   height: 100%;
