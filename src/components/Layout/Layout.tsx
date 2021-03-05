@@ -36,8 +36,8 @@ export const Layout: React.FC<Props> = ({
               <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
             </a>
             <DesktopMenu url={url} />
-            <MobileMenu url={url} />
           </Styled.Header>
+          <MobileMenu url={url} />
         </AppBar>
       </header>
       <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>

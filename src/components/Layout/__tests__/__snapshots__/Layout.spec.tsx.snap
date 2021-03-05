@@ -123,16 +123,19 @@ exports[`Layout 1`] = `
             </span>
           </button>
         </div>
-        <div
-          className="sc-fFubgz bKQXOq"
+      </div>
+      <div
+        className="sc-fFubgz dEckQx"
+      >
+        <a
+          className="sc-hBEYos bSCtY"
+          href="#booths"
+          rel="noreferrer"
         >
           <button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
             className="MuiButtonBase-root MuiButton-root MuiButton-text"
             disabled={false}
             onBlur={[Function]}
-            onClick={[Function]}
             onDragLeave={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
@@ -143,16 +146,85 @@ exports[`Layout 1`] = `
             onTouchEnd={[Function]}
             onTouchMove={[Function]}
             onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#037f8c",
+              }
+            }
             tabIndex={0}
             type="button"
           >
             <span
               className="MuiButton-label"
             >
-              Open Menu
+              Booths
             </span>
           </button>
-        </div>
+        </a>
+        <a
+          className="sc-hBEYos bSCtY"
+          href="/cndo2021/timetables"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#037f8c",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Timetable
+            </span>
+          </button>
+        </a>
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text"
+          disabled={false}
+          href=""
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "color": "#037f8c",
+            }
+          }
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            Logout
+          </span>
+        </button>
       </div>
     </header>
   </header>

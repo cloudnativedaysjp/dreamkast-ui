@@ -58,9 +58,12 @@ export const DesktopMenu = styled.div`
 
 export const MobileMenu = styled.div`
   display: none;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-left: auto;
   @media (max-width: 599px) {
     display: flex;
+    width:100%;
+    background-color: #FFF;
+    padding: 0 20px;
   }
 `
