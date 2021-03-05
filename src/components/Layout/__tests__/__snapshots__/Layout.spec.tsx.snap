@@ -26,7 +26,7 @@ exports[`Layout 1`] = `
         >
           <a
             className="sc-hBEYos bSCtY"
-            href="#booths"
+            href="/cndo2021/ui#booths"
             rel="noreferrer"
           >
             <button
@@ -129,7 +129,7 @@ exports[`Layout 1`] = `
       >
         <a
           className="sc-hBEYos bSCtY"
-          href="#booths"
+          href="/cndo2021/ui#booths"
           rel="noreferrer"
         >
           <button
