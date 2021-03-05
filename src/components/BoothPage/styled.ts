@@ -19,7 +19,9 @@ export const CenterContainer = styled.div`
 `
 
 export const LogoImg = styled.img`
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 200px;
 `
 
 export const HeaderContainer = styled.div`
