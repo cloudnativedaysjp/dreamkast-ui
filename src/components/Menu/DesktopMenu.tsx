@@ -9,7 +9,7 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ url }) => {
   return (
     <Styled.DesktopMenu>
-      <Styled.MenuLink href="#booths" rel="noreferrer">
+      <Styled.MenuLink href="/cndo2021/ui#booths" rel="noreferrer">
         <Button style={{ color: '#037f8c' }}>Booths</Button>
       </Styled.MenuLink>
       <Styled.MenuLink
