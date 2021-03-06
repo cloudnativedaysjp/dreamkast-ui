@@ -2,15 +2,15 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="sc-bdfBwQ cKbKdI"
+  className="sc-bdfBwQ fZOdB"
 >
   <div
-    className="sc-gsTCUz hhRAir"
+    className="sc-gsTCUz gsmcqU"
   >
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root sc-dlfnbm kskwDK MuiList-padding"
+    className="MuiList-root sc-dlfnbm dRyweE MuiList-padding"
   />
 </div>
 `;

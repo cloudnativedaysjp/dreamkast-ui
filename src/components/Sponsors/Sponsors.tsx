@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SponsorApi, Sponsor, Configuration } from '../../client-axios'
 import * as Styled from './styled'
+import * as CommonStyled from '../../styles/styled'
 
 export const Sponsors: React.FC = () => {
   const settings = {
@@ -46,8 +47,7 @@ export const Sponsors: React.FC = () => {
   }, [])
 
   return (
-    <Styled.Outer>
-      <Styled.Container>
+      <CommonStyled.Container>
         <Styled.CNDOSlider {...settings}>
           {data.map((sponsor) => (
             <Styled.Sponsor key={sponsor.id}>
@@ -57,7 +57,6 @@ export const Sponsors: React.FC = () => {
             </Styled.Sponsor>
           ))}
         </Styled.CNDOSlider>
-      </Styled.Container>
-    </Styled.Outer>
+      </CommonStyled.Container>
   )
 }

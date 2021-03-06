@@ -32,3 +32,7 @@ export const MiroIframe = styled.iframe`
   width: 100%;
   min-height: 500px;
 `
+
+export const MenuLink = styled.a`
+  text-decoration-line: none;
+`

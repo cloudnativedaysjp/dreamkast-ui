@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { List as OriginList, ListItem } from '@material-ui/core'
 
 export const Container = styled.div`
-  padding: 0 8px 10px 8px;
   height: 450px;
+  padding-right: 5px;
 `
 
 export const Title = styled.div`
@@ -11,7 +11,6 @@ export const Title = styled.div`
   font-weight: bold;
   text-align: center;
   padding: 10px;
-  border: 1.5px solid black;
   border-bottom: none;
   border-radius: 10px 10px 0px 0px;
   background-color: #ffffff;
@@ -20,7 +19,7 @@ export const Title = styled.div`
 
 export const List = styled(OriginList)`
   height: 405px;
-  border: 1.5px solid;
+  border-top: 1px solid #888;
   overflow-y: scroll;
   border-radius: 0px 0px 10px 10px;
   background-color: #ffffff;
@@ -49,4 +48,11 @@ export const Text = styled.div`
   font-size: 0.9rem;
   line-height: 1.2rem;
   padding: 2px 0;
+`
+export const Live = styled.span`
+  font-weight: bold;
+  background-color: red;
+  padding: 2px;
+  color: white;
+  border-radius: 3px;
 `
