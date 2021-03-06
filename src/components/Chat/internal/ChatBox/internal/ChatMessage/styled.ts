@@ -25,8 +25,19 @@ export const MessageBody = styled.div`
 export const ChatReplyMessage = styled(ChatMessage)`
   margin-left: 30px;
 `
-
+export const MenuButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: dimgray;
+`
 export const ReplyButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: dimgray;
+`
+export const DeleteButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
