@@ -5,6 +5,7 @@ import {
   ChatMessageMessageTypeEnum,
   Talk,
   Configuration,
+  Profile,
 } from '../../client-axios'
 import { ChatMessageForm } from './internal/ChatMessageForm'
 import ActionCable from 'actioncable'
@@ -18,6 +19,7 @@ import {
 } from './internal/ChatMessageRequest'
 
 type Props = {
+  profile?: Profile
   talk?: Talk
 }
 
@@ -34,7 +36,7 @@ type ReceivedMsg = {
   replyTo: number
 }
 
-export const Chat: React.FC<Props> = ({ talk }) => {
+export const Chat: React.FC<Props> = ({ profile, talk }) => {
   const initialChatMessageMap = new ChatMessageMap()
   const initialChatMessage = {
     eventAbbr: 'cndo2021',
@@ -193,6 +195,7 @@ export const Chat: React.FC<Props> = ({ talk }) => {
           </Styled.TabContainer>
           <Styled.TabPanel value="0">
             <ChatBox
+              profile={profile}
               talk={talk}
               messages={messages}
               messageTypes={[

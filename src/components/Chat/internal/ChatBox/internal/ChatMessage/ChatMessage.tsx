@@ -3,6 +3,7 @@ import * as Styled from './styled'
 import {
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
+  Profile,
   Talk,
 } from '../../../../../../client-axios/api'
 import { ChatMessageClass } from '../../../../../../util/chat'
@@ -21,6 +22,7 @@ dayjs.extend(timezone)
 dayjs.extend(utc)
 
 type Props = {
+  profile?: Profile
   talk?: Talk
   chatMessage?: ChatMessageClass
   selected: boolean
@@ -30,6 +32,7 @@ type Props = {
 }
 
 export const ChatMessage: React.FC<Props> = ({
+  profile,
   talk,
   chatMessage,
   selected,
@@ -45,17 +48,29 @@ export const ChatMessage: React.FC<Props> = ({
     return !!msg?.speakerId && speakerIds.includes(msg.speakerId)
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [message, setMessage] = useState<ChatMessageClass>()
 
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
+
   const openChatMessageMenu = (e: React.MouseEvent<HTMLElement>) => {
-    console.log('openChatMessageMenu')
+    const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
+    const replyTo = e.currentTarget.getAttribute('data-replyto')
+    if (!replyTo) {
+      setMessage(chatMessage)
+    } else {
+      chatMessage?.children?.forEach((child) => {
+        if (child?.id == Number(selectedMessageId)) {
+          setMessage(child)
+        }
+      })
+    }
     setAnchorEl(e.currentTarget)
   }
+
   const closeChatMessageMenu = () => {
     setAnchorEl(null)
   }
   const onMenuClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log('clicccccccccccc')
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
     if (!selectedMessageId) return
     const api = new ChatMessageApi(
@@ -73,16 +88,14 @@ export const ChatMessage: React.FC<Props> = ({
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
         {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
-        <Styled.MenuButton onClick={openChatMessageMenu}>
+
+        <Styled.MenuButton
+          onClick={openChatMessageMenu}
+          data-messageid={chatMessage?.id}
+          data-replyto={chatMessage?.replyTo}
+        >
           <MenuIcon fontSize="small" />
         </Styled.MenuButton>
-
-        <ChatMessageMenu
-          chatMessage={chatMessage}
-          anchorEl={anchorEl}
-          onClose={closeChatMessageMenu}
-          onMenuClick={onMenuClick}
-        />
 
         <Styled.MessageBody>
           {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
@@ -105,12 +118,25 @@ export const ChatMessage: React.FC<Props> = ({
               {msg.body}
             </Styled.MessageBody>
 
-            <Styled.MenuButton>
+            <Styled.MenuButton
+              onClick={openChatMessageMenu}
+              data-messageid={msg.id}
+              data-replyto={msg.replyTo}
+            >
               <MenuIcon fontSize="small" />
             </Styled.MenuButton>
           </Styled.ChatReplyMessage>
         )
       })}
+
+      <ChatMessageMenu
+        profile={profile}
+        chatMessage={message}
+        anchorEl={anchorEl}
+        onClose={closeChatMessageMenu}
+        onMenuClick={onMenuClick}
+      />
+
       {selected && (
         <ChatReplyForm
           onClickCloseButton={onClickCloseButton}

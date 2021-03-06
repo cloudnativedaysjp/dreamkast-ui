@@ -2,17 +2,33 @@ import { useState, useEffect, useCallback } from 'react'
 import { Layout } from '../components/Layout'
 import { TrackSelector } from '../components/TrackSelector'
 import { TrackView } from '../components/Track'
-import { Track, TrackApi, Configuration } from '../client-axios'
+import {
+  Track,
+  TrackApi,
+  Configuration,
+  ProfileApi,
+  Profile,
+} from '../client-axios'
 
 const IndexPage: React.FC = () => {
   // States
   const [selectedTrack, setSelectedTrack] = useState<Track>()
   const [tracks, setTracks] = useState<Track[]>([])
+  const [profile, setProfile] = useState<Profile>()
 
   // Handlers
   const selectTrack = (selectedTrack: Track) => {
     setSelectedTrack(selectedTrack)
   }
+
+  const getProfile = useCallback(async () => {
+    const api = new ProfileApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+    const { data } = await api.apiV1EventAbbrMyProfileGet('cndo2021')
+    setProfile(data)
+    console.log(data)
+  }, [])
 
   const getTracks = useCallback(async () => {
     const api = new TrackApi(
@@ -24,6 +40,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    getProfile()
     getTracks()
   }, [])
 
@@ -34,7 +51,7 @@ const IndexPage: React.FC = () => {
         selectedTrack={selectedTrack}
         selectTrack={selectTrack}
       />
-      <TrackView selectedTrack={selectedTrack} />
+      <TrackView profile={profile} selectedTrack={selectedTrack} />
     </Layout>
   )
 }
