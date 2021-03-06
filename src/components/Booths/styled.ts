@@ -11,11 +11,6 @@ export const Container = styled.div`
     display: none;
   }
 `
-export const SponsorHeader = styled.h2`
-  font-size: 2em;
-  text-align: center;
-  color: #037f8c;
-`
 
 export const Content = styled.div`
   padding: 10px 0;

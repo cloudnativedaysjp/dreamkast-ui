@@ -17,7 +17,7 @@ export const Layout: React.FC<Props> = ({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setUrl(`${window.location.href.replace('/cndo2021/ui', '/logout')}`)
+      setUrl(window.location.origin + '/logout')
     }
   }, [])
 
@@ -32,7 +32,7 @@ export const Layout: React.FC<Props> = ({
       <header>
         <AppBar position="static">
           <Styled.Header>
-            <a href="/cndo2021" target="_blank" rel="noopener noreferrer">
+            <a href="/cndo2021/ui" rel="noopener noreferrer">
               <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
             </a>
             <DesktopMenu url={url} />

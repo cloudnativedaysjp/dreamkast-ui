@@ -13,6 +13,13 @@ export const MobileMenu: React.FC<Props> = ({ url }) => {
         <Button style={{ color: '#037f8c' }}>Booths</Button>
       </Styled.MenuLink>
       <Styled.MenuLink
+        href="/cndo2021/ui/discussionboard"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Button style={{ color: '#037f8c' }}>DiscussionBoard</Button>
+      </Styled.MenuLink>
+      <Styled.MenuLink
         href="/cndo2021/timetables"
         target="_blank"
         rel="noreferrer"

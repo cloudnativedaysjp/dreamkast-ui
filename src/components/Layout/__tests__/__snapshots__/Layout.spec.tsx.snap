@@ -12,9 +12,8 @@ exports[`Layout 1`] = `
         className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
       >
         <a
-          href="/cndo2021"
+          href="/cndo2021/ui"
           rel="noopener noreferrer"
-          target="_blank"
         >
           <img
             className="sc-dlfnbm jFXkDF"
@@ -60,9 +59,42 @@ exports[`Layout 1`] = `
           </a>
           <a
             className="sc-hBEYos bSCtY"
+            href="/cndo2021/ui/discussionboard"
+            rel="noreferrer"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                Object {
+                  "color": "#037f8c",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                DiscussionBoard
+              </span>
+            </button>
+          </a>
+          <a
+            className="sc-hBEYos bSCtY"
             href="/cndo2021/timetables"
             rel="noreferrer"
-            target="_blank"
           >
             <button
               className="MuiButtonBase-root MuiButton-root MuiButton-text"
@@ -158,6 +190,41 @@ exports[`Layout 1`] = `
               className="MuiButton-label"
             >
               Booths
+            </span>
+          </button>
+        </a>
+        <a
+          className="sc-hBEYos bSCtY"
+          href="/cndo2021/ui/discussionboard"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#037f8c",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              DiscussionBoard
             </span>
           </button>
         </a>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Configuration, Sponsor, SponsorApi } from '../../client-axios'
 import * as Styled from './styled'
 import { Grid } from '@material-ui/core'
+import * as CommonStyled from '../../styles/styled'
 
 type Props = {
   openNewWindow?: boolean
@@ -34,7 +35,7 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
 
   return (
     <Styled.Container>
-      <Styled.SponsorHeader>Booths</Styled.SponsorHeader>
+      <CommonStyled.Header2 centerized={true}>Booths</CommonStyled.Header2>
       <Grid container spacing={1} justify="center" alignItems="flex-start">
         {data.map((sponsor) => {
           if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
