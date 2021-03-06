@@ -6,6 +6,7 @@ jobs:
   eslint:
     name: eslint
     runs-on: ubuntu-latest
+    if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
       - uses: actions/checkout@v1
       - name: yarn install
