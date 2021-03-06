@@ -9,6 +9,7 @@ import * as Styled from './styled'
 import { Grid } from '@material-ui/core'
 import AttachmentPdfs from './internal/AttachmentPdfs'
 import { AttachmentImages } from './internal/AttachmentImages/AttachmentImages'
+import { Booths } from '../Booths'
 
 type Props = {
   boothId?: string
@@ -84,86 +85,76 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
     return 'https://miro.com/app/embed/' + id + '/?autoplay=yep'
   }
 
-  const leftPane = () => {
-    return (
-      <Styled.Container>
-        <Grid item xs={12} md={12}>
-          <Styled.CenterContainer>
-            <Styled.LogoImg src={booth?.logoUrl} />
-          </Styled.CenterContainer>
-          <Styled.CenterContainer>
-            <h3>{booth?.sponsorName}</h3>
-          </Styled.CenterContainer>
-          <p>{booth?.description}</p>
-        </Grid>
-
-      </Styled.Container>
-    )
-  }
-
-  const rightPane = () => {
-    return (
-      <Styled.Container>
-        <AttachmentImages images={booth?.keyImageUrls} />
-        <Grid item xs={12}>
-          <Styled.CenterContainer>
-            <p>{booth?.text}</p>
-          </Styled.CenterContainer>
-        </Grid>
-
-        { booth?.miroUrl &&
-        <Grid item xs={12}>
-          <Styled.HeaderContainer>
-            <h2>
-              オンラインホワイトボード (編集するには、左下のリンクをクリック)
-            </h2>
-          </Styled.HeaderContainer>
-          <Styled.CenterContainer>
-            <Styled.MiroIframe
-              src={miroEmbedUrl(booth?.miroUrl)}
-              frameBorder="0"
-              scrolling="no"
-              allowFullScreen
-            ></Styled.MiroIframe>
-          </Styled.CenterContainer>
-        </Grid>
-        }
-        { booth?.vimeoUrl &&
-        <Grid item xs={12}>
-          <Styled.VimeoContainer>
-          <Styled.VimeoIframe
-              src={booth?.vimeoUrl}
-              width="100%"
-              height="360"
-              frameBorder="0"
-              allow="autoplay; fullscreen"
-              allowFullScreen>
-          </Styled.VimeoIframe>
-          </Styled.VimeoContainer>
-        </Grid>
-        }
-        { booth?.pdfUrls &&
-        <Grid item xs={12}>
-          <Styled.HeaderContainer>
-            <h2>PDF資料ダウンロード</h2>
-          </Styled.HeaderContainer>
-          <AttachmentPdfs pdfs={booth?.pdfUrls} />
-        </Grid>
-        }
-      </Styled.Container>
-    )
-  }
-
   return (
-    <Styled.BoothPageContainer>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={4}>
-          {leftPane()}
-        </Grid>
+    <Styled.BoothPageContainer
+      container
+      spacing={1}
+      alignItems="center"
+      justify="center"
+    >
+      <Grid item xs={12} md={11}>
+        <Styled.Container>
+          <Grid item xs={12}>
+            <Styled.CenterContainer>
+              <Styled.LogoImg src={booth?.logoUrl} />
+            </Styled.CenterContainer>
+            <Styled.CenterContainer>
+              <h3>{booth?.sponsorName}</h3>
+            </Styled.CenterContainer>
+            <p>{booth?.description}</p>
+          </Grid>
 
-        <Grid item xs={12} md={8}>
-          {rightPane()}
-        </Grid>
+          <AttachmentImages images={booth?.keyImageUrls} />
+          <Grid item xs={12}>
+            <Styled.CenterContainer>
+              <p>{booth?.text}</p>
+            </Styled.CenterContainer>
+          </Grid>
+
+          {booth?.miroUrl && (
+            <Grid item xs={12}>
+              <Styled.HeaderContainer>
+                <Styled.HeaderTitle>
+                  オンラインホワイトボード
+                  (編集するには、左下のリンクをクリック)
+                </Styled.HeaderTitle>
+              </Styled.HeaderContainer>
+              <Styled.CenterContainer>
+                <Styled.MiroIframe
+                  src={miroEmbedUrl(booth?.miroUrl)}
+                  frameBorder="0"
+                  scrolling="no"
+                  allowFullScreen
+                ></Styled.MiroIframe>
+              </Styled.CenterContainer>
+            </Grid>
+          )}
+          {booth?.vimeoUrl && (
+            <Grid item xs={12}>
+              <Styled.VimeoContainer>
+                <Styled.VimeoIframe
+                  src={booth?.vimeoUrl}
+                  width="100%"
+                  height="360"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                ></Styled.VimeoIframe>
+              </Styled.VimeoContainer>
+            </Grid>
+          )}
+          {booth?.pdfUrls && (
+            <Grid item xs={12}>
+              <Styled.HeaderContainer>
+                <Styled.HeaderTitle>PDF資料ダウンロード</Styled.HeaderTitle>
+              </Styled.HeaderContainer>
+              <AttachmentPdfs pdfs={booth?.pdfUrls} />
+            </Grid>
+          )}
+        </Styled.Container>
+      </Grid>
+      <Grid item xs={12} md={11}>
+        <Booths openNewWindow={false} />
       </Grid>
     </Styled.BoothPageContainer>
   )

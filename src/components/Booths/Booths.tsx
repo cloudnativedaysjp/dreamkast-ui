@@ -3,7 +3,11 @@ import { Configuration, Sponsor, SponsorApi } from '../../client-axios'
 import * as Styled from './styled'
 import { Grid } from '@material-ui/core'
 
-export const Booths: React.FC = () => {
+type Props = {
+  openNewWindow?: boolean
+}
+
+export const Booths: React.FC<Props> = ({ openNewWindow }) => {
   const [data, setData] = useState<Sponsor[]>([])
 
   useEffect(() => {
@@ -14,6 +18,14 @@ export const Booths: React.FC = () => {
         setData(res.data)
       })
   }, [])
+
+  const windowTarget = () => {
+    if (openNewWindow) {
+      return '_blank'
+    } else {
+      return '_self'
+    }
+  }
 
   const boothUrl = (id?: number) => {
     if (!id) return
@@ -30,7 +42,7 @@ export const Booths: React.FC = () => {
               <Styled.SponsorGridItem item xs={12} md={4}>
                 <Styled.SponsorLink
                   href={boothUrl(sponsor.booth.id)}
-                  target="_blank"
+                  target={windowTarget()}
                 >
                   <Styled.SponsorImg src={sponsor.logo_url} />
                 </Styled.SponsorLink>

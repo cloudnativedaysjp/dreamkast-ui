@@ -6,7 +6,7 @@ import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
-import { Booths } from '../Booths/Booths'
+import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
 
 type Props = {
@@ -122,7 +122,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
         />
       </Grid>
       <Grid item xs={12} md={11}>
-        <Booths />
+        <Booths openNewWindow={true} />
       </Grid>
     </Grid>
   )

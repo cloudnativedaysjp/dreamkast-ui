@@ -62,8 +62,8 @@ export const MobileMenu = styled.div`
   margin-left: auto;
   @media (max-width: 599px) {
     display: flex;
-    width:100%;
-    background-color: #FFF;
+    width: 100%;
+    background-color: #fff;
     padding: 0 20px;
   }
 `

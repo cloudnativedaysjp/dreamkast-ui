@@ -1,15 +1,16 @@
 import styled from 'styled-components'
-import { Container as MuiContainer } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
-export const BoothPageContainer = styled.div`
+export const BoothPageContainer = styled(Grid)`
   height: 100%;
-  margin: 10px 10px 0px 10px;
 `
 
-export const Container = styled(MuiContainer)`
+export const Container = styled.div`
   height: 100%;
   background: rgba(255, 255, 255, 0.7);
   font-size: 1.2em;
+  border-radius: 10px;
+  margin: 5px;
   padding: 10px;
 `
 
@@ -55,4 +56,8 @@ export const MiroIframe = styled.iframe`
 
 export const PdfContainer = styled.div`
   text-align: center;
+`
+
+export const HeaderTitle = styled.h2`
+  color: #037f8c;
 `
