@@ -30,7 +30,7 @@ exports[`TalkInfo 1`] = `
       一緒に盛り上がろう
     </h4>
     <a
-      className="sc-eCssSg bkAosv"
+      className="sc-eCssSg hVitRX"
       href="https://discord.gg/bvuTMNQ"
       target="_blank"
     >
@@ -45,7 +45,7 @@ exports[`TalkInfo 1`] = `
       </span>
     </a>
     <a
-      className="sc-eCssSg bkAosv"
+      className="sc-eCssSg hVitRX"
       href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
       target="_blank"
     >

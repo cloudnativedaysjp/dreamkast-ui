@@ -18,6 +18,8 @@
         "@material-ui/lab": "^4.0.0-alpha.57",
         "@types/axios": "^0.14.0",
         "@types/linkifyjs": "^2.1.3",
+        "@types/moment": "^2.13.0",
+        "@types/react-router-dom": "^5.1.7",
         "actioncable": "^5.2.4-5",
         "axios": "^0.21.1",
         "dayjs": "^1.10.4",
@@ -27,6 +29,7 @@
         "react-dom": "^16.12.0",
         "react-gtm-module": "^2.0.11",
         "react-hook-form": "^6.15.2",
+        "react-router-dom": "^5.2.0",
         "react-slick": "^0.28.0",
         "slick-carousel": "^1.8.1",
         "use-interval": "^1.3.0"

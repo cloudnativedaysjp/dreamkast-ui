@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { Player } from '../Player'
-import { TalkInfo } from '../TalkInfo'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
+import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
+import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
 
 type Props = {
@@ -107,7 +108,10 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
         <Chat talk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={8}>
-        <TalkInfo selectedTalk={selectedTalk} selectedTrackName={selectedTrack?.name} />
+        <TalkInfo
+          selectedTalk={selectedTalk}
+          selectedTrackName={selectedTrack?.name}
+        />
       </Grid>
       <Grid item xs={12} md={3}>
         <TalkSelector
@@ -116,6 +120,9 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
           talks={talks}
           selectTalk={selectTalk}
         />
+      </Grid>
+      <Grid item xs={12} md={11}>
+        <Booths openNewWindow={true} />
       </Grid>
     </Grid>
   )

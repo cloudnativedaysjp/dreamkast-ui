@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import Head from 'next/head'
-import Button from '@material-ui/core/Button'
+import { DesktopMenu, MobileMenu } from '../Menu'
 import AppBar from '@material-ui/core/AppBar'
 
 type Props = {
@@ -35,17 +35,9 @@ export const Layout: React.FC<Props> = ({
             <a href="/cndo2021" target="_blank" rel="noopener noreferrer">
               <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
             </a>
-            <Styled.MenuLink
-              href="/cndo2021/timetables"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Button style={{ color: '#037f8c' }}>Timetable</Button>
-            </Styled.MenuLink>
-            <Button href={url} style={{ color: '#037f8c' }}>
-              Logout
-            </Button>
+            <DesktopMenu url={url} />
           </Styled.Header>
+          <MobileMenu url={url} />
         </AppBar>
       </header>
       <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>

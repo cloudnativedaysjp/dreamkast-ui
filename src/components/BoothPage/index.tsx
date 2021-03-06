@@ -1,0 +1,1 @@
+export { BoothPage } from './BoothPage'

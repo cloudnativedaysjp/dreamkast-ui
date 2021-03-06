@@ -30,7 +30,10 @@ export const TalkInfo: React.FC<Props> = ({
             .join(' / ')}
         </h3>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
-        <Styled.SocialHeader><Styled.TalkIcon src="/cndo2021/ui/images/talk_icon.png" />一緒に盛り上がろう</Styled.SocialHeader>
+        <Styled.SocialHeader>
+          <Styled.TalkIcon src="/cndo2021/ui/images/talk_icon.png" />
+          一緒に盛り上がろう
+        </Styled.SocialHeader>
         <Styled.ShareButton href="https://discord.gg/bvuTMNQ" target="_blank">
           <Styled.SocialImg src="/cndo2021/ui/images/discord.png" />
           <Styled.SocialText>Ask the speaker</Styled.SocialText>

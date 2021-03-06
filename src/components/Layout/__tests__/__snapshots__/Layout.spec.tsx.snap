@@ -9,7 +9,7 @@ exports[`Layout 1`] = `
       className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
     >
       <div
-        className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz hcOYnX MuiToolbar-gutters"
+        className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
       >
         <a
           href="/cndo2021"
@@ -17,12 +17,152 @@ exports[`Layout 1`] = `
           target="_blank"
         >
           <img
-            className="sc-dlfnbm gQAXJw"
+            className="sc-dlfnbm jFXkDF"
             src="/cndo2021/ui/images/CNDO2021_horizontal.png"
           />
         </a>
+        <div
+          className="sc-fodVxV dfccac"
+        >
+          <a
+            className="sc-hBEYos bSCtY"
+            href="/cndo2021/ui#booths"
+            rel="noreferrer"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                Object {
+                  "color": "#037f8c",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Booths
+              </span>
+            </button>
+          </a>
+          <a
+            className="sc-hBEYos bSCtY"
+            href="/cndo2021/timetables"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                Object {
+                  "color": "#037f8c",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Timetable
+              </span>
+            </button>
+          </a>
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            href=""
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#037f8c",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Logout
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        className="sc-fFubgz bXZJlt"
+      >
         <a
-          className="sc-iBPRYJ hwsPac"
+          className="sc-hBEYos bSCtY"
+          href="/cndo2021/ui#booths"
+          rel="noreferrer"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#037f8c",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Booths
+            </span>
+          </button>
+        </a>
+        <a
+          className="sc-hBEYos bSCtY"
           href="/cndo2021/timetables"
           rel="noreferrer"
           target="_blank"

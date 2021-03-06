@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-
 import Toolbar from '@material-ui/core/Toolbar'
 
 export const Container = styled.div`
@@ -59,9 +58,12 @@ export const DesktopMenu = styled.div`
 
 export const MobileMenu = styled.div`
   display: none;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-left: auto;
   @media (max-width: 599px) {
     display: flex;
+    width: 100%;
+    background-color: #fff;
+    padding: 0 20px;
   }
 `
