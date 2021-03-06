@@ -224,7 +224,7 @@ exports[`Layout 1`] = `
             <span
               className="MuiButton-label"
             >
-              DiscussionBoard
+              Discussion
             </span>
           </button>
         </a>

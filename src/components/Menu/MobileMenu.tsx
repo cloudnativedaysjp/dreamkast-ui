@@ -17,7 +17,7 @@ export const MobileMenu: React.FC<Props> = ({ url }) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Button style={{ color: '#037f8c' }}>DiscussionBoard</Button>
+        <Button style={{ color: '#037f8c' }}>Discussion</Button>
       </Styled.MenuLink>
       <Styled.MenuLink
         href="/cndo2021/timetables"
