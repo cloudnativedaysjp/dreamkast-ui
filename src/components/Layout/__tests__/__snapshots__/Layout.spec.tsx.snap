@@ -197,7 +197,6 @@ exports[`Layout 1`] = `
           className="sc-hBEYos bSCtY"
           href="/cndo2021/ui/discussionboard"
           rel="noreferrer"
-          target="_blank"
         >
           <button
             className="MuiButtonBase-root MuiButton-root MuiButton-text"
@@ -232,7 +231,6 @@ exports[`Layout 1`] = `
           className="sc-hBEYos bSCtY"
           href="/cndo2021/timetables"
           rel="noreferrer"
-          target="_blank"
         >
           <button
             className="MuiButtonBase-root MuiButton-root MuiButton-text"

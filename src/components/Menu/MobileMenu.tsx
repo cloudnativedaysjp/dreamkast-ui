@@ -12,18 +12,10 @@ export const MobileMenu: React.FC<Props> = ({ url }) => {
       <Styled.MenuLink href="/cndo2021/ui#booths" rel="noreferrer">
         <Button style={{ color: '#037f8c' }}>Booths</Button>
       </Styled.MenuLink>
-      <Styled.MenuLink
-        href="/cndo2021/ui/discussionboard"
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Styled.MenuLink href="/cndo2021/ui/discussionboard" rel="noreferrer">
         <Button style={{ color: '#037f8c' }}>Discussion</Button>
       </Styled.MenuLink>
-      <Styled.MenuLink
-        href="/cndo2021/timetables"
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Styled.MenuLink href="/cndo2021/timetables" rel="noreferrer">
         <Button style={{ color: '#037f8c' }}>Timetable</Button>
       </Styled.MenuLink>
       <Button href={url} style={{ color: '#037f8c' }}>
