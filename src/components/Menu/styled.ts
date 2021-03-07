@@ -43,10 +43,6 @@ export const FooterLink = styled.a`
   color: gray;
 `
 
-export const MenuLink = styled.a`
-  text-decoration-line: none;
-`
-
 export const DesktopMenu = styled.div`
   display: none;
   justify-content: flex-end;
