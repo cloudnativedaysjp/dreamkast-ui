@@ -16,18 +16,34 @@ export const Title = styled.h2`
   font-size: 1.8em;
 `
 
+export const SpeakerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+`
+
+export const Speaker = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+`
+
 export const Content = styled.div`
   padding: 10px 0;
-  min-height: 200px;
+  height: 230px;
   font-size: 1.1em;
-  overflow: scroll;
+  overflow-y: scroll;
   &::-webkit-scrollbar {
-    display: none;
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 0 0 5px 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(3, 127, 140, 0.8);
   }
 `
 
 export const DocsLink = styled.a`
-  padding: 10px 0;
   text-decoration: none;
   color: #037f8c;
   font-weight: bold;

@@ -22,19 +22,22 @@ export const TalkInfo: React.FC<Props> = ({
     <Styled.OuterContainer>
       <Styled.Container>
         <Styled.Title>{selectedTalk?.title}</Styled.Title>
-        <h3>
-          {selectedTalk?.speakers
-            .map((speaker) => {
-              return speaker.name
-            })
-            .join(' / ')}
-        </h3>
+        <Styled.SpeakerContainer>
+          <Styled.Speaker>
+            {selectedTalk?.speakers
+              .map((speaker) => {
+                return speaker.name
+              })
+              .join(' / ')}
+          </Styled.Speaker>
+          <div style={{ paddingRight: '20px' }} />
+          {selectedTalk?.documentUrl && (
+            <Styled.DocsLink href={selectedTalk?.documentUrl} target="_blank">
+              登壇資料はこちら
+            </Styled.DocsLink>
+          )}
+        </Styled.SpeakerContainer>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
-        {selectedTalk?.documentUrl && (
-          <Styled.DocsLink href={selectedTalk?.documentUrl} target="_blank">
-            登壇資料
-          </Styled.DocsLink>
-        )}
         <Styled.SocialHeader>
           <Styled.TalkIcon src="/cndo2021/ui/images/talk_icon.png" />
           一緒に盛り上がろう

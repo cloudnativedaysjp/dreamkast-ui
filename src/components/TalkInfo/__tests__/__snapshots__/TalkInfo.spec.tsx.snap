@@ -12,33 +12,46 @@ exports[`TalkInfo 1`] = `
     >
       ほげふが
     </h2>
-    <h3>
-      alice / bob
-    </h3>
     <div
-      className="sc-hKgILt bnbvCg"
+      className="sc-hKgILt fGVjOM"
+    >
+      <div
+        className="sc-eCssSg eGOYFD"
+      >
+        alice / bob
+      </div>
+      <div
+        style={
+          Object {
+            "paddingRight": "20px",
+          }
+        }
+      />
+    </div>
+    <div
+      className="sc-jSgupP ggSDkb"
     >
       ぴよぴよ
     </div>
     <div
-      className="sc-jSgupP aPCNt"
+      className="sc-iBPRYJ kRuKJY"
     >
       <img
-        className="sc-gKsewC keBlao"
+        className="sc-fubCfw iYzSNh"
         src="/cndo2021/ui/images/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
     <div
-      className="sc-iBPRYJ knSzVm"
+      className="sc-pFZIQ hxExeM"
     >
       <a
-        className="sc-fubCfw cJvXKe"
+        className="sc-jrAGrp jUAzA-d"
         href="https://discord.gg/bvuTMNQ"
         target="_blank"
       >
         <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-pFZIQ fKIYol"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-kEjbxe smZCm"
           disabled={false}
           onBlur={[Function]}
           onDragLeave={[Function]}
@@ -58,7 +71,7 @@ exports[`TalkInfo 1`] = `
             className="MuiButton-label"
           >
             <img
-              className="sc-jrAGrp deYXuc"
+              className="sc-iqHYGH fhKGze"
               src="/cndo2021/ui/images/discord_logo.png"
             />
             Ask the speaker
@@ -73,12 +86,12 @@ exports[`TalkInfo 1`] = `
         }
       />
       <a
-        className="sc-fubCfw cJvXKe"
+        className="sc-jrAGrp jUAzA-d"
         href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
         target="_blank"
       >
         <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-kEjbxe deHcyM"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-crrsfI dqefnU"
           disabled={false}
           onBlur={[Function]}
           onDragLeave={[Function]}
@@ -98,7 +111,7 @@ exports[`TalkInfo 1`] = `
             className="MuiButton-label"
           >
             <img
-              className="sc-iqHYGH RBerV"
+              className="sc-dQppl fxCwta"
               src="/cndo2021/ui/images/twitter_logo.png"
             />
             tweet #CNDT2020_
