@@ -14,6 +14,16 @@ interface TalkWithAvailable extends Talk {
   available: boolean
 }
 
+const isAvailable = (
+  now: number,
+  startTime: string,
+  conferanceDayDate?: string,
+) => {
+  if (!conferanceDayDate) return true
+  const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
+  return now - dayjs(startDate).unix() >= 0
+}
+
 export const TalkSelector: React.FC<Props> = ({
   selectedTrackId,
   selectedTalk,
@@ -39,7 +49,10 @@ export const TalkSelector: React.FC<Props> = ({
   useEffect(() => {
     setTalksWithAvailableState(
       talks.map((talk) => {
-        return { ...talk, available: now - dayjs(talk.startTime).unix() >= 0 }
+        return {
+          ...talk,
+          available: isAvailable(now, talk.startTime, talk.conferenceDayDate),
+        }
       }),
     )
   }, [talks, now])
@@ -59,7 +72,9 @@ export const TalkSelector: React.FC<Props> = ({
                 onClick={() => selectTalk(talk)}
               >
                 <Styled.Text>
-                  {talk.onAir && <Styled.Live>LIVE</Styled.Live>} {dayjs(talk.startTime).format('HH:mm')}-{dayjs(talk.endTime).format('HH:mm')}
+                  {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
+                  {dayjs(talk.startTime).format('HH:mm')}-
+                  {dayjs(talk.endTime).format('HH:mm')}
                   <br />
                   {talk.title}
                 </Styled.Text>
