@@ -76,6 +76,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
           ) {
             setSelectedTalk(msg[selectedTrack.id])
             setVideoId(msg[selectedTrack.id].videoId)
+            getTalks() // onAirの切り替わった新しいTalk一覧を取得
           }
         },
       },
@@ -107,13 +108,13 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
       <Grid item xs={12} md={4}>
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid item xs={12} md={8} alignItems="stretch" style={{height: '100%'}}>
+      <Grid item xs={12} md={8} style={{ height: '100%' }}>
         <TalkInfo
           selectedTalk={selectedTalk}
           selectedTrackName={selectedTrack?.name}
         />
       </Grid>
-      <Grid item xs={12} md={4} alignItems="stretch" style={{height: '100%'}}>
+      <Grid item xs={12} md={4} style={{ height: '100%' }}>
         <TalkSelector
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrack?.id}
