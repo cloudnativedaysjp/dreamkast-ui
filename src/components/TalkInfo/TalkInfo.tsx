@@ -30,23 +30,33 @@ export const TalkInfo: React.FC<Props> = ({
             .join(' / ')}
         </h3>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
+        {selectedTalk?.documentUrl && (
+          <Styled.DocsLink href={selectedTalk?.documentUrl} target="_blank">
+            登壇資料
+          </Styled.DocsLink>
+        )}
         <Styled.SocialHeader>
           <Styled.TalkIcon src="/cndo2021/ui/images/talk_icon.png" />
           一緒に盛り上がろう
         </Styled.SocialHeader>
-        <Styled.ShareButton href="https://discord.gg/bvuTMNQ" target="_blank">
-          <Styled.SocialImg src="/cndo2021/ui/images/discord.png" />
-          <Styled.SocialText>Ask the speaker</Styled.SocialText>
-        </Styled.ShareButton>
-        <Styled.ShareButton
-          href={twitterURL(selectedTrackName)}
-          target="_blank"
-        >
-          <Styled.SocialImg src="/cndo2021/ui/images/twitter.png" />
-          <Styled.SocialText>
-            Twitterでつぶやく #CNDT2020_{selectedTrackName}
-          </Styled.SocialText>
-        </Styled.ShareButton>
+        <Styled.ButtonContainer>
+          <Styled.ButtonLink href="https://discord.gg/bvuTMNQ" target="_blank">
+            <Styled.DiscordButton>
+              <Styled.DiscordImg src="/cndo2021/ui/images/discord_logo.png" />
+              Ask the speaker
+            </Styled.DiscordButton>
+          </Styled.ButtonLink>
+          <div style={{ paddingRight: '8px' }} />
+          <Styled.ButtonLink
+            href={twitterURL(selectedTrackName)}
+            target="_blank"
+          >
+            <Styled.TweetButton>
+              <Styled.TwitterImg src="/cndo2021/ui/images/twitter_logo.png" />
+              tweet #CNDT2020_{selectedTrackName}
+            </Styled.TweetButton>
+          </Styled.ButtonLink>
+        </Styled.ButtonContainer>
       </Styled.Container>
     </Styled.OuterContainer>
   )

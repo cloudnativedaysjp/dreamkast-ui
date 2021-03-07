@@ -59,7 +59,9 @@ export const TalkSelector: React.FC<Props> = ({
                 onClick={() => selectTalk(talk)}
               >
                 <Styled.Text>
-                  {talk.onAir && <Styled.Live>LIVE</Styled.Live>} {dayjs(talk.startTime).format('HH:mm')}-{dayjs(talk.endTime).format('HH:mm')}
+                  {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
+                  {dayjs(talk.startTime).format('HH:mm')}-
+                  {dayjs(talk.endTime).format('HH:mm')}
                   <br />
                   {talk.title}
                 </Styled.Text>

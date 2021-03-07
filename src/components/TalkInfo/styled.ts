@@ -1,13 +1,10 @@
 import styled from 'styled-components'
+import { Button } from '@material-ui/core'
 
 export const Container = styled.div`
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 10px;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 export const OuterContainer = styled.div`
@@ -21,28 +18,29 @@ export const Title = styled.h2`
 
 export const Content = styled.div`
   padding: 10px 0;
+  min-height: 200px;
   font-size: 1.1em;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
-export const ShareButton = styled.a`
-  margin: 10px 0px;
-  padding: 5px;
-  display: block;
-  border: none !important;
-
+export const DocsLink = styled.a`
+  padding: 10px 0;
   text-decoration: none;
   color: #037f8c;
-  &:visited {
-    color: #037f8c;
-  }
-  &:hover {
-    background: rgba(255, 255, 255, 0.7);
-  }
+  font-weight: bold;
+  font-size: 16px;
 `
 
-export const SocialHeader = styled.h4`
+export const SocialHeader = styled.div`
+  display: flex;
+  align-items: center;
   color: #333;
   font-size: 1.2em;
+  padding: 10px 0;
+  font-weight: bold;
 `
 
 export const TalkIcon = styled.img`
@@ -51,13 +49,47 @@ export const TalkIcon = styled.img`
   margin-right: 5px;
 `
 
-export const SocialImg = styled.img`
-  height: 1.8em;
-  vertical-align: middle;
+export const ButtonContainer = styled.div`
+  display: flex;
 `
 
-export const SocialText = styled.span`
-  font-size: 1.4em;
+export const ButtonLink = styled.a`
+  text-decoration: none;
+`
+
+export const DiscordButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding-right: 10px;
+  color: #ffffff;
+  background-color: #7289da;
+  &:hover {
+    background-color: #9aabe4;
+  }
+`
+
+export const DiscordImg = styled.img`
+  height: 1.7em;
   vertical-align: middle;
-  margin-left: 10px;
+  padding-right: 5px;
+`
+
+export const TweetButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding-right: 10px;
+  color: #ffffff;
+  background-color: #1da1f2;
+  &:hover {
+    background-color: #4cb7f4;
+  }
+`
+
+export const TwitterImg = styled.img`
+  height: 1.4em;
+  padding: 1.5px;
+  vertical-align: middle;
+  padding-right: 5px;
 `

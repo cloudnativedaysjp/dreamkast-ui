@@ -5,7 +5,7 @@ exports[`TalkInfo 1`] = `
   className="sc-gsTCUz gCgpQH"
 >
   <div
-    className="sc-bdfBwQ eqqTko"
+    className="sc-bdfBwQ MrQxr"
   >
     <h2
       className="sc-dlfnbm edmzhC"
@@ -16,49 +16,96 @@ exports[`TalkInfo 1`] = `
       alice / bob
     </h3>
     <div
-      className="sc-hKgILt bAZhMm"
+      className="sc-hKgILt bnbvCg"
     >
       ぴよぴよ
     </div>
-    <h4
-      className="sc-jSgupP eiDkDi"
+    <div
+      className="sc-jSgupP aPCNt"
     >
       <img
         className="sc-gKsewC keBlao"
         src="/cndo2021/ui/images/talk_icon.png"
       />
       一緒に盛り上がろう
-    </h4>
-    <a
-      className="sc-eCssSg hVitRX"
-      href="https://discord.gg/bvuTMNQ"
-      target="_blank"
+    </div>
+    <div
+      className="sc-iBPRYJ knSzVm"
     >
-      <img
-        className="sc-iBPRYJ kJpEqb"
-        src="/cndo2021/ui/images/discord.png"
-      />
-      <span
-        className="sc-fubCfw ACARE"
+      <a
+        className="sc-fubCfw cJvXKe"
+        href="https://discord.gg/bvuTMNQ"
+        target="_blank"
       >
-        Ask the speaker
-      </span>
-    </a>
-    <a
-      className="sc-eCssSg hVitRX"
-      href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
-      target="_blank"
-    >
-      <img
-        className="sc-iBPRYJ kJpEqb"
-        src="/cndo2021/ui/images/twitter.png"
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-pFZIQ fKIYol"
+          disabled={false}
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <img
+              className="sc-jrAGrp deYXuc"
+              src="/cndo2021/ui/images/discord_logo.png"
+            />
+            Ask the speaker
+          </span>
+        </button>
+      </a>
+      <div
+        style={
+          Object {
+            "paddingRight": "8px",
+          }
+        }
       />
-      <span
-        className="sc-fubCfw ACARE"
+      <a
+        className="sc-fubCfw cJvXKe"
+        href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
+        target="_blank"
       >
-        Twitterでつぶやく #CNDT2020_
-      </span>
-    </a>
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-kEjbxe deHcyM"
+          disabled={false}
+          onBlur={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <img
+              className="sc-iqHYGH RBerV"
+              src="/cndo2021/ui/images/twitter_logo.png"
+            />
+            tweet #CNDT2020_
+          </span>
+        </button>
+      </a>
+    </div>
   </div>
 </div>
 `;
