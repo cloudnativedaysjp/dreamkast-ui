@@ -8,9 +8,9 @@ type Props = {
   selectedTrackId?: number
   selectedTalk?: Talk
   talks: Talk[]
-  isLiveMode: boolean
+  isLiveMode?: boolean
   selectTalk: (talk: Talk) => void
-  changeLiveMode: (
+  changeLiveMode?: (
     event: React.ChangeEvent<HTMLInputElement>,
     mode: boolean,
   ) => void
