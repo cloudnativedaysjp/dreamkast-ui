@@ -6,10 +6,12 @@ import {
   Configuration,
 } from '../../client-axios'
 import * as Styled from './styled'
+import * as CommonStyled from '../../styles/styled'
 import { Grid } from '@material-ui/core'
 import AttachmentPdfs from './internal/AttachmentPdfs'
 import { AttachmentImages } from './internal/AttachmentImages/AttachmentImages'
 import { Booths } from '../Booths'
+import { Miro } from '../../components/Miro'
 
 type Props = {
   boothId?: string
@@ -80,53 +82,45 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
     getBooth()
   }, [boothId])
 
-  const miroEmbedUrl = (id?: string) => {
-    if (!id) return
-    return 'https://miro.com/app/embed/' + id + '/?autoplay=yep'
-  }
-
   return (
-    <Styled.BoothPageContainer
+    <CommonStyled.OuterContainer
       container
       spacing={1}
       alignItems="center"
       justify="center"
     >
       <Grid item xs={12} md={11}>
-        <Styled.Container>
+        <CommonStyled.Container>
           <Grid item xs={12}>
-            <Styled.CenterContainer>
+            <CommonStyled.CenterizedContainer>
               <Styled.LogoImg src={booth?.logoUrl} />
-            </Styled.CenterContainer>
-            <Styled.CenterContainer>
-              <h3>{booth?.sponsorName}</h3>
-            </Styled.CenterContainer>
+            </CommonStyled.CenterizedContainer>
+            <CommonStyled.Header2 centerized={true}>
+              {booth?.sponsorName}
+            </CommonStyled.Header2>
             <p>{booth?.description}</p>
           </Grid>
 
           <AttachmentImages images={booth?.keyImageUrls} />
           <Grid item xs={12}>
-            <Styled.CenterContainer>
+            <CommonStyled.CenterizedContainer>
               <p>{booth?.text}</p>
-            </Styled.CenterContainer>
+            </CommonStyled.CenterizedContainer>
           </Grid>
 
           {booth?.miroUrl && (
             <Grid item xs={12}>
-              <Styled.HeaderContainer>
-                <Styled.HeaderTitle>
-                  オンラインホワイトボード
-                  (編集するには、左下のリンクをクリック)
-                </Styled.HeaderTitle>
-              </Styled.HeaderContainer>
-              <Styled.CenterContainer>
-                <Styled.MiroIframe
-                  src={miroEmbedUrl(booth?.miroUrl)}
-                  frameBorder="0"
-                  scrolling="no"
-                  allowFullScreen
-                ></Styled.MiroIframe>
-              </Styled.CenterContainer>
+              <CommonStyled.Header2 centerized={true}>
+                オンラインホワイトボード
+              </CommonStyled.Header2>
+              <CommonStyled.Header3 centerized={true}>
+                (編集するには、左下のリンクをクリック)
+              </CommonStyled.Header3>
+              <Miro
+                miroId={booth?.miroUrl}
+                liveEmbed={false}
+                viewport="moveToViewport=-94,-1521,7088,5264"
+              />
             </Grid>
           )}
           {booth?.vimeoUrl && (
@@ -145,17 +139,17 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
           )}
           {booth?.pdfUrls && (
             <Grid item xs={12}>
-              <Styled.HeaderContainer>
-                <Styled.HeaderTitle>PDF資料ダウンロード</Styled.HeaderTitle>
-              </Styled.HeaderContainer>
+              <CommonStyled.Header2 centerized={true}>
+                PDF資料ダウンロード
+              </CommonStyled.Header2>
               <AttachmentPdfs pdfs={booth?.pdfUrls} />
             </Grid>
           )}
-        </Styled.Container>
+        </CommonStyled.Container>
       </Grid>
       <Grid item xs={12} md={11}>
         <Booths openNewWindow={false} />
       </Grid>
-    </Styled.BoothPageContainer>
+    </CommonStyled.OuterContainer>
   )
 }
