@@ -47,16 +47,16 @@ export const Sponsors: React.FC = () => {
   }, [])
 
   return (
-      <CommonStyled.Container>
-        <Styled.CNDOSlider {...settings}>
-          {data.map((sponsor) => (
-            <Styled.Sponsor key={sponsor.id}>
-              <a href={sponsor.url} target="_blank">
-                <Styled.SponsorImg src={sponsor.logo_url} />
-              </a>
-            </Styled.Sponsor>
-          ))}
-        </Styled.CNDOSlider>
-      </CommonStyled.Container>
+    <CommonStyled.Container>
+      <Styled.CNDOSlider {...settings}>
+        {data.map((sponsor) => (
+          <Styled.Sponsor key={sponsor.id}>
+            <a href={sponsor.url} target="_blank">
+              <Styled.SponsorImg src={sponsor.logo_url} />
+            </a>
+          </Styled.Sponsor>
+        ))}
+      </Styled.CNDOSlider>
+    </CommonStyled.Container>
   )
 }

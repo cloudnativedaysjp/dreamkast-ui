@@ -115,14 +115,15 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
                 オンラインホワイトボード
               </CommonStyled.Header2>
               <CommonStyled.CenterizedContainer>
-                <CommonStyled.MenuLink href={`https://miro.com/app/board/${booth?.miroUrl}/`}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                >
-                  参加する
-                </Button>
-                </CommonStyled.MenuLink>
+                <CommonStyled.ButtonContainer>
+                  <Button
+                    href={`https://miro.com/app/board/${booth?.miroUrl}/`}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    参加する
+                  </Button>
+                </CommonStyled.ButtonContainer>
               </CommonStyled.CenterizedContainer>
               <Miro
                 miroId={booth?.miroUrl}

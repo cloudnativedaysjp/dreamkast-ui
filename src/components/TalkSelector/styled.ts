@@ -3,7 +3,7 @@ import { List as OriginList, ListItem } from '@material-ui/core'
 
 export const Container = styled.div`
   height: 450px;
-  padding-right: 5px;
+  padding: 0 5px;
 `
 
 export const Title = styled.div`
