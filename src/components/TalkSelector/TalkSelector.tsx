@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { Talk } from '../../client-axios'
+import { Checkbox } from '@material-ui/core'
 import dayjs from 'dayjs'
 
 type Props = {
   selectedTrackId?: number
   selectedTalk?: Talk
   talks: Talk[]
+  isLiveMode: boolean
   selectTalk: (talk: Talk) => void
+  changeLiveMode: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    mode: boolean,
+  ) => void
 }
 
 interface TalkWithAvailable extends Talk {
@@ -18,7 +24,9 @@ export const TalkSelector: React.FC<Props> = ({
   selectedTrackId,
   selectedTalk,
   talks,
+  isLiveMode,
   selectTalk,
+  changeLiveMode,
 }) => {
   const [talksWithAvailableState, setTalksWithAvailableState] = useState<
     TalkWithAvailable[]
@@ -70,6 +78,10 @@ export const TalkSelector: React.FC<Props> = ({
           }
         })}
       </Styled.List>
+      <Styled.Footer>
+        <Checkbox size="small" checked={isLiveMode} onChange={changeLiveMode} />
+        <Styled.label>ライブ中のセッションに自動遷移する</Styled.label>
+      </Styled.Footer>
     </Styled.Container>
   )
 }

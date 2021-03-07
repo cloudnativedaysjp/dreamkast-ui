@@ -19,6 +19,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
+  const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
 
   const getTalks = useCallback(async () => {
     const api = new TalkApi(
@@ -42,11 +43,15 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   }
 
   useEffect(() => {
-    if (!talks.length) return
+    if (!talks.length || !isLiveMode) return
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
     setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
   }, [talks])
+
+  useEffect(() => {
+    console.log(selectedTalk)
+  }, [selectedTalk])
 
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
@@ -54,6 +59,13 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
     } else {
       return `wss://${window.location.host}/cable`
     }
+  }
+
+  const onChecked = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
+    setIsLiveMode(checked)
   }
 
   useEffect(() => {
@@ -74,8 +86,6 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
             selectedTrack.id == msg[selectedTrack.id].trackId &&
             selectedTalk?.id != msg[selectedTrack.id].id
           ) {
-            setSelectedTalk(msg[selectedTrack.id])
-            setVideoId(msg[selectedTrack.id].videoId)
             getTalks() // onAirの切り替わった新しいTalk一覧を取得
           }
         },
@@ -119,6 +129,8 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrack?.id}
           talks={talks}
+          isLiveMode={isLiveMode}
+          changeLiveMode={onChecked}
           selectTalk={selectTalk}
         />
       </Grid>
