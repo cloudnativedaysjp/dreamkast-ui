@@ -7,7 +7,6 @@ import {
   Talk,
 } from '../../../../../../client-axios/api'
 import { ChatMessageClass } from '../../../../../../util/chat'
-import ReplyIcon from '@material-ui/icons/Reply'
 import MenuIcon from '@material-ui/icons/Menu'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
@@ -17,6 +16,7 @@ import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkifyjs/react'
 import { ChatMessageMenu } from '../../ChatMessageMenu'
 import { Configuration } from '../../../../../../client-axios'
+import { Grid } from '@material-ui/core'
 
 dayjs.extend(timezone)
 dayjs.extend(utc)
@@ -87,28 +87,39 @@ export const ChatMessage: React.FC<Props> = ({
   return (
     <div>
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
-        {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
+        <Grid container>
+          <Grid item xs={11}>
+            {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
+          </Grid>
 
-        <Styled.MenuButton
-          onClick={openChatMessageMenu}
-          data-messageid={chatMessage?.id}
-          data-replyto={chatMessage?.replyTo}
-        >
-          <MenuIcon fontSize="small" />
-        </Styled.MenuButton>
+          <Grid item xs={1}>
+            <Styled.MenuButton
+              onClick={openChatMessageMenu}
+              data-messageid={chatMessage?.id}
+              data-replyto={chatMessage?.replyTo}
+            >
+              <Styled.MenuIcon fontSize="small" />
+            </Styled.MenuButton>
+          </Grid>
 
-        <Styled.MessageBody>
-          {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
-          <Linkify>{chatMessage?.body}</Linkify>
-        </Styled.MessageBody>
-        {!selected && (
-          <Styled.ReplyButton
-            data-messageId={chatMessage?.id}
-            onClick={onClickReplyButton}
-          >
-            <ReplyIcon fontSize="small" />
-          </Styled.ReplyButton>
-        )}
+          <Grid item xs={11}>
+            <Styled.MessageBody>
+              {isSpeakerMessage(chatMessage) ? '[スピーカー] ' : ''}
+              <Linkify>{chatMessage?.body}</Linkify>
+            </Styled.MessageBody>
+          </Grid>
+
+          <Grid item xs={1}>
+            {!selected && (
+              <Styled.ReplyButton
+                data-messageId={chatMessage?.id}
+                onClick={onClickReplyButton}
+              >
+                <Styled.ReplyIcon fontSize="small" />
+              </Styled.ReplyButton>
+            )}
+          </Grid>
+        </Grid>
       </Styled.ChatMessage>
       {chatMessage?.children?.map((msg) => {
         return (
