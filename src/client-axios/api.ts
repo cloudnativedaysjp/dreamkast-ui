@@ -337,6 +337,19 @@ export interface Event {
 /**
  * 
  * @export
+ * @interface InlineResponse403
+ */
+export interface InlineResponse403 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse403
+     */
+    error?: string;
+}
+/**
+ * 
+ * @export
  * @interface Profile
  */
 export interface Profile {
