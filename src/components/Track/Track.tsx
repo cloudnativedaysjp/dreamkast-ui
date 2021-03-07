@@ -99,21 +99,21 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
   }, [selectedTrack, selectedTalk])
 
   return (
-    <Grid container spacing={1} justify="center" alignItems="flex-start">
+    <Grid container spacing={0} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
         <Player vimeoId={videoId} autoplay={true}></Player>
         <Sponsors />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={4}>
         <Chat talk={selectedTalk} />
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={8} alignItems="stretch" style={{height: '100%'}}>
         <TalkInfo
           selectedTalk={selectedTalk}
           selectedTrackName={selectedTrack?.name}
         />
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={4} alignItems="stretch" style={{height: '100%'}}>
         <TalkSelector
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrack?.id}
@@ -121,7 +121,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
           selectTalk={selectTalk}
         />
       </Grid>
-      <Grid item xs={12} md={11}>
+      <Grid item xs={12} md={12}>
         <Booths openNewWindow={true} />
       </Grid>
     </Grid>

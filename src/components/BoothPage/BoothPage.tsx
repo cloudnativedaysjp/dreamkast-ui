@@ -8,6 +8,7 @@ import {
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Grid } from '@material-ui/core'
+import { Button } from '@material-ui/core'
 import AttachmentPdfs from './internal/AttachmentPdfs'
 import { AttachmentImages } from './internal/AttachmentImages/AttachmentImages'
 import { Booths } from '../Booths'
@@ -113,9 +114,16 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
               <CommonStyled.Header2 centerized={true}>
                 オンラインホワイトボード
               </CommonStyled.Header2>
-              <CommonStyled.Header3 centerized={true}>
-                (編集するには、左下のリンクをクリック)
-              </CommonStyled.Header3>
+              <CommonStyled.CenterizedContainer>
+                <CommonStyled.MenuLink href={`https://miro.com/app/board/${booth?.miroUrl}/`}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                >
+                  参加する
+                </Button>
+                </CommonStyled.MenuLink>
+              </CommonStyled.CenterizedContainer>
               <Miro
                 miroId={booth?.miroUrl}
                 liveEmbed={false}
