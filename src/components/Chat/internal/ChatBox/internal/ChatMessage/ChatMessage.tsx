@@ -121,24 +121,25 @@ export const ChatMessage: React.FC<Props> = ({
           </Grid>
         </Grid>
       </Styled.ChatMessage>
-      {chatMessage?.children?.map((msg) => {
-        return (
-          <Styled.ChatReplyMessage key={msg.id} isChat={isChat}>
-            <Styled.MessageBody>
-              {isSpeakerMessage(msg) ? '[スピーカー] ' : ''}
-              {msg.body}
-            </Styled.MessageBody>
+      {chatMessage?.children &&
+        Array.from(chatMessage.children).map(([, msg]) => {
+          return (
+            <Styled.ChatReplyMessage key={msg.id} isChat={isChat}>
+              <Styled.MessageBody>
+                {isSpeakerMessage(msg) ? '[スピーカー] ' : ''}
+                {msg.body}
+              </Styled.MessageBody>
 
-            <Styled.MenuButton
-              onClick={openChatMessageMenu}
-              data-messageid={msg.id}
-              data-replyto={msg.replyTo}
-            >
-              <MenuIcon fontSize="small" />
-            </Styled.MenuButton>
-          </Styled.ChatReplyMessage>
-        )
-      })}
+              <Styled.MenuButton
+                onClick={openChatMessageMenu}
+                data-messageid={msg.id}
+                data-replyto={msg.replyTo}
+              >
+                <MenuIcon fontSize="small" />
+              </Styled.MenuButton>
+            </Styled.ChatReplyMessage>
+          )
+        })}
 
       <ChatMessageMenu
         profile={profile}
