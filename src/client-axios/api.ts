@@ -199,6 +199,77 @@ export enum ChatMessageMessageTypeEnum {
 /**
  * 
  * @export
+ * @interface ChatMessageProperties
+ */
+export interface ChatMessageProperties {
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessageProperties
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessageProperties
+     */
+    profileId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessageProperties
+     */
+    speakerId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessageProperties
+     */
+    eventAbbr?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessageProperties
+     */
+    roomId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessageProperties
+     */
+    roomType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessageProperties
+     */
+    body?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessageProperties
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatMessageProperties
+     */
+    messageType?: ChatMessagePropertiesMessageTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ChatMessagePropertiesMessageTypeEnum {
+    Chat = 'chat',
+    Qa = 'qa'
+}
+
+/**
+ * 
+ * @export
  * @interface Event
  */
 export interface Event {
@@ -262,6 +333,38 @@ export interface Event {
      * @memberof Event
      */
     coc: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse403
+ */
+export interface InlineResponse403 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse403
+     */
+    error?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Profile
+ */
+export interface Profile {
+    /**
+     * 
+     * @type {number}
+     * @memberof Profile
+     */
+    id: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Profile
+     */
+    name: string;
 }
 /**
  * 
@@ -502,6 +605,77 @@ export interface Track {
      */
     videoId?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UpdateChatMessage
+ */
+export interface UpdateChatMessage {
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChatMessage
+     */
+    id?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChatMessage
+     */
+    profileId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChatMessage
+     */
+    speakerId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateChatMessage
+     */
+    eventAbbr: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChatMessage
+     */
+    roomId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateChatMessage
+     */
+    roomType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateChatMessage
+     */
+    body: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateChatMessage
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateChatMessage
+     */
+    messageType?: UpdateChatMessageMessageTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateChatMessageMessageTypeEnum {
+    Chat = 'chat',
+    Qa = 'qa'
+}
+
 
 /**
  * BoothApi - axios parameter creator
@@ -669,6 +843,44 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Update Chat Message
+         * @param {string} messageId ID of ChatMessage
+         * @param {UpdateChatMessage} [updateChatMessage] chat message to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1ChatMessagesMessageIdPut: async (messageId: string, updateChatMessage?: UpdateChatMessage, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'messageId' is not null or undefined
+            assertParamExists('apiV1ChatMessagesMessageIdPut', 'messageId', messageId)
+            const localVarPath = `/api/v1/chat_messages/{messageId}`
+                .replace(`{${"messageId"}}`, encodeURIComponent(String(messageId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateChatMessage, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Post Chat Message
          * @param {ChatMessage} [chatMessage] chat message to create
          * @param {*} [options] Override http request option.
@@ -726,6 +938,18 @@ export const ChatMessageApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update Chat Message
+         * @param {string} messageId ID of ChatMessage
+         * @param {UpdateChatMessage} [updateChatMessage] chat message to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatMessage>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ChatMessagesMessageIdPut(messageId, updateChatMessage, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Post Chat Message
          * @param {ChatMessage} [chatMessage] chat message to create
          * @param {*} [options] Override http request option.
@@ -759,6 +983,17 @@ export const ChatMessageApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
+         * @summary Update Chat Message
+         * @param {string} messageId ID of ChatMessage
+         * @param {UpdateChatMessage} [updateChatMessage] chat message to update
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: any): AxiosPromise<Array<ChatMessage>> {
+            return localVarFp.apiV1ChatMessagesMessageIdPut(messageId, updateChatMessage, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Post Chat Message
          * @param {ChatMessage} [chatMessage] chat message to create
          * @param {*} [options] Override http request option.
@@ -789,6 +1024,19 @@ export class ChatMessageApi extends BaseAPI {
      */
     public apiV1ChatMessagesGet(eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options?: any) {
         return ChatMessageApiFp(this.configuration).apiV1ChatMessagesGet(eventAbbr, roomId, roomType, createdFrom, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Chat Message
+     * @param {string} messageId ID of ChatMessage
+     * @param {UpdateChatMessage} [updateChatMessage] chat message to update
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatMessageApi
+     */
+    public apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: any) {
+        return ChatMessageApiFp(this.configuration).apiV1ChatMessagesMessageIdPut(messageId, updateChatMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -902,6 +1150,107 @@ export class EventApi extends BaseAPI {
      */
     public apiV1EventsEventAbbrGet(eventAbbr: string, options?: any) {
         return EventApiFp(this.configuration).apiV1EventsEventAbbrGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ProfileApi - axios parameter creator
+ * @export
+ */
+export const ProfileApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} eventAbbr ID of event
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'eventAbbr' is not null or undefined
+            assertParamExists('apiV1EventAbbrMyProfileGet', 'eventAbbr', eventAbbr)
+            const localVarPath = `/api/v1/${eventAbbr}/my_profile`
+                .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProfileApi - functional programming interface
+ * @export
+ */
+export const ProfileApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProfileApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} eventAbbr ID of event
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1EventAbbrMyProfileGet(eventAbbr, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ProfileApi - factory interface
+ * @export
+ */
+export const ProfileApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProfileApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} eventAbbr ID of event
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: any): AxiosPromise<Profile> {
+            return localVarFp.apiV1EventAbbrMyProfileGet(eventAbbr, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ProfileApi - object-oriented interface
+ * @export
+ * @class ProfileApi
+ * @extends {BaseAPI}
+ */
+export class ProfileApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} eventAbbr ID of event
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProfileApi
+     */
+    public apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: any) {
+        return ProfileApiFp(this.configuration).apiV1EventAbbrMyProfileGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

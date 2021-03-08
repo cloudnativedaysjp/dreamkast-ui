@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
 import * as Styled from './styled'
-import { ChatMessageMessageTypeEnum, Talk } from '../../../../client-axios'
+import {
+  ChatMessageMessageTypeEnum,
+  Profile,
+  Talk,
+} from '../../../../client-axios'
 import { ChatMessage } from './internal/ChatMessage'
 import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
+  profile?: Profile
   talk?: Talk
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
@@ -17,6 +22,7 @@ type Props = {
 }
 
 export const ChatBox: React.FC<Props> = ({
+  profile,
   talk,
   messages,
   messageTypes,
@@ -36,6 +42,7 @@ export const ChatBox: React.FC<Props> = ({
         if (messageTypes.includes(chatMessage.messageType)) {
           return (
             <ChatMessage
+              profile={profile}
               talk={talk}
               key={chatMessage.id}
               chatMessage={chatMessage}

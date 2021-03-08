@@ -2,7 +2,13 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Player } from '../Player'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import { Track, Talk, TalkApi, Configuration } from '../../client-axios'
+import {
+  Track,
+  Talk,
+  TalkApi,
+  Configuration,
+  Profile,
+} from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
@@ -10,11 +16,16 @@ import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
 
 type Props = {
+  profile?: Profile
   selectedTrack?: Track
   propTalks?: Talk[]
 }
 
-export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
+export const TrackView: React.FC<Props> = ({
+  profile,
+  selectedTrack,
+  propTalks,
+}) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -105,7 +116,7 @@ export const TrackView: React.FC<Props> = ({ selectedTrack, propTalks }) => {
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={4}>
-        <Chat talk={selectedTalk} />
+        <Chat profile={profile} talk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={8} alignItems="stretch" style={{height: '100%'}}>
         <TalkInfo

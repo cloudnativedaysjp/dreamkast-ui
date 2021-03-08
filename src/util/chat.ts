@@ -11,9 +11,9 @@ export class ChatMessageMap extends Map<number, ChatMessageClass> {
       const parent = this.get(msg.replyTo)
       if (parent) {
         if (!parent.children) {
-          parent.children = []
+          parent.children = new Map<number, ChatMessageClass>()
         }
-        parent.children.push(msg)
+        parent.children.set(msg.id, msg)
       } else {
         this.set(msg.id, msg)
       }
@@ -34,7 +34,7 @@ export class ChatMessageClass implements ChatMessageInterface {
   body: string
   messageType: ChatMessageMessageTypeEnum
   replyTo?: number
-  children?: ChatMessageClass[]
+  children?: Map<number, ChatMessageClass>
 
   constructor(
     id: number,
@@ -58,6 +58,6 @@ export class ChatMessageClass implements ChatMessageInterface {
     this.body = body
     this.messageType = messageType
     this.replyTo = replyTo
-    this.children = []
+    this.children = new Map<number, ChatMessageClass>()
   }
 }
