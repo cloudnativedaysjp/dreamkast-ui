@@ -110,14 +110,15 @@ export const ChatMessage: React.FC<Props> = ({
           </Grid>
 
           <Grid item xs={1}>
-            {!selected && (
-              <Styled.ReplyButton
-                data-messageId={chatMessage?.id}
-                onClick={onClickReplyButton}
-              >
-                <Styled.ReplyIcon fontSize="small" />
-              </Styled.ReplyButton>
-            )}
+            {!selected &&
+              chatMessage?.body != 'このメッセージは削除されました' && (
+                <Styled.ReplyButton
+                  data-messageId={chatMessage?.id}
+                  onClick={onClickReplyButton}
+                >
+                  <Styled.ReplyIcon fontSize="small" />
+                </Styled.ReplyButton>
+              )}
           </Grid>
         </Grid>
       </Styled.ChatMessage>
