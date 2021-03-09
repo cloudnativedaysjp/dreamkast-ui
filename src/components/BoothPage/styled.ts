@@ -34,3 +34,7 @@ export const KeyImage = styled.img`
 export const PdfContainer = styled.div`
   text-align: center;
 `
+
+export const PreWrapP = styled.p`
+  white-space: pre-wrap;
+`

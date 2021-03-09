@@ -83,6 +83,15 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
     getBooth()
   }, [boothId])
 
+  useEffect(() => {
+    console.log(booth)
+  }, [booth])
+
+  function createMarkup(text?: string) {
+    if (!text) return
+    return { __html: text }
+  }
+
   return (
     <CommonStyled.OuterContainer
       container
@@ -99,13 +108,17 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
             <CommonStyled.Header2 centerized={true}>
               {booth?.sponsorName}
             </CommonStyled.Header2>
-            <p>{booth?.description}</p>
+            <Styled.PreWrapP
+              dangerouslySetInnerHTML={createMarkup(booth?.description)}
+            ></Styled.PreWrapP>
           </Grid>
 
           <AttachmentImages images={booth?.keyImageUrls} />
           <Grid item xs={12}>
             <CommonStyled.CenterizedContainer>
-              <p>{booth?.text}</p>
+              <Styled.PreWrapP
+                dangerouslySetInnerHTML={createMarkup(booth?.text)}
+              ></Styled.PreWrapP>
             </CommonStyled.CenterizedContainer>
           </Grid>
 
