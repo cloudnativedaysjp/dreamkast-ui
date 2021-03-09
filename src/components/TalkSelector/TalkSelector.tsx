@@ -37,8 +37,11 @@ export const TalkSelector: React.FC<Props> = ({
   }, [])
 
   useEffect(() => {
+    const filteredTalks = sortTalks(talks).filter((talk) => {
+      return talk.showOnTimetable
+    })
     setTalksWithAvailableState(
-      sortTalks(talks).map((talk) => {
+      filteredTalks.map((talk) => {
         return { ...talk, available: now - dayjs(talk.startTime).unix() >= 0 }
       }),
     )
