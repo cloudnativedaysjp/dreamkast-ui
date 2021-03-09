@@ -333,6 +333,31 @@ export interface Event {
      * @memberof Event
      */
     coc: string;
+    /**
+     * 
+     * @type {Array<EventConferenceDays>}
+     * @memberof Event
+     */
+    conferenceDays?: Array<EventConferenceDays>;
+}
+/**
+ * 
+ * @export
+ * @interface EventConferenceDays
+ */
+export interface EventConferenceDays {
+    /**
+     * 
+     * @type {number}
+     * @memberof EventConferenceDays
+     */
+    id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof EventConferenceDays
+     */
+    date?: string;
 }
 /**
  * 
@@ -1149,7 +1174,9 @@ export class EventApi extends BaseAPI {
      * @memberof EventApi
      */
     public apiV1EventsEventAbbrGet(eventAbbr: string, options?: any) {
-        return EventApiFp(this.configuration).apiV1EventsEventAbbrGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
+        return EventApiFp(this.configuration).apiV1EventsEventAbbrGet(eventAbbr, options).then((request) => {
+            return request(this.axios, this.basePath)
+        });
     }
 }
 
