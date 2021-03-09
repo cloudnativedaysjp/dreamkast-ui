@@ -83,10 +83,6 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
     getBooth()
   }, [boothId])
 
-  useEffect(() => {
-    console.log(booth)
-  }, [booth])
-
   function createMarkup(text?: string) {
     if (!text) return
     return { __html: text }
