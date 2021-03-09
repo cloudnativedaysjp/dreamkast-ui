@@ -1,4 +1,4 @@
-name: GitOps for production
+name: GitOps for staging
 
 on:
   push:

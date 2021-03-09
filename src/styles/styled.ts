@@ -36,3 +36,7 @@ export const MiroIframe = styled.iframe`
 export const MenuLink = styled.a`
   text-decoration-line: none;
 `
+
+export const ButtonContainer = styled.div`
+  padding-bottom: 10px;
+`
