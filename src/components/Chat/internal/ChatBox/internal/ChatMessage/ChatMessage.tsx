@@ -89,7 +89,7 @@ export const ChatMessage: React.FC<Props> = ({
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
         <Grid container>
           <Grid item xs={11}>
-            {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:MM')}
+            {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:mm')}
           </Grid>
 
           <Grid item xs={1}>
