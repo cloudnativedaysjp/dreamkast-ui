@@ -24,6 +24,7 @@ dayjs.extend(utc)
 type Props = {
   profile?: Profile
   talk?: Talk
+  isVisibleForm?: boolean
   chatMessage?: ChatMessageClass
   selected: boolean
   onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
@@ -34,6 +35,7 @@ type Props = {
 export const ChatMessage: React.FC<Props> = ({
   profile,
   talk,
+  isVisibleForm,
   chatMessage,
   selected,
   onClickReplyButton,
@@ -110,7 +112,8 @@ export const ChatMessage: React.FC<Props> = ({
           </Grid>
 
           <Grid item xs={1}>
-            {!selected &&
+            {isVisibleForm &&
+              !selected &&
               chatMessage?.body != 'このメッセージは削除されました' && (
                 <Styled.ReplyButton
                   data-messageId={chatMessage?.id}
