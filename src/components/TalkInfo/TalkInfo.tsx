@@ -56,7 +56,7 @@ export const TalkInfo: React.FC<Props> = ({
           >
             <Styled.TweetButton>
               <Styled.TwitterImg src="/cndo2021/ui/images/twitter_logo.png" />
-              tweet #CNDT2020_{selectedTrackName}
+              tweet #CNDO2021_{selectedTrackName}
             </Styled.TweetButton>
           </Styled.ButtonLink>
         </Styled.ButtonContainer>
