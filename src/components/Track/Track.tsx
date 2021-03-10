@@ -36,6 +36,7 @@ export const TrackView: React.FC<Props> = ({
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
+  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
 
   const findDayId = () => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
@@ -49,6 +50,7 @@ export const TrackView: React.FC<Props> = ({
   }
 
   const getTalks = useCallback(async () => {
+    console.log('run getTalks')
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
     )
@@ -65,6 +67,10 @@ export const TrackView: React.FC<Props> = ({
   useEffect(() => {
     if (!propTalks) getTalks()
   }, [getTalks])
+
+  useEffect(() => {
+    if (isLiveMode) getTalks()
+  }, [isLiveMode])
 
   const selectTalk = (talk: Talk) => {
     if (!talk.onAir) {
@@ -98,23 +104,24 @@ export const TrackView: React.FC<Props> = ({
 
   useEffect(() => {
     if (!selectedTrack) return
+    if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const wsUrl = actionCableUrl()
-    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
-    if (cableApp) {
-      cableApp.disconnect()
-    }
-    cableApp.subscriptions.create(
+    const cable = actionCable.createConsumer(wsUrl)
+    setChatCable(cable)
+    cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
+          getTalks() // onAirの切り替わった新しいTalk一覧を取得
           if (!msg[selectedTrack.id] || !selectedTalk) return
           if (
-            selectedTrack.id === msg[selectedTrack.id].trackId &&
-            selectedTalk.id !== msg[selectedTrack.id].id
+            selectedTrack.id == msg[selectedTrack.id].trackId &&
+            selectedTalk.id != msg[selectedTrack.id].id
           ) {
-            getTalks() // onAirの切り替わった新しいTalk一覧を取得
+            setSelectedTalk(msg[selectedTrack.id])
+            setVideoId(msg[selectedTrack.id].videoId)
           }
         },
       },
