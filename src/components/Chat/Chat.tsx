@@ -52,9 +52,8 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   )
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [checked, setChecked] = useState<boolean>(true)
+  const [isVisibleForm, setIsVisibleForm] = useState<boolean>(false)
 
-  // 発表時間の幅を考慮して10分(6000000ミリ秒)余裕をもたせる
-  const isArchive = dayjs().unix() - dayjs(talk?.endTime).unix() >= 6000000
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
       return `ws://${window.location.host}/cable`
@@ -104,6 +103,12 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   useEffect(() => {
     if (!talk || !messages) return
     if (chatCable) chatCable.disconnect()
+
+    const endTime = `${talk?.conferenceDayDate} ${dayjs(talk.endTime).format(
+      'HH:mm',
+    )}`
+    // 発表時間の幅を考慮して10分(600秒)余裕をもたせる
+    setIsVisibleForm(dayjs().unix() - dayjs(endTime).unix() < 600)
 
     setSelectedMessage(initialChatMessage)
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -223,7 +228,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
           </Styled.TabPanel>
         </TabContext>
         <ChatMessageForm
-          isArchive={isArchive}
+          isVisibleForm={isVisibleForm}
           selectedMessage={selectedMessage}
           onClickCloseButton={onClickCloseButton}
           onSendMessage={onSendReply}

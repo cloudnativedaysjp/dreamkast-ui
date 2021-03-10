@@ -8,7 +8,7 @@ import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
   selectedMessage: ChatMessageClass
-  isArchive: boolean
+  isVisibleForm: boolean
   checked: boolean
   onCheck: (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -20,7 +20,7 @@ type Props = {
 }
 
 export const ChatMessageForm: React.FC<Props> = ({
-  isArchive,
+  isVisibleForm,
   checked,
   onCheck,
   onSendMessage,
@@ -71,7 +71,7 @@ export const ChatMessageForm: React.FC<Props> = ({
 
   return (
     <Styled.Container>
-      {isArchive && (
+      {isVisibleForm && (
         <Styled.ChatMessageForm>
           <Styled.CheckBoxContainer>
             <Checkbox size="small" checked={checked} onChange={onCheck} />
