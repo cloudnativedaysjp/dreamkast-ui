@@ -3,7 +3,7 @@ import { TabPanel as MUITabPanel } from '@material-ui/lab'
 import { Tabs, Tab as MUITab } from '@material-ui/core'
 
 export const Outer = styled.div`
-  padding: 5px 5px 5px 0;
+  padding: 5px;
 `
 
 export const Container = styled.div`
