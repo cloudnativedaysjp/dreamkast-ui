@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Player } from '../Player'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
@@ -35,6 +35,9 @@ export const TrackView: React.FC<Props> = ({
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
+  const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
+  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+  const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
 
   const findDayId = () => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
@@ -65,13 +68,25 @@ export const TrackView: React.FC<Props> = ({
     if (!propTalks) getTalks()
   }, [getTalks])
 
+  useEffect(() => {
+    if (isLiveMode) getTalks()
+  }, [isLiveMode])
+
   const selectTalk = (talk: Talk) => {
+    if (!talk.onAir) {
+      setIsLiveMode(false)
+    }
     setSelectedTalk(talk)
     setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
 
   useEffect(() => {
-    if (!talks.length) return
+    if (
+      !talks.length ||
+      (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
+    )
+      return
+    beforeTrackId.current = selectedTrack?.id
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
     setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
@@ -85,23 +100,30 @@ export const TrackView: React.FC<Props> = ({
     }
   }
 
+  const onChecked = (
+    _event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
+    setIsLiveMode(checked)
+  }
+
   useEffect(() => {
     if (!selectedTrack) return
+    if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const wsUrl = actionCableUrl()
-    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
-    if (cableApp) {
-      cableApp.disconnect()
-    }
-    cableApp.subscriptions.create(
+    const cable = actionCable.createConsumer(wsUrl)
+    setChatCable(cable)
+    cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
-          if (!msg[selectedTrack.id] && !selectedTalk) return
+          getTalks() // onAirの切り替わった新しいTalk一覧を取得
+          if (!msg[selectedTrack.id] || !selectedTalk) return
           if (
             selectedTrack.id == msg[selectedTrack.id].trackId &&
-            selectedTalk?.id != msg[selectedTrack.id].id
+            selectedTalk.id != msg[selectedTrack.id].id
           ) {
             setSelectedTalk(msg[selectedTrack.id])
             setVideoId(msg[selectedTrack.id].videoId)
@@ -147,6 +169,8 @@ export const TrackView: React.FC<Props> = ({
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrack?.id}
           talks={talks}
+          isLiveMode={isLiveMode}
+          changeLiveMode={onChecked}
           selectTalk={selectTalk}
         />
       </Grid>
