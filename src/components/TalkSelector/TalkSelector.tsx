@@ -92,7 +92,7 @@ export const TalkSelector: React.FC<Props> = ({
               <Styled.Item
                 button
                 key={talk.id}
-                disabled={!talk.available}
+                // disabled={!talk.available}
                 selected={talk.id === selectedTalk?.id}
                 onClick={() => selectTalk(talk)}
               >

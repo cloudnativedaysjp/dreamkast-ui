@@ -32,6 +32,7 @@ export const TrackView: React.FC<Props> = ({
   propTalks,
 }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
+  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
@@ -96,14 +97,13 @@ export const TrackView: React.FC<Props> = ({
 
   useEffect(() => {
     if (!selectedTrack) return
+    if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const wsUrl = actionCableUrl()
-    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
-    if (cableApp) {
-      cableApp.disconnect()
-    }
-    cableApp.subscriptions.create(
+    const cable = actionCable.createConsumer(wsUrl)
+    setChatCable(cable)
+    cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
