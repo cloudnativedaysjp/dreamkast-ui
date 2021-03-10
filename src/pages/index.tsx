@@ -8,6 +8,8 @@ import {
   Configuration,
   ProfileApi,
   Profile,
+  Event,
+  EventApi,
 } from '../client-axios'
 
 const IndexPage: React.FC = () => {
@@ -15,11 +17,20 @@ const IndexPage: React.FC = () => {
   const [selectedTrack, setSelectedTrack] = useState<Track>()
   const [tracks, setTracks] = useState<Track[]>([])
   const [profile, setProfile] = useState<Profile>()
+  const [event, setEvent] = useState<Event>()
 
   // Handlers
   const selectTrack = (selectedTrack: Track) => {
     setSelectedTrack(selectedTrack)
   }
+
+  const getEvent = useCallback(async () => {
+    const eventApi = new EventApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+    const { data } = await eventApi.apiV1EventsEventAbbrGet('cndo2021')
+    setEvent(data)
+  }, [])
 
   const getProfile = useCallback(async () => {
     const api = new ProfileApi(
@@ -40,6 +51,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    getEvent()
     getProfile()
     getTracks()
   }, [])
@@ -51,7 +63,11 @@ const IndexPage: React.FC = () => {
         selectedTrack={selectedTrack}
         selectTrack={selectTrack}
       />
-      <TrackView profile={profile} selectedTrack={selectedTrack} />
+      <TrackView
+        event={event}
+        profile={profile}
+        selectedTrack={selectedTrack}
+      />
     </Layout>
   )
 }

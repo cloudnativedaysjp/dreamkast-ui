@@ -8,20 +8,25 @@ import {
   TalkApi,
   Configuration,
   Profile,
+  Event,
 } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
 
 type Props = {
+  event?: Event
   profile?: Profile
   selectedTrack?: Track
   propTalks?: Talk[]
 }
 
 export const TrackView: React.FC<Props> = ({
+  event,
   profile,
   selectedTrack,
   propTalks,
@@ -31,6 +36,17 @@ export const TrackView: React.FC<Props> = ({
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
 
+  const findDayId = () => {
+    const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
+    let dayId = ''
+    event?.conferenceDays?.forEach((day) => {
+      if (day.date == today && day.id) {
+        dayId = String(day.id)
+      }
+    })
+    return dayId
+  }
+
   const getTalks = useCallback(async () => {
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
@@ -38,7 +54,7 @@ export const TrackView: React.FC<Props> = ({
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrack?.id),
-      '6,7',
+      findDayId(),
     )
     setTalks(data)
   }, [selectedTrack])
@@ -118,13 +134,13 @@ export const TrackView: React.FC<Props> = ({
       <Grid item xs={12} md={4}>
         <Chat profile={profile} talk={selectedTalk} />
       </Grid>
-      <Grid item xs={12} md={8} alignItems="stretch" style={{height: '100%'}}>
+      <Grid item xs={12} md={8} alignItems="stretch" style={{ height: '100%' }}>
         <TalkInfo
           selectedTalk={selectedTalk}
           selectedTrackName={selectedTrack?.name}
         />
       </Grid>
-      <Grid item xs={12} md={4} alignItems="stretch" style={{height: '100%'}}>
+      <Grid item xs={12} md={4} alignItems="stretch" style={{ height: '100%' }}>
         <TalkSelector
           selectedTalk={selectedTalk}
           selectedTrackId={selectedTrack?.id}
