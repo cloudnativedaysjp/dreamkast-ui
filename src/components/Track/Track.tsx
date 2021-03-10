@@ -32,7 +32,6 @@ export const TrackView: React.FC<Props> = ({
   propTalks,
 }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
-  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
@@ -53,15 +52,13 @@ export const TrackView: React.FC<Props> = ({
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const dayId = findDayId()
-    if (!dayId) return
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrack?.id),
-      dayId,
+      findDayId(),
     )
     setTalks(data)
-  }, [event, selectedTrack])
+  }, [selectedTrack?.id])
 
   useEffect(() => {
     if (!propTalks) getTalks()
@@ -99,13 +96,14 @@ export const TrackView: React.FC<Props> = ({
 
   useEffect(() => {
     if (!selectedTrack) return
-    if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const wsUrl = actionCableUrl()
-    const cable = actionCable.createConsumer(wsUrl)
-    setChatCable(cable)
-    cable.subscriptions.create(
+    const cableApp: ActionCable.Cable = actionCable.createConsumer(wsUrl)
+    if (cableApp) {
+      cableApp.disconnect()
+    }
+    cableApp.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
