@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Player } from '../Player'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
@@ -48,7 +48,7 @@ export const TrackView: React.FC<Props> = ({
     return dayId
   }
 
-  const getTalks = async () => {
+  const getTalks = useCallback(async () => {
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
     )
@@ -58,11 +58,11 @@ export const TrackView: React.FC<Props> = ({
       findDayId(),
     )
     setTalks(data)
-  }
+  }, [selectedTrack?.id])
 
   useEffect(() => {
     if (!propTalks) getTalks()
-  }, [selectedTrack?.id])
+  }, [getTalks])
 
   const selectTalk = (talk: Talk) => {
     if (!talk.onAir) {
@@ -109,8 +109,8 @@ export const TrackView: React.FC<Props> = ({
         received: (msg: { [trackId: number]: Talk }) => {
           if (!msg[selectedTrack.id] || !selectedTalk) return
           if (
-            selectedTrack.id == msg[selectedTrack.id].trackId &&
-            selectedTalk.id != msg[selectedTrack.id].id
+            selectedTrack.id === msg[selectedTrack.id].trackId &&
+            selectedTalk.id !== msg[selectedTrack.id].id
           ) {
             getTalks() // onAirの切り替わった新しいTalk一覧を取得
           }
