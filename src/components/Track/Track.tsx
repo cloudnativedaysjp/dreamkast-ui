@@ -50,7 +50,6 @@ export const TrackView: React.FC<Props> = ({
   }
 
   const getTalks = useCallback(async () => {
-    console.log('run getTalks')
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
     )
