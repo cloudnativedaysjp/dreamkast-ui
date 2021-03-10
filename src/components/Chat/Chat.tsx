@@ -119,15 +119,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
     setChatCable(cable)
     cable.subscriptions.create(
       { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
-      {
-        connected: () => {
-          console.log('connected: ' + talk.id)
-        },
-        disconnected: () => {
-          console.log('disconnected: ' + talk.id)
-        },
-        received: cableReceived,
-      },
+      { received: cableReceived },
     )
   }, [talk])
 

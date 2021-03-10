@@ -15,7 +15,6 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
     new SponsorApi(new Configuration({ basePath: window.location.origin }))
       .apiV1SponsorsGet('cndo2021')
       .then((res) => {
-        console.log(res.data)
         setData(res.data)
       })
   }, [])

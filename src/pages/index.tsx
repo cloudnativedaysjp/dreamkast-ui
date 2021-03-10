@@ -38,7 +38,6 @@ const IndexPage: React.FC = () => {
     )
     const { data } = await api.apiV1EventAbbrMyProfileGet('cndo2021')
     setProfile(data)
-    console.log(data)
   }, [])
 
   const getTracks = useCallback(async () => {

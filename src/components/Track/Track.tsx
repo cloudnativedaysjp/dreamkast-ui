@@ -137,9 +137,6 @@ export const TrackView: React.FC<Props> = ({
     clearInterval(timer)
     setTimer(
       window.setInterval(() => {
-        // console.log('sending logs...')
-        // console.log(selectedTrack?.name)
-        // console.log(selectedTalk?.title)
         window.tracker.track('watch_video', {
           track_name: selectedTrack?.name,
           talk_id: selectedTalk?.id,
