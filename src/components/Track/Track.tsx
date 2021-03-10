@@ -65,6 +65,9 @@ export const TrackView: React.FC<Props> = ({
   }, [selectedTrack?.id])
 
   const selectTalk = (talk: Talk) => {
+    if (!talk.onAir) {
+      setIsLiveMode(false)
+    }
     setSelectedTalk(talk)
     setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
@@ -75,10 +78,6 @@ export const TrackView: React.FC<Props> = ({
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
     setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
   }, [talks])
-
-  useEffect(() => {
-    console.log(selectedTalk)
-  }, [selectedTalk])
 
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
