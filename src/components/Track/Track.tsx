@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Player } from '../Player'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
@@ -37,6 +37,7 @@ export const TrackView: React.FC<Props> = ({
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+  const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
 
   const findDayId = () => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
@@ -80,7 +81,12 @@ export const TrackView: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (!talks.length || !isLiveMode) return
+    if (
+      !talks.length ||
+      (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
+    )
+      return
+    beforeTrackId.current = selectedTrack?.id
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
     setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
