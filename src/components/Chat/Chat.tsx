@@ -202,7 +202,6 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
             <ChatBox
               profile={profile}
               talk={talk}
-              isVisibleForm={isVisibleForm}
               messages={messages}
               messageTypes={[
                 ChatMessageMessageTypeEnum.Chat,
@@ -218,7 +217,6 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
           <Styled.TabPanel value="1">
             <ChatBox
               talk={talk}
-              isVisibleForm={isVisibleForm}
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
               selectedMessage={selectedMessage}

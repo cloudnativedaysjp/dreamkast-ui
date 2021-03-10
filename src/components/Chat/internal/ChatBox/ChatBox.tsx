@@ -12,7 +12,6 @@ import { MessageInputs } from '../ChatMessageRequest'
 type Props = {
   profile?: Profile
   talk?: Talk
-  isVisibleForm?: boolean
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
   selectedMessage: ChatMessageClass
@@ -25,7 +24,6 @@ type Props = {
 export const ChatBox: React.FC<Props> = ({
   profile,
   talk,
-  isVisibleForm,
   messages,
   messageTypes,
   selectedMessage,
@@ -46,7 +44,6 @@ export const ChatBox: React.FC<Props> = ({
             <ChatMessage
               profile={profile}
               talk={talk}
-              isVisibleForm={isVisibleForm}
               key={chatMessage.id}
               chatMessage={chatMessage}
               selected={chatMessage.id == selectedMessage?.id}
