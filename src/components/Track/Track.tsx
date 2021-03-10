@@ -53,13 +53,15 @@ export const TrackView: React.FC<Props> = ({
     const api = new TalkApi(
       new Configuration({ basePath: window.location.origin }),
     )
+    const dayId = findDayId()
+    if (!dayId) return
     const { data } = await api.apiV1TalksGet(
       'cndo2021',
       String(selectedTrack?.id),
-      findDayId(),
+      dayId,
     )
     setTalks(data)
-  }, [selectedTrack?.id])
+  }, [event, selectedTrack])
 
   useEffect(() => {
     if (!propTalks) getTalks()
