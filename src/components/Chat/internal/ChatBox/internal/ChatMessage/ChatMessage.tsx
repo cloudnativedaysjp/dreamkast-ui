@@ -94,15 +94,17 @@ export const ChatMessage: React.FC<Props> = ({
             {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:mm')}
           </Grid>
 
-          <Grid item xs={1}>
-            <Styled.MenuButton
-              onClick={openChatMessageMenu}
-              data-messageid={chatMessage?.id}
-              data-replyto={chatMessage?.replyTo}
-            >
-              <Styled.MenuIcon fontSize="small" />
-            </Styled.MenuButton>
-          </Grid>
+          {isVisibleForm && (
+            <Grid item xs={1}>
+              <Styled.MenuButton
+                onClick={openChatMessageMenu}
+                data-messageid={chatMessage?.id}
+                data-replyto={chatMessage?.replyTo}
+              >
+                <Styled.MenuIcon fontSize="small" />
+              </Styled.MenuButton>
+            </Grid>
+          )}
 
           <Grid item xs={11}>
             <Styled.MessageBody>
