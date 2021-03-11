@@ -52,7 +52,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   )
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [checked, setChecked] = useState<boolean>(true)
-  const [isVisibleForm, setIsVisibleForm] = useState<boolean>(false)
+  const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
 
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
