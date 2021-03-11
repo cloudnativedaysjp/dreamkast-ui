@@ -20,7 +20,6 @@ type Props = {
 }
 
 export const ChatMessageForm: React.FC<Props> = ({
-  isVisibleForm,
   checked,
   onCheck,
   onSendMessage,
@@ -71,55 +70,55 @@ export const ChatMessageForm: React.FC<Props> = ({
 
   return (
     <Styled.Container>
-      {isVisibleForm && (
-        <Styled.ChatMessageForm>
-          <Styled.CheckBoxContainer>
-            <Checkbox size="small" checked={checked} onChange={onCheck} />
-            <Styled.label>オートスクロール</Styled.label>
-          </Styled.CheckBoxContainer>
-          <Styled.TextField
-            name="chatMessage"
-            color="secondary"
-            size="small"
-            inputRef={register}
-            onKeyPress={handleKeyPress}
+      {/* {isVisibleForm && ( */}
+      <Styled.ChatMessageForm>
+        <Styled.CheckBoxContainer>
+          <Checkbox size="small" checked={checked} onChange={onCheck} />
+          <Styled.label>オートスクロール</Styled.label>
+        </Styled.CheckBoxContainer>
+        <Styled.TextField
+          name="chatMessage"
+          color="secondary"
+          size="small"
+          inputRef={register}
+          onKeyPress={handleKeyPress}
+        />
+        <Input type="hidden" name="isQuestion" inputRef={register} />
+        <Styled.ButtonContainer>
+          <ReactionButton
+            disabled={btnDisabled}
+            reactEmoji="👍"
+            onSendReply={handleSendMessage}
           />
-          <Input type="hidden" name="isQuestion" inputRef={register} />
-          <Styled.ButtonContainer>
-            <ReactionButton
-              disabled={btnDisabled}
-              reactEmoji="👍"
-              onSendReply={handleSendMessage}
-            />
-            <ReactionButton
-              disabled={btnDisabled}
-              reactEmoji="👏"
-              onSendReply={handleSendMessage}
-            />
-            <ReactionButton
-              disabled={btnDisabled}
-              reactEmoji="🎉"
-              onSendReply={handleSendMessage}
-            />
-            <Button
-              type="submit"
-              disabled={!watchChatMessage || btnDisabled}
-              variant="contained"
-              onClick={handleSubmit(handleSendMessage)}
-            >
-              送信
-            </Button>
-            <Button
-              type="submit"
-              disabled={!watchChatMessage || btnDisabled}
-              variant="contained"
-              onClick={handleSubmit(handleSendQuestion)}
-            >
-              質問する
-            </Button>
-          </Styled.ButtonContainer>
-        </Styled.ChatMessageForm>
-      )}
+          <ReactionButton
+            disabled={btnDisabled}
+            reactEmoji="👏"
+            onSendReply={handleSendMessage}
+          />
+          <ReactionButton
+            disabled={btnDisabled}
+            reactEmoji="🎉"
+            onSendReply={handleSendMessage}
+          />
+          <Button
+            type="submit"
+            disabled={!watchChatMessage || btnDisabled}
+            variant="contained"
+            onClick={handleSubmit(handleSendMessage)}
+          >
+            送信
+          </Button>
+          <Button
+            type="submit"
+            disabled={!watchChatMessage || btnDisabled}
+            variant="contained"
+            onClick={handleSubmit(handleSendQuestion)}
+          >
+            質問する
+          </Button>
+        </Styled.ButtonContainer>
+      </Styled.ChatMessageForm>
+      {/* )} */}
     </Styled.Container>
   )
 }
