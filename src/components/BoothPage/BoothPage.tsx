@@ -78,10 +78,23 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
     const { data } = await api.apiV1BoothsBoothIdGet(boothId)
     setBooth(data)
   }
+  const [timer, setTimer] = useState<number>()
 
   useEffect(() => {
     getBooth()
   }, [boothId])
+
+  useEffect(() => {
+    clearInterval(timer)
+    setTimer(
+      window.setInterval(() => {
+        window.tracker.track('booth', {
+          name: booth?.sponsorName,
+          id: booth?.id,
+        })
+      }, 120 * 1000),
+    )
+  }, [booth])
 
   function createMarkup(text?: string) {
     if (!text) return
