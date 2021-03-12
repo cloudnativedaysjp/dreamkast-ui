@@ -17,6 +17,11 @@ import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
+import dynamic from 'next/dynamic.js'
+
+const useStateWithLocalStorage = dynamic(() => {
+  import('../../util/state'), { ssr: false }
+})
 
 type Props = {
   event?: Event
@@ -33,7 +38,10 @@ export const TrackView: React.FC<Props> = ({
 }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [videoId, setVideoId] = useState<string>()
-  const [selectedTalk, setSelectedTalk] = useState<Talk>()
+  const [selectedTalk, setSelectedTalk] = useStateWithLocalStorage<Talk>(
+    'selectedTalk',
+  )
+  //const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
