@@ -11,7 +11,7 @@ COPY --from=base /base ./
 RUN npm run export
 
 FROM nginx:alpine
-RUN mkdir -p /usr/share/nginx/html/cndo2021/ui
-COPY --from=build /build/out /usr/share/nginx/html/cndo2021/ui
+RUN mkdir -p /usr/share/nginx/html/cicd2021/ui
+COPY --from=build /build/out /usr/share/nginx/html/cicd2021/ui
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3001

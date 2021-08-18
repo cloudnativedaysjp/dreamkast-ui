@@ -38,7 +38,7 @@ exports[`TalkInfo 1`] = `
     >
       <img
         className="sc-fubCfw iYzSNh"
-        src="/cndo2021/ui/images/talk_icon.png"
+        src="/cicd2021/ui/images/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
@@ -72,7 +72,7 @@ exports[`TalkInfo 1`] = `
           >
             <img
               className="sc-iqHYGH fhKGze"
-              src="/cndo2021/ui/images/discord_logo.png"
+              src="/cicd2021/ui/images/discord_logo.png"
             />
             Ask the speaker
           </span>
@@ -87,7 +87,7 @@ exports[`TalkInfo 1`] = `
       />
       <a
         className="sc-jrAGrp jUAzA-d"
-        href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021"
+        href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cicd2021&related=@cloudnativedays&hashtags=cicd2021"
         target="_blank"
       >
         <button
@@ -112,9 +112,9 @@ exports[`TalkInfo 1`] = `
           >
             <img
               className="sc-dQppl fxCwta"
-              src="/cndo2021/ui/images/twitter_logo.png"
+              src="/cicd2021/ui/images/twitter_logo.png"
             />
-            tweet #CNDO2021_
+            tweet #cicd2021_
           </span>
         </button>
       </a>

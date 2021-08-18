@@ -28,7 +28,7 @@ const IndexPage: React.FC = () => {
     const eventApi = new EventApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await eventApi.apiV1EventsEventAbbrGet('cndo2021')
+    const { data } = await eventApi.apiV1EventsEventAbbrGet('cicd2021')
     setEvent(data)
   }, [])
 
@@ -36,7 +36,7 @@ const IndexPage: React.FC = () => {
     const api = new ProfileApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await api.apiV1EventAbbrMyProfileGet('cndo2021')
+    const { data } = await api.apiV1EventAbbrMyProfileGet('cicd2021')
     setProfile(data)
   }, [])
 
@@ -44,7 +44,7 @@ const IndexPage: React.FC = () => {
     const api = new TrackApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await api.apiV1TracksGet('cndo2021')
+    const { data } = await api.apiV1TracksGet('cicd2021')
     setTracks(data)
     setSelectedTrack(data[0])
   }, [])

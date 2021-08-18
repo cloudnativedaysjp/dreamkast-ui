@@ -57,7 +57,7 @@ export const TrackView: React.FC<Props> = ({
     const dayId = findDayId()
     if (!dayId) return
     const { data } = await api.apiV1TalksGet(
-      'cndo2021',
+      'cicd2021',
       String(selectedTrack?.id),
       dayId,
     )
@@ -116,7 +116,7 @@ export const TrackView: React.FC<Props> = ({
     const cable = actionCable.createConsumer(wsUrl)
     setChatCable(cable)
     cable.subscriptions.create(
-      { channel: 'OnAirChannel', eventAbbr: 'cndo2021' },
+      { channel: 'OnAirChannel', eventAbbr: 'cicd2021' },
       {
         received: (msg: { [trackId: number]: Talk }) => {
           getTalks() // onAirの切り替わった新しいTalk一覧を取得

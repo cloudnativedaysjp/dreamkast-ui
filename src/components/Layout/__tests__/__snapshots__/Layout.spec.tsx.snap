@@ -12,12 +12,12 @@ exports[`Layout 1`] = `
         className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
       >
         <a
-          href="/cndo2021/ui"
+          href="/cicd2021/ui"
           rel="noopener noreferrer"
         >
           <img
             className="sc-dlfnbm jFXkDF"
-            src="/cndo2021/ui/images/CNDO2021_horizontal.png"
+            src="/cicd2021/ui/images/cicd2021_horizontal.png"
           />
         </a>
         <div
@@ -25,7 +25,7 @@ exports[`Layout 1`] = `
         >
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cndo2021/ui#booths"
+            href="/cicd2021/ui#booths"
             rel="noreferrer"
           >
             <button
@@ -59,7 +59,7 @@ exports[`Layout 1`] = `
           </a>
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cndo2021/ui/discussionboard"
+            href="/cicd2021/ui/discussionboard"
             rel="noreferrer"
           >
             <button
@@ -93,7 +93,7 @@ exports[`Layout 1`] = `
           </a>
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cndo2021/timetables"
+            href="/cicd2021/timetables"
             rel="noreferrer"
           >
             <button
@@ -161,7 +161,7 @@ exports[`Layout 1`] = `
       >
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/cndo2021/ui#booths"
+          href="/cicd2021/ui#booths"
           rel="noreferrer"
         >
           <button
@@ -195,7 +195,7 @@ exports[`Layout 1`] = `
         </a>
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/cndo2021/ui/discussionboard"
+          href="/cicd2021/ui/discussionboard"
           rel="noreferrer"
         >
           <button
@@ -229,7 +229,7 @@ exports[`Layout 1`] = `
         </a>
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/cndo2021/timetables"
+          href="/cicd2021/timetables"
           rel="noreferrer"
         >
           <button
@@ -301,7 +301,7 @@ exports[`Layout 1`] = `
   >
     <a
       className="sc-gKsewC giTXZJ"
-      href="https://event.cloudnativedays.jp/cndo2021/privacy"
+      href="https://event.cloudnativedays.jp/cicd2021/privacy"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -309,7 +309,7 @@ exports[`Layout 1`] = `
     </a>
     <a
       className="sc-gKsewC giTXZJ"
-      href="https://event.cloudnativedays.jp/cndo2021/coc"
+      href="https://event.cloudnativedays.jp/cicd2021/coc"
       rel="noopener noreferrer"
       target="_blank"
     >
