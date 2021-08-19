@@ -73,7 +73,7 @@ export const ButtonLink = styled.a`
   text-decoration: none;
 `
 
-export const DiscordButton = styled(Button)`
+export const OViceButton = styled(Button)`
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -85,7 +85,7 @@ export const DiscordButton = styled(Button)`
   }
 `
 
-export const DiscordImg = styled.img`
+export const OViceImg = styled.img`
   height: 1.7em;
   vertical-align: middle;
   padding-right: 5px;

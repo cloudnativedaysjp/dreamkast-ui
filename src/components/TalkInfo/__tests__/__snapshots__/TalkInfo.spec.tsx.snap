@@ -47,7 +47,7 @@ exports[`TalkInfo 1`] = `
     >
       <a
         className="sc-jrAGrp jUAzA-d"
-        href="https://discord.gg/bvuTMNQ"
+        href="https://cnd.ovice.in/"
         target="_blank"
       >
         <button
@@ -70,10 +70,6 @@ exports[`TalkInfo 1`] = `
           <span
             className="MuiButton-label"
           >
-            <img
-              className="sc-iqHYGH fhKGze"
-              src="/cicd2021/ui/images/discord_logo.png"
-            />
             Ask the speaker
           </span>
         </button>

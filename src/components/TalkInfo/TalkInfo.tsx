@@ -43,11 +43,10 @@ export const TalkInfo: React.FC<Props> = ({
           一緒に盛り上がろう
         </Styled.SocialHeader>
         <Styled.ButtonContainer>
-          <Styled.ButtonLink href="https://discord.gg/bvuTMNQ" target="_blank">
-            <Styled.DiscordButton>
-              <Styled.DiscordImg src="/cicd2021/ui/images/discord_logo.png" />
+          <Styled.ButtonLink href="https://cnd.ovice.in/" target="_blank">
+            <Styled.OViceButton>
               Ask the speaker
-            </Styled.DiscordButton>
+            </Styled.OViceButton>
           </Styled.ButtonLink>
           <div style={{ paddingRight: '8px' }} />
           <Styled.ButtonLink
