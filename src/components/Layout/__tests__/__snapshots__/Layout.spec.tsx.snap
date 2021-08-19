@@ -44,7 +44,7 @@ exports[`Layout 1`] = `
               onTouchStart={[Function]}
               style={
                 Object {
-                  "color": "#037f8c",
+                  "color": "#423A57",
                 }
               }
               tabIndex={0}
@@ -78,7 +78,7 @@ exports[`Layout 1`] = `
               onTouchStart={[Function]}
               style={
                 Object {
-                  "color": "#037f8c",
+                  "color": "#423A57",
                 }
               }
               tabIndex={0}
@@ -112,7 +112,7 @@ exports[`Layout 1`] = `
               onTouchStart={[Function]}
               style={
                 Object {
-                  "color": "#037f8c",
+                  "color": "#423A57",
                 }
               }
               tabIndex={0}
@@ -142,7 +142,7 @@ exports[`Layout 1`] = `
             onTouchStart={[Function]}
             style={
               Object {
-                "color": "#037f8c",
+                "color": "#423A57",
               }
             }
             tabIndex={0}
@@ -180,7 +180,7 @@ exports[`Layout 1`] = `
             onTouchStart={[Function]}
             style={
               Object {
-                "color": "#037f8c",
+                "color": "#423A57",
               }
             }
             tabIndex={0}
@@ -214,7 +214,7 @@ exports[`Layout 1`] = `
             onTouchStart={[Function]}
             style={
               Object {
-                "color": "#037f8c",
+                "color": "#423A57",
               }
             }
             tabIndex={0}
@@ -248,7 +248,7 @@ exports[`Layout 1`] = `
             onTouchStart={[Function]}
             style={
               Object {
-                "color": "#037f8c",
+                "color": "#423A57",
               }
             }
             tabIndex={0}
@@ -278,7 +278,7 @@ exports[`Layout 1`] = `
           onTouchStart={[Function]}
           style={
             Object {
-              "color": "#037f8c",
+              "color": "#423A57",
             }
           }
           tabIndex={0}

@@ -12,7 +12,7 @@ export const OuterContainer = styled.div`
 `
 
 export const Title = styled.h2`
-  color: #037f8c;
+  color: #423A57;
   font-size: 1.8em;
 `
 
@@ -45,7 +45,7 @@ export const Content = styled.div`
 
 export const DocsLink = styled.a`
   text-decoration: none;
-  color: #037f8c;
+  color: #423A57;
   font-weight: bold;
   font-size: 16px;
 `

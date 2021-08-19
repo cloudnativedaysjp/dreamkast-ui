@@ -14,7 +14,7 @@ export const Title = styled.div`
   border-bottom: none;
   border-radius: 10px 10px 0px 0px;
   background-color: #ffffff;
-  color: #037f8c;
+  color: #423A57;
 `
 
 export const List = styled(OriginList)`
