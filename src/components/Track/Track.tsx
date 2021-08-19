@@ -15,7 +15,7 @@ import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
-import dayjs from 'dayjs'
+//import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
 type Props = {
@@ -40,12 +40,12 @@ export const TrackView: React.FC<Props> = ({
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
 
   const findDayId = () => {
-    const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
+    //const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
     let dayId = ''
     event?.conferenceDays?.forEach((day) => {
-      if (day.date == today && day.id) {
-        dayId = String(day.id)
-      }
+      //if (day.date == today && day.id) {
+      dayId = String(day.id)
+      //}
     })
     return dayId
   }
