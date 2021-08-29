@@ -10,16 +10,19 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ url }) => {
   return (
     <Styled.DesktopMenu>
-      <CommonStyled.MenuLink href="/cndo2021/ui#booths" rel="noreferrer">
-        <Button style={{ color: '#037f8c' }}>Booths</Button>
+      <CommonStyled.MenuLink href="/cicd2021/ui#booths" rel="noreferrer">
+        <Button style={{ color: '#423A57' }}>Booths</Button>
       </CommonStyled.MenuLink>
-      <CommonStyled.MenuLink href="/cndo2021/ui/discussionboard" rel="noreferrer">
-        <Button style={{ color: '#037f8c' }}>DiscussionBoard</Button>
+      <CommonStyled.MenuLink
+        href="/cicd2021/ui/discussionboard"
+        rel="noreferrer"
+      >
+        <Button style={{ color: '#423A57' }}>DiscussionBoard</Button>
       </CommonStyled.MenuLink>
-      <CommonStyled.MenuLink href="/cndo2021/timetables" rel="noreferrer">
-        <Button style={{ color: '#037f8c' }}>Timetable</Button>
+      <CommonStyled.MenuLink href="/cicd2021/timetables" rel="noreferrer">
+        <Button style={{ color: '#423A57' }}>Timetable</Button>
       </CommonStyled.MenuLink>
-      <Button href={url} style={{ color: '#037f8c' }}>
+      <Button href={url} style={{ color: '#423A57' }}>
         Logout
       </Button>
     </Styled.DesktopMenu>

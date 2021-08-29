@@ -1,7 +1,7 @@
 module.exports = {
-  basePath: '/cndo2021/ui',
-  assetPrefix: '/cndo2021/ui',
+  basePath: '/cicd2021/ui',
+  assetPrefix: '/cicd2021/ui',
   publicRuntimeConfig: {
-    basePath: '/cndo2021/ui',
+    basePath: '/cicd2021/ui',
   },
 }

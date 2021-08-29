@@ -25,15 +25,15 @@ export const Layout: React.FC<Props> = ({
     <Styled.Container>
       <Head>
         <title>{title}</title>
-        <link rel="shortcut icon" href="/cndo2021/ui/trademark.svg" />
+        <link rel="shortcut icon" href="/cicd2021/ui/trademark.svg" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <header>
         <AppBar position="static">
           <Styled.Header>
-            <a href="/cndo2021/ui" rel="noopener noreferrer">
-              <Styled.HeaderImg src="/cndo2021/ui/images/CNDO2021_horizontal.png" />
+            <a href="/cicd2021/ui" rel="noopener noreferrer">
+              <Styled.HeaderImg src="/cicd2021/ui/images/cicd2021_horizontal.png" />
             </a>
             <DesktopMenu url={url} />
           </Styled.Header>
@@ -43,14 +43,14 @@ export const Layout: React.FC<Props> = ({
       <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>
       <Styled.Footer>
         <Styled.FooterLink
-          href="https://event.cloudnativedays.jp/cndo2021/privacy"
+          href="https://event.cloudnativedays.jp/cicd2021/privacy"
           target="_blank"
           rel="noopener noreferrer"
         >
           プライバシーポリシー
         </Styled.FooterLink>
         <Styled.FooterLink
-          href="https://event.cloudnativedays.jp/cndo2021/coc"
+          href="https://event.cloudnativedays.jp/cicd2021/coc"
           target="_blank"
           rel="noopener noreferrer"
         >

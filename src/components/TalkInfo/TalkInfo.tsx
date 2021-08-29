@@ -13,7 +13,7 @@ export const TalkInfo: React.FC<Props> = ({
 }) => {
   const twitterURL = (trackName?: string) => {
     const base =
-      'http://twitter.com/share?url=https://event.cloudnativedays.jp/cndo2021&related=@cloudnativedays&hashtags=CNDO2021'
+      'http://twitter.com/share?url=https://event.cloudnativedays.jp/cicd2021&related=@cloudnativedays&hashtags=cicd2021'
     if (!trackName) return base
     return base + '_' + trackName
   }
@@ -39,15 +39,14 @@ export const TalkInfo: React.FC<Props> = ({
         </Styled.SpeakerContainer>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
         <Styled.SocialHeader>
-          <Styled.TalkIcon src="/cndo2021/ui/images/talk_icon.png" />
+          <Styled.TalkIcon src="/cicd2021/ui/images/talk_icon.png" />
           一緒に盛り上がろう
         </Styled.SocialHeader>
         <Styled.ButtonContainer>
-          <Styled.ButtonLink href="https://discord.gg/bvuTMNQ" target="_blank">
-            <Styled.DiscordButton>
-              <Styled.DiscordImg src="/cndo2021/ui/images/discord_logo.png" />
+          <Styled.ButtonLink href="https://cnd.ovice.in/" target="_blank">
+            <Styled.OViceButton>
               Ask the speaker
-            </Styled.DiscordButton>
+            </Styled.OViceButton>
           </Styled.ButtonLink>
           <div style={{ paddingRight: '8px' }} />
           <Styled.ButtonLink
@@ -55,8 +54,8 @@ export const TalkInfo: React.FC<Props> = ({
             target="_blank"
           >
             <Styled.TweetButton>
-              <Styled.TwitterImg src="/cndo2021/ui/images/twitter_logo.png" />
-              tweet #CNDO2021_{selectedTrackName}
+              <Styled.TwitterImg src="/cicd2021/ui/images/twitter_logo.png" />
+              tweet #cicd2021_{selectedTrackName}
             </Styled.TweetButton>
           </Styled.ButtonLink>
         </Styled.ButtonContainer>

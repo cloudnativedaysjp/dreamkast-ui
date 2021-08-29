@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
   body {
-    background-image: url('/cndo2021/ui/images/background.jpg');
+    background-image: url('/cicd2021/ui/images/background.jpg');
     background-position: 50%;
     background-repeat: no-repeat;
     background-attachment: fixed;
