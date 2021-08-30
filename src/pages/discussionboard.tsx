@@ -21,13 +21,13 @@ const DiscussionPage: React.FC = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                href="https://miro.com/app/board/o9J_lRiwMdw=/"
+                href="https://miro.com/app/board/o9J_l58TPmc=/"
               >
                 参加する
               </Button>
             </CommonStyled.CenterizedContainer>
             <Miro
-              miroId="o9J_lRiwMdw="
+              miroId="o9J_l58TPmc="
               liveEmbed={false}
               viewport="moveToViewport=347,-121,3506,3506"
             />
