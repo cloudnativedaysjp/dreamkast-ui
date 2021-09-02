@@ -13,7 +13,6 @@ import {
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
-import { Booths } from '../Booths'
 import ActionCable from 'actioncable'
 //import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
@@ -170,9 +169,6 @@ export const TrackView: React.FC<Props> = ({
           changeLiveMode={onChecked}
           selectTalk={selectTalk}
         />
-      </Grid>
-      <Grid item xs={12} md={12}>
-        <Booths openNewWindow={true} />
       </Grid>
     </Grid>
   )

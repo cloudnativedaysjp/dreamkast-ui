@@ -25,40 +25,6 @@ exports[`Layout 1`] = `
         >
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cicd2021/ui#booths"
-            rel="noreferrer"
-          >
-            <button
-              className="MuiButtonBase-root MuiButton-root MuiButton-text"
-              disabled={false}
-              onBlur={[Function]}
-              onDragLeave={[Function]}
-              onFocus={[Function]}
-              onKeyDown={[Function]}
-              onKeyUp={[Function]}
-              onMouseDown={[Function]}
-              onMouseLeave={[Function]}
-              onMouseUp={[Function]}
-              onTouchEnd={[Function]}
-              onTouchMove={[Function]}
-              onTouchStart={[Function]}
-              style={
-                Object {
-                  "color": "#423A57",
-                }
-              }
-              tabIndex={0}
-              type="button"
-            >
-              <span
-                className="MuiButton-label"
-              >
-                Booths
-              </span>
-            </button>
-          </a>
-          <a
-            className="sc-kfzAmx dLIGSx"
             href="/cicd2021/ui/discussionboard"
             rel="noreferrer"
           >
@@ -159,40 +125,6 @@ exports[`Layout 1`] = `
       <div
         className="sc-fodVxV gJEXNK"
       >
-        <a
-          className="sc-kfzAmx dLIGSx"
-          href="/cicd2021/ui#booths"
-          rel="noreferrer"
-        >
-          <button
-            className="MuiButtonBase-root MuiButton-root MuiButton-text"
-            disabled={false}
-            onBlur={[Function]}
-            onDragLeave={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            onMouseLeave={[Function]}
-            onMouseUp={[Function]}
-            onTouchEnd={[Function]}
-            onTouchMove={[Function]}
-            onTouchStart={[Function]}
-            style={
-              Object {
-                "color": "#423A57",
-              }
-            }
-            tabIndex={0}
-            type="button"
-          >
-            <span
-              className="MuiButton-label"
-            >
-              Booths
-            </span>
-          </button>
-        </a>
         <a
           className="sc-kfzAmx dLIGSx"
           href="/cicd2021/ui/discussionboard"
