@@ -56,7 +56,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   return (
-    <Layout title="CloudNative Days 2021">
+    <Layout title="CI/CD Conference 2021 by CloudNative Days">
       <TrackSelector
         tracks={tracks}
         selectedTrack={selectedTrack}
