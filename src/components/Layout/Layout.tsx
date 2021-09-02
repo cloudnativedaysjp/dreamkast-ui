@@ -25,7 +25,7 @@ export const Layout: React.FC<Props> = ({
     <Styled.Container>
       <Head>
         <title>{title}</title>
-        <link rel="shortcut icon" href="/cicd2021/ui/trademark.svg" />
+        <link rel="shortcut icon" href="/cicd2021/ui/cicd_trademark.png" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
