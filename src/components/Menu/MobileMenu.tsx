@@ -10,9 +10,6 @@ type Props = {
 export const MobileMenu: React.FC<Props> = ({ url }) => {
   return (
     <Styled.MobileMenu>
-      <CommonStyled.MenuLink href="/cicd2021/ui#booths" rel="noreferrer">
-        <Button style={{ color: '#423A57' }}>Booths</Button>
-      </CommonStyled.MenuLink>
       <CommonStyled.MenuLink
         href="/cicd2021/ui/discussionboard"
         rel="noreferrer"
