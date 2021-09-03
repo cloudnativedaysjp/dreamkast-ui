@@ -5,7 +5,7 @@ import * as CommonStyled from '../styles/styled'
 
 const DiscussionPage: React.FC = () => {
   return (
-    <Layout title="CloudNative Days 2021 - DiscussionBoard">
+    <Layout title="DiscussionBoard - CI/CD Conference 2021">
       <CommonStyled.OuterContainer
         container
         spacing={1}
