@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { Player } from '../Player'
+import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import {
@@ -148,7 +148,7 @@ export const TrackView: React.FC<Props> = ({
   return (
     <Grid container spacing={0} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <Player vimeoId={videoId} autoplay={true}></Player>
+        <IvsPlayer playBackUrl={"https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.XFAcAcypUxQm.m3u8"} autoplay={true}></IvsPlayer>
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={4}>
