@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   roots: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
   testPathIgnorePatterns: [
@@ -8,6 +8,9 @@ module.exports = {
     '<rootDir>/node_modules/',
     '/client-axios/',
   ],
+  moduleNameMapper: {
+    '\\.(css|scss)$': '<rootDir>/test/__mocks__/styleMock.js',
+  },
   snapshotSerializers: ['enzyme-to-json/serializer'],
   testMatch: [
     '**/__tests__/**/*.+(ts|tsx|js)',
