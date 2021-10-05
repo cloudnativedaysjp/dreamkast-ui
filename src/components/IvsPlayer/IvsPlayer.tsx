@@ -26,7 +26,7 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
     document.body.appendChild(script)
 
     script.addEventListener('load', () => {
-      if (!playBackUrl || !videoElement.current) return
+      if (!videoElement.current) return
       registerIVSTech(videojs)
       const player = videojs(
         videoElement.current,
@@ -35,7 +35,8 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
           autoplay: autoplay,
         },
         () => {
-          player.src(playBackUrl)
+          console.log('Player is ready to use!')
+          if (playBackUrl) player.src(playBackUrl)
         },
       )
       playerRef.current = player
@@ -45,6 +46,12 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
       if (playerRef.current) playerRef.current.dispose()
       document.body.removeChild(script)
     }
+  }, [])
+
+  useEffect(() => {
+    if (!playBackUrl || !playerRef.current) return
+    playerRef.current.src(playBackUrl)
+    console.log(playerRef.current.currentSource())
   }, [playBackUrl])
 
   return (
