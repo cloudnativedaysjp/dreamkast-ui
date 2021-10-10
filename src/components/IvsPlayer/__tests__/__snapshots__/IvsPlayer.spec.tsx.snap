@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IvsPlayer 1`] = `
+<div
+  className="sc-dlfnbm fbDFAt"
+>
+  <div
+    className="sc-bdfBwQ iOawCe"
+  >
+    <video
+      autoPlay={true}
+      className="sc-gsTCUz bBTKKj video-js vjs-16-9 vjs-big-play-centered"
+      controls={true}
+      playsInline={true}
+    />
+  </div>
+</div>
+`;
