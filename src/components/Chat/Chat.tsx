@@ -39,7 +39,7 @@ type ReceivedMsg = {
 export const Chat: React.FC<Props> = ({ profile, talk }) => {
   const initialChatMessageMap = new ChatMessageMap()
   const initialChatMessage = {
-    eventAbbr: 'cicd2021',
+    eventAbbr: 'cndt2021',
     body: '',
     messageType: ChatMessageMessageTypeEnum.Chat,
   }
@@ -66,7 +66,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
       new Configuration({ basePath: window.location.origin }),
     )
     const { data } = await api.apiV1ChatMessagesGet(
-      'cicd2021',
+      'cndt2021',
       String(talk?.id),
       'talk',
     )

@@ -38,7 +38,7 @@ exports[`TalkInfo 1`] = `
     >
       <img
         className="sc-fubCfw iYzSNh"
-        src="/cicd2021/ui/images/talk_icon.png"
+        src="/cndt2021/ui/images/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
@@ -83,7 +83,7 @@ exports[`TalkInfo 1`] = `
       />
       <a
         className="sc-jrAGrp jUAzA-d"
-        href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cicd2021&related=@cloudnativedays&hashtags=cicd2021"
+        href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2021&related=@cloudnativedays&hashtags=cndt2021"
         target="_blank"
       >
         <button
@@ -108,9 +108,9 @@ exports[`TalkInfo 1`] = `
           >
             <img
               className="sc-dQppl fxCwta"
-              src="/cicd2021/ui/images/twitter_logo.png"
+              src="/cndt2021/ui/images/twitter_logo.png"
             />
-            tweet #cicd2021_
+            tweet #cndt2021_
           </span>
         </button>
       </a>

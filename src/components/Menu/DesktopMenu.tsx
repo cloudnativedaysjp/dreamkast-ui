@@ -11,12 +11,12 @@ export const DesktopMenu: React.FC<Props> = ({ url }) => {
   return (
     <Styled.DesktopMenu>
       <CommonStyled.MenuLink
-        href="/cicd2021/ui/discussionboard"
+        href="/cndt2021/ui/discussionboard"
         rel="noreferrer"
       >
         <Button style={{ color: '#423A57' }}>DiscussionBoard</Button>
       </CommonStyled.MenuLink>
-      <CommonStyled.MenuLink href="/cicd2021/timetables" rel="noreferrer">
+      <CommonStyled.MenuLink href="/cndt2021/timetables" rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Timetable</Button>
       </CommonStyled.MenuLink>
       <Button href={url} style={{ color: '#423A57' }}>
