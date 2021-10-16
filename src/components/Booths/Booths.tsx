@@ -13,7 +13,7 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
 
   useEffect(() => {
     new SponsorApi(new Configuration({ basePath: window.location.origin }))
-      .apiV1SponsorsGet('cicd2021')
+      .apiV1SponsorsGet('cndt2021')
       .then((res) => {
         setData(res.data)
       })
@@ -29,7 +29,7 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
 
   const boothUrl = (id?: number) => {
     if (!id) return
-    return '/cicd2021/ui/booths/' + id
+    return '/cndt2021/ui/booths/' + id
   }
 
   return (

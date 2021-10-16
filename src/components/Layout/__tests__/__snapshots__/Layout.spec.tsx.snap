@@ -12,12 +12,12 @@ exports[`Layout 1`] = `
         className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
       >
         <a
-          href="/cicd2021/ui"
+          href="/cndt2021/ui"
           rel="noopener noreferrer"
         >
           <img
             className="sc-dlfnbm jFXkDF"
-            src="/cicd2021/ui/images/cicd2021_horizontal.png"
+            src="/cndt2021/ui/images/cndt2021_header_logo.png"
           />
         </a>
         <div
@@ -25,7 +25,7 @@ exports[`Layout 1`] = `
         >
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cicd2021/ui/discussionboard"
+            href="/cndt2021/ui/discussionboard"
             rel="noreferrer"
           >
             <button
@@ -59,7 +59,7 @@ exports[`Layout 1`] = `
           </a>
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/cicd2021/timetables"
+            href="/cndt2021/timetables"
             rel="noreferrer"
           >
             <button
@@ -127,7 +127,7 @@ exports[`Layout 1`] = `
       >
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/cicd2021/ui/discussionboard"
+          href="/cndt2021/ui/discussionboard"
           rel="noreferrer"
         >
           <button
@@ -161,7 +161,7 @@ exports[`Layout 1`] = `
         </a>
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/cicd2021/timetables"
+          href="/cndt2021/timetables"
           rel="noreferrer"
         >
           <button
@@ -233,7 +233,7 @@ exports[`Layout 1`] = `
   >
     <a
       className="sc-gKsewC giTXZJ"
-      href="https://event.cloudnativedays.jp/cicd2021/privacy"
+      href="https://event.cloudnativedays.jp/cndt2021/privacy"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -241,7 +241,7 @@ exports[`Layout 1`] = `
     </a>
     <a
       className="sc-gKsewC giTXZJ"
-      href="https://event.cloudnativedays.jp/cicd2021/coc"
+      href="https://event.cloudnativedays.jp/cndt2021/coc"
       rel="noopener noreferrer"
       target="_blank"
     >
