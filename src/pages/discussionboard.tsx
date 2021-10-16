@@ -5,7 +5,7 @@ import * as CommonStyled from '../styles/styled'
 
 const DiscussionPage: React.FC = () => {
   return (
-    <Layout title="DiscussionBoard - CI/CD Conference 2021">
+    <Layout title="DiscussionBoard - CNDT 2021">
       <CommonStyled.OuterContainer
         container
         spacing={1}
@@ -21,13 +21,13 @@ const DiscussionPage: React.FC = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                href="https://miro.com/app/board/o9J_l58TPmc=/"
+                href="https://miro.com/app/board/o9J_l58Mqh0=/"
               >
                 参加する
               </Button>
             </CommonStyled.CenterizedContainer>
             <Miro
-              miroId="o9J_l58TPmc="
+              miroId="o9J_l58Mqh0="
               liveEmbed={false}
               viewport="moveToViewport=347,-121,3506,3506"
             />
