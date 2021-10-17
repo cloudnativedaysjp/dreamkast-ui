@@ -22,7 +22,7 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
   useEffect(() => {
     const script = document.createElement('script')
     script.src =
-      'https://player.live-video.net/1.4.1/amazon-ivs-videojs-tech.min.js'
+      'https://player.live-video.net/1.2.0/amazon-ivs-videojs-tech.min.js'
     document.body.appendChild(script)
 
     script.addEventListener('load', () => {
