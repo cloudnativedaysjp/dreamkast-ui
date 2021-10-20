@@ -36,8 +36,16 @@ const IndexPage: React.FC = () => {
     const api = new ProfileApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await api.apiV1EventAbbrMyProfileGet('cndt2021')
-    setProfile(data)
+    const res = await api
+      .apiV1EventAbbrMyProfileGet('cndt2021')
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          const topUrl = window.location.href.replace('/ui', '')
+          window.location.href = topUrl
+        }
+      })
+    if (!res) return
+    setProfile(res.data)
   }, [])
 
   const getTracks = useCallback(async () => {
