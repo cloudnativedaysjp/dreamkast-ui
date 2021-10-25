@@ -2,29 +2,29 @@
 
 exports[`Layout 1`] = `
 <div
-  className="sc-bdvvaa gaikju"
+  className="sc-bdfBwQ cfTGtS"
 >
   <header>
     <header
       className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
     >
       <div
-        className="MuiToolbar-root MuiToolbar-regular sc-gsDJrp jwnBFE MuiToolbar-gutters"
+        className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
       >
         <a
           href="/cndt2021/ui"
           rel="noopener noreferrer"
         >
           <img
-            className="sc-dkPtyc dcrCnB"
+            className="sc-dlfnbm jFXkDF"
             src="/cndt2021/ui/images/cndt2021_header_logo.png"
           />
         </a>
         <div
-          className="sc-hBURRC kRpPej"
+          className="sc-hBEYos ipAVxb"
         >
           <a
-            className="sc-kfPtPH kznfLJ"
+            className="sc-kfzAmx dLIGSx"
             href="/cndt2021/ui/discussionboard"
             rel="noreferrer"
           >
@@ -58,7 +58,7 @@ exports[`Layout 1`] = `
             </button>
           </a>
           <a
-            className="sc-kfPtPH kznfLJ"
+            className="sc-kfzAmx dLIGSx"
             href="/cndt2021/timetables"
             rel="noreferrer"
           >
@@ -123,10 +123,10 @@ exports[`Layout 1`] = `
         </div>
       </div>
       <div
-        className="sc-fotPbf gvqOBI"
+        className="sc-fodVxV gJEXNK"
       >
         <a
-          className="sc-kfPtPH kznfLJ"
+          className="sc-kfzAmx dLIGSx"
           href="/cndt2021/ui/discussionboard"
           rel="noreferrer"
         >
@@ -160,7 +160,7 @@ exports[`Layout 1`] = `
           </button>
         </a>
         <a
-          className="sc-kfPtPH kznfLJ"
+          className="sc-kfzAmx dLIGSx"
           href="/cndt2021/timetables"
           rel="noreferrer"
         >
@@ -226,13 +226,13 @@ exports[`Layout 1`] = `
     </header>
   </header>
   <div
-    className="sc-hKwCoD fKeepo"
+    className="sc-hKgILt dsFsSH"
   />
   <footer
-    className="sc-eCImvq cEommq"
+    className="sc-eCssSg csAIkT"
   >
     <a
-      className="sc-gKckTs ihfSwi"
+      className="sc-gKsewC giTXZJ"
       href="https://event.cloudnativedays.jp/cndt2021/privacy"
       rel="noopener noreferrer"
       target="_blank"
@@ -240,7 +240,7 @@ exports[`Layout 1`] = `
       プライバシーポリシー
     </a>
     <a
-      className="sc-gKckTs ihfSwi"
+      className="sc-gKsewC giTXZJ"
       href="https://event.cloudnativedays.jp/cndt2021/coc"
       rel="noopener noreferrer"
       target="_blank"
@@ -248,7 +248,7 @@ exports[`Layout 1`] = `
       行動規範
     </a>
     <div
-      className="sc-jRQAMF hWJkmJ"
+      className="sc-jSgupP dTmTMX"
     >
       © CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)
     </div>

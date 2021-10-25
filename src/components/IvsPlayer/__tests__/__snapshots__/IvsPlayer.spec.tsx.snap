@@ -2,14 +2,14 @@
 
 exports[`IvsPlayer 1`] = `
 <div
-  className="sc-dkPtyc iOJfgp"
+  className="sc-dlfnbm fbDFAt"
 >
   <div
-    className="sc-bdvvaa kOJZom"
+    className="sc-bdfBwQ iOawCe"
   >
     <video
       autoPlay={true}
-      className="sc-gsDJrp iNDSfl video-js vjs-16-9 vjs-big-play-centered"
+      className="sc-gsTCUz bBTKKj video-js vjs-16-9 vjs-big-play-centered"
       controls={true}
       playsInline={true}
     />

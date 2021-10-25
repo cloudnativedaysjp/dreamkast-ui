@@ -2,18 +2,18 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="sc-bdvvaa eNHuTQ"
+  className="sc-bdfBwQ jpKRUg"
 >
   <div
-    className="sc-gsDJrp iGcHSh"
+    className="sc-gsTCUz bAESxf"
   >
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root sc-dkPtyc jQJsks MuiList-padding"
+    className="MuiList-root sc-dlfnbm kPTqlQ MuiList-padding"
   />
   <div
-    className="sc-gKckTs dHZylA"
+    className="sc-gKsewC iIVHmz"
   >
     <span
       aria-disabled={false}
@@ -53,7 +53,7 @@ exports[`TalkSelector 1`] = `
       </span>
     </span>
     <div
-      className="sc-iCfLBT"
+      className="sc-iBPRYJ"
     >
       ライブ中のセッションに自動遷移する
     </div>
