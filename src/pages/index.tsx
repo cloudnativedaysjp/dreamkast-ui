@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { Layout } from '../components/Layout'
 import { TrackSelector } from '../components/TrackSelector'
 import { TrackView } from '../components/Track'
+import { isStorageAvailable } from '../util/sessionstorage'
 import {
   Track,
   TrackApi,
@@ -54,7 +55,18 @@ const IndexPage: React.FC = () => {
     )
     const { data } = await api.apiV1TracksGet('cndt2021')
     setTracks(data)
-    setSelectedTrack(data[0])
+
+    if (isStorageAvailable('sessionStorage')) {
+      setSelectedTrack(
+        ((tracks) => {
+          const A_TRACK_ID = 20
+          const num = sessionStorage.getItem('view_track_id') || A_TRACK_ID
+          return tracks.find((track) => track.id == num)
+        })(data),
+      )
+    } else {
+      setSelectedTrack(data[0])
+    }
   }, [])
 
   useEffect(() => {
