@@ -14,7 +14,7 @@
 
 
 import { Configuration } from './configuration';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
@@ -32,79 +32,79 @@ export interface Booth {
      * @type {number}
      * @memberof Booth
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {number}
      * @memberof Booth
      */
-    sponsorId: number;
+    'sponsorId': number;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    sponsorName: string;
+    'sponsorName': string;
     /**
      * 
      * @type {boolean}
      * @memberof Booth
      */
-    published: boolean;
+    'published': boolean;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    description: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    url?: string;
+    'url'?: string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    abbr: string;
+    'abbr': string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    text: string;
+    'text': string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    logoUrl: string;
+    'logoUrl': string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    vimeoUrl: string;
+    'vimeoUrl': string;
     /**
      * 
      * @type {string}
      * @memberof Booth
      */
-    miroUrl: string;
+    'miroUrl': string;
     /**
      * 
      * @type {Array<BoothPdfUrls>}
      * @memberof Booth
      */
-    pdfUrls: Array<BoothPdfUrls>;
+    'pdfUrls': Array<BoothPdfUrls>;
     /**
      * 
      * @type {Array<string>}
      * @memberof Booth
      */
-    keyImageUrls: Array<string>;
+    'keyImageUrls': Array<string>;
 }
 /**
  * 
@@ -117,13 +117,13 @@ export interface BoothPdfUrls {
      * @type {string}
      * @memberof BoothPdfUrls
      */
-    url?: string;
+    'url'?: string;
     /**
      * 
      * @type {string}
      * @memberof BoothPdfUrls
      */
-    title?: string;
+    'title'?: string;
 }
 /**
  * 
@@ -136,55 +136,55 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {number}
      * @memberof ChatMessage
      */
-    profileId?: number;
+    'profileId'?: number;
     /**
      * 
      * @type {number}
      * @memberof ChatMessage
      */
-    speakerId?: number;
+    'speakerId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ChatMessage
      */
-    eventAbbr: string;
+    'eventAbbr': string;
     /**
      * 
      * @type {number}
      * @memberof ChatMessage
      */
-    roomId?: number;
+    'roomId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ChatMessage
      */
-    roomType?: string;
+    'roomType'?: string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessage
      */
-    body: string;
+    'body': string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessage
      */
-    createdAt?: string;
+    'createdAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessage
      */
-    messageType: ChatMessageMessageTypeEnum;
+    'messageType': ChatMessageMessageTypeEnum;
 }
 
 /**
@@ -207,55 +207,55 @@ export interface ChatMessageProperties {
      * @type {number}
      * @memberof ChatMessageProperties
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {number}
      * @memberof ChatMessageProperties
      */
-    profileId?: number;
+    'profileId'?: number;
     /**
      * 
      * @type {number}
      * @memberof ChatMessageProperties
      */
-    speakerId?: number;
+    'speakerId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ChatMessageProperties
      */
-    eventAbbr?: string;
+    'eventAbbr'?: string;
     /**
      * 
      * @type {number}
      * @memberof ChatMessageProperties
      */
-    roomId?: number;
+    'roomId'?: number;
     /**
      * 
      * @type {string}
      * @memberof ChatMessageProperties
      */
-    roomType?: string;
+    'roomType'?: string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessageProperties
      */
-    body?: string;
+    'body'?: string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessageProperties
      */
-    createdAt?: string;
+    'createdAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof ChatMessageProperties
      */
-    messageType?: ChatMessagePropertiesMessageTypeEnum;
+    'messageType'?: ChatMessagePropertiesMessageTypeEnum;
 }
 
 /**
@@ -278,67 +278,67 @@ export interface Event {
      * @type {number}
      * @memberof Event
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    name: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    abbr: string;
+    'abbr': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    status: string;
+    'status': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    theme: string;
+    'theme': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    about: string;
+    'about': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    privacy_policy: string;
+    'privacy_policy': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    privacy_policy_for_speaker: string;
+    'privacy_policy_for_speaker': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    copyright: string;
+    'copyright': string;
     /**
      * 
      * @type {string}
      * @memberof Event
      */
-    coc: string;
+    'coc': string;
     /**
      * 
      * @type {Array<EventConferenceDays>}
      * @memberof Event
      */
-    conferenceDays?: Array<EventConferenceDays>;
+    'conferenceDays'?: Array<EventConferenceDays>;
 }
 /**
  * 
@@ -351,13 +351,13 @@ export interface EventConferenceDays {
      * @type {number}
      * @memberof EventConferenceDays
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof EventConferenceDays
      */
-    date?: string;
+    'date'?: string;
 }
 /**
  * 
@@ -370,7 +370,7 @@ export interface InlineResponse403 {
      * @type {string}
      * @memberof InlineResponse403
      */
-    error?: string;
+    'error'?: string;
 }
 /**
  * 
@@ -383,13 +383,13 @@ export interface Profile {
      * @type {number}
      * @memberof Profile
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof Profile
      */
-    name: string;
+    'name': string;
 }
 /**
  * 
@@ -402,49 +402,49 @@ export interface Sponsor {
      * @type {number}
      * @memberof Sponsor
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof Sponsor
      */
-    eventAbbr: string;
+    'eventAbbr': string;
     /**
      * 
      * @type {string}
      * @memberof Sponsor
      */
-    name: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof Sponsor
      */
-    abbr: string;
+    'abbr': string;
     /**
      * 
      * @type {string}
      * @memberof Sponsor
      */
-    url: string;
+    'url': string;
     /**
      * 
      * @type {string}
      * @memberof Sponsor
      */
-    logo_url: string;
+    'logo_url': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof Sponsor
      */
-    sponsorType?: Array<string>;
+    'sponsorType'?: Array<string>;
     /**
      * 
      * @type {SponsorBooth}
      * @memberof Sponsor
      */
-    booth?: SponsorBooth;
+    'booth'?: SponsorBooth;
 }
 /**
  * 
@@ -457,13 +457,13 @@ export interface SponsorBooth {
      * @type {number}
      * @memberof SponsorBooth
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {boolean}
      * @memberof SponsorBooth
      */
-    opened?: boolean;
+    'opened'?: boolean;
 }
 /**
  * 
@@ -476,109 +476,109 @@ export interface Talk {
      * @type {number}
      * @memberof Talk
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {number}
      * @memberof Talk
      */
-    trackId: number;
+    'trackId': number;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    videoPlatform?: string;
+    'videoPlatform'?: string;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    videoId: string;
+    'videoId': string;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    title: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    abstract: string;
+    'abstract': string;
     /**
      * array of speakers name
      * @type {Array<TalkSpeakers>}
      * @memberof Talk
      */
-    speakers: Array<TalkSpeakers>;
+    'speakers': Array<TalkSpeakers>;
     /**
      * 
      * @type {number}
      * @memberof Talk
      */
-    dayId: number;
+    'dayId': number;
     /**
      * 
      * @type {boolean}
      * @memberof Talk
      */
-    showOnTimetable: boolean;
+    'showOnTimetable': boolean;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    startTime: string;
+    'startTime': string;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    endTime: string;
+    'endTime': string;
     /**
      * 
      * @type {number}
      * @memberof Talk
      */
-    talkDuration: number;
+    'talkDuration': number;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    talkDifficulty: string;
+    'talkDifficulty': string;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    talkCategory: string;
+    'talkCategory': string;
     /**
      * 
      * @type {boolean}
      * @memberof Talk
      */
-    onAir?: boolean;
+    'onAir'?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    documentUrl?: string;
+    'documentUrl'?: string;
     /**
      * 
      * @type {number}
      * @memberof Talk
      */
-    conferenceDayId?: number;
+    'conferenceDayId'?: number;
     /**
      * 
      * @type {string}
      * @memberof Talk
      */
-    conferenceDayDate?: string;
+    'conferenceDayDate'?: string;
 }
 /**
  * 
@@ -591,13 +591,13 @@ export interface TalkSpeakers {
      * @type {number}
      * @memberof TalkSpeakers
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {string}
      * @memberof TalkSpeakers
      */
-    name?: string;
+    'name'?: string;
 }
 /**
  * 
@@ -610,25 +610,25 @@ export interface Track {
      * @type {number}
      * @memberof Track
      */
-    id: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof Track
      */
-    name: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof Track
      */
-    videoPlatform?: string;
+    'videoPlatform'?: string;
     /**
      * 
      * @type {string}
      * @memberof Track
      */
-    videoId?: string;
+    'videoId'?: string;
 }
 /**
  * 
@@ -641,55 +641,55 @@ export interface UpdateChatMessage {
      * @type {number}
      * @memberof UpdateChatMessage
      */
-    id?: number;
+    'id'?: number;
     /**
      * 
      * @type {number}
      * @memberof UpdateChatMessage
      */
-    profileId?: number;
+    'profileId'?: number;
     /**
      * 
      * @type {number}
      * @memberof UpdateChatMessage
      */
-    speakerId?: number;
+    'speakerId'?: number;
     /**
      * 
      * @type {string}
      * @memberof UpdateChatMessage
      */
-    eventAbbr: string;
+    'eventAbbr': string;
     /**
      * 
      * @type {number}
      * @memberof UpdateChatMessage
      */
-    roomId?: number;
+    'roomId'?: number;
     /**
      * 
      * @type {string}
      * @memberof UpdateChatMessage
      */
-    roomType?: string;
+    'roomType'?: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateChatMessage
      */
-    body: string;
+    'body': string;
     /**
      * 
      * @type {string}
      * @memberof UpdateChatMessage
      */
-    createdAt?: string;
+    'createdAt'?: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateChatMessage
      */
-    messageType?: UpdateChatMessageMessageTypeEnum;
+    'messageType'?: UpdateChatMessageMessageTypeEnum;
 }
 
 /**
@@ -701,6 +701,37 @@ export enum UpdateChatMessageMessageTypeEnum {
     Qa = 'qa'
 }
 
+/**
+ * 
+ * @export
+ * @interface ViewerCount
+ */
+export interface ViewerCount {
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewerCount
+     */
+    'conference_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewerCount
+     */
+    'track_id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewerCount
+     */
+    'talk_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewerCount
+     */
+    'viewer_count': number;
+}
 
 /**
  * BoothApi - axios parameter creator
@@ -714,7 +745,7 @@ export const BoothApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1BoothsBoothIdGet: async (boothId: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1BoothsBoothIdGet: async (boothId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'boothId' is not null or undefined
             assertParamExists('apiV1BoothsBoothIdGet', 'boothId', boothId)
             const localVarPath = `/api/v1/booths/{boothId}`
@@ -732,7 +763,7 @@ export const BoothApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -757,7 +788,7 @@ export const BoothApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1BoothsBoothIdGet(boothId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booth>> {
+        async apiV1BoothsBoothIdGet(boothId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booth>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1BoothsBoothIdGet(boothId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -797,7 +828,7 @@ export class BoothApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BoothApi
      */
-    public apiV1BoothsBoothIdGet(boothId: string, options?: any) {
+    public apiV1BoothsBoothIdGet(boothId: string, options?: AxiosRequestConfig) {
         return BoothApiFp(this.configuration).apiV1BoothsBoothIdGet(boothId, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -818,7 +849,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ChatMessagesGet: async (eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1ChatMessagesGet: async (eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1ChatMessagesGet', 'eventAbbr', eventAbbr)
             // verify required parameter 'roomId' is not null or undefined
@@ -857,7 +888,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -874,7 +905,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ChatMessagesMessageIdPut: async (messageId: string, updateChatMessage?: UpdateChatMessage, options: any = {}): Promise<RequestArgs> => {
+        apiV1ChatMessagesMessageIdPut: async (messageId: string, updateChatMessage?: UpdateChatMessage, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'messageId' is not null or undefined
             assertParamExists('apiV1ChatMessagesMessageIdPut', 'messageId', messageId)
             const localVarPath = `/api/v1/chat_messages/{messageId}`
@@ -894,7 +925,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(updateChatMessage, localVarRequestOptions, configuration)
@@ -911,7 +942,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ChatMessagesPost: async (chatMessage?: ChatMessage, options: any = {}): Promise<RequestArgs> => {
+        apiV1ChatMessagesPost: async (chatMessage?: ChatMessage, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/chat_messages`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -928,7 +959,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(chatMessage, localVarRequestOptions, configuration)
@@ -957,7 +988,7 @@ export const ChatMessageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ChatMessagesGet(eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatMessage>>> {
+        async apiV1ChatMessagesGet(eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatMessage>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ChatMessagesGet(eventAbbr, roomId, roomType, createdFrom, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -969,7 +1000,7 @@ export const ChatMessageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatMessage>>> {
+        async apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChatMessage>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ChatMessagesMessageIdPut(messageId, updateChatMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -980,7 +1011,7 @@ export const ChatMessageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ChatMessagesPost(chatMessage?: ChatMessage, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiV1ChatMessagesPost(chatMessage?: ChatMessage, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ChatMessagesPost(chatMessage, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1047,7 +1078,7 @@ export class ChatMessageApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ChatMessageApi
      */
-    public apiV1ChatMessagesGet(eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options?: any) {
+    public apiV1ChatMessagesGet(eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options?: AxiosRequestConfig) {
         return ChatMessageApiFp(this.configuration).apiV1ChatMessagesGet(eventAbbr, roomId, roomType, createdFrom, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1060,7 +1091,7 @@ export class ChatMessageApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ChatMessageApi
      */
-    public apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: any) {
+    public apiV1ChatMessagesMessageIdPut(messageId: string, updateChatMessage?: UpdateChatMessage, options?: AxiosRequestConfig) {
         return ChatMessageApiFp(this.configuration).apiV1ChatMessagesMessageIdPut(messageId, updateChatMessage, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1072,7 +1103,7 @@ export class ChatMessageApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ChatMessageApi
      */
-    public apiV1ChatMessagesPost(chatMessage?: ChatMessage, options?: any) {
+    public apiV1ChatMessagesPost(chatMessage?: ChatMessage, options?: AxiosRequestConfig) {
         return ChatMessageApiFp(this.configuration).apiV1ChatMessagesPost(chatMessage, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1090,7 +1121,7 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1EventsEventAbbrGet: async (eventAbbr: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1EventsEventAbbrGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1EventsEventAbbrGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/events/{eventAbbr}`
@@ -1108,7 +1139,7 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1133,7 +1164,7 @@ export const EventApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1EventsEventAbbrGet(eventAbbr: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Event>> {
+        async apiV1EventsEventAbbrGet(eventAbbr: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Event>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1EventsEventAbbrGet(eventAbbr, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1173,10 +1204,8 @@ export class EventApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EventApi
      */
-    public apiV1EventsEventAbbrGet(eventAbbr: string, options?: any) {
-        return EventApiFp(this.configuration).apiV1EventsEventAbbrGet(eventAbbr, options).then((request) => {
-            return request(this.axios, this.basePath)
-        });
+    public apiV1EventsEventAbbrGet(eventAbbr: string, options?: AxiosRequestConfig) {
+        return EventApiFp(this.configuration).apiV1EventsEventAbbrGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1193,7 +1222,7 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1EventAbbrMyProfileGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/${eventAbbr}/my_profile`
@@ -1211,7 +1240,7 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1236,7 +1265,7 @@ export const ProfileApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
+        async apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1EventAbbrMyProfileGet(eventAbbr, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1276,7 +1305,7 @@ export class ProfileApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProfileApi
      */
-    public apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: any) {
+    public apiV1EventAbbrMyProfileGet(eventAbbr: string, options?: AxiosRequestConfig) {
         return ProfileApiFp(this.configuration).apiV1EventAbbrMyProfileGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1294,7 +1323,7 @@ export const SponsorApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1SponsorsGet: async (eventAbbr: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1SponsorsGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1SponsorsGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/sponsors`;
@@ -1315,7 +1344,7 @@ export const SponsorApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1340,7 +1369,7 @@ export const SponsorApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1SponsorsGet(eventAbbr: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Sponsor>>> {
+        async apiV1SponsorsGet(eventAbbr: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Sponsor>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1SponsorsGet(eventAbbr, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1380,7 +1409,7 @@ export class SponsorApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SponsorApi
      */
-    public apiV1SponsorsGet(eventAbbr: string, options?: any) {
+    public apiV1SponsorsGet(eventAbbr: string, options?: AxiosRequestConfig) {
         return SponsorApiFp(this.configuration).apiV1SponsorsGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1400,7 +1429,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksGet: async (eventAbbr: string, trackId?: string, conferenceDayIds?: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1TalksGet: async (eventAbbr: string, trackId?: string, conferenceDayIds?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1TalksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/talks`;
@@ -1429,7 +1458,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1444,7 +1473,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksTalkIdGet: async (talkId: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1TalksTalkIdGet: async (talkId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'talkId' is not null or undefined
             assertParamExists('apiV1TalksTalkIdGet', 'talkId', talkId)
             const localVarPath = `/api/v1/talks/{talkId}`
@@ -1462,7 +1491,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1489,7 +1518,7 @@ export const TalkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Talk>>> {
+        async apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Talk>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksGet(eventAbbr, trackId, conferenceDayIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1499,7 +1528,7 @@ export const TalkApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TalksTalkIdGet(talkId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Talk>> {
+        async apiV1TalksTalkIdGet(talkId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Talk>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksTalkIdGet(talkId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1552,7 +1581,7 @@ export class TalkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TalkApi
      */
-    public apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: any) {
+    public apiV1TalksGet(eventAbbr: string, trackId?: string, conferenceDayIds?: string, options?: AxiosRequestConfig) {
         return TalkApiFp(this.configuration).apiV1TalksGet(eventAbbr, trackId, conferenceDayIds, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1563,7 +1592,7 @@ export class TalkApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TalkApi
      */
-    public apiV1TalksTalkIdGet(talkId: string, options?: any) {
+    public apiV1TalksTalkIdGet(talkId: string, options?: AxiosRequestConfig) {
         return TalkApiFp(this.configuration).apiV1TalksTalkIdGet(talkId, options).then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1581,7 +1610,7 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TracksGet: async (eventAbbr: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1TracksGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1TracksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/tracks`;
@@ -1602,7 +1631,7 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1617,7 +1646,7 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TracksTrackIdGet: async (trackId: string, options: any = {}): Promise<RequestArgs> => {
+        apiV1TracksTrackIdGet: async (trackId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'trackId' is not null or undefined
             assertParamExists('apiV1TracksTrackIdGet', 'trackId', trackId)
             const localVarPath = `/api/v1/tracks/{trackId}`
@@ -1635,7 +1664,40 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
 
 
     
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} trackId ID of track
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1TracksTrackIdViewerCountGet: async (trackId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'trackId' is not null or undefined
+            assertParamExists('apiV1TracksTrackIdViewerCountGet', 'trackId', trackId)
+            const localVarPath = `/api/v1/tracks/{trackId}/viewer_count`
+                .replace(`{${"trackId"}}`, encodeURIComponent(String(trackId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
@@ -1660,7 +1722,7 @@ export const TrackApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TracksGet(eventAbbr: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Track>>> {
+        async apiV1TracksGet(eventAbbr: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Track>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TracksGet(eventAbbr, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1670,8 +1732,18 @@ export const TrackApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TracksTrackIdGet(trackId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Track>> {
+        async apiV1TracksTrackIdGet(trackId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Track>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TracksTrackIdGet(trackId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} trackId ID of track
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiV1TracksTrackIdViewerCountGet(trackId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ViewerCount>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TracksTrackIdViewerCountGet(trackId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1702,6 +1774,15 @@ export const TrackApiFactory = function (configuration?: Configuration, basePath
         apiV1TracksTrackIdGet(trackId: string, options?: any): AxiosPromise<Track> {
             return localVarFp.apiV1TracksTrackIdGet(trackId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} trackId ID of track
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1TracksTrackIdViewerCountGet(trackId: string, options?: any): AxiosPromise<ViewerCount> {
+            return localVarFp.apiV1TracksTrackIdViewerCountGet(trackId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1719,7 +1800,7 @@ export class TrackApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TrackApi
      */
-    public apiV1TracksGet(eventAbbr: string, options?: any) {
+    public apiV1TracksGet(eventAbbr: string, options?: AxiosRequestConfig) {
         return TrackApiFp(this.configuration).apiV1TracksGet(eventAbbr, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1730,8 +1811,19 @@ export class TrackApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TrackApi
      */
-    public apiV1TracksTrackIdGet(trackId: string, options?: any) {
+    public apiV1TracksTrackIdGet(trackId: string, options?: AxiosRequestConfig) {
         return TrackApiFp(this.configuration).apiV1TracksTrackIdGet(trackId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} trackId ID of track
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TrackApi
+     */
+    public apiV1TracksTrackIdViewerCountGet(trackId: string, options?: AxiosRequestConfig) {
+        return TrackApiFp(this.configuration).apiV1TracksTrackIdViewerCountGet(trackId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
