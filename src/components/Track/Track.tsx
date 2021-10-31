@@ -148,7 +148,13 @@ export const TrackView: React.FC<Props> = ({
   return (
     <Grid container spacing={0} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <IvsPlayer playBackUrl={videoId} autoplay={true}></IvsPlayer>
+        <IvsPlayer
+          playBackUrl={videoId}
+          autoplay={true}
+          isLive={
+            selectedTalk?.onAir == undefined ? false : selectedTalk?.onAir
+          }
+        ></IvsPlayer>
         <Sponsors />
       </Grid>
       <Grid item xs={12} md={4}>
