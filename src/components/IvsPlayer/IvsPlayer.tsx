@@ -63,6 +63,7 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
           controls
           autoPlay
           playsInline
+          muted={false}
         />
       </Styled.IvsPlayerContainer>
     </CommonStyled.Container>

@@ -11,6 +11,7 @@ exports[`IvsPlayer 1`] = `
       autoPlay={true}
       className="sc-gsTCUz bBTKKj video-js vjs-16-9 vjs-big-play-centered"
       controls={true}
+      muted={false}
       playsInline={true}
     />
   </div>
