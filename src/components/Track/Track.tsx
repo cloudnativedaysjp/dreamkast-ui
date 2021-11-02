@@ -158,6 +158,7 @@ export const TrackView: React.FC<Props> = ({
         <TalkInfo
           selectedTalk={selectedTalk}
           selectedTrackName={selectedTrack?.name}
+          selectedTrackId={selectedTrack?.id}
         />
       </Grid>
       <Grid item xs={12} md={4} style={{ height: '100%' }}>

@@ -1,16 +1,21 @@
-import React from 'react'
+import React, {useEffect, useState, useCallback} from 'react'
 import * as Styled from './styled'
-import { Talk } from '../../client-axios'
+import { Talk, TrackApi, Configuration } from '../../client-axios'
 
 type Props = {
   selectedTalk?: Talk
   selectedTrackName?: string
+  selectedTrackId?: number
 }
 
 export const TalkInfo: React.FC<Props> = ({
   selectedTalk,
   selectedTrackName,
+  selectedTrackId
 }) => {
+  const [timer, setTimer] = useState<number>()
+  const [viewerCount, setViewerCount] = useState<string>()
+
   const twitterURL = (trackName?: string) => {
     const base =
       'http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2021&related=@cloudnativedays&hashtags=cndt2021'
@@ -18,9 +23,41 @@ export const TalkInfo: React.FC<Props> = ({
     return base + '_' + trackName
   }
 
+  const getViewerCount = useCallback(async () => {
+    console.log("Start getViewerCount")
+    const api = new TrackApi(
+      new Configuration({ basePath: window.location.origin }),
+    )
+    if(selectedTrackId){
+      try{
+        console.log("Trying request")
+        const { data } = await api.apiV1TracksTrackIdViewerCountGet(
+          selectedTrackId.toString()
+        )
+        setViewerCount(data.viewer_count.toString())
+      } catch {
+        setViewerCount("-")
+      }
+    }
+  }, [viewerCount, selectedTrackId])
+
+  useEffect(() => {
+    getViewerCount()
+    clearInterval(timer)
+    setTimer(
+      window.setInterval(() => {
+        getViewerCount()
+      }, 60 * 1000),
+    )
+  }, [selectedTrackId])
+
+
   return (
     <Styled.OuterContainer>
       <Styled.Container>
+        {selectedTalk?.onAir && 
+          <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>
+        }
         <Styled.Title>{selectedTalk?.title}</Styled.Title>
         <Styled.SpeakerContainer>
           <Styled.Speaker>

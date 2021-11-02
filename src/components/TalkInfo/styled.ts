@@ -14,6 +14,17 @@ export const OuterContainer = styled.div`
 export const Title = styled.h2`
   color: #423A57;
   font-size: 1.8em;
+  margin-bottom: 10px;
+`
+
+export const Live = styled.span`
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: inline-block;
 `
 
 export const SpeakerContainer = styled.div`
