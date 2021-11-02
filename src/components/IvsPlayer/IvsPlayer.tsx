@@ -8,6 +8,7 @@ import * as CommonStyled from '../../styles/styled'
 type Props = {
   playBackUrl?: string
   autoplay: boolean
+  isLive: boolean
 }
 
 declare function registerIVSTech(
@@ -15,9 +16,30 @@ declare function registerIVSTech(
   config?: { wasmWorker: string; wasmBinary: string },
 ): void
 
-export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
+export const IvsPlayer: React.FC<Props> = ({
+  playBackUrl,
+  autoplay,
+  isLive,
+}) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
+
+  const videojsOptions = () => {
+    if (isLive) {
+      return {
+        techOrder: ['AmazonIVS'],
+        autoplay: autoplay,
+        controls: true,
+        muted: false,
+      }
+    } else {
+      return {
+        autoplay: autoplay,
+        controls: true,
+        muted: false,
+      }
+    }
+  }
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -27,18 +49,14 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
 
     script.addEventListener('load', () => {
       if (!videoElement.current) return
-      registerIVSTech(videojs)
-      const player = videojs(
-        videoElement.current,
-        {
-          techOrder: ['AmazonIVS'],
-          autoplay: autoplay,
-        },
-        () => {
-          console.log('Player is ready to use!')
-          if (playBackUrl) player.src(playBackUrl)
-        },
-      )
+      if (isLive) {
+        registerIVSTech(videojs)
+      }
+      const options = videojsOptions()
+      const player = videojs(videoElement.current, options, () => {
+        console.log('Player is ready to use!')
+        if (playBackUrl) player.src(playBackUrl)
+      })
       playerRef.current = player
     })
 
