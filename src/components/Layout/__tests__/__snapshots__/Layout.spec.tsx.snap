@@ -59,6 +59,40 @@ exports[`Layout 1`] = `
           </a>
           <a
             className="sc-kfzAmx dLIGSx"
+            href="/cndt2021/ui/jobboard"
+            rel="noreferrer"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                Object {
+                  "color": "#423A57",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                JobBoard
+              </span>
+            </button>
+          </a>
+          <a
+            className="sc-kfzAmx dLIGSx"
             href="/cndt2021/timetables"
             rel="noreferrer"
           >
@@ -156,6 +190,40 @@ exports[`Layout 1`] = `
               className="MuiButton-label"
             >
               Discussion
+            </span>
+          </button>
+        </a>
+        <a
+          className="sc-kfzAmx dLIGSx"
+          href="/cndt2021/ui/jobboard"
+          rel="noreferrer"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "color": "#423A57",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Job
             </span>
           </button>
         </a>
