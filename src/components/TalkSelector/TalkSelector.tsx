@@ -27,7 +27,7 @@ const isAvailable = (
 ) => {
   if (!conferanceDayDate) return true
   const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
-  return true || now - dayjs(startDate).unix() >= 0
+  return now - dayjs(startDate).unix() >= 0
 }
 
 export const TalkSelector: React.FC<Props> = ({
