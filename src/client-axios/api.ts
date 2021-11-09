@@ -148,7 +148,7 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    'speakerId'?: number;
+    'speakerId'?: number | null;
     /**
      * 
      * @type {string}
@@ -160,7 +160,7 @@ export interface ChatMessage {
      * @type {number}
      * @memberof ChatMessage
      */
-    'roomId'?: number;
+    'roomId': number;
     /**
      * 
      * @type {string}
@@ -185,6 +185,12 @@ export interface ChatMessage {
      * @memberof ChatMessage
      */
     'messageType': ChatMessageMessageTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessage
+     */
+    'replyTo'?: number | null;
 }
 
 /**
@@ -219,7 +225,7 @@ export interface ChatMessageProperties {
      * @type {number}
      * @memberof ChatMessageProperties
      */
-    'speakerId'?: number;
+    'speakerId'?: number | null;
     /**
      * 
      * @type {string}
@@ -256,6 +262,12 @@ export interface ChatMessageProperties {
      * @memberof ChatMessageProperties
      */
     'messageType'?: ChatMessagePropertiesMessageTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatMessageProperties
+     */
+    'replyTo'?: number | null;
 }
 
 /**
@@ -653,7 +665,7 @@ export interface UpdateChatMessage {
      * @type {number}
      * @memberof UpdateChatMessage
      */
-    'speakerId'?: number;
+    'speakerId'?: number | null;
     /**
      * 
      * @type {string}
@@ -690,6 +702,12 @@ export interface UpdateChatMessage {
      * @memberof UpdateChatMessage
      */
     'messageType'?: UpdateChatMessageMessageTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateChatMessage
+     */
+    'replyTo'?: number | null;
 }
 
 /**
