@@ -26,7 +26,7 @@ export class ChatMessageMap extends Map<number, ChatMessageClass> {
 export class ChatMessageClass implements ChatMessageInterface {
   id?: number
   profileId?: number
-  speakerId?: number | null
+  speakerId?: number
   eventAbbr: string
   roomId: number
   roomType?: string
