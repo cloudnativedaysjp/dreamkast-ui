@@ -41,7 +41,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   const initialChatMessage = {
     eventAbbr: 'cndt2021',
     body: '',
-    roomId: talk !== undefined ? talk.id : 0,
+    roomId: !!talk ? talk.id : 0,
     messageType: ChatMessageMessageTypeEnum.Chat,
   }
   const [selectedTab, setSelectedTab] = useState('0')
