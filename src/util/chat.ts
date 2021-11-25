@@ -28,7 +28,7 @@ export class ChatMessageClass implements ChatMessageInterface {
   profileId?: number
   speakerId?: number
   eventAbbr: string
-  roomId?: number
+  roomId: number
   roomType?: string
   createdAt?: string
   body: string

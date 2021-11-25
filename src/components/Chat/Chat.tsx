@@ -41,6 +41,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   const initialChatMessage = {
     eventAbbr: 'cndt2021',
     body: '',
+    roomId: !!talk ? talk.id : 0,
     messageType: ChatMessageMessageTypeEnum.Chat,
   }
   const [selectedTab, setSelectedTab] = useState('0')
@@ -77,7 +78,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
     if (!messages) setMessages(new ChatMessageMap())
     messages.clear()
     data.forEach((receivedMsg) => {
-      messages.addMessage(receivedMsg)
+      messages.addMessage(receivedMsg as ChatMessageClass)
     })
     setMessages(new ChatMessageMap(messages))
   }
