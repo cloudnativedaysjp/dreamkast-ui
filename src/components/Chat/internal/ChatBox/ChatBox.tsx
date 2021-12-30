@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import * as Styled from './styled'
 import {
+  Event,
   ChatMessageMessageTypeEnum,
   Profile,
   Talk,
@@ -10,6 +11,7 @@ import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
+  event?: Event
   profile?: Profile
   talk?: Talk
   messages: ChatMessageMap
@@ -22,6 +24,7 @@ type Props = {
 }
 
 export const ChatBox: React.FC<Props> = ({
+  event,
   profile,
   talk,
   messages,
@@ -42,6 +45,7 @@ export const ChatBox: React.FC<Props> = ({
         if (messageTypes.includes(chatMessage.messageType)) {
           return (
             <ChatMessage
+              event={event}
               profile={profile}
               talk={talk}
               key={chatMessage.id}

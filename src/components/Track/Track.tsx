@@ -18,7 +18,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 
 type Props = {
-  event?: Event
+  event: Event
   profile?: Profile
   selectedTrack?: Track
   propTalks?: Talk[]
@@ -56,7 +56,7 @@ export const TrackView: React.FC<Props> = ({
     const dayId = findDayId()
     if (!dayId) return
     const { data } = await api.apiV1TalksGet(
-      'cndt2021',
+      !!event ? event?.abbr : '',
       String(selectedTrack?.id),
       dayId,
     )
@@ -115,7 +115,7 @@ export const TrackView: React.FC<Props> = ({
     const cable = actionCable.createConsumer(wsUrl)
     setChatCable(cable)
     cable.subscriptions.create(
-      { channel: 'OnAirChannel', eventAbbr: 'cndt2021' },
+      { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
         received: (msg: { [trackId: number]: Talk }) => {
           getTalks() // onAirの切り替わった新しいTalk一覧を取得
@@ -149,13 +149,14 @@ export const TrackView: React.FC<Props> = ({
     <Grid container spacing={0} justify="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
         <IvsPlayer playBackUrl={videoId} autoplay={true}></IvsPlayer>
-        <Sponsors />
+        <Sponsors event={event} />
       </Grid>
       <Grid item xs={12} md={4}>
-        <Chat profile={profile} talk={selectedTalk} />
+        <Chat event={event} profile={profile} talk={selectedTalk} />
       </Grid>
       <Grid item xs={12} md={8} style={{ height: '100%' }}>
         <TalkInfo
+          event={event}
           selectedTalk={selectedTalk}
           selectedTrackName={selectedTrack?.name}
           selectedTrackId={selectedTrack?.id}

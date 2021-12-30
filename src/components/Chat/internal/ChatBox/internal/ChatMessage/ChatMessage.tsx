@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import * as Styled from './styled'
 import {
+  Event,
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Profile,
@@ -22,6 +23,7 @@ dayjs.extend(timezone)
 dayjs.extend(utc)
 
 type Props = {
+  event?: Event
   profile?: Profile
   talk?: Talk
   chatMessage?: ChatMessageClass
@@ -32,6 +34,7 @@ type Props = {
 }
 
 export const ChatMessage: React.FC<Props> = ({
+  event,
   profile,
   talk,
   chatMessage,
@@ -72,12 +75,12 @@ export const ChatMessage: React.FC<Props> = ({
   }
   const onMenuClick = (e: React.MouseEvent<HTMLElement>) => {
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
-    if (!selectedMessageId) return
+    if (!selectedMessageId || !event) return
     const api = new ChatMessageApi(
       new Configuration({ basePath: window.location.origin }),
     )
     const newChatMessage = {
-      eventAbbr: 'cndt2021',
+      eventAbbr: event.abbr,
       body: 'このメッセージは削除されました',
     }
     api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage)
