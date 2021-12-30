@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { SponsorApi, Sponsor, Configuration } from '../../client-axios'
+import { SponsorApi, Sponsor, Configuration, Event } from '../../client-axios'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 
-export const Sponsors: React.FC = () => {
+type Props = {
+  event: Event
+}
+
+export const Sponsors: React.FC<Props> = ({ event }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -40,7 +44,7 @@ export const Sponsors: React.FC = () => {
 
   useEffect(() => {
     new SponsorApi(new Configuration({ basePath: window.location.origin }))
-      .apiV1SponsorsGet('o11y2022')
+      .apiV1SponsorsGet(event.abbr)
       .then((res) => {
         setData(res.data)
       })

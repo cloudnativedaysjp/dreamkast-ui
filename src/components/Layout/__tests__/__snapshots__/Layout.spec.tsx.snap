@@ -318,7 +318,7 @@ exports[`Layout 1`] = `
     <div
       className="sc-jSgupP dTmTMX"
     >
-      © CloudNative Days Spring 2021 ONLINE (Secretariat by Impress Corporation)
+      this is copyright
     </div>
   </footer>
 </div>

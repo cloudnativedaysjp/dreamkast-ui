@@ -1,4 +1,17 @@
-import { Talk, Track } from '../client-axios'
+import { Event, Talk, Track } from '../client-axios'
+
+export const MockEvent: Event = {
+  id: 1,
+  name: 'Observability Conference 2022',
+  abbr: 'o11y2022',
+  status: 'open',
+  theme: 'this is theme',
+  about: 'this is about',
+  privacy_policy: 'this is privacy policy',
+  privacy_policy_for_speaker: 'this is privacy policy for speaker',
+  copyright: 'this is copyright',
+  coc: 'this is coc',
+}
 
 export const Talks: Talk[] = [
   {

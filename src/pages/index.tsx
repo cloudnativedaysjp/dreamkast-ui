@@ -14,6 +14,7 @@ import {
 } from '../client-axios'
 
 const IndexPage: React.FC = () => {
+  const eventAbbr = 'cndt2021'
   // States
   const [selectedTrack, setSelectedTrack] = useState<Track>()
   const [tracks, setTracks] = useState<Track[]>([])
@@ -29,7 +30,7 @@ const IndexPage: React.FC = () => {
     const eventApi = new EventApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await eventApi.apiV1EventsEventAbbrGet('o11y2022')
+    const { data } = await eventApi.apiV1EventsEventAbbrGet(eventAbbr)
     setEvent(data)
   }, [])
 
@@ -38,7 +39,7 @@ const IndexPage: React.FC = () => {
       new Configuration({ basePath: window.location.origin }),
     )
     const res = await api
-      .apiV1EventAbbrMyProfileGet('o11y2022')
+      .apiV1EventAbbrMyProfileGet(eventAbbr)
       .catch((error) => {
         if (error.response && error.response.status === 403) {
           const topUrl = window.location.href.replace('/ui', '')
@@ -53,7 +54,7 @@ const IndexPage: React.FC = () => {
     const api = new TrackApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await api.apiV1TracksGet('o11y2022')
+    const { data } = await api.apiV1TracksGet(eventAbbr)
     setTracks(data)
 
     if (isStorageAvailable('sessionStorage')) {
@@ -74,20 +75,24 @@ const IndexPage: React.FC = () => {
     getTracks()
   }, [])
 
-  return (
-    <Layout title="CloudNative Days Tokyo 2021">
-      <TrackSelector
-        tracks={tracks}
-        selectedTrack={selectedTrack}
-        selectTrack={selectTrack}
-      />
-      <TrackView
-        event={event}
-        profile={profile}
-        selectedTrack={selectedTrack}
-      />
-    </Layout>
-  )
+  if (!!event) {
+    return (
+      <Layout title="CloudNative Days Tokyo 2021" event={event}>
+        <TrackSelector
+          tracks={tracks}
+          selectedTrack={selectedTrack}
+          selectTrack={selectTrack}
+        />
+        <TrackView
+          event={event}
+          profile={profile}
+          selectedTrack={selectedTrack}
+        />
+      </Layout>
+    )
+  } else {
+    return <div></div>
+  }
 }
 
 export default IndexPage

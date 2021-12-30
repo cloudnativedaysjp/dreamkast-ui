@@ -110,7 +110,7 @@ exports[`TalkInfo 1`] = `
               className="sc-bqyKva cKheEB"
               src="/o11y2022/ui/images/twitter_logo.png"
             />
-            tweet #o11y2022_
+            tweet #o11y2022_undefined
           </span>
         </button>
       </a>
