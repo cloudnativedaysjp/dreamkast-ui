@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import { Layout } from '../components/Layout'
 import { TrackSelector } from '../components/TrackSelector'
 import { TrackView } from '../components/Track'
@@ -14,7 +15,9 @@ import {
 } from '../client-axios'
 
 const IndexPage: React.FC = () => {
-  const eventAbbr = 'cndt2021'
+  const router = useRouter()
+  const [eventAbbr, setEventAbbr] = useState<string>('')
+
   // States
   const [selectedTrack, setSelectedTrack] = useState<Track>()
   const [tracks, setTracks] = useState<Track[]>([])
@@ -26,15 +29,30 @@ const IndexPage: React.FC = () => {
     setSelectedTrack(selectedTrack)
   }
 
+  useEffect(() => {
+    const r = /^\/(.*)\/ui$/m
+    const result = router.basePath.match(r)
+    if (result && result.length > 1) {
+      setEventAbbr(result[1] as string)
+    }
+  }, [router])
+
   const getEvent = useCallback(async () => {
+    if (eventAbbr == '') {
+      return
+    }
+
     const eventApi = new EventApi(
       new Configuration({ basePath: window.location.origin }),
     )
     const { data } = await eventApi.apiV1EventsEventAbbrGet(eventAbbr)
     setEvent(data)
-  }, [])
+  }, [eventAbbr])
 
   const getProfile = useCallback(async () => {
+    if (eventAbbr == '') {
+      return
+    }
     const api = new ProfileApi(
       new Configuration({ basePath: window.location.origin }),
     )
@@ -48,9 +66,12 @@ const IndexPage: React.FC = () => {
       })
     if (!res) return
     setProfile(res.data)
-  }, [])
+  }, [eventAbbr])
 
   const getTracks = useCallback(async () => {
+    if (eventAbbr == '') {
+      return
+    }
     const api = new TrackApi(
       new Configuration({ basePath: window.location.origin }),
     )
@@ -67,13 +88,15 @@ const IndexPage: React.FC = () => {
     } else {
       setSelectedTrack(data[0])
     }
-  }, [])
+  }, [eventAbbr])
 
   useEffect(() => {
-    getEvent()
-    getProfile()
-    getTracks()
-  }, [])
+    if (eventAbbr != '') {
+      getEvent()
+      getProfile()
+      getTracks()
+    }
+  }, [eventAbbr])
 
   if (!!event) {
     return (
