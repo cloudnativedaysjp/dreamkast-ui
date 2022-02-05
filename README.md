@@ -24,9 +24,15 @@ docker run -p 3001:3001 --name dremakst-ui <IMAGE>
 
 ## How to run entire system
 
-You can run all components including Dreamkast, LB, UI and other dependency with docker-compose.
+You can run all components including Dreamkast, LB, UI and other dependency with docker-compose in https://github.com/cloudnativedaysjp/dreamkast .
 
-1. Create .env.local file and fill required values
+1. Clone https://github.com/cloudnativedaysjp/dreamkast
+
+```
+git clone git@github.com:cloudnativedaysjp/dreamkast.git
+```
+
+2. Create .env.local file and fill required values
 
 ```
 export AUTH0_CLIENT_ID=
@@ -45,14 +51,14 @@ export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
 ```
 
-2. Configure awscli and logged in registry 
+3. Configure awscli and logged in registry 
 
 ```
 source .env-local
 aws ecr get-login-password | docker login --username AWS --password-stdin http://607167088920.dkr.ecr.ap-northeast-1.amazonaws.com/
 ```
 
-3. Run
+4. Run
 
 ```
 docker-compose pull
