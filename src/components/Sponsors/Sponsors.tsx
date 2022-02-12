@@ -40,7 +40,7 @@ export const Sponsors: React.FC = () => {
 
   useEffect(() => {
     new SponsorApi(new Configuration({ basePath: window.location.origin }))
-      .apiV1SponsorsGet('cndt2021')
+      .apiV1SponsorsGet('o11y2022')
       .then((res) => {
         setData(res.data)
       })

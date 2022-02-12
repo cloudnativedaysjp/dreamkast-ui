@@ -29,7 +29,7 @@ const IndexPage: React.FC = () => {
     const eventApi = new EventApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await eventApi.apiV1EventsEventAbbrGet('cndt2021')
+    const { data } = await eventApi.apiV1EventsEventAbbrGet('o11y2022')
     setEvent(data)
   }, [])
 
@@ -38,7 +38,7 @@ const IndexPage: React.FC = () => {
       new Configuration({ basePath: window.location.origin }),
     )
     const res = await api
-      .apiV1EventAbbrMyProfileGet('cndt2021')
+      .apiV1EventAbbrMyProfileGet('o11y2022')
       .catch((error) => {
         if (error.response && error.response.status === 403) {
           const topUrl = window.location.href.replace('/ui', '')
@@ -53,7 +53,7 @@ const IndexPage: React.FC = () => {
     const api = new TrackApi(
       new Configuration({ basePath: window.location.origin }),
     )
-    const { data } = await api.apiV1TracksGet('cndt2021')
+    const { data } = await api.apiV1TracksGet('o11y2022')
     setTracks(data)
 
     if (isStorageAvailable('sessionStorage')) {

@@ -77,7 +77,7 @@ export const ChatMessage: React.FC<Props> = ({
       new Configuration({ basePath: window.location.origin }),
     )
     const newChatMessage = {
-      eventAbbr: 'cndt2021',
+      eventAbbr: 'o11y2022',
       body: 'このメッセージは削除されました',
     }
     api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage)
