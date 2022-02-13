@@ -59,8 +59,7 @@ const IndexPage: React.FC = () => {
     if (isStorageAvailable('sessionStorage')) {
       setSelectedTrack(
         ((tracks) => {
-          const A_TRACK_ID = 20
-          const num = sessionStorage.getItem('view_track_id') || A_TRACK_ID
+          const num = sessionStorage.getItem('view_track_id') || tracks[0].id
           return tracks.find((track) => track.id == num)
         })(data),
       )
