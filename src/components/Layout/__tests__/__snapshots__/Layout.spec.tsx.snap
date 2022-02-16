@@ -25,7 +25,7 @@ exports[`Layout 1`] = `
         >
           <a
             className="sc-kfzAmx dLIGSx"
-            href="/o11y2022/ui/discussionboard"
+            href="/o11y2022/o11y"
             rel="noreferrer"
           >
             <button
@@ -53,41 +53,7 @@ exports[`Layout 1`] = `
               <span
                 className="MuiButton-label"
               >
-                DiscussionBoard
-              </span>
-            </button>
-          </a>
-          <a
-            className="sc-kfzAmx dLIGSx"
-            href="/o11y2022/ui/jobboard"
-            rel="noreferrer"
-          >
-            <button
-              className="MuiButtonBase-root MuiButton-root MuiButton-text"
-              disabled={false}
-              onBlur={[Function]}
-              onDragLeave={[Function]}
-              onFocus={[Function]}
-              onKeyDown={[Function]}
-              onKeyUp={[Function]}
-              onMouseDown={[Function]}
-              onMouseLeave={[Function]}
-              onMouseUp={[Function]}
-              onTouchEnd={[Function]}
-              onTouchMove={[Function]}
-              onTouchStart={[Function]}
-              style={
-                Object {
-                  "color": "#423A57",
-                }
-              }
-              tabIndex={0}
-              type="button"
-            >
-              <span
-                className="MuiButton-label"
-              >
-                JobBoard
+                Grafana
               </span>
             </button>
           </a>
@@ -161,7 +127,7 @@ exports[`Layout 1`] = `
       >
         <a
           className="sc-kfzAmx dLIGSx"
-          href="/o11y2022/ui/discussionboard"
+          href="/o11y2022/o11y"
           rel="noreferrer"
         >
           <button
@@ -189,41 +155,7 @@ exports[`Layout 1`] = `
             <span
               className="MuiButton-label"
             >
-              Discussion
-            </span>
-          </button>
-        </a>
-        <a
-          className="sc-kfzAmx dLIGSx"
-          href="/o11y2022/ui/jobboard"
-          rel="noreferrer"
-        >
-          <button
-            className="MuiButtonBase-root MuiButton-root MuiButton-text"
-            disabled={false}
-            onBlur={[Function]}
-            onDragLeave={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseDown={[Function]}
-            onMouseLeave={[Function]}
-            onMouseUp={[Function]}
-            onTouchEnd={[Function]}
-            onTouchMove={[Function]}
-            onTouchStart={[Function]}
-            style={
-              Object {
-                "color": "#423A57",
-              }
-            }
-            tabIndex={0}
-            type="button"
-          >
-            <span
-              className="MuiButton-label"
-            >
-              Job
+              Grafana
             </span>
           </button>
         </a>
