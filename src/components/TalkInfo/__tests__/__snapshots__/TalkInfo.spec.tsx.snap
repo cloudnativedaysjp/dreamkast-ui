@@ -47,42 +47,6 @@ exports[`TalkInfo 1`] = `
     >
       <a
         className="sc-kEjbxe cgtSAu"
-        href="https://cnd.ovice.in/"
-        target="_blank"
-      >
-        <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-iqHYGH NyjLD"
-          disabled={false}
-          onBlur={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
-          type="button"
-        >
-          <span
-            className="MuiButton-label"
-          >
-            Ask the speaker
-          </span>
-        </button>
-      </a>
-      <div
-        style={
-          Object {
-            "paddingRight": "8px",
-          }
-        }
-      />
-      <a
-        className="sc-kEjbxe cgtSAu"
         href="http://twitter.com/share?url=https://event.cloudnativedays.jp/o11y2022&related=@cloudnativedays&hashtags=o11y2022"
         target="_blank"
       >
