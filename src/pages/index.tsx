@@ -75,7 +75,7 @@ const IndexPage: React.FC = () => {
   }, [])
 
   return (
-    <Layout title="CloudNative Days Tokyo 2021">
+    <Layout title="Observability Conference 2022">
       <TrackSelector
         tracks={tracks}
         selectedTrack={selectedTrack}
