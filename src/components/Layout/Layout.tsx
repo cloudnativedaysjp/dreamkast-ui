@@ -57,8 +57,7 @@ export const Layout: React.FC<Props> = ({
           行動規範
         </Styled.FooterLink>
         <Styled.FooterText>
-          © CloudNative Days Spring 2021 ONLINE (Secretariat by Impress
-          Corporation)
+          © CloudNative Days (Secretariat by Impress Corporation)
         </Styled.FooterText>
       </Styled.Footer>
     </Styled.Container>
