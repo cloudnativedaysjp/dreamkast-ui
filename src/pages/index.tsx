@@ -100,7 +100,7 @@ const IndexPage: React.FC = () => {
 
   if (!!event) {
     return (
-      <Layout title="CloudNative Days Tokyo 2021" event={event}>
+      <Layout title={event.name} event={event}>
         <TrackSelector
           tracks={tracks}
           selectedTrack={selectedTrack}

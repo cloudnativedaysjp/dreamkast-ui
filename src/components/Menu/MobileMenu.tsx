@@ -24,6 +24,9 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
       >
         <Button style={{ color: '#423A57' }}>Job</Button>
       </CommonStyled.MenuLink>
+      <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
+        <Button style={{ color: '#423A57' }}>Grafana</Button>
+      </CommonStyled.MenuLink>
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/timetables`}
         rel="noreferrer"

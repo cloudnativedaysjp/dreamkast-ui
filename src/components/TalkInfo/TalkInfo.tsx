@@ -80,10 +80,6 @@ export const TalkInfo: React.FC<Props> = ({
           一緒に盛り上がろう
         </Styled.SocialHeader>
         <Styled.ButtonContainer>
-          <Styled.ButtonLink href="https://cnd.ovice.in/" target="_blank">
-            <Styled.OViceButton>Ask the speaker</Styled.OViceButton>
-          </Styled.ButtonLink>
-          <div style={{ paddingRight: '8px' }} />
           <Styled.ButtonLink
             href={twitterURL(selectedTrackName)}
             target="_blank"
