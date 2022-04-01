@@ -30,7 +30,6 @@ const IndexPage: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log('routerrrrrrrrrrrrrrrrr')
     const r = /^\/(.*)\/ui$/m
     const result = router.basePath.match(r)
     if (result && result.length > 1) {
@@ -39,11 +38,9 @@ const IndexPage: React.FC = () => {
   }, [router])
 
   const getEvent = useCallback(async () => {
-    console.log('getEvent')
     if (eventAbbr == '') {
       return
     }
-    console.log(`eventAbbr: ${eventAbbr}`)
 
     const eventApi = new EventApi(
       new Configuration({ basePath: window.location.origin }),
