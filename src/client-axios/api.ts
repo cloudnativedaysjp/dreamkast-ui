@@ -868,7 +868,7 @@ export const ChatMessageApiAxiosParamCreator = function (configuration?: Configu
          * @throws {RequiredError}
          */
         apiV1ChatMessagesGet: async (eventAbbr: string, roomId: string, roomType: string, createdFrom?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1ChatMessagesGet', 'eventAbbr', eventAbbr)
             // verify required parameter 'roomId' is not null or undefined
             assertParamExists('apiV1ChatMessagesGet', 'roomId', roomId)
@@ -1140,7 +1140,7 @@ export const EventApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         apiV1EventsEventAbbrGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1EventsEventAbbrGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/events/{eventAbbr}`
                 .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
@@ -1241,7 +1241,7 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1EventAbbrMyProfileGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/${eventAbbr}/my_profile`
                 .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
@@ -1342,7 +1342,7 @@ export const SponsorApiAxiosParamCreator = function (configuration?: Configurati
          * @throws {RequiredError}
          */
         apiV1SponsorsGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1SponsorsGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/sponsors`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1448,7 +1448,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * @throws {RequiredError}
          */
         apiV1TalksGet: async (eventAbbr: string, trackId?: string, conferenceDayIds?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1TalksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/talks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1629,7 +1629,7 @@ export const TrackApiAxiosParamCreator = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         apiV1TracksGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'eventAbbr' is not null or undefined
+            // verify required parameter '[eventAbbr]' is not null or undefined
             assertParamExists('apiV1TracksGet', 'eventAbbr', eventAbbr)
             const localVarPath = `/api/v1/tracks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.

@@ -12,6 +12,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
+import { useRouter } from 'next/router'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -19,13 +20,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     scrollbar-width: none;
     height: 100%;
-  }
-  body {
-    background-image: url('/o11y2022/ui/images/background.jpg');
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
   }
   body::-webkit-scrollbar {
     display:none;
@@ -35,8 +29,11 @@ export default function Dreamkast({
   Component,
   pageProps,
 }: AppProps): JSX.Element {
+  const router = useRouter()
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
+    console.log('DKKKKKKKKKKK')
+    console.log(router)
     TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles && jssStyles.parentNode) {

@@ -76,7 +76,7 @@ export const TalkInfo: React.FC<Props> = ({
         </Styled.SpeakerContainer>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
         <Styled.SocialHeader>
-          <Styled.TalkIcon src={`/${event?.abbr}/ui/images/talk_icon.png`} />
+          <Styled.TalkIcon src={`/${event?.abbr}/ui/talk_icon.png`} />
           一緒に盛り上がろう
         </Styled.SocialHeader>
         <Styled.ButtonContainer>
@@ -85,9 +85,7 @@ export const TalkInfo: React.FC<Props> = ({
             target="_blank"
           >
             <Styled.TweetButton>
-              <Styled.TwitterImg
-                src={`/${event?.abbr}/ui/images/twitter_logo.png`}
-              />
+              <Styled.TwitterImg src={`/${event?.abbr}/ui/twitter_logo.png`} />
               {`tweet #${event?.abbr}_${selectedTrackName}`}
             </Styled.TweetButton>
           </Styled.ButtonLink>

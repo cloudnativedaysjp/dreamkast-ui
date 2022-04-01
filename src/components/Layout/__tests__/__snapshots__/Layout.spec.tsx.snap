@@ -2,7 +2,7 @@
 
 exports[`Layout 1`] = `
 <div
-  className="sc-bdfBwQ cfTGtS"
+  className="sc-bdfBwQ kJsdFU"
 >
   <header>
     <header
@@ -17,7 +17,7 @@ exports[`Layout 1`] = `
         >
           <img
             className="sc-dlfnbm jFXkDF"
-            src="/cndt2021/ui/images/cndt2021_header_logo.png"
+            src="/cndt2021/ui/cndt2021_header_logo.png"
           />
         </a>
         <div
@@ -362,7 +362,7 @@ exports[`Layout 1`] = `
     </header>
   </header>
   <div
-    className="sc-hKgILt dsFsSH"
+    className="sc-hKgILt iAZlXr"
   />
   <footer
     className="sc-eCssSg csAIkT"

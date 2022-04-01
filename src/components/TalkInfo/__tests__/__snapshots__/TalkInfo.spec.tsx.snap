@@ -38,7 +38,7 @@ exports[`TalkInfo 1`] = `
     >
       <img
         className="sc-pFZIQ ehvigS"
-        src="/o11y2022/ui/images/talk_icon.png"
+        src="/o11y2022/ui/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
@@ -72,7 +72,7 @@ exports[`TalkInfo 1`] = `
           >
             <img
               className="sc-bqyKva cKheEB"
-              src="/o11y2022/ui/images/twitter_logo.png"
+              src="/o11y2022/ui/twitter_logo.png"
             />
             tweet #o11y2022_undefined
           </span>

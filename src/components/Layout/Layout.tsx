@@ -25,7 +25,7 @@ export const Layout: React.FC<Props> = ({
   }, [])
 
   return (
-    <Styled.Container>
+    <Styled.Container eventAbbr={event?.abbr}>
       <Head>
         <title>{title}</title>
         <link
@@ -40,7 +40,7 @@ export const Layout: React.FC<Props> = ({
           <Styled.Header>
             <a href={`/${event?.abbr}/ui`} rel="noopener noreferrer">
               <Styled.HeaderImg
-                src={`/${event?.abbr}/ui/images/${event?.abbr}_header_logo.png`}
+                src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
               />
             </a>
             <DesktopMenu event={event} url={url} />
