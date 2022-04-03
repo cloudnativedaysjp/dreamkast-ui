@@ -1,0 +1,52 @@
+name: build container image
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: ecr
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: dreamkast-ui
+          DOCKER_BUILDKIT: 1
+        run: |
+          echo REF ${{ github.ref }}
+          echo HEAD REF ${{ github.head_ref }}
+          echo SHA ${{ github.sha }}
+          IMAGE_TAG=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && IMAGE_TAG=$(echo $IMAGE_TAG | sed -e 's/^v//')
+          if [ ! -e ${{ github.head_ref }} ]; then
+            IMAGE_TAG=${{ github.head_ref }}
+          fi
+          CACHE_BASE=$ECR_REGISTRY/$ECR_REPOSITORY:base-cache
+          IMAGE_WITH_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          IMAGE_WITH_SHA=$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}
+          docker build \
+            --cache-from=$CACHE_BASE \
+            --build-arg=BUILDKIT_INLINE_CACHE=1 \
+            -t $IMAGE_WITH_TAG \
+            -t $IMAGE_WITH_SHA .
+          docker build --target base -t $CACHE_BASE --build-arg=BUILDKIT_INLINE_CACHE=1  .
+          docker tag $IMAGE_WITH_TAG $IMAGE_WITH_SHA
+          docker push $IMAGE_WITH_SHA
+          docker push $CACHE_BASE
+          echo "::set-output name=IMAGE_TAG::${IMAGE_TAG}"
+          echo "::set-output name=IMAGE_WITH_TAG::${IMAGE_WITH_TAG}"
+          echo "::set-output name=IMAGE_WITH_SHA::${IMAGE_WITH_SHA}"
