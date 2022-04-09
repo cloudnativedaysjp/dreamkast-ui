@@ -2,6 +2,10 @@ name: Push a new tag with Pull Request
 
 on:
   pull_request:
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/release.yml'
+      - '**.md'
     types: [closed]
 
 jobs:
@@ -9,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
 

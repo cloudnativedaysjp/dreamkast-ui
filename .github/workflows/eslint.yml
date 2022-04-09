@@ -1,6 +1,10 @@
 name: eslint
 on:
   pull_request:
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/eslint.yml'
+      - '**.md'
     types: [opened, synchronize]
 jobs:
   eslint:
@@ -8,7 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: Set up Node.js 16.13.1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.1
+          cache: 'yarn'
       - name: yarn install
         run: yarn install
       - name: eslint
