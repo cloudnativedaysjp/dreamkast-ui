@@ -1,12 +1,14 @@
+# syntax = docker/dockerfile:1.4
+
 FROM node:16.13.1-alpine3.14 AS base
 WORKDIR /base
-COPY package.json yarn.lock ./
+COPY --link package.json yarn.lock ./
 RUN yarn install
 
 FROM node:16.13.1-alpine3.14
 WORKDIR /base
-COPY --from=base /base ./
-COPY . .
+COPY --link --from=base /base ./
+COPY --link . .
 RUN yarn build
 
 CMD [ "yarn", "start", "-p", "3001" ]
