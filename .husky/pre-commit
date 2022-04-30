@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+eslint --fix --max-warnings=0 --config .eslintrc.js --ignore-path .eslintignore
+jest --findRelatedTests --passWithNoTests
