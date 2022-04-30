@@ -48,9 +48,8 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
   const [messages, setMessages] = useState<ChatMessageMap>(
     initialChatMessageMap,
   )
-  const [selectedMessage, setSelectedMessage] = useState<ChatMessageClass>(
-    initialChatMessage,
-  )
+  const [selectedMessage, setSelectedMessage] =
+    useState<ChatMessageClass>(initialChatMessage)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
