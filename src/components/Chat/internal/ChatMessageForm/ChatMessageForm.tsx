@@ -77,13 +77,12 @@ export const ChatMessageForm: React.FC<Props> = ({
           <Styled.label>オートスクロール</Styled.label>
         </Styled.CheckBoxContainer>
         <Styled.TextField
-          name="chatMessage"
           color="secondary"
           size="small"
-          inputRef={register}
           onKeyPress={handleKeyPress}
+          {...register('chatMessage')}
         />
-        <Input type="hidden" name="isQuestion" inputRef={register} />
+        <Input type="hidden" {...register('isQuestion')} />
         <Styled.ButtonContainer>
           <ReactionButton
             disabled={btnDisabled}
