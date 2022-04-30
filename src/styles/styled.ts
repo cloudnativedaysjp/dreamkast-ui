@@ -19,12 +19,12 @@ export const CenterizedContainer = styled.div`
 `
 
 export const Header2 = styled.h2<{ centerized?: boolean }>`
-  color: #423A57;
+  color: #423a57;
   ${({ centerized }) => (centerized ? 'text-align: center' : '')};
 `
 
 export const Header3 = styled.h3<{ centerized?: boolean }>`
-  color: #423A57;
+  color: #423a57;
   ${({ centerized }) => (centerized ? 'text-align: center' : '')};
 `
 
