@@ -9,7 +9,7 @@ type Props = {
 
 export const AttachmentImages: React.FC<Props> = ({ images }) => {
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
+    <Grid container spacing={5} justifyContent="center" alignItems="center">
       {images?.map((url) => {
         return (
           <Grid item md={12}>

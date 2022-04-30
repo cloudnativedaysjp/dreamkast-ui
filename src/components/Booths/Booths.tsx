@@ -35,7 +35,12 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
   return (
     <Styled.Container>
       <CommonStyled.Header2 centerized={true}>Booths</CommonStyled.Header2>
-      <Grid container spacing={1} justify="center" alignItems="flex-start">
+      <Grid
+        container
+        spacing={1}
+        justifyContent="center"
+        alignItems="flex-start"
+      >
         {data.map((sponsor) => {
           if (sponsor.booth && sponsor.booth.id && sponsor.booth.opened) {
             return (

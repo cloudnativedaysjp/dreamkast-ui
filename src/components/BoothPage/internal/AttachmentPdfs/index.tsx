@@ -9,7 +9,7 @@ type Props = {
 
 const AttachmentPdfs: React.FC<Props> = ({ pdfs }) => {
   return (
-    <Grid container spacing={10} justify="center" alignItems="center">
+    <Grid container spacing={10} justifyContent="center" alignItems="center">
       {pdfs?.map((pdf) => {
         return (
           <Grid item>

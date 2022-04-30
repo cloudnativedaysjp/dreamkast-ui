@@ -106,7 +106,7 @@ export const BoothPage: React.FC<Props> = ({ boothId }) => {
       container
       spacing={1}
       alignItems="center"
-      justify="center"
+      justifyContent="center"
     >
       <Grid item xs={12} md={11}>
         <CommonStyled.Container>
