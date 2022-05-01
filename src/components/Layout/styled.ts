@@ -2,8 +2,12 @@ import styled from 'styled-components'
 
 import Toolbar from '@material-ui/core/Toolbar'
 
-export const Container = styled.div`
-  background: rgba(255, 255, 255, 0.6);
+export const Container = styled.div<{ eventAbbr?: string }>`
+  background-image: url('/${(props) => props.eventAbbr}/ui/background.jpg');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
   min-height: 100vh;
 `
 
@@ -19,6 +23,7 @@ export const HeaderImg = styled.img`
 `
 
 export const ChildrenContainer = styled.div`
+  background: rgba(255, 255, 255, 0.6);
   padding-bottom: 22px;
 `
 
