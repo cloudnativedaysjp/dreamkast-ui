@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { Layout } from '../components/Layout'
-import { TrackSelector } from '../components/TrackSelector'
-import { TrackView } from '../components/Track'
-import { isStorageAvailable } from '../util/sessionstorage'
+import { Layout } from '../../../components/Layout'
+import { TrackSelector } from '../../../components/TrackSelector'
+import { TrackView } from '../../../components/Track'
+import { isStorageAvailable } from '../../../util/sessionstorage'
 import {
   Track,
   TrackApi,
@@ -12,7 +12,7 @@ import {
   Profile,
   Event,
   EventApi,
-} from '../client-axios'
+} from '../../../client-axios'
 
 const IndexPage: React.FC = () => {
   const router = useRouter()
@@ -30,10 +30,9 @@ const IndexPage: React.FC = () => {
   }
 
   useEffect(() => {
-    const r = /^\/(.*)\/ui$/m
-    const result = router.basePath.match(r)
-    if (result && result.length > 1) {
-      setEventAbbr(result[1] as string)
+    if (router.asPath !== router.route) {
+      const { eventAbbr } = router.query
+      setEventAbbr(eventAbbr as string)
     }
   }, [router])
 

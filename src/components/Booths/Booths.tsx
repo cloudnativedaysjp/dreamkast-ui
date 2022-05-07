@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import { Configuration, Sponsor, SponsorApi } from '../../client-axios'
 import * as Styled from './styled'
@@ -60,3 +61,5 @@ export const Booths: React.FC<Props> = ({ openNewWindow }) => {
     </Styled.Container>
   )
 }
+=======
+>>>>>>> origin

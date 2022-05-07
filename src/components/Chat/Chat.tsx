@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import {
+  Event,
   ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Talk,
@@ -19,6 +20,7 @@ import {
 } from './internal/ChatMessageRequest'
 
 type Props = {
+  event: Event
   profile?: Profile
   talk?: Talk
 }
@@ -36,10 +38,10 @@ type ReceivedMsg = {
   replyTo: number
 }
 
-export const Chat: React.FC<Props> = ({ profile, talk }) => {
+export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   const initialChatMessageMap = new ChatMessageMap()
   const initialChatMessage = {
-    eventAbbr: 'o11y2022',
+    eventAbbr: event.abbr,
     body: '',
     roomId: !!talk ? talk.id : 0,
     messageType: ChatMessageMessageTypeEnum.Chat,
@@ -66,7 +68,7 @@ export const Chat: React.FC<Props> = ({ profile, talk }) => {
       new Configuration({ basePath: window.location.origin }),
     )
     const { data } = await api.apiV1ChatMessagesGet(
-      'o11y2022',
+      event.abbr,
       String(talk?.id),
       'talk',
     )

@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import * as Styled from './styled'
-import { Talk, TrackApi, Configuration } from '../../client-axios'
+import { Event, Talk, TrackApi, Configuration } from '../../client-axios'
 
 type Props = {
+  event?: Event
   selectedTalk?: Talk
   selectedTrackName?: string
   selectedTrackId?: number
 }
 
 export const TalkInfo: React.FC<Props> = ({
+  event,
   selectedTalk,
   selectedTrackName,
   selectedTrackId,
@@ -17,8 +19,7 @@ export const TalkInfo: React.FC<Props> = ({
   const [viewerCount, setViewerCount] = useState<string>()
 
   const twitterURL = (trackName?: string) => {
-    const base =
-      'http://twitter.com/share?url=https://event.cloudnativedays.jp/o11y2022&related=@cloudnativedays&hashtags=o11y2022'
+    const base = `http://twitter.com/share?url=https://event.cloudnativedays.jp/${event?.abbr}&related=@cloudnativedays&hashtags=${event?.abbr}`
     if (!trackName) return base
     return base + '_' + trackName
   }
@@ -75,7 +76,7 @@ export const TalkInfo: React.FC<Props> = ({
         </Styled.SpeakerContainer>
         <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
         <Styled.SocialHeader>
-          <Styled.TalkIcon src="/o11y2022/ui/images/talk_icon.png" />
+          <Styled.TalkIcon src={`/${event?.abbr}/ui/talk_icon.png`} />
           一緒に盛り上がろう
         </Styled.SocialHeader>
         <Styled.ButtonContainer>
@@ -84,8 +85,8 @@ export const TalkInfo: React.FC<Props> = ({
             target="_blank"
           >
             <Styled.TweetButton>
-              <Styled.TwitterImg src="/o11y2022/ui/images/twitter_logo.png" />
-              tweet #o11y2022_{selectedTrackName}
+              <Styled.TwitterImg src={`/${event?.abbr}/ui/twitter_logo.png`} />
+              {`tweet #${event?.abbr}_${selectedTrackName}`}
             </Styled.TweetButton>
           </Styled.ButtonLink>
         </Styled.ButtonContainer>
