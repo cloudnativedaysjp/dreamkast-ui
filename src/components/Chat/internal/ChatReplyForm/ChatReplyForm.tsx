@@ -31,11 +31,10 @@ export const ChatReplyForm: React.FC<Props> = ({
     <Styled.Paper>
       <Styled.ChatReplyForm onSubmit={handleSubmit(onSendReply)}>
         <Styled.TextField
-          name="chatMessage"
           color="secondary"
           size="small"
-          inputRef={register}
           onKeyPress={handleKeyPress}
+          {...register('chatMessage')}
         />
         <Styled.ButtonContainer>
           <ReactionButton reactEmoji="👍" onSendReply={onSendReply} />

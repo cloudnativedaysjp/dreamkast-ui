@@ -9,7 +9,7 @@ const DiscussionPage: React.FC = () => {
       <CommonStyled.OuterContainer
         container
         spacing={1}
-        justify="center"
+        justifyContent="center"
         alignItems="flex-start"
       >
         <Grid item xs={12} md={12}>

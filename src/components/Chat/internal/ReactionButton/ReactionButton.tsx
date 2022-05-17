@@ -19,12 +19,7 @@ export const ReactionButton: React.FC<Props> = ({
 
   return (
     <Styled.ChatMessageForm>
-      <Input
-        type="hidden"
-        name="chatMessage"
-        value={reactEmoji}
-        inputRef={register}
-      />
+      <Input type="hidden" value={reactEmoji} {...register('chatMessage')} />
       <Styled.ReactButton
         type="submit"
         disabled={disabled}
