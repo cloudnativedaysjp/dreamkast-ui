@@ -2,8 +2,8 @@ import { Event, Talk, Track } from '../client-axios'
 
 export const MockEvent: Event = {
   id: 1,
-  name: 'Observability Conference 2022',
-  abbr: 'o11y2022',
+  name: 'CloudNative Security Conference 2022',
+  abbr: 'cnsec2022',
   status: 'open',
   theme: 'this is theme',
   about: 'this is about',

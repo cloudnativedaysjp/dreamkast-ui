@@ -39,7 +39,7 @@ export const CreateChatMessageRequest = (
   selectedMessage?: ChatMessageClass,
 ): ChatMessageRequestClass => {
   const req = ChatMessageRequest(
-    'o11y2022',
+    'cnsec2022',
     roomId,
     'talk',
     chatMessage,
