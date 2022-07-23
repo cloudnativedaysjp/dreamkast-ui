@@ -33,7 +33,8 @@ export const TrackSelector: React.FC<Props> = ({
       ) as Track
       setItem(selectedTrack.id)
       selectTrack(selectedTrack)
-      window.location.href = window.location.href.split('#')[0] + '#' + selectedTrack.name
+      window.location.href =
+        window.location.href.split('#')[0] + '#' + selectedTrack.name
     }
   }
   return (
