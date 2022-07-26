@@ -2,18 +2,52 @@
 
 exports[`IvsPlayer 1`] = `
 <div
-  className="sc-dlfnbm fbDFAt"
+  className="sc-iBPRYJ hzmxZs"
 >
   <div
     className="sc-bdfBwQ iOawCe"
   >
     <video
       autoPlay={true}
-      className="sc-gsTCUz bBTKKj video-js vjs-16-9 vjs-big-play-centered"
+      className="sc-gsTCUz hrgGfN video-js vjs-16-9 vjs-big-play-centered"
       controls={true}
       muted={false}
       playsInline={true}
     />
+    <div
+      className="sc-dlfnbm gcufJy"
+    >
+      <div
+        className="sc-jSgupP dNnUpq"
+      >
+        <p>
+          次のセッションまで 
+          5
+          秒
+        </p>
+        <div
+          className="sc-gKsewC hbnBND"
+        >
+          ほげふが
+        </div>
+      </div>
+      <div
+        className="sc-hKgILt gqXsYn"
+      >
+        <button
+          className="sc-eCssSg uNBEZ"
+          onClick={[Function]}
+        >
+          キャンセル
+        </button>
+        <button
+          className="sc-eCssSg uNBEZ"
+          onClick={[Function]}
+        >
+          すぐに再生
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 `;
