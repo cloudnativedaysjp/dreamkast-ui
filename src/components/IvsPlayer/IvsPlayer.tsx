@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import videojs, { VideoJsPlayer } from 'video.js'
+import { Talk } from '../../client-axios'
 import 'video.js/dist/video-js.css'
 
 import * as Styled from './styled'
@@ -8,6 +9,7 @@ import * as CommonStyled from '../../styles/styled'
 type Props = {
   playBackUrl?: string
   autoplay: boolean
+  nextTalk: Talk
 }
 
 declare function registerIVSTech(
@@ -15,7 +17,11 @@ declare function registerIVSTech(
   config?: { wasmWorker: string; wasmBinary: string },
 ): void
 
-export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
+export const IvsPlayer: React.FC<Props> = ({
+  playBackUrl,
+  autoplay,
+  nextTalk,
+}) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
 
@@ -68,9 +74,7 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
         <Styled.OverLayContainer>
           <Styled.TextContainer>
             <p>次のセッションまで 5秒</p>
-            <Styled.NextTitle>
-              クラウドネイティブにイベントサイトを実装してみた話
-            </Styled.NextTitle>
+            <Styled.NextTitle>{nextTalk?.title}</Styled.NextTitle>
           </Styled.TextContainer>
           <Styled.ButtonContainer>
             <Styled.PlayerButton>キャンセル</Styled.PlayerButton>

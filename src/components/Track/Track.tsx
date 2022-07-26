@@ -30,7 +30,22 @@ export const TrackView: React.FC<Props> = ({
   selectedTrack,
   propTalks,
 }) => {
-  const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
+  const sortTalks = (talks: Talk[]): Talk[] => {
+    return talks.sort((n1, n2) => {
+      if (n1.startTime > n2.startTime) {
+        return 1
+      }
+
+      if (n1.startTime < n2.startTime) {
+        return -1
+      }
+
+      return 0
+    })
+  }
+  const [talks, setTalks] = useState<Talk[]>(
+    propTalks ? sortTalks(propTalks) : [],
+  )
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
@@ -99,6 +114,11 @@ export const TrackView: React.FC<Props> = ({
     }
   }
 
+  const getNextTalk = (talks: Talk[]) => {
+    const index = talks.findIndex((talk) => talk.onAir)
+    return talks[index + 1]
+  }
+
   const onChecked = (
     _event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
@@ -148,7 +168,11 @@ export const TrackView: React.FC<Props> = ({
   return (
     <Grid container spacing={0} justifyContent="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <IvsPlayer playBackUrl={videoId} autoplay={true}></IvsPlayer>
+        <IvsPlayer
+          playBackUrl={videoId}
+          nextTalk={getNextTalk(talks)}
+          autoplay={true}
+        ></IvsPlayer>
         <Sponsors event={event} />
       </Grid>
       <Grid item xs={12} md={4}>

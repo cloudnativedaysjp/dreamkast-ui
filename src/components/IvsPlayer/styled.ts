@@ -46,6 +46,7 @@ export const PlayerButton = styled.button`
   background: rgba(0, 0, 0, 0);
   color: white;
   font-size: 1.6em;
+  cursor: pointer;
   &:hover {
     background-color: rgba(189, 195, 199, 0.5);
   }
@@ -58,6 +59,6 @@ export const TextContainer = styled.div`
 `
 
 export const NextTitle = styled.div`
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
 `

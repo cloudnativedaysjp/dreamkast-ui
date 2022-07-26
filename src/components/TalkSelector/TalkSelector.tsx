@@ -55,7 +55,7 @@ export const TalkSelector: React.FC<Props> = ({
   }, [])
 
   useEffect(() => {
-    const filteredTalks = sortTalks(talks).filter((talk) => {
+    const filteredTalks = talks.filter((talk) => {
       return talk.showOnTimetable
     })
     setTalksWithAvailableState(
@@ -67,20 +67,6 @@ export const TalkSelector: React.FC<Props> = ({
       }),
     )
   }, [talks, now])
-
-  const sortTalks = (talks: Talk[]): Talk[] => {
-    return talks.sort((n1, n2) => {
-      if (n1.startTime > n2.startTime) {
-        return 1
-      }
-
-      if (n1.startTime < n2.startTime) {
-        return -1
-      }
-
-      return 0
-    })
-  }
 
   return (
     <Styled.Container>
