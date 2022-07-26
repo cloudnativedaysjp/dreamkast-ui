@@ -65,6 +65,18 @@ export const IvsPlayer: React.FC<Props> = ({ playBackUrl, autoplay }) => {
           playsInline
           muted={false}
         />
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>次のセッションまで 5秒</p>
+            <Styled.NextTitle>
+              クラウドネイティブにイベントサイトを実装してみた話
+            </Styled.NextTitle>
+          </Styled.TextContainer>
+          <Styled.ButtonContainer>
+            <Styled.PlayerButton>キャンセル</Styled.PlayerButton>
+            <Styled.PlayerButton>すぐに再生</Styled.PlayerButton>
+          </Styled.ButtonContainer>
+        </Styled.OverLayContainer>
       </Styled.IvsPlayerContainer>
     </CommonStyled.Container>
   )
