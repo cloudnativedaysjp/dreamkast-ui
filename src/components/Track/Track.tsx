@@ -122,8 +122,8 @@ export const TrackView: React.FC<Props> = ({
     )
       return
     if (
-      selectedTrack.id == msg[selectedTrack.id].trackId &&
-      selectedTalk.id != msg[selectedTrack.id].id
+      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
+      selectedTalk.id != nextTalk[selectedTrack.id].id
     ) {
       window.location.href =
         window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
@@ -132,8 +132,8 @@ export const TrackView: React.FC<Props> = ({
         talk_id: selectedTalk?.id,
         talk_name: selectedTalk?.title,
       })
-      setSelectedTalk(msg[selectedTrack.id])
-      setVideoId(msg[selectedTrack.id].videoId)
+      setSelectedTalk(nextTalk[selectedTrack.id])
+      setVideoId(nextTalk[selectedTrack.id].videoId)
       setShowCountdown(false)
     }
   }
