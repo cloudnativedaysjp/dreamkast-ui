@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import videojs, { VideoJsPlayer } from 'video.js'
 import { Talk } from '../../client-axios'
 import 'video.js/dist/video-js.css'
@@ -9,7 +9,10 @@ import * as CommonStyled from '../../styles/styled'
 type Props = {
   playBackUrl?: string
   autoplay: boolean
-  nextTalk: Talk
+  showCountdown: boolean
+  nextTalk?: Talk
+  updateView: () => void
+  stopUpdate: () => void
 }
 
 declare function registerIVSTech(
@@ -20,10 +23,26 @@ declare function registerIVSTech(
 export const IvsPlayer: React.FC<Props> = ({
   playBackUrl,
   autoplay,
+  showCountdown,
   nextTalk,
+  updateView,
+  stopUpdate,
 }) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
+  const [counter, setCounter] = useState<number>(5)
+  const [timer, setTimer] = useState<NodeJS.Timer>()
+
+  const cancelUpdate = () => {
+    clearInterval(timer as NodeJS.Timer)
+    setCounter(5)
+    stopUpdate()
+  }
+
+  const updateSession = () => {
+    updateView()
+    setCounter(5)
+  }
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -60,6 +79,19 @@ export const IvsPlayer: React.FC<Props> = ({
     console.log(playerRef.current.currentSource())
   }, [playBackUrl])
 
+  useEffect(() => {
+    if (counter === 0) {
+      updateSession()
+      return
+    }
+    const timer =
+      showCountdown &&
+      counter > 0 &&
+      setInterval(() => setCounter(counter - 1), 1000)
+    setTimer(timer as NodeJS.Timer)
+    return () => clearInterval(timer as NodeJS.Timer)
+  }, [counter, showCountdown])
+
   return (
     <CommonStyled.Container>
       <Styled.IvsPlayerContainer>
@@ -71,16 +103,22 @@ export const IvsPlayer: React.FC<Props> = ({
           playsInline
           muted={false}
         />
-        <Styled.OverLayContainer>
-          <Styled.TextContainer>
-            <p>次のセッションまで 5秒</p>
-            <Styled.NextTitle>{nextTalk?.title}</Styled.NextTitle>
-          </Styled.TextContainer>
-          <Styled.ButtonContainer>
-            <Styled.PlayerButton>キャンセル</Styled.PlayerButton>
-            <Styled.PlayerButton>すぐに再生</Styled.PlayerButton>
-          </Styled.ButtonContainer>
-        </Styled.OverLayContainer>
+        {showCountdown && (
+          <Styled.OverLayContainer>
+            <Styled.TextContainer>
+              <p>次のセッションまで {counter}秒</p>
+              <Styled.NextTitle>{nextTalk?.title}</Styled.NextTitle>
+            </Styled.TextContainer>
+            <Styled.ButtonContainer>
+              <Styled.PlayerButton onClick={cancelUpdate}>
+                キャンセル
+              </Styled.PlayerButton>
+              <Styled.PlayerButton onClick={updateSession}>
+                すぐに再生
+              </Styled.PlayerButton>
+            </Styled.ButtonContainer>
+          </Styled.OverLayContainer>
+        )}
       </Styled.IvsPlayerContainer>
     </CommonStyled.Container>
   )

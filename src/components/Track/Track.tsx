@@ -30,27 +30,14 @@ export const TrackView: React.FC<Props> = ({
   selectedTrack,
   propTalks,
 }) => {
-  const sortTalks = (talks: Talk[]): Talk[] => {
-    return talks.sort((n1, n2) => {
-      if (n1.startTime > n2.startTime) {
-        return 1
-      }
-
-      if (n1.startTime < n2.startTime) {
-        return -1
-      }
-
-      return 0
-    })
-  }
-  const [talks, setTalks] = useState<Talk[]>(
-    propTalks ? sortTalks(propTalks) : [],
-  )
+  const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
   const [videoId, setVideoId] = useState<string>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
+  const [showCountdown, setShowCountdown] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+  const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
 
   const findDayId = () => {
@@ -114,9 +101,8 @@ export const TrackView: React.FC<Props> = ({
     }
   }
 
-  const getNextTalk = (talks: Talk[]) => {
-    const index = talks.findIndex((talk) => talk.onAir)
-    return talks[index + 1]
+  const getNextTalk = () => {
+    if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
   }
 
   const onChecked = (
@@ -126,8 +112,31 @@ export const TrackView: React.FC<Props> = ({
     setIsLiveMode(checked)
   }
 
+  const updateView = () => {
+    getTalks() // onAirの切り替わった新しいTalk一覧を取得
+    if (
+      !nextTalk ||
+      !selectedTrack ||
+      !nextTalk[selectedTrack.id] ||
+      !selectedTalk
+    )
+      return
+    if (
+      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
+      selectedTalk.id != nextTalk[selectedTrack.id].id
+    ) {
+      setSelectedTalk(nextTalk[selectedTrack.id])
+      setVideoId(nextTalk[selectedTrack.id].videoId)
+      setShowCountdown(false)
+    }
+  }
+
+  const stopUpdate = () => {
+    setShowCountdown(false)
+    setIsLiveMode(false)
+  }
+
   useEffect(() => {
-    if (!selectedTrack) return
     if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
@@ -138,19 +147,12 @@ export const TrackView: React.FC<Props> = ({
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
         received: (msg: { [trackId: number]: Talk }) => {
-          getTalks() // onAirの切り替わった新しいTalk一覧を取得
-          if (!msg[selectedTrack.id] || !selectedTalk) return
-          if (
-            selectedTrack.id == msg[selectedTrack.id].trackId &&
-            selectedTalk.id != msg[selectedTrack.id].id
-          ) {
-            setSelectedTalk(msg[selectedTrack.id])
-            setVideoId(msg[selectedTrack.id].videoId)
-          }
+          setNextTalk(msg)
+          if (isLiveMode) setShowCountdown(true)
         },
       },
     )
-  }, [selectedTrack])
+  }, [selectedTrack, isLiveMode])
 
   useEffect(() => {
     clearInterval(timer)
@@ -170,8 +172,11 @@ export const TrackView: React.FC<Props> = ({
       <Grid item xs={12} md={8}>
         <IvsPlayer
           playBackUrl={videoId}
-          nextTalk={getNextTalk(talks)}
+          nextTalk={getNextTalk()}
           autoplay={true}
+          showCountdown={showCountdown}
+          updateView={updateView}
+          stopUpdate={stopUpdate}
         ></IvsPlayer>
         <Sponsors event={event} />
       </Grid>
