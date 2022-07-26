@@ -124,13 +124,20 @@ export const TrackView: React.FC<Props> = ({
             selectedTrack.id == msg[selectedTrack.id].trackId &&
             selectedTalk.id != msg[selectedTrack.id].id
           ) {
+            window.location.href =
+              window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
+            window.tracker.track('trigger_survey', {
+              track_name: selectedTrack?.name,
+              talk_id: selectedTalk?.id,
+              talk_name: selectedTalk?.title,
+            })
             setSelectedTalk(msg[selectedTrack.id])
             setVideoId(msg[selectedTrack.id].videoId)
           }
         },
       },
     )
-  }, [selectedTrack])
+  }, [selectedTrack, selectedTalk])
 
   useEffect(() => {
     clearInterval(timer)
