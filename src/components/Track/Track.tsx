@@ -132,7 +132,6 @@ export const TrackView: React.FC<Props> = ({
         talk_id: selectedTalk?.id,
         talk_name: selectedTalk?.title,
       })
-      setSelectedTalk(nextTalk[selectedTrack.id])
       setVideoId(nextTalk[selectedTrack.id].videoId)
       setShowCountdown(false)
     }
@@ -155,6 +154,7 @@ export const TrackView: React.FC<Props> = ({
       {
         received: (msg: { [trackId: number]: Talk }) => {
           setNextTalk(msg)
+          setSelectedTalk(getNextTalk())
           if (isLiveMode) setShowCountdown(true)
         },
       },
