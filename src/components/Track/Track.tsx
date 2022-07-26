@@ -122,11 +122,18 @@ export const TrackView: React.FC<Props> = ({
     )
       return
     if (
-      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
-      selectedTalk.id != nextTalk[selectedTrack.id].id
+      selectedTrack.id == msg[selectedTrack.id].trackId &&
+      selectedTalk.id != msg[selectedTrack.id].id
     ) {
-      setSelectedTalk(nextTalk[selectedTrack.id])
-      setVideoId(nextTalk[selectedTrack.id].videoId)
+      window.location.href =
+        window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
+      window.tracker.track('trigger_survey', {
+        track_name: selectedTrack?.name,
+        talk_id: selectedTalk?.id,
+        talk_name: selectedTalk?.title,
+      })
+      setSelectedTalk(msg[selectedTrack.id])
+      setVideoId(msg[selectedTrack.id].videoId)
       setShowCountdown(false)
     }
   }
