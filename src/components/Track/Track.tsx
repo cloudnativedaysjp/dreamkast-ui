@@ -84,6 +84,7 @@ export const TrackView: React.FC<Props> = ({
   useEffect(() => {
     if (
       !talks.length ||
+      showCountdown ||
       (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
     )
       return
@@ -114,7 +115,6 @@ export const TrackView: React.FC<Props> = ({
 
   const updateView = () => {
     setShowCountdown(false)
-    getTalks() // onAirの切り替わった新しいTalk一覧を取得
     if (
       !nextTalk ||
       !selectedTrack ||
@@ -154,6 +154,7 @@ export const TrackView: React.FC<Props> = ({
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
         received: (msg: { [trackId: number]: Talk }) => {
+          getTalks() // onAirの切り替わった新しいTalk一覧を取得
           setNextTalk(msg)
           if (isLiveMode) setShowCountdown(true)
         },
