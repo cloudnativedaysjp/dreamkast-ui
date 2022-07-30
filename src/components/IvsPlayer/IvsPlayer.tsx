@@ -80,10 +80,8 @@ export const IvsPlayer: React.FC<Props> = ({
   }, [playBackUrl])
 
   useEffect(() => {
-    if (counter === 0) {
-      updateSession()
-      return
-    }
+    if (counter === 0) updateSession()
+
     const timer =
       showCountdown &&
       counter > 0 &&
