@@ -35,7 +35,9 @@ export const TrackView: React.FC<Props> = ({
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
+  const [showCountdown, setShowCountdown] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
+  const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
 
   const findDayId = () => {
@@ -82,6 +84,7 @@ export const TrackView: React.FC<Props> = ({
   useEffect(() => {
     if (
       !talks.length ||
+      showCountdown ||
       (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
     )
       return
@@ -99,6 +102,10 @@ export const TrackView: React.FC<Props> = ({
     }
   }
 
+  const getNextTalk = () => {
+    if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
+  }
+
   const onChecked = (
     _event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean,
@@ -106,8 +113,37 @@ export const TrackView: React.FC<Props> = ({
     setIsLiveMode(checked)
   }
 
+  const updateView = () => {
+    setShowCountdown(false)
+    if (
+      !nextTalk ||
+      !selectedTrack ||
+      !nextTalk[selectedTrack.id] ||
+      !selectedTalk
+    )
+      return
+    if (
+      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
+      selectedTalk.id != nextTalk[selectedTrack.id].id
+    ) {
+      window.location.href =
+        window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
+      window.tracker.track('trigger_survey', {
+        track_name: selectedTrack?.name,
+        talk_id: selectedTalk?.id,
+        talk_name: selectedTalk?.title,
+      })
+      setVideoId(nextTalk[selectedTrack.id].videoId)
+      setSelectedTalk(getNextTalk())
+    }
+  }
+
+  const stopUpdate = () => {
+    setShowCountdown(false)
+    setIsLiveMode(false)
+  }
+
   useEffect(() => {
-    if (!selectedTrack) return
     if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
@@ -119,25 +155,12 @@ export const TrackView: React.FC<Props> = ({
       {
         received: (msg: { [trackId: number]: Talk }) => {
           getTalks() // onAirの切り替わった新しいTalk一覧を取得
-          if (!msg[selectedTrack.id] || !selectedTalk) return
-          if (
-            selectedTrack.id == msg[selectedTrack.id].trackId &&
-            selectedTalk.id != msg[selectedTrack.id].id
-          ) {
-            window.location.href =
-              window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-            window.tracker.track('trigger_survey', {
-              track_name: selectedTrack?.name,
-              talk_id: selectedTalk?.id,
-              talk_name: selectedTalk?.title,
-            })
-            setSelectedTalk(msg[selectedTrack.id])
-            setVideoId(msg[selectedTrack.id].videoId)
-          }
+          setNextTalk(msg)
+          if (isLiveMode) setShowCountdown(true)
         },
       },
     )
-  }, [selectedTrack, selectedTalk])
+  }, [selectedTrack, isLiveMode])
 
   useEffect(() => {
     clearInterval(timer)
@@ -155,7 +178,14 @@ export const TrackView: React.FC<Props> = ({
   return (
     <Grid container spacing={0} justifyContent="center" alignItems="flex-start">
       <Grid item xs={12} md={8}>
-        <IvsPlayer playBackUrl={videoId} autoplay={true}></IvsPlayer>
+        <IvsPlayer
+          playBackUrl={videoId}
+          nextTalk={getNextTalk()}
+          autoplay={true}
+          showCountdown={showCountdown}
+          updateView={updateView}
+          stopUpdate={stopUpdate}
+        ></IvsPlayer>
         <Sponsors event={event} />
       </Grid>
       <Grid item xs={12} md={4}>
