@@ -157,23 +157,16 @@ export const TrackView: React.FC<Props> = ({
           getTalks() // onAirの切り替わった新しいTalk一覧を取得
           setNextTalk(msg)
           if (
-            !nextTalk ||
             !selectedTrack ||
-            !nextTalk[selectedTrack.id] ||
             !selectedTalk
           )
             return
-          if (
-            isLiveMode &&
-            selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
-            selectedTalk.id != nextTalk[selectedTrack.id].id
-          ){
+          if ( msg[selectedTrack.id].id != selectedTalk.id )
             setShowCountdown(true)
-          }
         },
       },
     )
-  }, [selectedTrack, isLiveMode])
+  }, [selectedTrack, isLiveMode, selectedTalk])
 
   useEffect(() => {
     clearInterval(timer)
