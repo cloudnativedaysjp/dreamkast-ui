@@ -161,7 +161,7 @@ export const TrackView: React.FC<Props> = ({
             !selectedTalk
           )
             return
-          if ( msg[selectedTrack.id].id != selectedTalk.id )
+          if ( isLiveMode && msg[selectedTrack.id].id != selectedTalk.id )
             setShowCountdown(true)
         },
       },
