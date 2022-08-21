@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import * as Styled from './styled'
 import { Track } from '../../client-axios'
-import { isStorageAvailable } from '../../util/sessionstorage'
+import { setViewTrackIdToSessionStorage } from '../../util/viewTrackId'
 
 type Props = {
   tracks: Track[]
-  selectedTrack?: Track
+  selectedTrack: Track | null
   selectTrack: (track: Track) => void
 }
 
@@ -24,9 +24,10 @@ export const TrackSelector: React.FC<Props> = ({
     _event: React.MouseEvent<HTMLElement>,
     selectItem: number | null,
   ) => {
-    if (isStorageAvailable('sessionStorage') && selectItem != null) {
-      sessionStorage.setItem('view_track_id', selectItem.toString())
+    if (selectItem) {
+      setViewTrackIdToSessionStorage(selectItem)
     }
+
     if (selectItem !== null) {
       const selectedTrack = tracks.find(
         (track) => track.id === selectItem,

@@ -19,7 +19,7 @@ const IndexPage: React.FC = () => {
   const [eventAbbr, setEventAbbr] = useState<string>('')
 
   // States
-  const [selectedTrack, setSelectedTrack] = useState<Track>()
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null)
   const [tracks, setTracks] = useState<Track[]>([])
   const [profile, setProfile] = useState<Profile>()
   const [event, setEvent] = useState<Event>()
@@ -81,7 +81,7 @@ const IndexPage: React.FC = () => {
       setSelectedTrack(
         ((tracks) => {
           const num = sessionStorage.getItem('view_track_id') || tracks[0].id
-          return tracks.find((track) => track.id == num)
+          return tracks.find((track) => track.id == num) || null
         })(data),
       )
     } else {

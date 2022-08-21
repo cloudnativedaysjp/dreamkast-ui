@@ -20,7 +20,7 @@ import 'dayjs/locale/ja'
 type Props = {
   event: Event
   profile?: Profile
-  selectedTrack?: Track
+  selectedTrack: Track | null
   propTalks?: Talk[]
 }
 
