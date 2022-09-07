@@ -1,0 +1,15 @@
+name: debug
+
+on:
+  pull_request:
+    branches-ignore:
+      - 'renovate/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo "name: ${{ github.event_name }} path: ${{ github.event_path }} ref: ${{ github.ref }} head_ref: ${{ github.head_ref }}"
+
