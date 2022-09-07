@@ -1476,10 +1476,10 @@ acorn@^8.8.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
   integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
-actioncable@^5.2.7-1:
-  version "5.2.7-1"
-  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.2.7-1.tgz#789c38e1f6e5d9ddd395112d36182cf26a9062b6"
-  integrity sha512-nEZTVm/rJDXAjIPl9EEXe4VMbYyDSzUxPap/JukHmei7pW+M3ddjMuRw1WZfvyAGK5jNBT5RtSOPrpWHO51ePg==
+actioncable@5.2.7:
+  version "5.2.7"
+  resolved "https://registry.yarnpkg.com/actioncable/-/actioncable-5.2.7.tgz#eda2ba19579836d67da2b11c4e927a4200cebb43"
+  integrity sha512-3qH3bpY96NY9Da2EPfXeNzRqSC2Utf7zWSxDlul+O8ljjatsXzlaEy22awiJHpXzE3TKlOBZaOCU9Jmjj8VKog==
 
 aes-decrypter@3.1.2:
   version "3.1.2"

@@ -20,7 +20,7 @@
         "@types/linkifyjs": "^2.1.4",
         "@types/moment": "^2.13.0",
         "@types/react-router-dom": "^5.3.3",
-        "actioncable": "^5.2.7-1",
+        "actioncable": "5.2.7",
         "axios": "^0.27.2",
         "dayjs": "^1.11.1",
         "linkify-react": "^3.0.4",
