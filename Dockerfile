@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:1.4
 
-FROM node:16.13.1-alpine3.14 AS base
+FROM node:16.15.1-alpine3.14 AS base
 WORKDIR /base
 COPY --link package.json yarn.lock ./
 RUN yarn install
 
-FROM node:16.13.1-alpine3.14
+FROM node:16.15.1-alpine3.14
 WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
