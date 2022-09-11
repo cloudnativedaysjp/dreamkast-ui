@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Checkout dreamkast-infra
         uses: actions/checkout@v3
         with:
@@ -48,7 +55,7 @@ jobs:
       - name: Create and Merge Pull Request
         uses: "actions/github-script@v2"
         with:
-          github_token: ${{ steps.generate_token.outputs.token }}
+          github-token: ${{ steps.generate_token.outputs.token }}
           script: |
             const pr = await github.pulls.create({
               owner: "cloudnativedaysjp",
