@@ -1,113 +1,83 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { Layout } from '../../../components/Layout'
 import { TrackSelector } from '../../../components/TrackSelector'
 import { TrackView } from '../../../components/Track'
 import { isStorageAvailable } from '../../../util/sessionstorage'
+import { Track } from '../../../client-axios'
 import {
-  Track,
-  TrackApi,
-  Configuration,
-  ProfileApi,
-  Profile,
-  Event,
-  EventApi,
-} from '../../../client-axios'
+  useGetApiV1TracksQuery,
+  useGetApiV1EventsByEventAbbrQuery,
+  useGetApiV1ByEventAbbrMyProfileQuery,
+} from '../../../generated/dreamkast-api.generated'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
+import { NextPage } from 'next'
 
-const IndexPage: React.FC = () => {
+const IndexPage: NextPage = () => {
   const router = useRouter()
-  const [eventAbbr, setEventAbbr] = useState<string>('')
-
-  // States
-  const [selectedTrack, setSelectedTrack] = useState<Track | null>(null)
-  const [tracks, setTracks] = useState<Track[]>([])
-  const [profile, setProfile] = useState<Profile>()
-  const [event, setEvent] = useState<Event>()
-
-  // Handlers
-  const selectTrack = (selectedTrack: Track) => {
-    setSelectedTrack(selectedTrack)
-  }
-
-  useEffect(() => {
+  const eventAbbr = useMemo<string>(() => {
     if (router.asPath !== router.route) {
       const { eventAbbr } = router.query
-      setEventAbbr(eventAbbr as string)
+      return eventAbbr as string
     }
+    return ''
   }, [router])
+  const skip = eventAbbr === null
+  const v1TracksQuery = useGetApiV1TracksQuery({ eventAbbr }, { skip })
+  const { data: event } = useGetApiV1EventsByEventAbbrQuery(
+    { eventAbbr },
+    { skip },
+  )
+  const myProfileQuery = useGetApiV1ByEventAbbrMyProfileQuery(
+    { eventAbbr },
+    { skip },
+  )
 
-  const getEvent = useCallback(async () => {
-    if (eventAbbr == '') {
-      return
+  const getTrack = () => {
+    if (!v1TracksQuery.data) {
+      return null
     }
-
-    const eventApi = new EventApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const { data } = await eventApi.apiV1EventsEventAbbrGet(eventAbbr)
-    setEvent(data)
-  }, [eventAbbr])
-
-  const getProfile = useCallback(async () => {
-    if (eventAbbr == '') {
-      return
-    }
-    const api = new ProfileApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const res = await api
-      .apiV1EventAbbrMyProfileGet(eventAbbr)
-      .catch((error) => {
-        if (error.response && error.response.status === 403) {
-          const topUrl = window.location.href.replace('/ui', '')
-          window.location.href = topUrl
-        }
-      })
-    if (!res) return
-    setProfile(res.data)
-  }, [eventAbbr])
-
-  const getTracks = useCallback(async () => {
-    if (eventAbbr == '') {
-      return
-    }
-    const api = new TrackApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const { data } = await api.apiV1TracksGet(eventAbbr)
-    setTracks(data)
-
+    const tracks = v1TracksQuery.data
     if (isStorageAvailable('sessionStorage')) {
-      setSelectedTrack(
-        ((tracks) => {
-          const num = sessionStorage.getItem('view_track_id') || tracks[0].id
-          return tracks.find((track) => track.id == num) || null
-        })(data),
-      )
+      const num = sessionStorage.getItem('view_track_id') || tracks[0].id
+      return tracks.find((track) => track.id == num) || null
     } else {
-      setSelectedTrack(data[0])
+      return tracks[0]
     }
-  }, [eventAbbr])
+  }
+
+  const [selectedTrack, setSelectedTrack] = useState<Track | null>(getTrack())
+
+  const selectTrack = useCallback(
+    (selectedTrack: Track) => setSelectedTrack(selectedTrack),
+    [],
+  )
 
   useEffect(() => {
-    if (eventAbbr != '') {
-      getEvent()
-      getProfile()
-      getTracks()
+    if ((myProfileQuery.error as FetchBaseQueryError)?.status === 403) {
+      const topUrl = window.location.href.replace('/ui', '')
+      window.location.href = topUrl
     }
-  }, [eventAbbr])
+  }, [myProfileQuery.error])
 
-  if (!!event) {
+  useEffect(() => {
+    const track = getTrack()
+    if (track) {
+      setSelectedTrack(track)
+    }
+  }, [v1TracksQuery.data])
+
+  if (event) {
     return (
       <Layout title={event.name} event={event}>
         <TrackSelector
-          tracks={tracks}
+          tracks={v1TracksQuery.data ?? []}
           selectedTrack={selectedTrack}
           selectTrack={selectTrack}
         />
         <TrackView
           event={event}
-          profile={profile}
+          profile={myProfileQuery.data}
           selectedTrack={selectedTrack}
         />
       </Layout>
