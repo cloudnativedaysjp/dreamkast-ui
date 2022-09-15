@@ -2,56 +2,56 @@
 
 exports[`TalkInfo 1`] = `
 <div
-  className="sc-gsTCUz gCgpQH"
+  className="styled__OuterContainer-sc-15n5q1r-1 hQEXpL"
 >
   <div
-    className="sc-bdfBwQ MrQxr"
+    className="styled__Container-sc-15n5q1r-0 bIvPX"
   >
     <h2
-      className="sc-dlfnbm bQGTOj"
+      className="styled__Title-sc-15n5q1r-2 dfhwfB"
     >
       ほげふが
     </h2>
     <div
-      className="sc-eCssSg dAwEgz"
+      className="styled__SpeakerContainer-sc-15n5q1r-4 kSMcKG"
     >
       <div
-        className="sc-jSgupP kPMSyW"
+        className="styled__Speaker-sc-15n5q1r-5 jUemMS"
       >
         alice / bob
       </div>
       <div
         style={
-          Object {
+          {
             "paddingRight": "20px",
           }
         }
       />
     </div>
     <div
-      className="sc-gKsewC kXjrHy"
+      className="styled__Content-sc-15n5q1r-6 OSrNA"
     >
       ぴよぴよ
     </div>
     <div
-      className="sc-fubCfw iXuTbZ"
+      className="styled__SocialHeader-sc-15n5q1r-8 fviNyj"
     >
       <img
-        className="sc-pFZIQ ehvigS"
+        className="styled__TalkIcon-sc-15n5q1r-9 fZzaql"
         src="/cnsec2022/ui/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
     <div
-      className="sc-jrAGrp iSvhwg"
+      className="styled__ButtonContainer-sc-15n5q1r-10 cHRYxT"
     >
       <a
-        className="sc-kEjbxe cgtSAu"
+        className="styled__ButtonLink-sc-15n5q1r-11 fpTnFU"
         href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cnsec2022&related=@cloudnativedays&hashtags=cnsec2022"
         target="_blank"
       >
         <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text sc-dQppl WRCRi"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-14 jPxOAA"
           disabled={false}
           onBlur={[Function]}
           onDragLeave={[Function]}
@@ -71,7 +71,7 @@ exports[`TalkInfo 1`] = `
             className="MuiButton-label"
           >
             <img
-              className="sc-bqyKva cKheEB"
+              className="styled__TwitterImg-sc-15n5q1r-15 hewlEg"
               src="/cnsec2022/ui/twitter_logo.png"
             />
             tweet #cnsec2022_undefined

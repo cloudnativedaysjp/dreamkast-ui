@@ -2,23 +2,23 @@
 
 exports[`IvsPlayer 1`] = `
 <div
-  className="sc-iBPRYJ hzmxZs"
+  className="styled__Container-sc-86hpyq-0 bpvAVL"
 >
   <div
-    className="sc-bdfBwQ iOawCe"
+    className="styled__IvsPlayerContainer-sc-1l56t7n-0 bRYQnZ"
   >
     <video
       autoPlay={true}
-      className="sc-gsTCUz hrgGfN video-js vjs-16-9 vjs-big-play-centered"
+      className="styled__IvsPlayerVideo-sc-1l56t7n-1 hLQBux video-js vjs-16-9 vjs-big-play-centered"
       controls={true}
       muted={false}
       playsInline={true}
     />
     <div
-      className="sc-dlfnbm gcufJy"
+      className="styled__OverLayContainer-sc-1l56t7n-2 jRaeId"
     >
       <div
-        className="sc-jSgupP dNnUpq"
+        className="styled__TextContainer-sc-1l56t7n-5 cnBMxX"
       >
         <p>
           次のセッションまで 
@@ -26,22 +26,22 @@ exports[`IvsPlayer 1`] = `
           秒
         </p>
         <div
-          className="sc-gKsewC hbnBND"
+          className="styled__NextTitle-sc-1l56t7n-6 hGARoH"
         >
           ほげふが
         </div>
       </div>
       <div
-        className="sc-hKgILt gqXsYn"
+        className="styled__ButtonContainer-sc-1l56t7n-3 hXfuqT"
       >
         <button
-          className="sc-eCssSg uNBEZ"
+          className="styled__PlayerButton-sc-1l56t7n-4 cYozSD"
           onClick={[Function]}
         >
           キャンセル
         </button>
         <button
-          className="sc-eCssSg uNBEZ"
+          className="styled__PlayerButton-sc-1l56t7n-4 cYozSD"
           onClick={[Function]}
         >
           すぐに再生

@@ -29,11 +29,7 @@ import {
   createRequestFunction,
 } from './common'
 // @ts-ignore
-import {
-  BASE_PATH,
-  RequestArgs,
-  BaseAPI,
-} from './base'
+import { BASE_PATH, RequestArgs, BaseAPI } from './base'
 
 /**
  *
