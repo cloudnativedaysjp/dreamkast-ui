@@ -2,29 +2,29 @@
 
 exports[`Layout 1`] = `
 <div
-  className="sc-bdfBwQ kJsdFU"
+  className="styled__Container-sc-mskfle-0 bgoKFt"
 >
   <header>
     <header
       className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
     >
       <div
-        className="MuiToolbar-root MuiToolbar-regular sc-gsTCUz kEloeC MuiToolbar-gutters"
+        className="MuiToolbar-root MuiToolbar-regular styled__Header-sc-mskfle-1 cwNPIW MuiToolbar-gutters"
       >
         <a
           href="/cndt2021/ui"
           rel="noopener noreferrer"
         >
           <img
-            className="sc-dlfnbm jFXkDF"
+            className="styled__HeaderImg-sc-mskfle-2 kcWoAg"
             src="/cndt2021/ui/cndt2021_header_logo.png"
           />
         </a>
         <div
-          className="sc-hBEYos ipAVxb"
+          className="styled__DesktopMenu-sc-n9hkhe-7 kZPcGK"
         >
           <a
-            className="sc-kfzAmx dLIGSx"
+            className="styled__MenuLink-sc-86hpyq-6 jwGAND"
             href="/cndt2021/o11y"
             rel="noreferrer"
           >
@@ -43,7 +43,7 @@ exports[`Layout 1`] = `
               onTouchMove={[Function]}
               onTouchStart={[Function]}
               style={
-                Object {
+                {
                   "color": "#423A57",
                 }
               }
@@ -58,7 +58,7 @@ exports[`Layout 1`] = `
             </button>
           </a>
           <a
-            className="sc-kfzAmx dLIGSx"
+            className="styled__MenuLink-sc-86hpyq-6 jwGAND"
             href="/cndt2021/timetables"
             rel="noreferrer"
           >
@@ -77,7 +77,7 @@ exports[`Layout 1`] = `
               onTouchMove={[Function]}
               onTouchStart={[Function]}
               style={
-                Object {
+                {
                   "color": "#423A57",
                 }
               }
@@ -107,7 +107,7 @@ exports[`Layout 1`] = `
             onTouchMove={[Function]}
             onTouchStart={[Function]}
             style={
-              Object {
+              {
                 "color": "#423A57",
               }
             }
@@ -123,10 +123,10 @@ exports[`Layout 1`] = `
         </div>
       </div>
       <div
-        className="sc-fodVxV gJEXNK"
+        className="styled__MobileMenu-sc-n9hkhe-8 kprXT"
       >
         <a
-          className="sc-kfzAmx dLIGSx"
+          className="styled__MenuLink-sc-86hpyq-6 jwGAND"
           href="/cndt2021/o11y"
           rel="noreferrer"
         >
@@ -145,7 +145,7 @@ exports[`Layout 1`] = `
             onTouchMove={[Function]}
             onTouchStart={[Function]}
             style={
-              Object {
+              {
                 "color": "#423A57",
               }
             }
@@ -160,7 +160,7 @@ exports[`Layout 1`] = `
           </button>
         </a>
         <a
-          className="sc-kfzAmx dLIGSx"
+          className="styled__MenuLink-sc-86hpyq-6 jwGAND"
           href="/cndt2021/timetables"
           rel="noreferrer"
         >
@@ -179,7 +179,7 @@ exports[`Layout 1`] = `
             onTouchMove={[Function]}
             onTouchStart={[Function]}
             style={
-              Object {
+              {
                 "color": "#423A57",
               }
             }
@@ -209,7 +209,7 @@ exports[`Layout 1`] = `
           onTouchMove={[Function]}
           onTouchStart={[Function]}
           style={
-            Object {
+            {
               "color": "#423A57",
             }
           }
@@ -226,13 +226,13 @@ exports[`Layout 1`] = `
     </header>
   </header>
   <div
-    className="sc-hKgILt iAZlXr"
+    className="styled__ChildrenContainer-sc-mskfle-3 dTCHfT"
   />
   <footer
-    className="sc-eCssSg csAIkT"
+    className="styled__Footer-sc-mskfle-4 jSCGpU"
   >
     <a
-      className="sc-gKsewC giTXZJ"
+      className="styled__FooterLink-sc-mskfle-6 fEbdYM"
       href="https://event.cloudnativedays.jp/cndt2021/privacy"
       rel="noopener noreferrer"
       target="_blank"
@@ -240,7 +240,7 @@ exports[`Layout 1`] = `
       プライバシーポリシー
     </a>
     <a
-      className="sc-gKsewC giTXZJ"
+      className="styled__FooterLink-sc-mskfle-6 fEbdYM"
       href="https://event.cloudnativedays.jp/cndt2021/coc"
       rel="noopener noreferrer"
       target="_blank"
@@ -248,7 +248,7 @@ exports[`Layout 1`] = `
       行動規範
     </a>
     <div
-      className="sc-jSgupP dTmTMX"
+      className="styled__FooterText-sc-mskfle-5 cCFRtn"
     >
       this is copyright
     </div>

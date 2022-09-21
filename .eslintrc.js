@@ -16,16 +16,17 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
     'prettier/prettier': [
       'error',
-      {
-        trailingComma: 'all',
-        endOfLine: 'lf',
-        semi: false,
-        singleQuote: true,
-        printWidth: 80,
-        tabWidth: 2,
-      },
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      JSON.parse(require('fs').readFileSync('.prettierrc', 'utf8')),
     ],
   },
 }

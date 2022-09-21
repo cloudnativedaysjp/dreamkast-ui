@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { wrapper } from '../store'
 import Head from 'next/head'
 import {
   ThemeProvider as SCThemeProvider,
@@ -12,6 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
+import App from 'next/app'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -24,10 +26,8 @@ const GlobalStyle = createGlobalStyle`
     display:none;
   }`
 
-export default function Dreamkast({
-  Component,
-  pageProps,
-}: AppProps): JSX.Element {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const AppComponent: any = ({ Component, pageProps }: AppProps) => {
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
     TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
@@ -38,7 +38,7 @@ export default function Dreamkast({
   }, [])
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>CloudNative Days player</title>
         <meta
@@ -55,6 +55,14 @@ export default function Dreamkast({
           </SCThemeProvider>
         </MUIThemeProvider>
       </StylesProvider>
-    </React.Fragment>
+    </>
   )
 }
+
+AppComponent.getInitialProps = wrapper.getInitialAppProps(
+  (_store) => async (appContext) => ({
+    pageProps: (await App.getInitialProps(appContext)).pageProps,
+  }),
+)
+
+export default wrapper.withRedux(AppComponent)

@@ -1,8 +1,8 @@
 # Dreamkast UI
 
-This is a front-end application for online conferences. 
+This is a front-end application for online conferences.
 
-## How to run locally 
+## How to run locally
 
 ```
 npm run dev
@@ -51,7 +51,7 @@ export REDIS_URL=redis://redis:6379
 export RAILS_MASTER_KEY=
 ```
 
-3. Configure awscli and logged in registry 
+3. Configure awscli and logged in registry
 
 ```
 source .env-local
@@ -70,15 +70,11 @@ You can access dreamkast and dreamkast-ui `http://localhost:8080/`
 ## Generate Client from OpenAPI schema
 
 ```
-$ docker run --rm -v (PWD):/local openapitools/openapi-generator-cli generate \
-      -g typescript-axios \
-      --reserved-words-mappings abstract=abstract \
-      -i ./local/schemas/swagger.yml \
-      -o ./local/src/client-axios
+$ yarn rtk-query-codegen
 
 ```
 
 ## License
 
-MIT License 
+MIT License
 
