@@ -64,11 +64,11 @@ jobs:
           branch: production/ui-main
 
       - name: Create and Merge Pull Request
-        uses: "actions/github-script@v2"
+        uses: "actions/github-script@v6"
         with:
           github-token: ${{ steps.generate_token.outputs.token }}
           script: |
-            const pr = await github.pulls.create({
+            const pr = await github.rest.pulls.create({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               title: "Automated PR (production/ui-main)",
@@ -76,7 +76,7 @@ jobs:
               head: "production/ui-main",
               base: "main"
             });
-            await github.pulls.merge({
+            await github.rest.pulls.merge({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
               pull_number: pr.data.number,
