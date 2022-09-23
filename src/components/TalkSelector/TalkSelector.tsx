@@ -23,7 +23,7 @@ interface TalkWithAvailable extends Talk {
 const isAvailable = (
   now: number,
   startTime: string,
-  conferanceDayDate?: string,
+  conferanceDayDate?: string | null,
 ) => {
   if (!conferanceDayDate) return true
   const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`

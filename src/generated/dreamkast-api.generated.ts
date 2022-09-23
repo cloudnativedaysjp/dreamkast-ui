@@ -267,8 +267,8 @@ export type Event = {
 export type Track = {
   id: number
   name: string
-  videoPlatform?: string | undefined
-  videoId?: string | undefined
+  videoPlatform?: string | undefined | null
+  videoId?: string | undefined | null
 }
 export type ViewerCount = {
   conference_id?: number | undefined
