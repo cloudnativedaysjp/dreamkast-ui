@@ -31,7 +31,7 @@ export const TrackView: React.FC<Props> = ({
   propTalks,
 }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
-  const [videoId, setVideoId] = useState<string>()
+  const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
@@ -78,8 +78,7 @@ export const TrackView: React.FC<Props> = ({
       setIsLiveMode(false)
     }
     setSelectedTalk(talk)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    setVideoId(talk.onAir ? selectedTrack!.videoId! : talk.videoId)
+    setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
 
   useEffect(() => {
@@ -92,8 +91,7 @@ export const TrackView: React.FC<Props> = ({
     beforeTrackId.current = selectedTrack?.id
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    setVideoId(onAirTalk ? selectedTrack!.videoId! : talks[0].videoId)
+    setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
   }, [talks])
 
   const actionCableUrl = () => {

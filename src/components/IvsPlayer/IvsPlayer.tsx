@@ -7,7 +7,7 @@ import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 
 type Props = {
-  playBackUrl?: string
+  playBackUrl?: string | null
   autoplay: boolean
   showCountdown: boolean
   nextTalk?: Talk
