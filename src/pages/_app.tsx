@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { wrapper } from '../store'
 import Head from 'next/head'
 import {
@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AppComponent: any = (props: { children: React.ReactElement }) => {
   const { children } = props
+  const [_, setError] = useState()
   const dispatch = useDispatch()
 
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
@@ -58,7 +59,10 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
     }
     if (!isAuthenticated) {
       loginWithRedirect().catch((err) => {
-        console.error(err)
+        err.message = 'Login with redirect: ' + err.message
+        setError(() => {
+          throw err
+        })
       })
       return
     }
@@ -70,7 +74,10 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
         dispatch(setToken(token))
       })
       .catch((err) => {
-        console.error('token fetch failed', err)
+        err.message = 'Get token silently: ' + err.message
+        setError(() => {
+          throw err
+        })
       })
   }, [isAuthenticated, isLoading])
 
