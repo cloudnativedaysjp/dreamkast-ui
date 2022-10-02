@@ -17,6 +17,7 @@ import App from 'next/app'
 import { useDispatch } from 'react-redux'
 import { setToken, setUser } from '../store/auth'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
+import { ENV } from '../config'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -110,14 +111,13 @@ AppComponent.getInitialProps = wrapper.getInitialAppProps(
 )
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
-  // TODO fix hardcode
   return (
     <>
       <Auth0Provider
-        domain={'dreamkast.us.auth0.com'}
-        clientId={'0cWWdpGt4CpWjHJ9QIHtPm5GrJLS25lz'}
-        redirectUri={'http://localhost:8080/cnsec2022/ui'}
-        audience={'https://event.cloudnativedays.jp/'}
+        domain={ENV.NEXT_PUBLIC_AUTH0_DOMAIN}
+        clientId={ENV.NEXT_PUBLIC_AUTH0_CLIENT_ID}
+        redirectUri={ENV.NEXT_PUBLIC_BASE_URL}
+        audience={ENV.NEXT_PUBLIC_AUDIENCE}
       >
         <AppComponent>
           <Component {...pageProps} />
