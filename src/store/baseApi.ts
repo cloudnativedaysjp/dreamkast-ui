@@ -1,10 +1,20 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { retry } from './retry'
+import { RootState } from './index'
 
 const baseQuery = retry(
   fetchBaseQuery({
     baseUrl: '/',
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).auth.token
+
+      // TODO reconsider that API call without token should be passed
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`)
+      }
+      return headers
+    },
   }),
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

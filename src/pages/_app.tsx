@@ -14,6 +14,8 @@ import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
+import { useDispatch } from 'react-redux'
+import { setToken } from '../store/auth'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -28,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const AppComponent: any = ({ Component, pageProps }: AppProps) => {
+  const dispatch = useDispatch()
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
     TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
@@ -36,6 +39,9 @@ const AppComponent: any = ({ Component, pageProps }: AppProps) => {
       jssStyles.parentNode.removeChild(jssStyles)
     }
   }, [])
+
+  // TODO replace with the one provided by auth0 client
+  dispatch(setToken('dummy'))
 
   return (
     <>
