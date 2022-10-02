@@ -15,7 +15,8 @@ import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
 import { useDispatch } from 'react-redux'
-import { setToken } from '../store/auth'
+import { setToken, setUser } from '../store/auth'
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -29,8 +30,10 @@ const GlobalStyle = createGlobalStyle`
   }`
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const AppComponent: any = ({ Component, pageProps }: AppProps) => {
+const AppComponent: any = (props: { children: React.ReactElement }) => {
+  const { children } = props
   const dispatch = useDispatch()
+
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
     TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
@@ -40,8 +43,36 @@ const AppComponent: any = ({ Component, pageProps }: AppProps) => {
     }
   }, [])
 
-  // TODO replace with the one provided by auth0 client
-  dispatch(setToken('dummy'))
+  const {
+    user,
+    isAuthenticated,
+    isLoading,
+    getAccessTokenSilently,
+    loginWithRedirect,
+  } = useAuth0()
+
+  // redirectUri={window.location.origin}
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (!isAuthenticated) {
+      loginWithRedirect().catch((err) => {
+        console.error(err)
+      })
+      return
+    }
+    if (user) {
+      dispatch(setUser(user))
+    }
+    getAccessTokenSilently()
+      .then((token) => {
+        dispatch(setToken(token))
+      })
+      .catch((err) => {
+        console.error('token fetch failed', err)
+      })
+  }, [isAuthenticated, isLoading])
 
   return (
     <>
@@ -57,7 +88,7 @@ const AppComponent: any = ({ Component, pageProps }: AppProps) => {
           <SCThemeProvider theme={theme}>
             <CssBaseline />
             <GlobalStyle />
-            <Component {...pageProps} />
+            {children}
           </SCThemeProvider>
         </MUIThemeProvider>
       </StylesProvider>
@@ -71,4 +102,22 @@ AppComponent.getInitialProps = wrapper.getInitialAppProps(
   }),
 )
 
-export default wrapper.withRedux(AppComponent)
+const WrappedApp = ({ Component, pageProps }: AppProps) => {
+  // TODO fix hardcode
+  return (
+    <>
+      <Auth0Provider
+        domain={'dreamkast.us.auth0.com'}
+        clientId={'0cWWdpGt4CpWjHJ9QIHtPm5GrJLS25lz'}
+        redirectUri={'http://localhost:8080/cnsec2022/ui'}
+        audience={'https://event.cloudnativedays.jp/'}
+      >
+        <AppComponent>
+          <Component {...pageProps} />
+        </AppComponent>
+      </Auth0Provider>
+    </>
+  )
+}
+
+export default wrapper.withRedux(WrappedApp)
