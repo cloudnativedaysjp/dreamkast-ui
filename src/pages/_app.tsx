@@ -53,7 +53,6 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
     loginWithRedirect,
   } = useAuth0()
 
-  // redirectUri={window.location.origin}
   useEffect(() => {
     if (isLoading) {
       return
@@ -111,12 +110,23 @@ AppComponent.getInitialProps = wrapper.getInitialAppProps(
 )
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
+  const [baseUrl, setBaseUrl] = useState('')
+
+  useEffect(() => {
+    const url = new URL(ENV.NEXT_PUBLIC_BASE_PATH, window.location.origin)
+    setBaseUrl(url.href)
+  }, [setBaseUrl])
+
+  // Only CSR is supported since dynamic host origin resolution cannot be performed in SSR.
+  if (!baseUrl) {
+    return <></>
+  }
   return (
     <>
       <Auth0Provider
         domain={ENV.NEXT_PUBLIC_AUTH0_DOMAIN}
         clientId={ENV.NEXT_PUBLIC_AUTH0_CLIENT_ID}
-        redirectUri={ENV.NEXT_PUBLIC_BASE_URL}
+        redirectUri={baseUrl}
         audience={ENV.NEXT_PUBLIC_AUDIENCE}
       >
         <AppComponent>
