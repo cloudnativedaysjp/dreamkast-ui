@@ -31,7 +31,7 @@ export const TrackView: React.FC<Props> = ({
   propTalks,
 }) => {
   const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
-  const [videoId, setVideoId] = useState<string>()
+  const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
