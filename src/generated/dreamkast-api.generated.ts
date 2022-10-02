@@ -24,6 +24,13 @@ const injectedRtkApi = api
         }),
         providesTags: ['Profile'],
       }),
+      getApiV1Events: build.query<
+        GetApiV1EventsApiResponse,
+        GetApiV1EventsApiArg
+      >({
+        query: () => ({ url: `/api/v1/events` }),
+        providesTags: ['Event'],
+      }),
       getApiV1EventsByEventAbbr: build.query<
         GetApiV1EventsByEventAbbrApiResponse,
         GetApiV1EventsByEventAbbrApiArg
@@ -76,6 +83,17 @@ const injectedRtkApi = api
       >({
         query: (queryArg) => ({ url: `/api/v1/talks/${queryArg.talkId}` }),
         providesTags: ['Talk'],
+      }),
+      putApiV1TalksByTalkId: build.mutation<
+        PutApiV1TalksByTalkIdApiResponse,
+        PutApiV1TalksByTalkIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}`,
+          method: 'PUT',
+          body: queryArg.body,
+        }),
+        invalidatesTags: ['Talk'],
       }),
       getApiV1TalksByTalkIdVideoRegistration: build.query<
         GetApiV1TalksByTalkIdVideoRegistrationApiResponse,
@@ -161,6 +179,8 @@ export type GetApiV1ByEventAbbrMyProfileApiArg = {
   /** ID of event */
   eventAbbr: string
 }
+export type GetApiV1EventsApiResponse = /** status 200 OK */ Event[]
+export type GetApiV1EventsApiArg = void
 export type GetApiV1EventsByEventAbbrApiResponse = /** status 200 OK */ Event
 export type GetApiV1EventsByEventAbbrApiArg = {
   /** ID of event */
@@ -194,6 +214,15 @@ export type GetApiV1TalksByTalkIdApiResponse = /** status 200 OK */ Talk
 export type GetApiV1TalksByTalkIdApiArg = {
   /** ID of talk */
   talkId: string
+}
+export type PutApiV1TalksByTalkIdApiResponse = unknown
+export type PutApiV1TalksByTalkIdApiArg = {
+  /** ID of talk */
+  talkId: string
+  /** Update on_air status */
+  body: {
+    on_air?: boolean | undefined
+  }
 }
 export type GetApiV1TalksByTalkIdVideoRegistrationApiResponse =
   /** status 200 OK */ VideoRegistration
@@ -261,14 +290,17 @@ export type Event = {
     | {
         id?: number | undefined
         date?: string | undefined
+        internal?: boolean | undefined
       }[]
     | undefined
 }
 export type Track = {
   id: number
   name: string
-  videoPlatform?: string | undefined | null
-  videoId?: string | undefined | null
+  videoPlatform?: (string | null) | undefined
+  videoId?: (string | null) | undefined
+  channelArn?: (string | null) | undefined
+  onAirTalk?: (object | null) | undefined
 }
 export type ViewerCount = {
   conference_id?: number | undefined
@@ -278,6 +310,7 @@ export type ViewerCount = {
 }
 export type Talk = {
   id: number
+  conferenceId?: number | undefined
   trackId: number
   videoPlatform?: string | undefined
   videoId: string
@@ -287,7 +320,7 @@ export type Talk = {
     id?: number | undefined
     name?: string | undefined
   }[]
-  dayId: number
+  dayId: number | null
   showOnTimetable: boolean
   startTime: string
   endTime: string
@@ -296,8 +329,13 @@ export type Talk = {
   talkCategory: string
   onAir?: boolean | undefined
   documentUrl?: string | undefined
-  conferenceDayId?: number | undefined
-  conferenceDayDate?: string | undefined
+  conferenceDayId?: (number | null) | undefined
+  conferenceDayDate?: (string | null) | undefined
+  startOffset?: number | undefined
+  endOffset?: number | undefined
+  actualStartTime?: string | undefined
+  actualEndTime?: string | undefined
+  presentationMethod?: (string | null) | undefined
 }
 export type VideoRegistration = {
   url?: string | undefined
@@ -355,12 +393,14 @@ export type Booth = {
 }
 export const {
   useGetApiV1ByEventAbbrMyProfileQuery,
+  useGetApiV1EventsQuery,
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1TracksQuery,
   useGetApiV1TracksByTrackIdQuery,
   useGetApiV1TracksByTrackIdViewerCountQuery,
   useGetApiV1TalksQuery,
   useGetApiV1TalksByTalkIdQuery,
+  usePutApiV1TalksByTalkIdMutation,
   useGetApiV1TalksByTalkIdVideoRegistrationQuery,
   usePutApiV1TalksByTalkIdVideoRegistrationMutation,
   useGetApiV1ChatMessagesQuery,
