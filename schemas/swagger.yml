@@ -31,6 +31,23 @@ paths:
                 $ref: '#/components/schemas/Profile'
         '403':
           description: You don't logged in
+  /api/v1/events:
+    get:
+      tags:
+        - Event
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid [eventAbbr] supplied
+        '404':
+          description: Event not found
   /api/v1/events/{eventAbbr}:
     get:
       tags:
@@ -77,7 +94,7 @@ paths:
           description: Invalid [eventAbbr] supplied
         '404':
           description: Event not found
-  
+
   /api/v1/tracks/{trackId}:
     get:
       tags:
@@ -179,6 +196,26 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
+    put:
+      tags:
+        - Talk
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: string
+      summary: Put Talk
+      requestBody:
+        description: Update on_air status
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                on_air:
+                  type: boolean
   /api/v1/talks/{talkId}/video_registration:
     get:
       tags:
@@ -414,6 +451,8 @@ components:
                 type: number
               date:
                 type: string
+              internal:
+                type: boolean
       example:
         id: 2
         name: "CloudNative Days Spring 2020 ONLINE"
@@ -446,13 +485,22 @@ components:
           type: string
         videoPlatform:
           type: string
+          nullable: true
         videoId:
           type: string
+          nullable: true
+        channelArn:
+          type: string
+          nullable: true
+        onAirTalk:
+          type: object
+          nullable: true
       example:
         id: 2
         name: "Track 2"
         videoPlatform: "vimeo"
         videoId: "453935827"
+        channelArn: "arn:aws:ivs:us-east-1:607167088920:channel/KdizL0w0PD7i"
       required:
         - id
         - name
@@ -482,6 +530,8 @@ components:
       properties:
         id:
           type: number
+        conferenceId:
+          type: number
         trackId:
           type: number
         videoPlatform:
@@ -504,6 +554,7 @@ components:
                 type: string
         dayId:
           type: number
+          nullable: true
         showOnTimetable:
           type: boolean
         startTime:
@@ -522,9 +573,22 @@ components:
           type: string
         conferenceDayId:
           type: number
+          nullable: true
         conferenceDayDate:
           type: string
           format: date
+          nullable: true
+        startOffset:
+          type: number
+        endOffset:
+          type: number
+        actualStartTime:
+          type: string
+        actualEndTime:
+          type: string
+        presentationMethod:
+          type: string
+          nullable: true
       example:
         - id: 1
           trackId: 2
@@ -542,6 +606,13 @@ components:
           talkCategory: "CI/CD"
           onAir: true
           documentUrl: "http://documents"
+          conferenceDayId: 1
+          conferenceDayDate: "2021-01-23"
+          startOffset: 0
+          endOffset: 0
+          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
+          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
+          presentationMethod: '現地登壇'
         - id: 2
           trackId: 2
           videoPlatform: "vimeo"
@@ -558,6 +629,13 @@ components:
           talkCategory: "CI/CD"
           onAir: true
           documentUrl: "http://documents"
+          conferenceDayId: 1
+          conferenceDayDate: "2021-01-23"
+          startOffset: 0
+          endOffset: 0
+          actualStartTime: "Sat, 23 Jan 2021 09:00:00 GMT"
+          actualEndTime: "Sat, 23 Jan 2021 09:20:00 GMT"
+          presentationMethod: 'オンライン登壇'
       required:
         - id
         - trackId
