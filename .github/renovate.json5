@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+  ],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "groupName": "all dependencies on Docker",
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "all dependencies on GitHub Actions",
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "excludePackageNames": ["video.js"], // because CI was failed
+      "groupName": "all minor, or patch dependencies on npm",
+    },
+  ],
+  "enabledManagers": [
+    "dockerfile",
+    "docker-compose",
+    "github-actions",
+    "npm",
+  ],
+}
