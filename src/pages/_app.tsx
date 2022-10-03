@@ -17,7 +17,7 @@ import App from 'next/app'
 import { useDispatch } from 'react-redux'
 import { setToken, setUser } from '../store/auth'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
-import { ENV } from '../config'
+import {ENV, validateEnv} from '../config'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -103,12 +103,6 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
   )
 }
 
-AppComponent.getInitialProps = wrapper.getInitialAppProps(
-  (_store) => async (appContext) => ({
-    pageProps: (await App.getInitialProps(appContext)).pageProps,
-  }),
-)
-
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
   const [baseUrl, setBaseUrl] = useState('')
 
@@ -127,7 +121,7 @@ const WrappedApp = ({ Component, pageProps }: AppProps) => {
         domain={ENV.NEXT_PUBLIC_AUTH0_DOMAIN}
         clientId={ENV.NEXT_PUBLIC_AUTH0_CLIENT_ID}
         redirectUri={baseUrl}
-        audience={ENV.NEXT_PUBLIC_AUDIENCE}
+        audience={ENV.NEXT_PUBLIC_AUTH0_AUDIENCE}
       >
         <AppComponent>
           <Component {...pageProps} />
@@ -136,5 +130,14 @@ const WrappedApp = ({ Component, pageProps }: AppProps) => {
     </>
   )
 }
+
+WrappedApp.getInitialProps = wrapper.getInitialAppProps(
+  (_store) => async (appContext) => {
+    validateEnv()
+    return {
+      pageProps: (await App.getInitialProps(appContext)).pageProps,
+    }
+  },
+)
 
 export default wrapper.withRedux(WrappedApp)
