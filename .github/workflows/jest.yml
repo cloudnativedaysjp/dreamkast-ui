@@ -10,7 +10,7 @@ jobs:
   jest:
     name: jest
     runs-on: ubuntu-latest
-    if: ${{ ! contains(github.event.pull_request.title, '[dreamkast-releasebot]') }}
+    if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Node.js 16.17.0
