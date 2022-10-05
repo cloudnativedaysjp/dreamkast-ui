@@ -14,10 +14,11 @@ import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUser } from '../store/auth'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { ENV, validateEnv } from '../config'
+import { tokenSelector } from '../store/authSelector'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -80,6 +81,11 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
         })
       })
   }, [isAuthenticated, isLoading])
+
+  const token = useSelector(tokenSelector)
+  if (!token) {
+    return <></>
+  }
 
   return (
     <>
