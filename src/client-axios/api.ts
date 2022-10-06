@@ -24,6 +24,32 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface ApiV1ChatMessagesMessageIdPut403Response
+ */
+export interface ApiV1ChatMessagesMessageIdPut403Response {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiV1ChatMessagesMessageIdPut403Response
+     */
+    'error'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ApiV1TalksTalkIdGetRequest
+ */
+export interface ApiV1TalksTalkIdGetRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApiV1TalksTalkIdGetRequest
+     */
+    'on_air'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Booth
  */
 export interface Booth {
@@ -95,10 +121,10 @@ export interface Booth {
     'miroUrl': string;
     /**
      * 
-     * @type {Array<BoothPdfUrls>}
+     * @type {Array<BoothPdfUrlsInner>}
      * @memberof Booth
      */
-    'pdfUrls': Array<BoothPdfUrls>;
+    'pdfUrls': Array<BoothPdfUrlsInner>;
     /**
      * 
      * @type {Array<string>}
@@ -109,19 +135,19 @@ export interface Booth {
 /**
  * 
  * @export
- * @interface BoothPdfUrls
+ * @interface BoothPdfUrlsInner
  */
-export interface BoothPdfUrls {
+export interface BoothPdfUrlsInner {
     /**
      * 
      * @type {string}
-     * @memberof BoothPdfUrls
+     * @memberof BoothPdfUrlsInner
      */
     'url'?: string;
     /**
      * 
      * @type {string}
-     * @memberof BoothPdfUrls
+     * @memberof BoothPdfUrlsInner
      */
     'title'?: string;
 }
@@ -193,14 +219,12 @@ export interface ChatMessage {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ChatMessageMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const ChatMessageMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type ChatMessageMessageTypeEnum = typeof ChatMessageMessageTypeEnum[keyof typeof ChatMessageMessageTypeEnum];
 
 /**
  * 
@@ -270,14 +294,12 @@ export interface ChatMessageProperties {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ChatMessagePropertiesMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const ChatMessagePropertiesMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type ChatMessagePropertiesMessageTypeEnum = typeof ChatMessagePropertiesMessageTypeEnum[keyof typeof ChatMessagePropertiesMessageTypeEnum];
 
 /**
  * 
@@ -347,61 +369,35 @@ export interface Event {
     'coc': string;
     /**
      * 
-     * @type {Array<EventConferenceDays>}
+     * @type {Array<EventConferenceDaysInner>}
      * @memberof Event
      */
-    'conferenceDays'?: Array<EventConferenceDays>;
+    'conferenceDays'?: Array<EventConferenceDaysInner>;
 }
 /**
  * 
  * @export
- * @interface EventConferenceDays
+ * @interface EventConferenceDaysInner
  */
-export interface EventConferenceDays {
+export interface EventConferenceDaysInner {
     /**
      * 
      * @type {number}
-     * @memberof EventConferenceDays
+     * @memberof EventConferenceDaysInner
      */
     'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof EventConferenceDays
+     * @memberof EventConferenceDaysInner
      */
     'date'?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof EventConferenceDays
+     * @memberof EventConferenceDaysInner
      */
     'internal'?: boolean;
-}
-/**
- * 
- * @export
- * @interface InlineObject
- */
-export interface InlineObject {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof InlineObject
-     */
-    'on_air'?: boolean;
-}
-/**
- * 
- * @export
- * @interface InlineResponse403
- */
-export interface InlineResponse403 {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse403
-     */
-    'error'?: string;
 }
 /**
  * 
@@ -546,10 +542,10 @@ export interface Talk {
     'abstract': string;
     /**
      * array of speakers name
-     * @type {Array<TalkSpeakers>}
+     * @type {Array<TalkSpeakersInner>}
      * @memberof Talk
      */
-    'speakers': Array<TalkSpeakers>;
+    'speakers': Array<TalkSpeakersInner>;
     /**
      * 
      * @type {number}
@@ -650,19 +646,19 @@ export interface Talk {
 /**
  * 
  * @export
- * @interface TalkSpeakers
+ * @interface TalkSpeakersInner
  */
-export interface TalkSpeakers {
+export interface TalkSpeakersInner {
     /**
      * 
      * @type {number}
-     * @memberof TalkSpeakers
+     * @memberof TalkSpeakersInner
      */
     'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof TalkSpeakers
+     * @memberof TalkSpeakersInner
      */
     'name'?: string;
 }
@@ -777,14 +773,12 @@ export interface UpdateChatMessage {
     'replyTo'?: number | null;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum UpdateChatMessageMessageTypeEnum {
-    Chat = 'chat',
-    Qa = 'qa'
-}
+export const UpdateChatMessageMessageTypeEnum = {
+    Chat: 'chat',
+    Qa: 'qa'
+} as const;
+
+export type UpdateChatMessageMessageTypeEnum = typeof UpdateChatMessageMessageTypeEnum[keyof typeof UpdateChatMessageMessageTypeEnum];
 
 /**
  * 
@@ -824,16 +818,14 @@ export interface VideoRegistration {
     'updatedAt'?: string;
 }
 
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VideoRegistrationStatusEnum {
-    Unsubmitted = 'unsubmitted',
-    Submitted = 'submitted',
-    Confirmed = 'confirmed',
-    InvalidFormat = 'invalid_format'
-}
+export const VideoRegistrationStatusEnum = {
+    Unsubmitted: 'unsubmitted',
+    Submitted: 'submitted',
+    Confirmed: 'confirmed',
+    InvalidFormat: 'invalid_format'
+} as const;
+
+export type VideoRegistrationStatusEnum = typeof VideoRegistrationStatusEnum[keyof typeof VideoRegistrationStatusEnum];
 
 /**
  * 
@@ -1415,7 +1407,7 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
         apiV1EventAbbrMyProfileGet: async (eventAbbr: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'eventAbbr' is not null or undefined
             assertParamExists('apiV1EventAbbrMyProfileGet', 'eventAbbr', eventAbbr)
-            const localVarPath = `/api/v1/${eventAbbr}/my_profile`
+            const localVarPath = `/api/v1/{eventAbbr}/my_profile`
                 .replace(`{${"eventAbbr"}}`, encodeURIComponent(String(eventAbbr)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1694,11 +1686,11 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @summary Put Talk
          * @param {string} talkId ID of talk
-         * @param {InlineObject} [inlineObject] 
+         * @param {ApiV1TalksTalkIdGetRequest} [apiV1TalksTalkIdGetRequest] Update on_air status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksTalkIdPut: async (talkId: string, inlineObject?: InlineObject, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiV1TalksTalkIdPut: async (talkId: string, apiV1TalksTalkIdGetRequest?: ApiV1TalksTalkIdGetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'talkId' is not null or undefined
             assertParamExists('apiV1TalksTalkIdPut', 'talkId', talkId)
             const localVarPath = `/api/v1/talks/{talkId}`
@@ -1721,7 +1713,7 @@ export const TalkApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(apiV1TalksTalkIdGetRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1764,12 +1756,12 @@ export const TalkApiFp = function(configuration?: Configuration) {
          * 
          * @summary Put Talk
          * @param {string} talkId ID of talk
-         * @param {InlineObject} [inlineObject] 
+         * @param {ApiV1TalksTalkIdGetRequest} [apiV1TalksTalkIdGetRequest] Update on_air status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1TalksTalkIdPut(talkId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksTalkIdPut(talkId, inlineObject, options);
+        async apiV1TalksTalkIdPut(talkId: string, apiV1TalksTalkIdGetRequest?: ApiV1TalksTalkIdGetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1TalksTalkIdPut(talkId, apiV1TalksTalkIdGetRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1806,12 +1798,12 @@ export const TalkApiFactory = function (configuration?: Configuration, basePath?
          * 
          * @summary Put Talk
          * @param {string} talkId ID of talk
-         * @param {InlineObject} [inlineObject] 
+         * @param {ApiV1TalksTalkIdGetRequest} [apiV1TalksTalkIdGetRequest] Update on_air status
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1TalksTalkIdPut(talkId: string, inlineObject?: InlineObject, options?: any): AxiosPromise<void> {
-            return localVarFp.apiV1TalksTalkIdPut(talkId, inlineObject, options).then((request) => request(axios, basePath));
+        apiV1TalksTalkIdPut(talkId: string, apiV1TalksTalkIdGetRequest?: ApiV1TalksTalkIdGetRequest, options?: any): AxiosPromise<void> {
+            return localVarFp.apiV1TalksTalkIdPut(talkId, apiV1TalksTalkIdGetRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1851,13 +1843,13 @@ export class TalkApi extends BaseAPI {
      * 
      * @summary Put Talk
      * @param {string} talkId ID of talk
-     * @param {InlineObject} [inlineObject] 
+     * @param {ApiV1TalksTalkIdGetRequest} [apiV1TalksTalkIdGetRequest] Update on_air status
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TalkApi
      */
-    public apiV1TalksTalkIdPut(talkId: string, inlineObject?: InlineObject, options?: AxiosRequestConfig) {
-        return TalkApiFp(this.configuration).apiV1TalksTalkIdPut(talkId, inlineObject, options).then((request) => request(this.axios, this.basePath));
+    public apiV1TalksTalkIdPut(talkId: string, apiV1TalksTalkIdGetRequest?: ApiV1TalksTalkIdGetRequest, options?: AxiosRequestConfig) {
+        return TalkApiFp(this.configuration).apiV1TalksTalkIdPut(talkId, apiV1TalksTalkIdGetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
