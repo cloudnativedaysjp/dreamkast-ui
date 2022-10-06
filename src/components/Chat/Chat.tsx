@@ -60,7 +60,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
     roomId: `${talk?.id}`,
     roomType: 'talk',
   })
-  const [createReplyMsg] = usePostApiV1ChatMessagesMutation({})
+  const [createChatMsg] = usePostApiV1ChatMessagesMutation()
 
   useEffect(() => {
     if (isLoading) {
@@ -158,7 +158,14 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
         ? ChatMessageMessageTypeEnum.Qa
         : ChatMessageMessageTypeEnum.Chat,
     }
-    createReplyMsg({ chatMessage })
+
+    createChatMsg({ chatMessage }).then(({ error }: any) => {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+      // TODO error handling
+      if (error) {
+        console.error(error)
+      }
+    })
     setSelectedMessage(initialChatMessage)
   }
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import * as Styled from './styled'
 import {
   Event,
-  ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Profile,
   Talk,
@@ -16,10 +15,8 @@ import { ChatReplyForm } from '../../../ChatReplyForm'
 import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkify-react'
 import { ChatMessageMenu } from '../../ChatMessageMenu'
-import { Configuration } from '../../../../../../client-axios'
 import { Grid } from '@material-ui/core'
-import { useSelector } from 'react-redux'
-import { tokenSelector } from '../../../../../../store/authSelector'
+import { usePutApiV1ChatMessagesByMessageIdMutation } from '../../../../../../generated/dreamkast-api.generated'
 
 dayjs.extend(timezone)
 dayjs.extend(utc)
@@ -54,7 +51,7 @@ export const ChatMessage: React.FC<Props> = ({
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [message, setMessage] = useState<ChatMessageContainer>()
-  const accessToken = useSelector(tokenSelector)
+  const [updateChatMsg] = usePutApiV1ChatMessagesByMessageIdMutation()
 
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
@@ -79,18 +76,21 @@ export const ChatMessage: React.FC<Props> = ({
   const onMenuClick = (e: React.MouseEvent<HTMLElement>) => {
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
     if (!selectedMessageId || !event) return
-    const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const newChatMessage = {
-      eventAbbr: event.abbr,
-      body: 'このメッセージは削除されました',
-    }
-    api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage, {
-      headers: {
-        authorization: `Bearer: ${accessToken}`,
+
+    updateChatMsg({
+      messageId: selectedMessageId,
+      updateChatMessage: {
+        eventAbbr: event.abbr,
+        body: 'このメッセージは削除されました',
       },
+    }).then(({ error }: any) => {
+      // eslint-disable-line @typescript-eslint/no-explicit-any
+      // TODO error handling
+      if (error) {
+        console.error(error)
+      }
     })
+
     setAnchorEl(null)
   }
 
