@@ -7,7 +7,7 @@ import {
   Profile,
   Talk,
 } from '../../../../../../client-axios/api'
-import { ChatMessageClass } from '../../../../../../util/chat'
+import { ChatMessageContainer } from '../../../../../../util/chat'
 import MenuIcon from '@material-ui/icons/Menu'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
@@ -28,7 +28,7 @@ type Props = {
   event?: Event
   profile?: Profile
   talk?: Talk
-  chatMessage?: ChatMessageClass
+  chatMessage?: ChatMessageContainer
   selected: boolean
   onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
   onClickCloseButton: () => void
@@ -45,7 +45,7 @@ export const ChatMessage: React.FC<Props> = ({
   onClickCloseButton,
   onSendReply,
 }) => {
-  const isSpeakerMessage = (msg?: ChatMessageClass) => {
+  const isSpeakerMessage = (msg?: ChatMessageContainer) => {
     const speakerIds = talk?.speakers.map((speaker) => {
       return speaker.id
     })
@@ -53,7 +53,7 @@ export const ChatMessage: React.FC<Props> = ({
     return !!msg?.speakerId && speakerIds.includes(msg.speakerId)
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [message, setMessage] = useState<ChatMessageClass>()
+  const [message, setMessage] = useState<ChatMessageContainer>()
   const accessToken = useSelector(tokenSelector)
 
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat

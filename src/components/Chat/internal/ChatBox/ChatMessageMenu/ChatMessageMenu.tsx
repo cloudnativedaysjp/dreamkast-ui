@@ -1,12 +1,12 @@
 import React from 'react'
 import * as Styled from './styled'
 import { Menu, MenuItem } from '@material-ui/core'
-import { ChatMessageClass } from '../../../../../util/chat'
+import { ChatMessageContainer } from '../../../../../util/chat'
 import { Profile } from '../../../../../client-axios'
 
 type Props = {
   profile?: Profile
-  chatMessage?: ChatMessageClass
+  chatMessage?: ChatMessageContainer
   anchorEl?: null | HTMLElement
   onClose: () => void
   onMenuClick: (e: React.MouseEvent<HTMLElement>) => void

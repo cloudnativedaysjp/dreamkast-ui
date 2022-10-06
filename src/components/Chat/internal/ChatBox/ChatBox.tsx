@@ -7,7 +7,7 @@ import {
   Talk,
 } from '../../../../client-axios'
 import { ChatMessage } from './internal/ChatMessage'
-import { ChatMessageClass, ChatMessageMap } from '../../../../util/chat'
+import { ChatMessageContainer, ChatMessageMap } from '../../../../util/chat'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
   talk?: Talk
   messages: ChatMessageMap
   messageTypes: ChatMessageMessageTypeEnum[]
-  selectedMessage: ChatMessageClass
+  selectedMessage: ChatMessageContainer
   checked: boolean
   onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
   onClickCloseButton: () => void
