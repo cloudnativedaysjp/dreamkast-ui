@@ -20,7 +20,7 @@ const injectedRtkApi = api
         GetApiV1ByEventAbbrMyProfileApiArg
       >({
         query: (queryArg) => ({
-          url: `/api/v1/$${queryArg.eventAbbr}/my_profile`,
+          url: `/api/v1/${queryArg.eventAbbr}/my_profile`,
         }),
         providesTags: ['Profile'],
       }),
