@@ -194,6 +194,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
           </Styled.TabContainer>
           <Styled.TabPanel value="0">
             <ChatBox
+              event={event}
               profile={profile}
               talk={talk}
               messages={messages}
@@ -210,6 +211,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
           </Styled.TabPanel>
           <Styled.TabPanel value="1">
             <ChatBox
+              event={event}
               talk={talk}
               messages={messages}
               messageTypes={[ChatMessageMessageTypeEnum.Qa]}
