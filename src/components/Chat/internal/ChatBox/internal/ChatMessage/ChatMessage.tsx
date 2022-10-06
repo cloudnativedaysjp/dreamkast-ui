@@ -18,6 +18,8 @@ import Linkify from 'linkify-react'
 import { ChatMessageMenu } from '../../ChatMessageMenu'
 import { Configuration } from '../../../../../../client-axios'
 import { Grid } from '@material-ui/core'
+import { useSelector } from 'react-redux'
+import { tokenSelector } from '../../../../../../store/authSelector'
 
 dayjs.extend(timezone)
 dayjs.extend(utc)
@@ -52,6 +54,7 @@ export const ChatMessage: React.FC<Props> = ({
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [message, setMessage] = useState<ChatMessageClass>()
+  const accessToken = useSelector(tokenSelector)
 
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
@@ -83,7 +86,11 @@ export const ChatMessage: React.FC<Props> = ({
       eventAbbr: event.abbr,
       body: 'このメッセージは削除されました',
     }
-    api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage)
+    api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage, {
+      headers: {
+        authorization: `Bearer: ${accessToken}`,
+      },
+    })
     setAnchorEl(null)
   }
 

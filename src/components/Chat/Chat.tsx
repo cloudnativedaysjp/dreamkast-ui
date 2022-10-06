@@ -18,6 +18,8 @@ import {
   CreateChatMessageRequest,
   MessageInputs,
 } from './internal/ChatMessageRequest'
+import { useSelector } from 'react-redux'
+import { tokenSelector } from '../../store/authSelector'
 
 type Props = {
   event: Event
@@ -55,6 +57,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
+  const accessToken = useSelector(tokenSelector)
 
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
@@ -71,6 +74,12 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
       event.abbr,
       String(talk?.id),
       'talk',
+      undefined,
+      {
+        headers: {
+          authorization: `Bearer: ${accessToken}`,
+        },
+      },
     )
     if (typeof data !== 'object') {
       // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
@@ -131,6 +140,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
       'aria-controls': `simple-tabpanel-${index}`,
     }
   }
+
   const onTabSelected = (
     _event: React.ChangeEvent<Record<string, never>>,
     newValue: string,
@@ -159,7 +169,10 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   const onSendReply = (data: MessageInputs) => {
     if (!talk) return
     const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
+      new Configuration({
+        basePath: window.location.origin,
+        accessToken,
+      }),
     )
     api.apiV1ChatMessagesPost(
       CreateChatMessageRequest(
@@ -168,6 +181,11 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
         data.isQuestion,
         selectedMessage,
       ),
+      {
+        headers: {
+          authorization: `Bearer: ${accessToken}`,
+        },
+      },
     )
     setSelectedMessage(initialChatMessage)
   }
