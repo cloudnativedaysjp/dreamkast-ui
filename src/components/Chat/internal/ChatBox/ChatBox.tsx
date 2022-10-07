@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react'
 import * as Styled from './styled'
-import {
-  Event,
-  ChatMessageMessageTypeEnum,
-  Profile,
-  Talk,
-} from '../../../../client-axios'
+import { Event, Profile, Talk } from '../../../../client-axios'
 import { ChatMessage } from './internal/ChatMessage'
 import { ChatMessageContainer, ChatMessageMap } from '../../../../util/chat'
 import { MessageInputs } from '../ChatMessageRequest'
+import { ChatMessageProperties } from '../../../../generated/dreamkast-api.generated'
 
 type Props = {
   event?: Event
   profile?: Profile
   talk?: Talk
   messages: ChatMessageMap
-  messageTypes: ChatMessageMessageTypeEnum[]
+  messageTypes: ChatMessageProperties['messageType'][]
   selectedMessage: ChatMessageContainer
   checked: boolean
   onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
