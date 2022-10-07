@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
-import { Event, Talk, TrackApi, Configuration } from '../../client-axios'
+import { Event, Talk } from '../../client-axios'
+import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event?: Event
@@ -15,42 +16,34 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrackName,
   selectedTrackId,
 }) => {
-  const [timer, setTimer] = useState<number>()
   const [viewerCount, setViewerCount] = useState<string>()
+
+  const { data, isError, isLoading, error } =
+    useGetApiV1TracksByTrackIdViewerCountQuery(
+      { trackId: `${selectedTrackId}` },
+      { skip: !selectedTrackId, pollingInterval: 60 * 1000 },
+    )
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (isError) {
+      // TODO error handling
+      console.error(error)
+      return
+    }
+    if (data) {
+      setViewerCount(data.viewer_count.toString())
+    } else {
+      setViewerCount('-')
+    }
+  }, [data, isLoading, isError])
 
   const twitterURL = (trackName?: string) => {
     const base = `http://twitter.com/share?url=https://event.cloudnativedays.jp/${event?.abbr}&related=@cloudnativedays&hashtags=${event?.abbr}`
     if (!trackName) return base
     return base + '_' + trackName
   }
-
-  const getViewerCount = useCallback(async () => {
-    console.log('Start getViewerCount')
-    const api = new TrackApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    if (selectedTrackId) {
-      try {
-        console.log('Trying request')
-        const { data } = await api.apiV1TracksTrackIdViewerCountGet(
-          selectedTrackId.toString(),
-        )
-        setViewerCount(data.viewer_count.toString())
-      } catch {
-        setViewerCount('-')
-      }
-    }
-  }, [viewerCount, selectedTrackId])
-
-  useEffect(() => {
-    getViewerCount()
-    clearInterval(timer)
-    setTimer(
-      window.setInterval(() => {
-        getViewerCount()
-      }, 60 * 1000),
-    )
-  }, [selectedTrackId])
 
   return (
     <Styled.OuterContainer>
