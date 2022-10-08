@@ -109,11 +109,12 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
   )
 }
 
-const WrappedApp = ({ Component, pageProps }: AppProps) => {
+type WrappedAppProps = AppProps & { env: typeof ENV }
+const WrappedApp = ({ Component, pageProps, env }: WrappedAppProps) => {
   const [baseUrl, setBaseUrl] = useState('')
 
   useEffect(() => {
-    const url = new URL(ENV.NEXT_PUBLIC_BASE_PATH, window.location.origin)
+    const url = new URL(env.NEXT_PUBLIC_BASE_PATH, window.location.origin)
     setBaseUrl(url.href)
   }, [setBaseUrl])
 
@@ -124,10 +125,10 @@ const WrappedApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Auth0Provider
-        domain={ENV.NEXT_PUBLIC_AUTH0_DOMAIN}
-        clientId={ENV.NEXT_PUBLIC_AUTH0_CLIENT_ID}
+        domain={env.NEXT_PUBLIC_AUTH0_DOMAIN}
+        clientId={env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
         redirectUri={baseUrl}
-        audience={ENV.NEXT_PUBLIC_AUTH0_AUDIENCE}
+        audience={env.NEXT_PUBLIC_AUTH0_AUDIENCE}
       >
         <AppComponent>
           <Component {...pageProps} />
@@ -142,6 +143,7 @@ WrappedApp.getInitialProps = wrapper.getInitialAppProps(
     validateEnv()
     return {
       pageProps: (await App.getInitialProps(appContext)).pageProps,
+      env: { ...ENV },
     }
   },
 )

@@ -2,11 +2,10 @@ import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { retry } from './retry'
 import { RootState } from './index'
-import { ENV } from '../config'
 
 const baseQuery = retry(
   fetchBaseQuery({
-    baseUrl: ENV.NEXT_PUBLIC_API_BASE_URL,
+    baseUrl: '/', // TODO replace by NEXT_PUBLIC_API_BASE_URL after separating API/UI domains
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token
 
