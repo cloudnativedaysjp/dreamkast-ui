@@ -4,11 +4,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 type AuthState = {
   user: User | null
   token: string
+
+  // TODO move to appropriate redux store
+  apiBaseUrl: string
 }
 
 const initialState: AuthState = {
   user: null,
   token: '',
+  apiBaseUrl: '',
 }
 
 const authSlice = createSlice({
@@ -21,8 +25,11 @@ const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload
     },
+    setApiBaseUrl: (state, action: PayloadAction<string>) => {
+      state.apiBaseUrl = action.payload
+    },
   },
 })
 
-export const { setUser, setToken } = authSlice.actions
+export const { setUser, setToken, setApiBaseUrl } = authSlice.actions
 export default authSlice
