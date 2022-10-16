@@ -54,20 +54,26 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
 
-  const { data, isLoading, isError } = useGetApiV1ChatMessagesQuery({
-    eventAbbr: event.abbr,
-    roomId: `${talk?.id}`,
-    roomType: 'talk',
-  })
+  const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
+    {
+      eventAbbr: event.abbr,
+      roomId: `${talk?.id}`,
+      roomType: 'talk',
+    },
+    { skip: !talk?.id },
+  )
   const [createChatMsg] = usePostApiV1ChatMessagesMutation()
 
   useEffect(() => {
     if (isLoading) {
       return
     }
-    if (isError || !data) {
-      // Chatのwebsocketがエラーを返した場合はログインさせるためにトップページへリダイレクト
-      window.location.href = `${window.location.href.replace(/\/ui\//g, '')}`
+    if (isError) {
+      // TODO error handling
+      console.error(error)
+      return
+    }
+    if (!data) {
       return
     }
     const newMsgs = new ChatMessageMap()
@@ -75,7 +81,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
       newMsgs.addMessage({ ...receivedMsg }) // copy required since the original one provided by RTK Query is not extensible
     })
     setMessages(newMsgs)
-  }, [data, isError])
+  }, [data, isLoading, isError])
 
   const actionCableUrl = () => {
     if (window.location.protocol == 'http:') {
