@@ -2,23 +2,23 @@
 
 exports[`IvsPlayer 1`] = `
 <div
-  className="styled__Container-sc-86hpyq-0 bpvAVL"
+  className="styled__Container-sc-86hpyq-0 jnikCc"
 >
   <div
-    className="styled__IvsPlayerContainer-sc-1l56t7n-0 bRYQnZ"
+    className="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
   >
     <video
       autoPlay={true}
-      className="styled__IvsPlayerVideo-sc-1l56t7n-1 hLQBux video-js vjs-16-9 vjs-big-play-centered"
+      className="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
       controls={true}
       muted={false}
       playsInline={true}
     />
     <div
-      className="styled__OverLayContainer-sc-1l56t7n-2 jRaeId"
+      className="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
     >
       <div
-        className="styled__TextContainer-sc-1l56t7n-5 cnBMxX"
+        className="styled__TextContainer-sc-1l56t7n-5 iOqMQw"
       >
         <p>
           次のセッションまで 
@@ -26,22 +26,22 @@ exports[`IvsPlayer 1`] = `
           秒
         </p>
         <div
-          className="styled__NextTitle-sc-1l56t7n-6 hGARoH"
+          className="styled__NextTitle-sc-1l56t7n-6 YFoGk"
         >
           ほげふが
         </div>
       </div>
       <div
-        className="styled__ButtonContainer-sc-1l56t7n-3 hXfuqT"
+        className="styled__ButtonContainer-sc-1l56t7n-3 bneEhI"
       >
         <button
-          className="styled__PlayerButton-sc-1l56t7n-4 cYozSD"
+          className="styled__PlayerButton-sc-1l56t7n-4 hZsbOo"
           onClick={[Function]}
         >
           キャンセル
         </button>
         <button
-          className="styled__PlayerButton-sc-1l56t7n-4 cYozSD"
+          className="styled__PlayerButton-sc-1l56t7n-4 hZsbOo"
           onClick={[Function]}
         >
           すぐに再生

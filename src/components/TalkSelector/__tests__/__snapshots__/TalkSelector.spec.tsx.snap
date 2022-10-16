@@ -2,18 +2,18 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="styled__Container-sc-1piihja-0 ixbFFh"
+  className="styled__Container-sc-1piihja-0 ghKsqG"
 >
   <div
-    className="styled__Title-sc-1piihja-1 fSmVaI"
+    className="styled__Title-sc-1piihja-1 hrbxKr"
   >
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root styled__List-sc-1piihja-2 jRqAnJ MuiList-padding"
+    className="MuiList-root styled__List-sc-1piihja-2 uLqLG MuiList-padding"
   />
   <div
-    className="styled__Footer-sc-1piihja-6 eItCEy"
+    className="styled__Footer-sc-1piihja-6 cnpEUB"
   >
     <span
       aria-disabled={false}

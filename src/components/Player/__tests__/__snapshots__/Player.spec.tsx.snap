@@ -2,15 +2,15 @@
 
 exports[`Player 1`] = `
 <div
-  className="styled__Container-sc-86hpyq-0 bpvAVL"
+  className="styled__Container-sc-86hpyq-0 jnikCc"
 >
   <div
-    className="styled__PlayerContainer-sc-1l15m1f-0 kaTrTx"
+    className="styled__PlayerContainer-sc-1l15m1f-0 iALdbe"
   >
     <iframe
       allow="autoplay; fullscreen"
       allowFullScreen={true}
-      className="styled__PlayerIframe-sc-1l15m1f-1 eyEqRF"
+      className="styled__PlayerIframe-sc-1l15m1f-1 fKZTfe"
       frameBorder="0"
       src="https://player.vimeo.com/video/453943528?autoplay=1"
     />

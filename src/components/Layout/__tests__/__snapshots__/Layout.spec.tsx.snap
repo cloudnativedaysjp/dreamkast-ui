@@ -2,29 +2,29 @@
 
 exports[`Layout 1`] = `
 <div
-  className="styled__Container-sc-mskfle-0 bgoKFt"
+  className="styled__Container-sc-mskfle-0 jpSOny"
 >
   <header>
     <header
       className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
     >
       <div
-        className="MuiToolbar-root MuiToolbar-regular styled__Header-sc-mskfle-1 cwNPIW MuiToolbar-gutters"
+        className="MuiToolbar-root MuiToolbar-regular styled__Header-sc-mskfle-1 fquIoZ MuiToolbar-gutters"
       >
         <a
           href="/cndt2021/ui"
           rel="noopener noreferrer"
         >
           <img
-            className="styled__HeaderImg-sc-mskfle-2 kcWoAg"
+            className="styled__HeaderImg-sc-mskfle-2 kmYYGn"
             src="/cndt2021/ui/cndt2021_header_logo.png"
           />
         </a>
         <div
-          className="styled__DesktopMenu-sc-n9hkhe-7 kZPcGK"
+          className="styled__DesktopMenu-sc-n9hkhe-7 QstRB"
         >
           <a
-            className="styled__MenuLink-sc-86hpyq-6 jwGAND"
+            className="styled__MenuLink-sc-86hpyq-6 hpppsY"
             href="/cndt2021/o11y"
             rel="noreferrer"
           >
@@ -58,7 +58,7 @@ exports[`Layout 1`] = `
             </button>
           </a>
           <a
-            className="styled__MenuLink-sc-86hpyq-6 jwGAND"
+            className="styled__MenuLink-sc-86hpyq-6 hpppsY"
             href="/cndt2021/timetables"
             rel="noreferrer"
           >
@@ -123,10 +123,10 @@ exports[`Layout 1`] = `
         </div>
       </div>
       <div
-        className="styled__MobileMenu-sc-n9hkhe-8 kprXT"
+        className="styled__MobileMenu-sc-n9hkhe-8 kbYAIQ"
       >
         <a
-          className="styled__MenuLink-sc-86hpyq-6 jwGAND"
+          className="styled__MenuLink-sc-86hpyq-6 hpppsY"
           href="/cndt2021/o11y"
           rel="noreferrer"
         >
@@ -160,7 +160,7 @@ exports[`Layout 1`] = `
           </button>
         </a>
         <a
-          className="styled__MenuLink-sc-86hpyq-6 jwGAND"
+          className="styled__MenuLink-sc-86hpyq-6 hpppsY"
           href="/cndt2021/timetables"
           rel="noreferrer"
         >
@@ -226,13 +226,13 @@ exports[`Layout 1`] = `
     </header>
   </header>
   <div
-    className="styled__ChildrenContainer-sc-mskfle-3 dTCHfT"
+    className="styled__ChildrenContainer-sc-mskfle-3 cpmldw"
   />
   <footer
-    className="styled__Footer-sc-mskfle-4 jSCGpU"
+    className="styled__Footer-sc-mskfle-4 iIYFwr"
   >
     <a
-      className="styled__FooterLink-sc-mskfle-6 fEbdYM"
+      className="styled__FooterLink-sc-mskfle-6 FAlXz"
       href="https://event.cloudnativedays.jp/cndt2021/privacy"
       rel="noopener noreferrer"
       target="_blank"
@@ -240,7 +240,7 @@ exports[`Layout 1`] = `
       プライバシーポリシー
     </a>
     <a
-      className="styled__FooterLink-sc-mskfle-6 fEbdYM"
+      className="styled__FooterLink-sc-mskfle-6 FAlXz"
       href="https://event.cloudnativedays.jp/cndt2021/coc"
       rel="noopener noreferrer"
       target="_blank"
@@ -248,7 +248,7 @@ exports[`Layout 1`] = `
       行動規範
     </a>
     <div
-      className="styled__FooterText-sc-mskfle-5 cCFRtn"
+      className="styled__FooterText-sc-mskfle-5 drryss"
     >
       this is copyright
     </div>
