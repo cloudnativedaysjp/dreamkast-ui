@@ -38,7 +38,6 @@ type ReceivedMsg = {
 }
 
 export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
-  const initialChatMessageMap = new ChatMessageMap()
   const initialChatMessage = {
     eventAbbr: event.abbr,
     body: '',
@@ -47,7 +46,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   }
   const [selectedTab, setSelectedTab] = useState('0')
   const [messages, setMessages] = useState<ChatMessageMap>(
-    initialChatMessageMap,
+    () => new ChatMessageMap(),
   )
   const [selectedMessage, setSelectedMessage] =
     useState<ChatMessageContainer>(initialChatMessage)
@@ -159,13 +158,9 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
         : ChatMessageMessageTypeEnum.Chat,
     }
 
-    createChatMsg({ chatMessage }).then(({ error }: any) => {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
-      // TODO error handling
-      if (error) {
-        console.error(error)
-      }
-    })
+    createChatMsg({ chatMessage })
+      .unwrap()
+      .catch((err) => console.error(err))
     setSelectedMessage(initialChatMessage)
   }
 

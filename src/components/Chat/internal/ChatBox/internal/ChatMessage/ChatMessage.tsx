@@ -83,14 +83,9 @@ export const ChatMessage: React.FC<Props> = ({
         eventAbbr: event.abbr,
         body: 'このメッセージは削除されました',
       },
-    }).then(({ error }: any) => {
-      // eslint-disable-line @typescript-eslint/no-explicit-any
-      // TODO error handling
-      if (error) {
-        console.error(error)
-      }
     })
-
+      .unwrap()
+      .catch((err) => console.error(err))
     setAnchorEl(null)
   }
 
