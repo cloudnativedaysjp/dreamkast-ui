@@ -2,21 +2,21 @@
 
 exports[`TalkInfo 1`] = `
 <div
-  className="styled__OuterContainer-sc-15n5q1r-1 hQEXpL"
+  className="styled__OuterContainer-sc-15n5q1r-1 pxhPE"
 >
   <div
-    className="styled__Container-sc-15n5q1r-0 bIvPX"
+    className="styled__Container-sc-15n5q1r-0 LIqsU"
   >
     <h2
-      className="styled__Title-sc-15n5q1r-2 dfhwfB"
+      className="styled__Title-sc-15n5q1r-2 kNFysu"
     >
       ほげふが
     </h2>
     <div
-      className="styled__SpeakerContainer-sc-15n5q1r-4 kSMcKG"
+      className="styled__SpeakerContainer-sc-15n5q1r-4 eTtcpN"
     >
       <div
-        className="styled__Speaker-sc-15n5q1r-5 jUemMS"
+        className="styled__Speaker-sc-15n5q1r-5 inxYyh"
       >
         alice / bob
       </div>
@@ -29,29 +29,29 @@ exports[`TalkInfo 1`] = `
       />
     </div>
     <div
-      className="styled__Content-sc-15n5q1r-6 OSrNA"
+      className="styled__Content-sc-15n5q1r-6 fLqozb"
     >
       ぴよぴよ
     </div>
     <div
-      className="styled__SocialHeader-sc-15n5q1r-8 fviNyj"
+      className="styled__SocialHeader-sc-15n5q1r-8 dqMQjg"
     >
       <img
-        className="styled__TalkIcon-sc-15n5q1r-9 fZzaql"
+        className="styled__TalkIcon-sc-15n5q1r-9 eCOPHe"
         src="/cnsec2022/ui/talk_icon.png"
       />
       一緒に盛り上がろう
     </div>
     <div
-      className="styled__ButtonContainer-sc-15n5q1r-10 cHRYxT"
+      className="styled__ButtonContainer-sc-15n5q1r-10 jHpoFU"
     >
       <a
-        className="styled__ButtonLink-sc-15n5q1r-11 fpTnFU"
+        className="styled__ButtonLink-sc-15n5q1r-11 mptFn"
         href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cnsec2022&related=@cloudnativedays&hashtags=cnsec2022"
         target="_blank"
       >
         <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-14 jPxOAA"
+          className="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-14 izxlsP"
           disabled={false}
           onBlur={[Function]}
           onDragLeave={[Function]}
@@ -71,7 +71,7 @@ exports[`TalkInfo 1`] = `
             className="MuiButton-label"
           >
             <img
-              className="styled__TwitterImg-sc-15n5q1r-15 hewlEg"
+              className="styled__TwitterImg-sc-15n5q1r-15 bzcQxb"
               src="/cnsec2022/ui/twitter_logo.png"
             />
             tweet #cnsec2022_undefined

@@ -2,13 +2,13 @@
 
 exports[`TrackSelector 1`] = `
 <div
-  className="MuiToggleButtonGroup-root styled__TrackMenuContainer-sc-hs19f1-0 eyhUpm"
+  className="MuiToggleButtonGroup-root styled__TrackMenuContainer-sc-hs19f1-0 eMCVUt"
   color="primary"
   role="group"
 >
   <button
     aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 bpStDL MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 dIsEnw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -35,7 +35,7 @@ exports[`TrackSelector 1`] = `
   </button>
   <button
     aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 bpStDL MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 dIsEnw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
@@ -62,7 +62,7 @@ exports[`TrackSelector 1`] = `
   </button>
   <button
     aria-pressed={false}
-    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 bpStDL MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+    className="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-1 dIsEnw MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
     disabled={false}
     onBlur={[Function]}
     onChange={[Function]}
