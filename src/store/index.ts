@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { NextPageContext } from 'next'
 import { createWrapper, Context } from 'next-redux-wrapper'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
+import auth from './auth'
 
 const makeStore = (_: Context) => {
   const store = configureStore({
     reducer: {
       [dreamkastApi.reducerPath]: dreamkastApi.reducer,
+      [auth.name]: auth.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(dreamkastApi.middleware),
