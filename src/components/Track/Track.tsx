@@ -1,21 +1,15 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import {
-  Track,
-  Talk,
-  TalkApi,
-  Configuration,
-  Profile,
-  Event,
-} from '../../client-axios'
+import { Track, Talk, Profile, Event } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
+import { useGetApiV1TalksQuery } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event: Event
@@ -28,9 +22,8 @@ export const TrackView: React.FC<Props> = ({
   event,
   profile,
   selectedTrack,
-  propTalks,
 }) => {
-  const [talks, setTalks] = useState<Talk[]>(propTalks ? propTalks : [])
+  const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [timer, setTimer] = useState<number>()
@@ -39,8 +32,9 @@ export const TrackView: React.FC<Props> = ({
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
+  const [_, setError] = useState()
 
-  const findDayId = () => {
+  const dayId = useMemo(() => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
     let dayId = ''
     event?.conferenceDays?.forEach((day) => {
@@ -49,28 +43,35 @@ export const TrackView: React.FC<Props> = ({
       }
     })
     return dayId
-  }
+  }, [event])
 
-  const getTalks = useCallback(async () => {
-    const api = new TalkApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const dayId = findDayId()
-    if (!dayId) return
-    const { data } = await api.apiV1TalksGet(
-      !!event ? event?.abbr : '',
-      String(selectedTrack?.id),
-      dayId,
-    )
-    setTalks(data)
-  }, [event, selectedTrack])
+  const { data, isLoading, isError, error, refetch } = useGetApiV1TalksQuery(
+    {
+      eventAbbr: event.abbr,
+      trackId: `${selectedTrack?.id}`,
+      conferenceDayIds: dayId,
+    },
+    { skip: !dayId },
+  )
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (isError) {
+      setError(() => {
+        throw error
+      })
+      return
+    }
+    if (data) {
+      setTalks(data)
+    }
+  }, [data, isLoading, isError])
 
   useEffect(() => {
-    if (!propTalks) getTalks()
-  }, [getTalks])
-
-  useEffect(() => {
-    if (isLiveMode) getTalks()
+    if (isLiveMode) {
+      refetch()
+    }
   }, [isLiveMode])
 
   const selectTalk = (talk: Talk) => {
@@ -154,7 +155,7 @@ export const TrackView: React.FC<Props> = ({
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
         received: (msg: { [trackId: number]: Talk }) => {
-          getTalks() // onAirの切り替わった新しいTalk一覧を取得
+          refetch() // onAirの切り替わった新しいTalk一覧を取得
           setNextTalk(msg)
           if (!selectedTrack || !selectedTalk) return
           if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)

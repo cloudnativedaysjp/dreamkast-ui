@@ -69,7 +69,7 @@ export const TalkSelector: React.FC<Props> = ({
   }, [talks, now])
 
   const sortTalks = (talks: Talk[]): Talk[] => {
-    return talks.sort((n1, n2) => {
+    return [...talks].sort((n1, n2) => {
       if (n1.startTime > n2.startTime) {
         return 1
       }

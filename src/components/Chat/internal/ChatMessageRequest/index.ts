@@ -1,5 +1,5 @@
 import { ChatMessageMessageTypeEnum } from '../../../../client-axios'
-import { ChatMessageClass } from '../../../../util/chat'
+import { ChatMessageContainer } from '../../../../util/chat'
 
 export type MessageInputs = {
   chatMessage: string
@@ -36,7 +36,7 @@ export const CreateChatMessageRequest = (
   chatMessage: string,
   roomId: number,
   isQuestion: boolean,
-  selectedMessage?: ChatMessageClass,
+  selectedMessage?: ChatMessageContainer,
 ): ChatMessageRequestClass => {
   const req = ChatMessageRequest(
     'cnsec2022',

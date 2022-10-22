@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Styled from './styled'
-import { ChatMessageClass } from '../../../../util/chat'
+import { ChatMessageContainer } from '../../../../util/chat'
 import { ReactionButton } from '../ReactionButton'
 import { Button, Input, Checkbox } from '@material-ui/core'
 import { MessageInputs } from '../ChatMessageRequest'
 
 type Props = {
-  selectedMessage: ChatMessageClass
+  selectedMessage: ChatMessageContainer
   isVisibleForm: boolean
   checked: boolean
   onCheck: (

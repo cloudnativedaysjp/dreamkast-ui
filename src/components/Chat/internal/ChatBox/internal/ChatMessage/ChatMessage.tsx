@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import * as Styled from './styled'
 import {
   Event,
-  ChatMessageApi,
   ChatMessageMessageTypeEnum,
   Profile,
   Talk,
 } from '../../../../../../client-axios/api'
-import { ChatMessageClass } from '../../../../../../util/chat'
+import { ChatMessageContainer } from '../../../../../../util/chat'
 import MenuIcon from '@material-ui/icons/Menu'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
@@ -16,8 +15,8 @@ import { ChatReplyForm } from '../../../ChatReplyForm'
 import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkify-react'
 import { ChatMessageMenu } from '../../ChatMessageMenu'
-import { Configuration } from '../../../../../../client-axios'
 import { Grid } from '@material-ui/core'
+import { usePutApiV1ChatMessagesByMessageIdMutation } from '../../../../../../generated/dreamkast-api.generated'
 
 dayjs.extend(timezone)
 dayjs.extend(utc)
@@ -26,7 +25,7 @@ type Props = {
   event?: Event
   profile?: Profile
   talk?: Talk
-  chatMessage?: ChatMessageClass
+  chatMessage?: ChatMessageContainer
   selected: boolean
   onClickReplyButton: (event: React.MouseEvent<HTMLInputElement>) => void
   onClickCloseButton: () => void
@@ -43,7 +42,7 @@ export const ChatMessage: React.FC<Props> = ({
   onClickCloseButton,
   onSendReply,
 }) => {
-  const isSpeakerMessage = (msg?: ChatMessageClass) => {
+  const isSpeakerMessage = (msg?: ChatMessageContainer) => {
     const speakerIds = talk?.speakers.map((speaker) => {
       return speaker.id
     })
@@ -51,7 +50,8 @@ export const ChatMessage: React.FC<Props> = ({
     return !!msg?.speakerId && speakerIds.includes(msg.speakerId)
   }
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [message, setMessage] = useState<ChatMessageClass>()
+  const [message, setMessage] = useState<ChatMessageContainer>()
+  const [updateChatMsg] = usePutApiV1ChatMessagesByMessageIdMutation()
 
   const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
 
@@ -76,14 +76,16 @@ export const ChatMessage: React.FC<Props> = ({
   const onMenuClick = (e: React.MouseEvent<HTMLElement>) => {
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
     if (!selectedMessageId || !event) return
-    const api = new ChatMessageApi(
-      new Configuration({ basePath: window.location.origin }),
-    )
-    const newChatMessage = {
-      eventAbbr: event.abbr,
-      body: 'このメッセージは削除されました',
-    }
-    api.apiV1ChatMessagesMessageIdPut(selectedMessageId, newChatMessage)
+
+    updateChatMsg({
+      messageId: selectedMessageId,
+      updateChatMessage: {
+        eventAbbr: event.abbr,
+        body: 'このメッセージは削除されました',
+      },
+    })
+      .unwrap()
+      .catch((err) => console.error(err))
     setAnchorEl(null)
   }
 
