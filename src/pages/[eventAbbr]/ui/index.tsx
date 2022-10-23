@@ -4,11 +4,11 @@ import { Layout } from '../../../components/Layout'
 import { TrackSelector } from '../../../components/TrackSelector'
 import { TrackView } from '../../../components/Track'
 import { isStorageAvailable } from '../../../util/sessionstorage'
-import { Track } from '../../../client-axios'
 import {
   useGetApiV1TracksQuery,
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1ByEventAbbrMyProfileQuery,
+  Track,
 } from '../../../generated/dreamkast-api.generated'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
 import { NextPage } from 'next'

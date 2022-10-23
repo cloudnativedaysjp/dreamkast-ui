@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
-import { Event } from '../../client-axios/api'
+import { Event } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event?: Event

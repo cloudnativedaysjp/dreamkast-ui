@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
-import { Event, Talk } from '../../client-axios'
+import { Event, Talk } from '../../generated/dreamkast-api.generated'
 import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
 
 type Props = {

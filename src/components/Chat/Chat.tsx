@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
-import {
-  Event,
-  ChatMessageMessageTypeEnum,
-  Talk,
-  Profile,
-} from '../../client-axios'
 import { ChatMessageForm } from './internal/ChatMessageForm'
 import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
@@ -14,6 +8,10 @@ import { TabContext } from '@material-ui/lab'
 import { ChatBox } from './internal/ChatBox'
 import { MessageInputs } from './internal/ChatMessageRequest'
 import {
+  ChatMessageProperties,
+  Event,
+  Profile,
+  Talk,
   useGetApiV1ChatMessagesQuery,
   usePostApiV1ChatMessagesMutation,
 } from '../../generated/dreamkast-api.generated'
@@ -24,6 +22,8 @@ type Props = {
   talk?: Talk
 }
 
+type MessageType = Exclude<ChatMessageProperties['messageType'], undefined>
+
 type ReceivedMsg = {
   id: number
   profileId: number
@@ -33,7 +33,7 @@ type ReceivedMsg = {
   roomType: string
   createdAt: string
   body: string
-  messageType: ChatMessageMessageTypeEnum
+  messageType: MessageType
   replyTo: number
 }
 
@@ -42,7 +42,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
     eventAbbr: event.abbr,
     body: '',
     roomId: !!talk ? talk.id : 0,
-    messageType: ChatMessageMessageTypeEnum.Chat,
+    messageType: 'chat' as MessageType,
   }
   const [selectedTab, setSelectedTab] = useState('0')
   const [messages, setMessages] = useState<ChatMessageMap>(
@@ -159,9 +159,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
       roomType: 'talk',
       body: data.chatMessage,
       replyTo: selectedMessage?.id || undefined,
-      messageType: data.isQuestion
-        ? ChatMessageMessageTypeEnum.Qa
-        : ChatMessageMessageTypeEnum.Chat,
+      messageType: (data.isQuestion ? 'qa' : 'chat') as MessageType,
     }
 
     createChatMsg({ chatMessage })
@@ -196,10 +194,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
               profile={profile}
               talk={talk}
               messages={messages}
-              messageTypes={[
-                ChatMessageMessageTypeEnum.Chat,
-                ChatMessageMessageTypeEnum.Qa,
-              ]}
+              messageTypes={['chat', 'qa']}
               selectedMessage={selectedMessage}
               checked={checked}
               onClickReplyButton={onClickReplyButton}
@@ -212,7 +207,7 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
               event={event}
               talk={talk}
               messages={messages}
-              messageTypes={[ChatMessageMessageTypeEnum.Qa]}
+              messageTypes={['qa']}
               selectedMessage={selectedMessage}
               checked={checked}
               onClickReplyButton={onClickReplyButton}

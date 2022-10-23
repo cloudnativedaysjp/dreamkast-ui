@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
 import * as Styled from './styled'
-import {
-  Event,
-  ChatMessageMessageTypeEnum,
-  Profile,
-  Talk,
-} from '../../../../../../client-axios/api'
 import { ChatMessageContainer } from '../../../../../../util/chat'
 import MenuIcon from '@material-ui/icons/Menu'
 import dayjs from 'dayjs'
@@ -16,7 +10,12 @@ import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkify-react'
 import { ChatMessageMenu } from '../../ChatMessageMenu'
 import { Grid } from '@material-ui/core'
-import { usePutApiV1ChatMessagesByMessageIdMutation } from '../../../../../../generated/dreamkast-api.generated'
+import {
+  Event,
+  Profile,
+  Talk,
+  usePutApiV1ChatMessagesByMessageIdMutation,
+} from '../../../../../../generated/dreamkast-api.generated'
 
 dayjs.extend(timezone)
 dayjs.extend(utc)
@@ -53,7 +52,7 @@ export const ChatMessage: React.FC<Props> = ({
   const [message, setMessage] = useState<ChatMessageContainer>()
   const [updateChatMsg] = usePutApiV1ChatMessagesByMessageIdMutation()
 
-  const isChat = chatMessage?.messageType === ChatMessageMessageTypeEnum.Chat
+  const isChat = chatMessage?.messageType === 'chat'
 
   const openChatMessageMenu = (e: React.MouseEvent<HTMLElement>) => {
     const selectedMessageId = e.currentTarget.getAttribute('data-messageId')
