@@ -2,7 +2,7 @@ import React from 'react'
 import * as Styled from './styled'
 import { Menu, MenuItem } from '@material-ui/core'
 import { ChatMessageContainer } from '../../../../../util/chat'
-import {Profile} from "../../../../../generated/dreamkast-api.generated";
+import { Profile } from '../../../../../generated/dreamkast-api.generated'
 
 type Props = {
   profile?: Profile
