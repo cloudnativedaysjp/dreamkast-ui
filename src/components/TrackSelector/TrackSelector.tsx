@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import * as Styled from './styled'
-import { Track } from '../../client-axios'
 import { setViewTrackIdToSessionStorage } from '../../util/viewTrackId'
+import { Track } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   tracks: Track[]

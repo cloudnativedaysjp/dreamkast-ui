@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import videojs, { VideoJsPlayer } from 'video.js'
-import { Talk } from '../../client-axios'
 import 'video.js/dist/video-js.css'
 
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
+import { Talk } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   playBackUrl?: string | null

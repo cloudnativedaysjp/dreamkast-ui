@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
-import { Talk } from '../../client-axios'
 import { Checkbox } from '@material-ui/core'
 import dayjs from 'dayjs'
+import { Talk } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   selectedTrackId?: number

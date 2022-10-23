@@ -3,7 +3,7 @@ import * as Styled from './styled'
 import Head from 'next/head'
 import { DesktopMenu, MobileMenu } from '../Menu'
 import AppBar from '@material-ui/core/AppBar'
-import { Event } from '../../client-axios'
+import { Event } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   children?: ReactNode
