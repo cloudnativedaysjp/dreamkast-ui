@@ -2,14 +2,19 @@ import React, { useEffect, useState, useRef, useMemo } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
-import { Track, Talk, Profile, Event } from '../../client-axios'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
-import { useGetApiV1TalksQuery } from '../../generated/dreamkast-api.generated'
+import {
+  Event,
+  Profile,
+  Talk,
+  Track,
+  useGetApiV1TalksQuery,
+} from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event: Event

@@ -1,4 +1,4 @@
-import { Event, Talk, Track } from '../client-axios'
+import { Event, Talk, Track } from '../generated/dreamkast-api.generated'
 
 export const MockEvent: Event = {
   id: 1,

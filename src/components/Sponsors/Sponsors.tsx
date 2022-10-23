@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { SponsorApi, Sponsor, Configuration, Event } from '../../client-axios'
+import React from 'react'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
+import {
+  Event,
+  useGetApiV1SponsorsQuery,
+} from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event: Event
@@ -40,15 +43,12 @@ export const Sponsors: React.FC<Props> = ({ event }) => {
     ],
   }
 
-  const [data, setData] = useState<Sponsor[]>([])
-
-  useEffect(() => {
-    new SponsorApi(new Configuration({ basePath: window.location.origin }))
-      .apiV1SponsorsGet(event.abbr)
-      .then((res) => {
-        setData(res.data)
-      })
-  }, [])
+  const { data, isLoading } = useGetApiV1SponsorsQuery({
+    eventAbbr: event.abbr,
+  })
+  if (isLoading || !data) {
+    return <div />
+  }
 
   return (
     <CommonStyled.Container>
