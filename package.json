@@ -39,7 +39,7 @@
         "react-slick": "^0.29.0",
         "slick-carousel": "^1.8.1",
         "use-interval": "^1.4.0",
-        "video.js": "^7.20.2"
+        "video.js": "7.20.3"
     },
     "devDependencies": {
         "@rtk-query/codegen-openapi": "^1.0.0",
