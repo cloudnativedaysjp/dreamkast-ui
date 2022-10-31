@@ -274,6 +274,8 @@ export type GetApiV1BoothsByBoothIdApiArg = {
 export type Profile = {
   id: number
   name: string
+  email: string
+  isAttendOffline: boolean
 }
 export type Event = {
   id: number
