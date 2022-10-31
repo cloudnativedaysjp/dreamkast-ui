@@ -39,6 +39,7 @@ export const Speaker = styled.div`
 `
 
 export const Content = styled.div`
+  white-space: pre-wrap;
   padding: 10px 0;
   height: 230px;
   font-size: 1.1em;
