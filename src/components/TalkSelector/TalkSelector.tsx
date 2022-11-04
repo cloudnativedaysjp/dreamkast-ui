@@ -14,6 +14,7 @@ type Props = {
     event: React.ChangeEvent<HTMLInputElement>,
     mode: boolean,
   ) => void
+  small?: boolean
 }
 
 interface TalkWithAvailable extends Talk {
@@ -37,6 +38,7 @@ export const TalkSelector: React.FC<Props> = ({
   isLiveMode,
   selectTalk,
   changeLiveMode,
+  small = false,
 }) => {
   const [talksWithAvailableState, setTalksWithAvailableState] = useState<
     TalkWithAvailable[]
@@ -85,7 +87,7 @@ export const TalkSelector: React.FC<Props> = ({
   return (
     <Styled.Container>
       <Styled.Title>このトラックのセッション</Styled.Title>
-      <Styled.List>
+      <Styled.List height={small ? 350 : 497}>
         {talksWithAvailableState.map((talk) => {
           if (talk.trackId == selectedTrackId) {
             return (

@@ -5,9 +5,8 @@ export const Container = styled.div`
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 10px;
+  height: 100%;
 `
-
-export const OuterContainer = styled.div``
 
 export const Title = styled.h2`
   color: #423a57;
@@ -40,7 +39,7 @@ export const Speaker = styled.div`
 export const Content = styled.div`
   white-space: pre-wrap;
   padding: 10px 0;
-  height: 230px;
+  max-height: 300px;
   font-size: 1.1em;
   overflow-y: scroll;
   &::-webkit-scrollbar {

@@ -204,55 +204,53 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
   }
 
   return (
-    <Styled.Outer>
-      <Styled.Container>
-        <TabContext value={selectedTab}>
-          <Styled.TabContainer
-            value={selectedTab}
-            onChange={onTabSelected}
-            textColor="secondary"
-            aria-label="simple tabs example"
-          >
-            <Styled.Tab label="Chat / QA" value="0" {...a11yProps(0)} />
-            <Styled.Tab label="QA Only" value="1" {...a11yProps(1)} />
-          </Styled.TabContainer>
-          <Styled.TabPanel value="0">
-            <ChatBox
-              event={event}
-              talk={talk}
-              messages={messages}
-              messageTypes={['chat', 'qa']}
-              selectedMessage={selectedMessage}
-              checked={checked}
-              onClickReplyButton={onClickReplyButton}
-              onSendReply={onSendReply}
-              onClickCloseButton={onClickCloseButton}
-            />
-          </Styled.TabPanel>
-          <Styled.TabPanel value="1">
-            <ChatBox
-              event={event}
-              talk={talk}
-              messages={messages}
-              messageTypes={['qa']}
-              selectedMessage={selectedMessage}
-              checked={checked}
-              onClickReplyButton={onClickReplyButton}
-              onClickCloseButton={onClickCloseButton}
-              onSendReply={onSendReply}
-            />
-          </Styled.TabPanel>
-        </TabContext>
-        <ChatMessageForm
-          isVisibleForm={isVisibleForm}
-          selectedMessage={selectedMessage}
-          onClickCloseButton={onClickCloseButton}
-          onSendMessage={onSendReply}
-          onSendQuestion={onSendQuestion}
-          onCheck={onChecked}
-          checked={checked}
-        />
-      </Styled.Container>
-    </Styled.Outer>
+    <Styled.Container>
+      <TabContext value={selectedTab}>
+        <Styled.TabContainer
+          value={selectedTab}
+          onChange={onTabSelected}
+          textColor="secondary"
+          aria-label="simple tabs example"
+        >
+          <Styled.Tab label="Chat / QA" value="0" {...a11yProps(0)} />
+          <Styled.Tab label="QA Only" value="1" {...a11yProps(1)} />
+        </Styled.TabContainer>
+        <Styled.TabPanel value="0">
+          <ChatBox
+            event={event}
+            talk={talk}
+            messages={messages}
+            messageTypes={['chat', 'qa']}
+            selectedMessage={selectedMessage}
+            checked={checked}
+            onClickReplyButton={onClickReplyButton}
+            onSendReply={onSendReply}
+            onClickCloseButton={onClickCloseButton}
+          />
+        </Styled.TabPanel>
+        <Styled.TabPanel value="1">
+          <ChatBox
+            event={event}
+            talk={talk}
+            messages={messages}
+            messageTypes={['qa']}
+            selectedMessage={selectedMessage}
+            checked={checked}
+            onClickReplyButton={onClickReplyButton}
+            onClickCloseButton={onClickCloseButton}
+            onSendReply={onSendReply}
+          />
+        </Styled.TabPanel>
+      </TabContext>
+      <ChatMessageForm
+        isVisibleForm={isVisibleForm}
+        selectedMessage={selectedMessage}
+        onClickCloseButton={onClickCloseButton}
+        onSendMessage={onSendReply}
+        onSendQuestion={onSendQuestion}
+        onCheck={onChecked}
+        checked={checked}
+      />
+    </Styled.Container>
   )
 }

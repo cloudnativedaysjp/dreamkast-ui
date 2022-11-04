@@ -223,6 +223,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
             isLiveMode={isLiveMode}
             changeLiveMode={onChecked}
             selectTalk={selectTalk}
+            small
           />
         </Grid>
       </Grid>
