@@ -2,9 +2,7 @@ import styled from 'styled-components'
 import { TabPanel as MUITabPanel } from '@material-ui/lab'
 import { Tabs, Tab as MUITab } from '@material-ui/core'
 
-export const Outer = styled.div`
-  padding: 5px;
-`
+export const Outer = styled.div``
 
 export const Container = styled.div`
   border-radius: 10px;

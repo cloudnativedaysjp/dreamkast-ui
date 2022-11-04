@@ -7,9 +7,7 @@ export const Container = styled.div`
   border-radius: 10px;
 `
 
-export const OuterContainer = styled.div`
-  padding: 0 5px 12px 5px;
-`
+export const OuterContainer = styled.div``
 
 export const Title = styled.h2`
   color: #423a57;

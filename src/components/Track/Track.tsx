@@ -189,7 +189,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     return (
       <Grid
         container
-        spacing={0}
+        spacing={1}
         justifyContent="center"
         alignItems="flex-start"
       >
@@ -229,7 +229,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     )
   } else {
     return (
-      <Grid container spacing={0} justifyContent="center" alignItems="stretch">
+      <Grid container spacing={1} justifyContent="center" alignItems="stretch">
         <Grid item xs={12} md={4}>
           <TalkInfo
             event={event}
@@ -251,7 +251,9 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
             selectTalk={selectTalk}
           />
         </Grid>
-        <Sponsors event={event} />
+        <Grid item md={12}>
+          <Sponsors event={event} />
+        </Grid>
       </Grid>
     )
   }
