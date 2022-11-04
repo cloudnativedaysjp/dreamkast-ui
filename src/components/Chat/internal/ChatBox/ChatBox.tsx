@@ -6,13 +6,11 @@ import { MessageInputs } from '../ChatMessageRequest'
 import {
   Event,
   ChatMessageProperties,
-  Profile,
   Talk,
 } from '../../../../generated/dreamkast-api.generated'
 
 type Props = {
   event?: Event
-  profile?: Profile
   talk?: Talk
   messages: ChatMessageMap
   messageTypes: ChatMessageProperties['messageType'][]
@@ -25,7 +23,6 @@ type Props = {
 
 export const ChatBox: React.FC<Props> = ({
   event,
-  profile,
   talk,
   messages,
   messageTypes,
@@ -46,7 +43,6 @@ export const ChatBox: React.FC<Props> = ({
           return (
             <ChatMessage
               event={event}
-              profile={profile}
               talk={talk}
               key={chatMessage.id}
               chatMessage={chatMessage}

@@ -10,24 +10,20 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 import {
   Event,
-  Profile,
   Talk,
   Track,
   useGetApiV1TalksQuery,
 } from '../../generated/dreamkast-api.generated'
+import { useSelector } from 'react-redux'
+import { settingsSelector } from '../../store/settings'
 
 type Props = {
   event: Event
-  profile?: Profile
   selectedTrack: Track | null
   propTalks?: Talk[]
 }
 
-export const TrackView: React.FC<Props> = ({
-  event,
-  profile,
-  selectedTrack,
-}) => {
+export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -37,15 +33,8 @@ export const TrackView: React.FC<Props> = ({
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
-  const [showVideo, setShowVideo] = useState<boolean>(false)
+  const settings = useSelector(settingsSelector)
   const [_, setError] = useState()
-
-  useEffect(() => {
-    if (!profile) {
-      return
-    }
-    setShowVideo(!profile.isAttendOffline)
-  }, [profile])
 
   const dayId = useMemo(() => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
@@ -191,12 +180,12 @@ export const TrackView: React.FC<Props> = ({
     )
   }, [selectedTrack, selectedTalk])
 
-  if (!profile) {
+  if (!settings.isInitialized) {
     // TODO show loading
     return <></>
   }
 
-  if (showVideo) {
+  if (settings.showVideo) {
     return (
       <Grid
         container
@@ -216,7 +205,7 @@ export const TrackView: React.FC<Props> = ({
           <Sponsors event={event} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} profile={profile} talk={selectedTalk} />
+          <Chat event={event} talk={selectedTalk} />
         </Grid>
         <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <TalkInfo
@@ -250,7 +239,7 @@ export const TrackView: React.FC<Props> = ({
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} profile={profile} talk={selectedTalk} />
+          <Chat event={event} talk={selectedTalk} />
         </Grid>
         <Grid item xs={12} md={4}>
           <TalkSelector

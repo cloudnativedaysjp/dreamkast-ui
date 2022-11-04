@@ -10,11 +10,13 @@ import {
   useGetApiV1ByEventAbbrMyProfileQuery,
   Track,
 } from '../../../generated/dreamkast-api.generated'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
 import { NextPage } from 'next'
+import { setProfile } from '../../../store/settings'
+import { useDispatch } from 'react-redux'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const eventAbbr = useMemo<string>(() => {
     if (router.asPath !== router.route) {
       const { eventAbbr } = router.query
@@ -32,6 +34,11 @@ const IndexPage: NextPage = () => {
     { eventAbbr },
     { skip },
   )
+  useEffect(() => {
+    if (myProfileQuery.data) {
+      dispatch(setProfile(myProfileQuery.data))
+    }
+  }, [myProfileQuery.data])
 
   const getTrack = () => {
     if (!v1TracksQuery.data) {
@@ -54,13 +61,6 @@ const IndexPage: NextPage = () => {
   )
 
   useEffect(() => {
-    if ((myProfileQuery.error as FetchBaseQueryError)?.status === 403) {
-      const topUrl = window.location.href.replace('/ui', '')
-      window.location.href = topUrl
-    }
-  }, [myProfileQuery.error])
-
-  useEffect(() => {
     const track = getTrack()
     if (track) {
       setSelectedTrack(track)
@@ -75,11 +75,7 @@ const IndexPage: NextPage = () => {
           selectedTrack={selectedTrack}
           selectTrack={selectTrack}
         />
-        <TrackView
-          event={event}
-          profile={myProfileQuery.data}
-          selectedTrack={selectedTrack}
-        />
+        <TrackView event={event} selectedTrack={selectedTrack} />
       </Layout>
     )
   } else {

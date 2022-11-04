@@ -2,10 +2,10 @@ import React from 'react'
 import * as Styled from './styled'
 import { Menu, MenuItem } from '@material-ui/core'
 import { ChatMessageContainer } from '../../../../../util/chat'
-import { Profile } from '../../../../../generated/dreamkast-api.generated'
+import { settingsSelector } from '../../../../../store/settings'
+import { useSelector } from 'react-redux'
 
 type Props = {
-  profile?: Profile
   chatMessage?: ChatMessageContainer
   anchorEl?: null | HTMLElement
   onClose: () => void
@@ -13,12 +13,12 @@ type Props = {
 }
 
 export const ChatMessageMenu: React.FC<Props> = ({
-  profile,
   chatMessage,
   anchorEl,
   onClose,
   onMenuClick,
 }) => {
+  const { profile } = useSelector(settingsSelector)
   const menuItemDisabled = () => {
     return !(
       chatMessage?.profileId == profile?.id &&

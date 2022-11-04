@@ -12,14 +12,12 @@ import {
   Event,
   GetApiV1ChatMessagesApiArg,
   GetApiV1ChatMessagesApiResponse,
-  Profile,
   Talk,
   usePostApiV1ChatMessagesMutation,
 } from '../../generated/dreamkast-api.generated'
 
 type Props = {
   event: Event
-  profile?: Profile
   talk?: Talk
 }
 
@@ -93,7 +91,7 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
   overrideExisting: true,
 })
 
-export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
+export const Chat: React.FC<Props> = ({ event, talk }) => {
   const initialChatMessage = {
     eventAbbr: event.abbr,
     body: '',
@@ -221,7 +219,6 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
           <Styled.TabPanel value="0">
             <ChatBox
               event={event}
-              profile={profile}
               talk={talk}
               messages={messages}
               messageTypes={['chat', 'qa']}
