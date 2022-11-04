@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { Event, Talk } from '../../generated/dreamkast-api.generated'
 import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
+import { Button } from '@material-ui/core'
+import { useDispatch, useSelector } from 'react-redux'
+import { setShowVideo, settingsSelector } from '../../store/settings'
+import { Videocam, VideocamOff } from '@material-ui/icons'
 
 type Props = {
   event?: Event
@@ -16,7 +20,9 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrackName,
   selectedTrackId,
 }) => {
+  const dispatch = useDispatch()
   const [viewerCount, setViewerCount] = useState<string>()
+  const settings = useSelector(settingsSelector)
 
   const { data, isError, isLoading, error } =
     useGetApiV1TracksByTrackIdViewerCountQuery(
@@ -50,6 +56,18 @@ export const TalkInfo: React.FC<Props> = ({
       <Styled.Container>
         {selectedTalk?.onAir && (
           <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>
+        )}
+        {settings.profile.isAttendOffline && (
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            disableElevation
+            startIcon={settings.showVideo ? <VideocamOff /> : <Videocam />}
+            onClick={() => dispatch(setShowVideo(!settings.showVideo))}
+          >
+            {settings.showVideo ? 'Stop Video' : 'Show Video'}
+          </Button>
         )}
         <Styled.Title>{selectedTalk?.title}</Styled.Title>
         <Styled.SpeakerContainer>

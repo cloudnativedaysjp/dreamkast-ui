@@ -20,10 +20,11 @@ export const Title = styled.h2`
 export const Live = styled.span`
   background-color: red;
   color: white;
-  padding: 5px 10px;
+  padding: 5.5px 10px;
   font-weight: bold;
   border-radius: 5px;
   margin-top: 10px;
+  margin-right: 5px;
   display: inline-block;
 `
 
