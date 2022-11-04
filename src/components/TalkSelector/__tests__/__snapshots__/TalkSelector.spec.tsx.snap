@@ -2,7 +2,7 @@
 
 exports[`TalkSelector 1`] = `
 <div
-  className="styled__Container-sc-1piihja-0 ghKsqG"
+  className="styled__Container-sc-1piihja-0"
 >
   <div
     className="styled__Title-sc-1piihja-1 hrbxKr"
@@ -10,7 +10,8 @@ exports[`TalkSelector 1`] = `
     このトラックのセッション
   </div>
   <ul
-    className="MuiList-root styled__List-sc-1piihja-2 uLqLG MuiList-padding"
+    className="MuiList-root styled__List-sc-1piihja-2 TaJvQ MuiList-padding"
+    height={497}
   />
   <div
     className="styled__Footer-sc-1piihja-6 cnpEUB"

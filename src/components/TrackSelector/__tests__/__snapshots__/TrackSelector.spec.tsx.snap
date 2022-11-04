@@ -2,7 +2,7 @@
 
 exports[`TrackSelector 1`] = `
 <div
-  className="MuiToggleButtonGroup-root styled__TrackMenuContainer-sc-hs19f1-0 eMCVUt"
+  className="MuiToggleButtonGroup-root styled__TrackMenuContainer-sc-hs19f1-0 cEhzLb"
   color="primary"
   role="group"
 >
