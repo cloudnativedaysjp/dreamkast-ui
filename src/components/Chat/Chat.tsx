@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { ChatMessageForm } from './internal/ChatMessageForm'
-import ActionCable from 'actioncable'
 import dayjs from 'dayjs'
 import { ChatMessageContainer, ChatMessageMap } from '../../util/chat'
 import { TabContext } from '@material-ui/lab'
@@ -9,10 +8,12 @@ import { ChatBox } from './internal/ChatBox'
 import { MessageInputs } from './internal/ChatMessageRequest'
 import {
   ChatMessageProperties,
+  dreamkastApi,
   Event,
+  GetApiV1ChatMessagesApiArg,
+  GetApiV1ChatMessagesApiResponse,
   Profile,
   Talk,
-  useGetApiV1ChatMessagesQuery,
   usePostApiV1ChatMessagesMutation,
 } from '../../generated/dreamkast-api.generated'
 
@@ -37,6 +38,61 @@ type ReceivedMsg = {
   replyTo: number
 }
 
+const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
+  endpoints: (build) => ({
+    // NOTE: copied and overrided the generated one to add custom onCacheEntryAdded for websocket support.
+    getApiV1ChatMessages: build.query<
+      GetApiV1ChatMessagesApiResponse,
+      GetApiV1ChatMessagesApiArg
+    >({
+      query: (queryArg) => ({
+        url: `/api/v1/chat_messages`,
+        params: {
+          eventAbbr: queryArg.eventAbbr,
+          roomId: queryArg.roomId,
+          roomType: queryArg.roomType,
+          createdFrom: queryArg.createdFrom,
+        },
+      }),
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+      ) {
+        // create a websocket connection when the cache subscription starts
+        await cacheDataLoaded
+
+        console.log(dreamkastApi)
+        const wsUrl =
+          window.location.protocol === 'http:'
+            ? `ws://${window.location.host}/cable`
+            : `wss://${window.location.host}/cable`
+
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const actionCable = require('actioncable') // cannot import actioncable at the top of module since it depends on window
+        const cable = actionCable.createConsumer(wsUrl)
+        cable.subscriptions.create(
+          { channel: 'ChatChannel', roomType: 'talk', roomId: arg.roomId },
+          {
+            received: (msg: ReceivedMsg) => {
+              updateCachedData((draft) => {
+                draft.push(msg)
+              })
+            },
+          },
+        )
+
+        // cacheEntryRemoved will resolve when the cache subscription is no longer active
+        await cacheEntryRemoved
+
+        // perform cleanup steps once the `cacheEntryRemoved` promise resolves
+        cable.disconnect()
+      },
+      providesTags: ['ChatMessage'],
+    }),
+  }),
+  overrideExisting: true,
+})
+
 export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   const initialChatMessage = {
     eventAbbr: event.abbr,
@@ -50,7 +106,6 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
   )
   const [selectedMessage, setSelectedMessage] =
     useState<ChatMessageContainer>(initialChatMessage)
-  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
 
@@ -83,40 +138,15 @@ export const Chat: React.FC<Props> = ({ event, profile, talk }) => {
     setMessages(newMsgs)
   }, [data, isLoading, isError])
 
-  const actionCableUrl = () => {
-    if (window.location.protocol == 'http:') {
-      return `ws://${window.location.host}/cable`
-    } else {
-      return `wss://${window.location.host}/cable`
-    }
-  }
-
-  const cableReceived = (receivedMsg: ReceivedMsg) => {
-    if (!messages) return
-    messages.addMessage(receivedMsg)
-    setMessages(new ChatMessageMap(messages))
-  }
-
   useEffect(() => {
     if (!talk || !messages) return
-    if (chatCable) chatCable.disconnect()
 
     const endTime = `${talk?.conferenceDayDate} ${dayjs(talk.endTime).format(
       'HH:mm',
     )}`
     // 発表時間の幅を考慮して10分(600秒)余裕をもたせる
     setIsVisibleForm(dayjs().unix() - dayjs(endTime).unix() < 600)
-
     setSelectedMessage(initialChatMessage)
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const actionCable = require('actioncable')
-    const wsUrl = actionCableUrl()
-    const cable = actionCable.createConsumer(wsUrl)
-    setChatCable(cable)
-    cable.subscriptions.create(
-      { channel: 'ChatChannel', roomType: 'talk', roomId: talk.id },
-      { received: cableReceived },
-    )
   }, [talk])
 
   function a11yProps(index: number) {
