@@ -23,6 +23,7 @@ export const HeaderImg = styled.img`
 `
 
 export const ChildrenContainer = styled.div`
+  min-height: calc(94vh - 64px);
   background: rgba(255, 255, 255, 0.6);
   padding-bottom: 22px;
 `

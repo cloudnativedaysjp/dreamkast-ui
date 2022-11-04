@@ -37,7 +37,15 @@ export const TrackView: React.FC<Props> = ({
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
+  const [showVideo, setShowVideo] = useState<boolean>(false)
   const [_, setError] = useState()
+
+  useEffect(() => {
+    if (!profile) {
+      return
+    }
+    setShowVideo(!profile.isAttendOffline)
+  }, [profile])
 
   const dayId = useMemo(() => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
@@ -183,40 +191,79 @@ export const TrackView: React.FC<Props> = ({
     )
   }, [selectedTrack, selectedTalk])
 
-  return (
-    <Grid container spacing={0} justifyContent="center" alignItems="flex-start">
-      <Grid item xs={12} md={8}>
-        <IvsPlayer
-          playBackUrl={videoId}
-          nextTalk={getNextTalk()}
-          autoplay={true}
-          showCountdown={showCountdown}
-          updateView={updateView}
-          stopUpdate={stopUpdate}
-        ></IvsPlayer>
+  if (!profile) {
+    // TODO show loading
+    return <></>
+  }
+
+  if (showVideo) {
+    return (
+      <Grid
+        container
+        spacing={0}
+        justifyContent="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={12} md={8}>
+          <IvsPlayer
+            playBackUrl={videoId}
+            nextTalk={getNextTalk()}
+            autoplay={true}
+            showCountdown={showCountdown}
+            updateView={updateView}
+            stopUpdate={stopUpdate}
+          ></IvsPlayer>
+          <Sponsors event={event} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Chat event={event} profile={profile} talk={selectedTalk} />
+        </Grid>
+        <Grid item xs={12} md={8} style={{ height: '100%' }}>
+          <TalkInfo
+            event={event}
+            selectedTalk={selectedTalk}
+            selectedTrackName={selectedTrack?.name}
+            selectedTrackId={selectedTrack?.id}
+          />
+        </Grid>
+        <Grid item xs={12} md={4} style={{ height: '100%' }}>
+          <TalkSelector
+            selectedTalk={selectedTalk}
+            selectedTrackId={selectedTrack?.id}
+            talks={talks}
+            isLiveMode={isLiveMode}
+            changeLiveMode={onChecked}
+            selectTalk={selectTalk}
+          />
+        </Grid>
+      </Grid>
+    )
+  } else {
+    return (
+      <Grid container spacing={0} justifyContent="center" alignItems="stretch">
+        <Grid item xs={12} md={4}>
+          <TalkInfo
+            event={event}
+            selectedTalk={selectedTalk}
+            selectedTrackName={selectedTrack?.name}
+            selectedTrackId={selectedTrack?.id}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Chat event={event} profile={profile} talk={selectedTalk} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TalkSelector
+            selectedTalk={selectedTalk}
+            selectedTrackId={selectedTrack?.id}
+            talks={talks}
+            isLiveMode={isLiveMode}
+            changeLiveMode={onChecked}
+            selectTalk={selectTalk}
+          />
+        </Grid>
         <Sponsors event={event} />
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Chat event={event} profile={profile} talk={selectedTalk} />
-      </Grid>
-      <Grid item xs={12} md={8} style={{ height: '100%' }}>
-        <TalkInfo
-          event={event}
-          selectedTalk={selectedTalk}
-          selectedTrackName={selectedTrack?.name}
-          selectedTrackId={selectedTrack?.id}
-        />
-      </Grid>
-      <Grid item xs={12} md={4} style={{ height: '100%' }}>
-        <TalkSelector
-          selectedTalk={selectedTalk}
-          selectedTrackId={selectedTrack?.id}
-          talks={talks}
-          isLiveMode={isLiveMode}
-          changeLiveMode={onChecked}
-          selectTalk={selectTalk}
-        />
-      </Grid>
-    </Grid>
-  )
+    )
+  }
 }
