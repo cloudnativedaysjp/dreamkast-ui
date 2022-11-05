@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowVideo, settingsSelector } from '../../store/settings'
