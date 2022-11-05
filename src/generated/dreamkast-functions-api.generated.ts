@@ -1,4 +1,4 @@
-import { baseApi as api } from '../store/baseApi'
+import { baseDkfApi as api } from '../store/baseDkfApi'
 export const addTagTypes = [
   'Profile',
   'Event',
@@ -215,7 +215,7 @@ const injectedRtkApi = api
     }),
     overrideExisting: false,
   })
-export { injectedRtkApi as dreamkastApi }
+export { injectedRtkApi as dkfApi }
 export type GetApiV1ByEventAbbrMyProfileApiResponse =
   /** status 200 OK */ Profile
 export type GetApiV1ByEventAbbrMyProfileApiArg = {
