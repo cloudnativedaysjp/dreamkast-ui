@@ -11,7 +11,7 @@
         "test": "jest",
         "test:update": "jest -u",
         "test:coverage": "jest --collect-coverage",
-        "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts"
+        "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts && rtk-query-codegen-openapi ./rtk-query-codegen-openapi-dkf.config.ts "
     },
     "dependencies": {
         "@auth0/auth0-react": "^1.11.0",
