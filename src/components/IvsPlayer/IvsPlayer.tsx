@@ -5,10 +5,7 @@ import 'video.js/dist/video-js.css'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Talk } from '../../generated/dreamkast-api.generated'
-import { setShowVideo } from '../../store/settings'
-import { Button } from '@material-ui/core'
-import { VideocamOff } from '@material-ui/icons'
-import { useDispatch } from 'react-redux'
+import { VideoToggleButton } from '../common/VideoToggleButton'
 
 type Props = {
   playBackUrl?: string | null
@@ -38,7 +35,6 @@ export const IvsPlayer: React.FC<Props> = ({
   const videoElement = useRef<HTMLVideoElement>(null)
   const [counter, setCounter] = useState<number>(5)
   const [timer, setTimer] = useState<NodeJS.Timer>()
-  const dispatch = useDispatch()
 
   const cancelUpdate = () => {
     clearInterval(timer as NodeJS.Timer)
@@ -125,18 +121,7 @@ export const IvsPlayer: React.FC<Props> = ({
           </Styled.OverLayContainer>
         )}
       </Styled.IvsPlayerContainer>
-      {showStopVideoButton && (
-        <Button
-          variant="contained"
-          size="small"
-          color="primary"
-          disableElevation
-          startIcon={<VideocamOff />}
-          onClick={() => dispatch(setShowVideo(false))}
-        >
-          Stop Video
-        </Button>
-      )}
+      {showStopVideoButton && <VideoToggleButton />}
     </CommonStyled.Container>
   )
 }
