@@ -10,24 +10,21 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 import {
   Event,
-  Profile,
   Talk,
   Track,
   useGetApiV1TalksQuery,
 } from '../../generated/dreamkast-api.generated'
+import { useSelector } from 'react-redux'
+import { settingsSelector } from '../../store/settings'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 type Props = {
   event: Event
-  profile?: Profile
   selectedTrack: Track | null
   propTalks?: Talk[]
 }
 
-export const TrackView: React.FC<Props> = ({
-  event,
-  profile,
-  selectedTrack,
-}) => {
+export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -37,6 +34,9 @@ export const TrackView: React.FC<Props> = ({
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
+  const settings = useSelector(settingsSelector)
+  const theme = useTheme()
+  const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
 
   const dayId = useMemo(() => {
@@ -183,40 +183,85 @@ export const TrackView: React.FC<Props> = ({
     )
   }, [selectedTrack, selectedTalk])
 
-  return (
-    <Grid container spacing={0} justifyContent="center" alignItems="flex-start">
-      <Grid item xs={12} md={8}>
-        <IvsPlayer
-          playBackUrl={videoId}
-          nextTalk={getNextTalk()}
-          autoplay={true}
-          showCountdown={showCountdown}
-          updateView={updateView}
-          stopUpdate={stopUpdate}
-        ></IvsPlayer>
-        <Sponsors event={event} />
+  if (!settings.isInitialized) {
+    // TODO show loading
+    return <></>
+  }
+
+  if (settings.showVideo) {
+    return (
+      <Grid
+        container
+        spacing={1}
+        justifyContent="center"
+        alignItems="flex-start"
+      >
+        <Grid item xs={12} md={8}>
+          <IvsPlayer
+            playBackUrl={videoId}
+            nextTalk={getNextTalk()}
+            autoplay={true}
+            showCountdown={showCountdown}
+            updateView={updateView}
+            stopUpdate={stopUpdate}
+            showStopVideoButton={
+              isSmallerThanMd && settings.profile.isAttendOffline
+            }
+          ></IvsPlayer>
+          <Sponsors event={event} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Chat event={event} talk={selectedTalk} />
+        </Grid>
+        <Grid item xs={12} md={8} style={{ height: '100%' }}>
+          <TalkInfo
+            event={event}
+            selectedTalk={selectedTalk}
+            selectedTrackName={selectedTrack?.name}
+            selectedTrackId={selectedTrack?.id}
+          />
+        </Grid>
+        <Grid item xs={12} md={4} style={{ height: '100%' }}>
+          <TalkSelector
+            selectedTalk={selectedTalk}
+            selectedTrackId={selectedTrack?.id}
+            talks={talks}
+            isLiveMode={isLiveMode}
+            changeLiveMode={onChecked}
+            selectTalk={selectTalk}
+            small
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Chat event={event} profile={profile} talk={selectedTalk} />
+    )
+  } else {
+    return (
+      <Grid container spacing={1} justifyContent="center" alignItems="stretch">
+        <Grid item xs={12} md={4}>
+          <TalkInfo
+            event={event}
+            selectedTalk={selectedTalk}
+            selectedTrackName={selectedTrack?.name}
+            selectedTrackId={selectedTrack?.id}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Chat event={event} talk={selectedTalk} />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <TalkSelector
+            selectedTalk={selectedTalk}
+            selectedTrackId={selectedTrack?.id}
+            talks={talks}
+            isLiveMode={isLiveMode}
+            changeLiveMode={onChecked}
+            selectTalk={selectTalk}
+          />
+        </Grid>
+        <Grid item md={12}>
+          <Sponsors event={event} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={8} style={{ height: '100%' }}>
-        <TalkInfo
-          event={event}
-          selectedTalk={selectedTalk}
-          selectedTrackName={selectedTrack?.name}
-          selectedTrackId={selectedTrack?.id}
-        />
-      </Grid>
-      <Grid item xs={12} md={4} style={{ height: '100%' }}>
-        <TalkSelector
-          selectedTalk={selectedTalk}
-          selectedTrackId={selectedTrack?.id}
-          talks={talks}
-          isLiveMode={isLiveMode}
-          changeLiveMode={onChecked}
-          selectTalk={selectTalk}
-        />
-      </Grid>
-    </Grid>
-  )
+    )
+  }
 }

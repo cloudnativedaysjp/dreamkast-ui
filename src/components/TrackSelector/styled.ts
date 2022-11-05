@@ -5,7 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton'
 export const TrackMenuContainer = styled(ToggleButtonGroup)`
   width: 100%;
   justify-content: space-between;
-  padding: 20px 6px;
+  padding: 20px 0;
 `
 
 export const MenuItem = styled(ToggleButton)`

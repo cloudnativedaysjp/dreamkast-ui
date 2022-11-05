@@ -4,12 +4,14 @@ import { NextPageContext } from 'next'
 import { createWrapper, Context } from 'next-redux-wrapper'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
 import auth from './auth'
+import settings from './settings'
 
 const makeStore = (_: Context) => {
   const store = configureStore({
     reducer: {
       [dreamkastApi.reducerPath]: dreamkastApi.reducer,
       [auth.name]: auth.reducer,
+      [settings.name]: settings.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(dreamkastApi.middleware),

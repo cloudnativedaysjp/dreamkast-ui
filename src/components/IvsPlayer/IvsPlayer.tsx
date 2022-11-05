@@ -5,6 +5,7 @@ import 'video.js/dist/video-js.css'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Talk } from '../../generated/dreamkast-api.generated'
+import { VideoToggleButton } from '../common/VideoToggleButton'
 
 type Props = {
   playBackUrl?: string | null
@@ -13,6 +14,7 @@ type Props = {
   nextTalk?: Talk
   updateView: () => void
   stopUpdate: () => void
+  showStopVideoButton?: boolean
 }
 
 declare function registerIVSTech(
@@ -27,6 +29,7 @@ export const IvsPlayer: React.FC<Props> = ({
   nextTalk,
   updateView,
   stopUpdate,
+  showStopVideoButton = false,
 }) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
@@ -118,6 +121,7 @@ export const IvsPlayer: React.FC<Props> = ({
           </Styled.OverLayContainer>
         )}
       </Styled.IvsPlayerContainer>
+      {showStopVideoButton && <VideoToggleButton />}
     </CommonStyled.Container>
   )
 }

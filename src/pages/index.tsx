@@ -39,7 +39,6 @@ const IndexPage: NextPage = () => {
     { eventAbbr },
     { skip },
   )
-  const profile = myProfileQuery.data
 
   const getInitialSelectedTrack = (): Track | null => {
     if (!tracksQuery.data) {
@@ -78,11 +77,7 @@ const IndexPage: NextPage = () => {
           selectedTrack={selectedTrack}
           selectTrack={setSelectedTrack}
         />
-        <TrackView
-          event={event}
-          profile={profile}
-          selectedTrack={selectedTrack}
-        />
+        <TrackView event={event} selectedTrack={selectedTrack} />
       </Layout>
     )
   } else {

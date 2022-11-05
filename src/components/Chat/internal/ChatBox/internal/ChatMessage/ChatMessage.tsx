@@ -12,7 +12,6 @@ import { ChatMessageMenu } from '../../ChatMessageMenu'
 import { Grid } from '@material-ui/core'
 import {
   Event,
-  Profile,
   Talk,
   usePutApiV1ChatMessagesByMessageIdMutation,
 } from '../../../../../../generated/dreamkast-api.generated'
@@ -22,7 +21,6 @@ dayjs.extend(utc)
 
 type Props = {
   event?: Event
-  profile?: Profile
   talk?: Talk
   chatMessage?: ChatMessageContainer
   selected: boolean
@@ -33,7 +31,6 @@ type Props = {
 
 export const ChatMessage: React.FC<Props> = ({
   event,
-  profile,
   talk,
   chatMessage,
   selected,
@@ -147,7 +144,6 @@ export const ChatMessage: React.FC<Props> = ({
         })}
 
       <ChatMessageMenu
-        profile={profile}
         chatMessage={message}
         anchorEl={anchorEl}
         onClose={closeChatMessageMenu}

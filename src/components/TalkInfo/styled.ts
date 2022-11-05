@@ -5,10 +5,7 @@ export const Container = styled.div`
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 10px;
-`
-
-export const OuterContainer = styled.div`
-  padding: 0 5px 12px 5px;
+  height: 100%;
 `
 
 export const Title = styled.h2`
@@ -20,10 +17,11 @@ export const Title = styled.h2`
 export const Live = styled.span`
   background-color: red;
   color: white;
-  padding: 5px 10px;
+  padding: 5.5px 10px;
   font-weight: bold;
   border-radius: 5px;
   margin-top: 10px;
+  margin-right: 5px;
   display: inline-block;
 `
 
@@ -41,7 +39,7 @@ export const Speaker = styled.div`
 export const Content = styled.div`
   white-space: pre-wrap;
   padding: 10px 0;
-  height: 230px;
+  max-height: 300px;
   font-size: 1.1em;
   overflow-y: scroll;
   &::-webkit-scrollbar {
