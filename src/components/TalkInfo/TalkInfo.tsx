@@ -33,7 +33,7 @@ export const TalkInfo: React.FC<Props> = ({
       return
     }
     if (data) {
-      setViewerCount(data.viewer_count.toString())
+      setViewerCount(data.viewerCount.toString())
     } else {
       setViewerCount('-')
     }
