@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { Event, Talk } from '../../generated/dreamkast-api.generated'
-import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
+import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-functions-api.generated'
 
 type Props = {
   event?: Event
@@ -33,7 +33,7 @@ export const TalkInfo: React.FC<Props> = ({
       return
     }
     if (data) {
-      setViewerCount(data.viewer_count.toString())
+      setViewerCount(data.viewerCount.toString())
     } else {
       setViewerCount('-')
     }
