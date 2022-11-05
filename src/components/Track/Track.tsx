@@ -16,6 +16,7 @@ import {
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 type Props = {
   event: Event
@@ -34,6 +35,8 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
+  const theme = useTheme()
+  const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
 
   const dayId = useMemo(() => {
@@ -201,6 +204,9 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
             showCountdown={showCountdown}
             updateView={updateView}
             stopUpdate={stopUpdate}
+            showStopVideoButton={
+              isSmallerThanMd && settings.profile.isAttendOffline
+            }
           ></IvsPlayer>
           <Sponsors event={event} />
         </Grid>
