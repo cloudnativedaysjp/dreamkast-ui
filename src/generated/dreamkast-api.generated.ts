@@ -8,6 +8,7 @@ export const addTagTypes = [
   'ChatMessage',
   'Sponsor',
   'Booth',
+  'Dreamkast-function',
 ] as const
 const injectedRtkApi = api
   .enhanceEndpoints({
@@ -53,15 +54,6 @@ const injectedRtkApi = api
         GetApiV1TracksByTrackIdApiArg
       >({
         query: (queryArg) => ({ url: `/api/v1/tracks/${queryArg.trackId}` }),
-        providesTags: ['Track'],
-      }),
-      getApiV1TracksByTrackIdViewerCount: build.query<
-        GetApiV1TracksByTrackIdViewerCountApiResponse,
-        GetApiV1TracksByTrackIdViewerCountApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
-        }),
         providesTags: ['Track'],
       }),
       getApiV1Talks: build.query<GetApiV1TalksApiResponse, GetApiV1TalksApiArg>(
@@ -169,6 +161,57 @@ const injectedRtkApi = api
         query: (queryArg) => ({ url: `/api/v1/booths/${queryArg.boothId}` }),
         providesTags: ['Booth'],
       }),
+      postApiV1TalksByTalkIdVote: build.mutation<
+        PostApiV1TalksByTalkIdVoteApiResponse,
+        PostApiV1TalksByTalkIdVoteApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/vote`,
+          method: 'POST',
+          body: queryArg.vote,
+        }),
+        invalidatesTags: ['Dreamkast-function'],
+      }),
+      getApiV1ProfileByProfileIdPoints: build.query<
+        GetApiV1ProfileByProfileIdPointsApiResponse,
+        GetApiV1ProfileByProfileIdPointsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/profile/${queryArg.profileId}/points`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['Dreamkast-function'],
+      }),
+      postApiV1ProfileByProfileIdPoint: build.mutation<
+        PostApiV1ProfileByProfileIdPointApiResponse,
+        PostApiV1ProfileByProfileIdPointApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/profile/${queryArg.profileId}/point`,
+          method: 'POST',
+          body: queryArg.profilePoint,
+        }),
+        invalidatesTags: ['Dreamkast-function'],
+      }),
+      getApiV1TracksByTrackIdViewerCount: build.query<
+        GetApiV1TracksByTrackIdViewerCountApiResponse,
+        GetApiV1TracksByTrackIdViewerCountApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
+        }),
+        providesTags: ['Dreamkast-function'],
+      }),
+      optionsApiV1TracksByTrackIdViewerCount: build.mutation<
+        OptionsApiV1TracksByTrackIdViewerCountApiResponse,
+        OptionsApiV1TracksByTrackIdViewerCountApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
+          method: 'OPTIONS',
+        }),
+        invalidatesTags: ['Dreamkast-function'],
+      }),
     }),
     overrideExisting: false,
   })
@@ -193,12 +236,6 @@ export type GetApiV1TracksApiArg = {
 }
 export type GetApiV1TracksByTrackIdApiResponse = /** status 200 OK */ Track
 export type GetApiV1TracksByTrackIdApiArg = {
-  /** ID of track */
-  trackId: string
-}
-export type GetApiV1TracksByTrackIdViewerCountApiResponse =
-  /** status 200 OK */ ViewerCount
-export type GetApiV1TracksByTrackIdViewerCountApiArg = {
   /** ID of track */
   trackId: string
 }
@@ -271,6 +308,33 @@ export type GetApiV1BoothsByBoothIdApiArg = {
   /** ID of booth */
   boothId: string
 }
+export type PostApiV1TalksByTalkIdVoteApiResponse =
+  /** status 200 200 response */ EmptySchema
+export type PostApiV1TalksByTalkIdVoteApiArg = {
+  talkId: string
+  vote: VoteResponse
+}
+export type GetApiV1ProfileByProfileIdPointsApiResponse =
+  /** status 200 200 response */ ProfilePointResponse
+export type GetApiV1ProfileByProfileIdPointsApiArg = {
+  eventAbbr?: string
+  profileId: string
+}
+export type PostApiV1ProfileByProfileIdPointApiResponse =
+  /** status 200 200 response */ EmptySchema
+export type PostApiV1ProfileByProfileIdPointApiArg = {
+  profileId: string
+  profilePoint: ProfilePointResponse2
+}
+export type GetApiV1TracksByTrackIdViewerCountApiResponse =
+  /** status 200 200 response */ ViewerCountResponse
+export type GetApiV1TracksByTrackIdViewerCountApiArg = {
+  trackId: string
+}
+export type OptionsApiV1TracksByTrackIdViewerCountApiResponse = unknown
+export type OptionsApiV1TracksByTrackIdViewerCountApiArg = {
+  trackId: string
+}
 export type Profile = {
   id: number
   name: string
@@ -303,12 +367,6 @@ export type Track = {
   videoId?: (string | null) | undefined
   channelArn?: (string | null) | undefined
   onAirTalk?: (object | null) | undefined
-}
-export type ViewerCount = {
-  conference_id?: number | undefined
-  track_id: number
-  talk_id?: number | undefined
-  viewer_count: number
 }
 export type Talk = {
   id: number
@@ -393,13 +451,38 @@ export type Booth = {
   }[]
   keyImageUrls: string[]
 }
+export type EmptySchema = object
+export type ErrorSchema = {
+  message?: string | undefined
+}
+export type VoteResponse = {
+  eventAbbr: string
+}
+export type ProfilePointResponse = {
+  total: number
+  points: {
+    reasonId?: number | undefined
+    eventAbbr: string
+    point: number
+    timestamp?: number | undefined
+  }[]
+}
+export type ProfilePointResponse2 = {
+  reasonId?: number | undefined
+  eventAbbr: string
+  point: number
+  timestamp?: number | undefined
+}
+export type ViewerCountResponse = {
+  trackId: number
+  viewerCount: number
+}
 export const {
   useGetApiV1ByEventAbbrMyProfileQuery,
   useGetApiV1EventsQuery,
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1TracksQuery,
   useGetApiV1TracksByTrackIdQuery,
-  useGetApiV1TracksByTrackIdViewerCountQuery,
   useGetApiV1TalksQuery,
   useGetApiV1TalksByTalkIdQuery,
   usePutApiV1TalksByTalkIdMutation,
@@ -410,4 +493,9 @@ export const {
   usePutApiV1ChatMessagesByMessageIdMutation,
   useGetApiV1SponsorsQuery,
   useGetApiV1BoothsByBoothIdQuery,
+  usePostApiV1TalksByTalkIdVoteMutation,
+  useGetApiV1ProfileByProfileIdPointsQuery,
+  usePostApiV1ProfileByProfileIdPointMutation,
+  useGetApiV1TracksByTrackIdViewerCountQuery,
+  useOptionsApiV1TracksByTrackIdViewerCountMutation,
 } = injectedRtkApi
