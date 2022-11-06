@@ -11,7 +11,7 @@ import {
   Track,
 } from '../../../generated/dreamkast-api.generated'
 import { NextPage } from 'next'
-import { setProfile } from '../../../store/settings'
+import { setProfile, setEventAbbr } from '../../../store/settings'
 import { useDispatch } from 'react-redux'
 
 const IndexPage: NextPage = () => {
@@ -24,6 +24,10 @@ const IndexPage: NextPage = () => {
     }
     return ''
   }, [router])
+  useEffect(() => {
+    dispatch(setEventAbbr(eventAbbr))
+  }, [eventAbbr])
+
   const skip = eventAbbr === null
   const v1TracksQuery = useGetApiV1TracksQuery({ eventAbbr }, { skip })
   const { data: event } = useGetApiV1EventsByEventAbbrQuery(

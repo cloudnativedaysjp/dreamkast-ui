@@ -59,7 +59,6 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
         // create a websocket connection when the cache subscription starts
         await cacheDataLoaded
 
-        console.log(dreamkastApi)
         const wsUrl =
           window.location.protocol === 'http:'
             ? `ws://${window.location.host}/cable`
