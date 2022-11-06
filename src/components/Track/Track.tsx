@@ -50,6 +50,10 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     return dayId
   }, [event])
 
+  const onAirTalkExists = useMemo(() => {
+    return talks.filter((talk) => !!talk.onAir).length > 0
+  }, [talks])
+
   const { data, isLoading, isError, error, refetch } = useGetApiV1TalksQuery(
     {
       eventAbbr: event.abbr,
@@ -97,7 +101,12 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     beforeTrackId.current = selectedTrack?.id
     const onAirTalk = talks.find((talk) => talk.onAir)
     setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
-    setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
+    if (!onAirTalkExists) {
+      // NOTE just for testing
+      setVideoId(selectedTrack?.videoId)
+    } else {
+      setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
+    }
   }, [talks])
 
   const actionCableUrl = () => {
