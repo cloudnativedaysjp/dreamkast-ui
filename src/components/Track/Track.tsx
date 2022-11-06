@@ -13,9 +13,10 @@ import {
   Talk,
   Track,
   useGetApiV1TalksQuery,
+  usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
+import { isInitializedSelector, settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 
 type Props = {
@@ -28,13 +29,15 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
-  const [timer, setTimer] = useState<number>()
+  const [karteTimer, setKarteTimer] = useState<number>()
+  const [pointTimer, setPointTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [showCountdown, setShowCountdown] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
+  const isInitialized = useSelector(isInitializedSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
@@ -179,9 +182,11 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     )
   }, [selectedTrack, isLiveMode, selectedTalk])
 
+  const [addPoint] = usePostApiV1ProfileByProfileIdPointMutation()
+
   useEffect(() => {
-    clearInterval(timer)
-    setTimer(
+    clearInterval(karteTimer)
+    setKarteTimer(
       window.setInterval(() => {
         window.tracker.track('watch_video', {
           track_name: selectedTrack?.name,
@@ -190,9 +195,26 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
         })
       }, 120 * 1000),
     )
+    clearTimeout(pointTimer)
+    if (!settings.profile.isAttendOffline && selectedTalk?.onAir) {
+      setPointTimer(
+        window.setTimeout(() => {
+          addPoint({
+            profileId: `${settings.profile.id}`, // TODO remove stringify
+            profilePoint: {
+              reasonId: 1234, // TODO replace with the correct one
+              eventAbbr: settings.eventAbbr,
+              point: 0, // TODO remove
+            },
+          })
+            .unwrap()
+            .catch((err) => console.error(err))
+        }, 3 * 1000),
+      )
+    }
   }, [selectedTrack, selectedTalk])
 
-  if (!settings.isInitialized) {
+  if (!isInitialized) {
     // TODO show loading
     return <></>
   }
