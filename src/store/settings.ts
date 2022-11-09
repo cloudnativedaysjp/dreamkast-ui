@@ -12,7 +12,9 @@ type SettingsState = {
   profile: Profile
   showVideo: boolean
   appData: DkUiData
+  appDataInitialized: boolean
   pointData: ProfilePointsResponse
+  pointDataInitialized: boolean
 }
 
 const initialState: SettingsState = {
@@ -31,10 +33,12 @@ const initialState: SettingsState = {
     },
     stampChallenges: [],
   },
+  appDataInitialized: false,
   pointData: {
     total: 0,
     points: [],
   },
+  pointDataInitialized: false,
 }
 
 const settingsSlice = createSlice({
@@ -53,9 +57,11 @@ const settingsSlice = createSlice({
     },
     setAppData: (state, action: PayloadAction<DkUiData>) => {
       state.appData = action.payload
+      state.appDataInitialized = true
     },
     setPointData: (state, action: PayloadAction<ProfilePointsResponse>) => {
       state.pointData = action.payload
+      state.pointDataInitialized = true
     },
   },
 })
@@ -69,7 +75,9 @@ export const isInitializedSelector = createSelector(settingsSelector, (s) => {
 })
 export const stampSelector = createSelector(settingsSelector, (s) => {
   return {
+    initialized: s.appDataInitialized,
     canGetNewStamp: !!s.appData.stampChallenges.find((i) => i.waiting),
+    slotIdToBeStamped: s.appData.stampChallenges.find((i) => i.waiting)?.slotId,
     stamps: s.appData.stampChallenges.filter((i) => i.condition === 'stamped'),
   }
 })
