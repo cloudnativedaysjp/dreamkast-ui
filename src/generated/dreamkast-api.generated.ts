@@ -161,6 +161,16 @@ const injectedRtkApi = api
         query: (queryArg) => ({ url: `/api/v1/booths/${queryArg.boothId}` }),
         providesTags: ['Booth'],
       }),
+      getApiV1ProfileByProfileIdPoints: build.query<
+        GetApiV1ProfileByProfileIdPointsApiResponse,
+        GetApiV1ProfileByProfileIdPointsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/profile/${queryArg.profileId}/points`,
+          params: { conference: queryArg.conference },
+        }),
+        providesTags: ['Dreamkast-function'],
+      }),
       postApiV1TalksByTalkIdVote: build.mutation<
         PostApiV1TalksByTalkIdVoteApiResponse,
         PostApiV1TalksByTalkIdVoteApiArg
@@ -171,16 +181,6 @@ const injectedRtkApi = api
           body: queryArg.vote,
         }),
         invalidatesTags: ['Dreamkast-function'],
-      }),
-      getApiV1ProfileByProfileIdPoints: build.query<
-        GetApiV1ProfileByProfileIdPointsApiResponse,
-        GetApiV1ProfileByProfileIdPointsApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/profile/${queryArg.profileId}/points`,
-          params: { eventAbbr: queryArg.eventAbbr },
-        }),
-        providesTags: ['Dreamkast-function'],
       }),
       postApiV1ProfileByProfileIdPoint: build.mutation<
         PostApiV1ProfileByProfileIdPointApiResponse,
@@ -308,23 +308,23 @@ export type GetApiV1BoothsByBoothIdApiArg = {
   /** ID of booth */
   boothId: string
 }
+export type GetApiV1ProfileByProfileIdPointsApiResponse =
+  /** status 200 200 response */ ProfilePointsResponse
+export type GetApiV1ProfileByProfileIdPointsApiArg = {
+  conference: string
+  profileId: string
+}
 export type PostApiV1TalksByTalkIdVoteApiResponse =
   /** status 200 200 response */ EmptySchema
 export type PostApiV1TalksByTalkIdVoteApiArg = {
   talkId: string
   vote: VoteResponse
 }
-export type GetApiV1ProfileByProfileIdPointsApiResponse =
-  /** status 200 200 response */ ProfilePointResponse
-export type GetApiV1ProfileByProfileIdPointsApiArg = {
-  eventAbbr?: string
-  profileId: string
-}
 export type PostApiV1ProfileByProfileIdPointApiResponse =
   /** status 200 200 response */ EmptySchema
 export type PostApiV1ProfileByProfileIdPointApiArg = {
   profileId: string
-  profilePoint: ProfilePointResponse2
+  profilePoint: ProfilePointRequest
 }
 export type GetApiV1TracksByTrackIdViewerCountApiResponse =
   /** status 200 200 response */ ViewerCountResponse
@@ -451,27 +451,25 @@ export type Booth = {
   }[]
   keyImageUrls: string[]
 }
-export type EmptySchema = object
-export type ErrorSchema = {
-  message?: string | undefined
-}
-export type VoteResponse = {
-  eventAbbr: string
-}
-export type ProfilePointResponse = {
+export type ProfilePointsResponse = {
   total: number
   points: {
-    reasonId?: number | undefined
-    eventAbbr: string
-    point: number
+    conference: string
+    pointEventId: string
+    point?: number | undefined
     timestamp?: number | undefined
   }[]
 }
-export type ProfilePointResponse2 = {
-  reasonId?: number | undefined
+export type ErrorSchema = {
+  message?: string | undefined
+}
+export type EmptySchema = object
+export type VoteResponse = {
   eventAbbr: string
-  point: number
-  timestamp?: number | undefined
+}
+export type ProfilePointRequest = {
+  conference: string
+  pointEventId: string
 }
 export type ViewerCountResponse = {
   trackId: number
@@ -493,8 +491,8 @@ export const {
   usePutApiV1ChatMessagesByMessageIdMutation,
   useGetApiV1SponsorsQuery,
   useGetApiV1BoothsByBoothIdQuery,
-  usePostApiV1TalksByTalkIdVoteMutation,
   useGetApiV1ProfileByProfileIdPointsQuery,
+  usePostApiV1TalksByTalkIdVoteMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
   useGetApiV1TracksByTrackIdViewerCountQuery,
   useOptionsApiV1TracksByTrackIdViewerCountMutation,
