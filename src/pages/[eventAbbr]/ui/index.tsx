@@ -1,8 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { Layout } from '../../../components/Layout'
-import { TrackSelector } from '../../../components/TrackSelector'
-import { TrackView } from '../../../components/Track'
 import { isStorageAvailable } from '../../../util/sessionstorage'
 import {
   useGetApiV1TracksQuery,
@@ -13,6 +10,7 @@ import {
 import { NextPage } from 'next'
 import { setProfile } from '../../../store/settings'
 import { useDispatch } from 'react-redux'
+import { RootView } from '../../../components/RootView/RootView'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
@@ -69,14 +67,12 @@ const IndexPage: NextPage = () => {
 
   if (event) {
     return (
-      <Layout title={event.name} event={event}>
-        <TrackSelector
-          tracks={v1TracksQuery.data ?? []}
-          selectedTrack={selectedTrack}
-          selectTrack={selectTrack}
-        />
-        <TrackView event={event} selectedTrack={selectedTrack} />
-      </Layout>
+      <RootView
+        event={event}
+        tracks={v1TracksQuery.data ?? []}
+        selectedTrack={selectedTrack}
+        selectTrack={selectTrack}
+      />
     )
   } else {
     return <div></div>
