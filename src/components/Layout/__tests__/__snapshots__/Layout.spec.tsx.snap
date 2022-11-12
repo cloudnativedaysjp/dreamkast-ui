@@ -25,6 +25,74 @@ exports[`Layout 1`] = `
         >
           <a
             className="styled__MenuLink-sc-86hpyq-6 hpppsY"
+            href="/cndt2021/ui"
+            rel="noreferrer"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                {
+                  "color": "#423A57",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Top
+              </span>
+            </button>
+          </a>
+          <a
+            className="styled__MenuLink-sc-86hpyq-6 hpppsY"
+            href="/cndt2021/ui/info"
+            rel="noreferrer"
+          >
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              disabled={false}
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                {
+                  "color": "#423A57",
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                Info
+              </span>
+            </button>
+          </a>
+          <a
+            className="styled__MenuLink-sc-86hpyq-6 hpppsY"
             href="/cndt2021/o11y"
             rel="noreferrer"
           >
@@ -125,6 +193,74 @@ exports[`Layout 1`] = `
       <div
         className="styled__MobileMenu-sc-n9hkhe-8 kbYAIQ"
       >
+        <a
+          className="styled__MenuLink-sc-86hpyq-6 hpppsY"
+          href="/cndt2021/ui"
+          rel="noreferrer"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              {
+                "color": "#423A57",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Top
+            </span>
+          </button>
+        </a>
+        <a
+          className="styled__MenuLink-sc-86hpyq-6 hpppsY"
+          href="/cndt2021/ui/info"
+          rel="noreferrer"
+        >
+          <button
+            className="MuiButtonBase-root MuiButton-root MuiButton-text"
+            disabled={false}
+            onBlur={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            style={
+              {
+                "color": "#423A57",
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiButton-label"
+            >
+              Info
+            </span>
+          </button>
+        </a>
         <a
           className="styled__MenuLink-sc-86hpyq-6 hpppsY"
           href="/cndt2021/o11y"
