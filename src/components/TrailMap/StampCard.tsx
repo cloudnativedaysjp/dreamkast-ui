@@ -63,7 +63,7 @@ type Props = {
 export const StampCard = (_: Props) => {
   const settings = useSelector(settingsSelector)
   const stamp = useSelector(stampSelector)
-  const [pinnedStamp, setPinnedStamp] = useState<typeof stamp>(stamp)
+  const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
   const [stamped, setStamped] = useState<boolean>(false)
   const [appDataQuery] =
     usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation()
@@ -73,9 +73,12 @@ export const StampCard = (_: Props) => {
       return
     }
     setPinnedStamp(stamp)
-  }, [stamp])
+  }, [stamp, pinnedStamp])
 
   useEffect(() => {
+    if (!settings.initialized) {
+      return
+    }
     if (stamp.canGetNewStamp) {
       // TODO set point
       appDataQuery({
@@ -96,7 +99,11 @@ export const StampCard = (_: Props) => {
           console.error('stampedFromUI action')
         })
     }
-  }, [stamp])
+  }, [settings.initialized, stamp.canGetNewStamp])
+
+  if (!pinnedStamp) {
+    return <></>
+  }
 
   return (
     <>

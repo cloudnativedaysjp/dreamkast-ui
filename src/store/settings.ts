@@ -66,13 +66,20 @@ const settingsSlice = createSlice({
   },
 })
 
-export const { setProfile, setShowVideo, setEventAbbr, setAppData, setPointData } =
-  settingsSlice.actions
+export const {
+  setProfile,
+  setShowVideo,
+  setEventAbbr,
+  setAppData,
+  setPointData,
+} = settingsSlice.actions
 
-export const settingsSelector = (state: RootState) => state.settings
-export const isInitializedSelector = createSelector(settingsSelector, (s) => {
-  return !!(s.profile.id && s.eventAbbr)
-})
+export const settingsSelector = (s: RootState) => {
+  return {
+    initialized: !!(s.settings.profile.id && s.settings.eventAbbr),
+    ...s.settings,
+  }
+}
 export const stampSelector = createSelector(settingsSelector, (s) => {
   return {
     initialized: s.appDataInitialized,

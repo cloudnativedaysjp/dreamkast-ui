@@ -16,7 +16,7 @@ import {
   usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
-import { isInitializedSelector, settingsSelector } from '../../store/settings'
+import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/stampCollecting'
 
@@ -38,7 +38,6 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
-  const isInitialized = useSelector(isInitializedSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
@@ -187,6 +186,9 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation()
 
   useEffect(() => {
+    if (!settings.initialized) {
+      return
+    }
     if (!selectedTrack || !selectedTalk) {
       return
     }
@@ -221,9 +223,9 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
         }, 120 * 1000),
       )
     }
-  }, [selectedTrack, selectedTalk])
+  }, [selectedTrack, selectedTalk, settings.initialized])
 
-  if (!isInitialized) {
+  if (!settings.initialized) {
     // TODO show loading
     return <></>
   }

@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { Button } from '@material-ui/core'
 
 export const Container = styled.div`
   width: 90%;
@@ -23,7 +24,7 @@ export const StampFrame = styled.div<{ top: string; left: string }>`
   position: absolute;
 `
 
-const sample_anime02 = keyframes`
+const stamping = keyframes`
   0% {
     visibility: visible;
     opacity: 0;
@@ -52,10 +53,28 @@ export const Stamp = styled.img`
   border-radius: 50%;
   padding: 10%;
   transform: rotate(10deg) scale(1);
-  /* スタンプアニメーションのための初期値 */
+
   &.showAnimation {
     visibility: hidden;
-    animation: ${sample_anime02} 1.5s paused both;
+    animation: ${stamping} 1.5s paused both;
     animation-play-state: running;
+  }
+`
+
+const pulsing = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(153, 53, 39, 0.5);
+  }
+  60% {
+    box-shadow: 0 0 0 1em transparent;
+  }
+`
+
+export const TrailMapButton = styled(Button)`
+  &.pulse {
+    -webkit-animation: ${pulsing} 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    -moz-animation: ${pulsing} 2s infinite cubic-bezier(0.66, 0, 0, 1);
+    animation: ${pulsing} 4s infinite cubic-bezier(0.66, 0, 0, 1);
+    box-shadow: 0 0 0 1em transparent;
   }
 `
