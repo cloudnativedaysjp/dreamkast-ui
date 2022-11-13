@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DkUiData, Profile } from '../generated/dreamkast-api.generated'
+import {
+  DkUiData,
+  Profile,
+  ProfilePointsResponse,
+} from '../generated/dreamkast-api.generated'
 import { RootState } from './index'
 import { createSelector } from 'reselect'
 
@@ -8,6 +12,7 @@ type SettingsState = {
   profile: Profile
   showVideo: boolean
   appData: DkUiData
+  pointData: ProfilePointsResponse
 }
 
 const initialState: SettingsState = {
@@ -25,6 +30,10 @@ const initialState: SettingsState = {
       prevTimestamp: 0,
     },
     stampChallenges: [],
+  },
+  pointData: {
+    total: 0,
+    points: [],
   },
 }
 
@@ -45,14 +54,24 @@ const settingsSlice = createSlice({
     setAppData: (state, action: PayloadAction<DkUiData>) => {
       state.appData = action.payload
     },
+    setPointData: (state, action: PayloadAction<ProfilePointsResponse>) => {
+      state.pointData = action.payload
+    },
   },
 })
 
-export const { setProfile, setShowVideo, setEventAbbr, setAppData } = settingsSlice.actions
+export const { setProfile, setShowVideo, setEventAbbr, setAppData, setPointData } =
+  settingsSlice.actions
 
 export const settingsSelector = (state: RootState) => state.settings
 export const isInitializedSelector = createSelector(settingsSelector, (s) => {
   return !!(s.profile.id && s.eventAbbr)
+})
+export const stampSelector = createSelector(settingsSelector, (s) => {
+  return {
+    canGetNewStamp: !!s.appData.stampChallenges.find((i) => i.waiting),
+    stamps: s.appData.stampChallenges.filter((i) => i.condition === 'stamped'),
+  }
 })
 
 export default settingsSlice
