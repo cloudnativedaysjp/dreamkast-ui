@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
 import { settingsSelector, stampSelector } from '../../store/settings'
-import { usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation } from '../../generated/dreamkast-api.generated'
+import { usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation } from '../../generated/dreamkast-api.generated'
 
 const stampLocation = [
   {
@@ -65,8 +65,8 @@ export const StampCard = (_: Props) => {
   const stamp = useSelector(stampSelector)
   const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
   const [stamped, setStamped] = useState<boolean>(false)
-  const [appDataQuery] =
-    usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation()
+  const [mutateAppData] =
+    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
 
   useEffect(() => {
     if (!stamp.initialized || pinnedStamp !== null) {
@@ -81,7 +81,7 @@ export const StampCard = (_: Props) => {
     }
     if (stamp.canGetNewStamp) {
       // TODO set point
-      appDataQuery({
+      mutateAppData({
         profileId: `${settings.profile.id}`,
         conference: settings.eventAbbr,
         dkUiDataMutation: {

@@ -13,7 +13,7 @@ import {
   Talk,
   Track,
   useGetApiV1TalksQuery,
-  usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation,
+  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
@@ -183,7 +183,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   }, [selectedTrack, isLiveMode, selectedTalk])
 
   const [mutateAppData] =
-    usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation()
+    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
 
   useEffect(() => {
     if (!settings.initialized) {
