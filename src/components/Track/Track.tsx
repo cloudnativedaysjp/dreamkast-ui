@@ -13,11 +13,12 @@ import {
   Talk,
   Track,
   useGetApiV1TalksQuery,
-  usePostApiV1ProfileByProfileIdPointMutation,
+  usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
 import { isInitializedSelector, settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
+import { getSlotId } from '../../util/stampCollecting'
 
 type Props = {
   event: Event
@@ -182,34 +183,42 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     )
   }, [selectedTrack, isLiveMode, selectedTalk])
 
-  const [addPoint] = usePostApiV1ProfileByProfileIdPointMutation()
+  const [mutateAppData] =
+    usePatchApiV1AppDataByProfileIdConferenceAndConferenceMutation()
 
   useEffect(() => {
+    if (!selectedTrack || !selectedTalk) {
+      return
+    }
     clearInterval(karteTimer)
     setKarteTimer(
       window.setInterval(() => {
         window.tracker.track('watch_video', {
-          track_name: selectedTrack?.name,
-          talk_id: selectedTalk?.id,
-          talk_name: selectedTalk?.title,
+          track_name: selectedTrack.name,
+          talk_id: selectedTalk.id,
+          talk_name: selectedTalk.title,
         })
       }, 120 * 1000),
     )
     clearTimeout(pointTimer)
-    if (!settings.profile.isAttendOffline && selectedTalk?.onAir) {
+    if (!settings.profile.isAttendOffline && selectedTalk.onAir) {
       setPointTimer(
-        window.setTimeout(() => {
-          addPoint({
-            profileId: `${settings.profile.id}`, // TODO remove stringify
-            profilePoint: {
-              reasonId: 1234, // TODO replace with the correct one
-              eventAbbr: settings.eventAbbr,
-              point: 0, // TODO remove
+        window.setInterval(() => {
+          mutateAppData({
+            profileId: `${settings.profile.id}`,
+            conference: settings.eventAbbr,
+            dkUiDataMutation: {
+              action: 'talkWatched',
+              payload: {
+                talkId: selectedTalk.id,
+                trackId: selectedTrack?.id || 0,
+                slotId: getSlotId(selectedTalk),
+              },
             },
           })
             .unwrap()
             .catch((err) => console.error(err))
-        }, 3 * 1000),
+        }, 120 * 1000),
       )
     }
   }, [selectedTrack, selectedTalk])
