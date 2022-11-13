@@ -335,11 +335,27 @@ export type OptionsApiV1TracksByTrackIdViewerCountApiResponse = unknown
 export type OptionsApiV1TracksByTrackIdViewerCountApiArg = {
   trackId: string
 }
+export type RegisteredTalk = {
+  talkId?: number | undefined
+  talkTitle?: string | undefined
+  talkSpeakers?:
+    | {
+        name?: string | undefined
+        twitterId?: string | undefined
+      }[]
+    | undefined
+  talkStartTime?: string | undefined
+  talkEndTime?: string | undefined
+  trackName?: string | undefined
+  roomName?: string | undefined
+  conferenceDay?: string | undefined
+}
 export type Profile = {
   id: number
   name: string
   email: string
   isAttendOffline: boolean
+  registeredTalks?: RegisteredTalk[] | undefined
 }
 export type Event = {
   id: number
