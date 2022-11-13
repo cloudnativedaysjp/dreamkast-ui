@@ -412,6 +412,7 @@ export type Talk = {
   actualStartTime?: string | undefined
   actualEndTime?: string | undefined
   presentationMethod?: (string | null) | undefined
+  slotNum?: number | undefined
 }
 export type VideoRegistration = {
   url?: string | undefined
