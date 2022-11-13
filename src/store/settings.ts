@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Profile } from '../generated/dreamkast-api.generated'
+import { DkUiData, Profile } from '../generated/dreamkast-api.generated'
 import { RootState } from './index'
 import { createSelector } from 'reselect'
 
@@ -7,6 +7,7 @@ type SettingsState = {
   eventAbbr: string
   profile: Profile
   showVideo: boolean
+  appData: DkUiData
 }
 
 const initialState: SettingsState = {
@@ -18,6 +19,13 @@ const initialState: SettingsState = {
     isAttendOffline: false,
   },
   showVideo: false,
+  appData: {
+    watchedTalksOnline: {
+      watchingTime: [],
+      prevTimestamp: 0,
+    },
+    stampChallenges: [],
+  },
 }
 
 const settingsSlice = createSlice({
@@ -34,10 +42,13 @@ const settingsSlice = createSlice({
     setShowVideo: (state, action: PayloadAction<boolean>) => {
       state.showVideo = action.payload
     },
+    setAppData: (state, action: PayloadAction<DkUiData>) => {
+      state.appData = action.payload
+    },
   },
 })
 
-export const { setProfile, setShowVideo, setEventAbbr } = settingsSlice.actions
+export const { setProfile, setShowVideo, setEventAbbr, setAppData } = settingsSlice.actions
 
 export const settingsSelector = (state: RootState) => state.settings
 export const isInitializedSelector = createSelector(settingsSelector, (s) => {
