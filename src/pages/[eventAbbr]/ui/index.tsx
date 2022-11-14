@@ -5,7 +5,6 @@ import { TrackView } from '../../../components/Track'
 import { isStorageAvailable } from '../../../util/sessionstorage'
 import {
   useGetApiV1TracksQuery,
-  useGetApiV1EventsByEventAbbrQuery,
   Track,
 } from '../../../generated/dreamkast-api.generated'
 import { NextPage } from 'next'
@@ -13,14 +12,10 @@ import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 
 const IndexPage: NextPage = () => {
-  const { eventAbbr } = useInitSetup()
+  const { eventAbbr, event } = useInitSetup()
   useAppDataSetup()
 
   const v1TracksQuery = useGetApiV1TracksQuery(
-    { eventAbbr },
-    { skip: !eventAbbr },
-  )
-  const { data: event } = useGetApiV1EventsByEventAbbrQuery(
     { eventAbbr },
     { skip: !eventAbbr },
   )

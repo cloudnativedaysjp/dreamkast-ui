@@ -1,8 +1,11 @@
 import { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setEventAbbr, setProfile } from '../../store/settings'
-import { useGetApiV1ByEventAbbrMyProfileQuery } from '../../generated/dreamkast-api.generated'
+import { setEvent, setEventAbbr, setProfile } from '../../store/settings'
+import {
+  useGetApiV1ByEventAbbrMyProfileQuery,
+  useGetApiV1EventsByEventAbbrQuery,
+} from '../../generated/dreamkast-api.generated'
 
 export const useInitSetup = () => {
   const router = useRouter()
@@ -17,6 +20,16 @@ export const useInitSetup = () => {
     dispatch(setEventAbbr(eventAbbr))
   }, [eventAbbr])
 
+  const eventQuery = useGetApiV1EventsByEventAbbrQuery(
+    { eventAbbr },
+    { skip: !eventAbbr },
+  )
+  useEffect(() => {
+    if (eventQuery.data) {
+      dispatch(setEvent(eventQuery.data))
+    }
+  }, [eventQuery.data])
+
   const myProfileQuery = useGetApiV1ByEventAbbrMyProfileQuery(
     { eventAbbr },
     { skip: !eventAbbr },
@@ -29,7 +42,7 @@ export const useInitSetup = () => {
 
   return {
     eventAbbr,
+    event: eventQuery.data,
     profile: myProfileQuery.data,
-    isLoading: !myProfileQuery.data,
   }
 }
