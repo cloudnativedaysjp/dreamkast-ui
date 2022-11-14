@@ -15,6 +15,7 @@ type SettingsState = {
   appDataInitialized: boolean
   pointData: ProfilePointsResponse
   pointDataInitialized: boolean
+  isTrailMapOpen: boolean
 }
 
 const initialState: SettingsState = {
@@ -39,6 +40,7 @@ const initialState: SettingsState = {
     points: [],
   },
   pointDataInitialized: false,
+  isTrailMapOpen: false,
 }
 
 const settingsSlice = createSlice({
@@ -63,6 +65,9 @@ const settingsSlice = createSlice({
       state.pointData = action.payload
       state.pointDataInitialized = true
     },
+    setTrailMapOpen: (state, action: PayloadAction<boolean>) => {
+      state.isTrailMapOpen = action.payload
+    },
   },
 })
 
@@ -72,6 +77,7 @@ export const {
   setEventAbbr,
   setAppData,
   setPointData,
+  setTrailMapOpen,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => {
