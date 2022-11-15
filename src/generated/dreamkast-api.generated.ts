@@ -377,7 +377,7 @@ export type OptionsApiV1ProfileByProfileIdPointsApiArg = {
   profileId: string
 }
 export type PostApiV1TalksByTalkIdVoteApiResponse =
-  /** status 200 200 response */ EmptySchema
+  /** status 200 200 response */ CommonResponse
 export type PostApiV1TalksByTalkIdVoteApiArg = {
   talkId: string
   vote: VoteResponse
@@ -387,7 +387,7 @@ export type OptionsApiV1TalksByTalkIdVoteApiArg = {
   talkId: string
 }
 export type PostApiV1ProfileByProfileIdPointApiResponse =
-  /** status 200 200 response */ EmptySchema
+  /** status 200 200 response */ CommonResponse
 export type PostApiV1ProfileByProfileIdPointApiArg = {
   profileId: string
   profilePoint: ProfilePointRequest
@@ -403,7 +403,7 @@ export type GetApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
   conference: string
 }
 export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
-  /** status 200 200 response */ EmptySchema
+  /** status 200 200 response */ CommonResponse
 export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
   profileId: string
   conference: string
@@ -569,7 +569,11 @@ export type ProfilePointsResponse = {
 export type ErrorSchema = {
   message?: string | undefined
 }
-export type EmptySchema = object
+export type CommonResponse = {
+  message?: string | undefined
+  status?: string | undefined
+  [key: string]: any
+}
 export type VoteResponse = {
   eventAbbr: string
 }
