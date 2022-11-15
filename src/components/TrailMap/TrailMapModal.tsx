@@ -3,10 +3,7 @@ import { Modal } from '@material-ui/core'
 import { StampCard } from './StampCard'
 import { settingsSelector, setTrailMapOpen } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  clearTrailMapOpenNext,
-  getTrailMapOpenNext,
-} from '../../util/stampCollecting'
+import { clearTrailMapOpenNext, getTrailMapOpenNext } from '../../util/trailMap'
 
 type Props = {
   todo?: boolean

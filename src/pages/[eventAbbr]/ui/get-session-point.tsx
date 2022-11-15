@@ -10,7 +10,7 @@ import {
   setQRCodeStampResult,
   setTrailMapOpenNext,
   QRCodeRequestResult,
-} from '../../../util/stampCollecting'
+} from '../../../util/trailMap'
 import {
   useGetApiV1TalksByTalkIdQuery,
   useGetApiV1TracksQuery,

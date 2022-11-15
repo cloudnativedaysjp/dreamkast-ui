@@ -10,7 +10,7 @@ import {
   getPointEventIdBySlot,
   getQRCodeStampResult,
   clearQRCodeStampResult,
-} from '../../util/stampCollecting'
+} from '../../util/trailMap'
 
 type Props = {
   todo?: boolean
