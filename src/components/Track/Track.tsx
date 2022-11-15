@@ -13,10 +13,12 @@ import {
   Talk,
   Track,
   useGetApiV1TalksQuery,
+  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
+import { getSlotId } from '../../util/stampCollecting'
 
 type Props = {
   event: Event
@@ -28,7 +30,8 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
-  const [timer, setTimer] = useState<number>()
+  const [karteTimer, setKarteTimer] = useState<number>()
+  const [pointTimer, setPointTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [showCountdown, setShowCountdown] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
@@ -179,20 +182,50 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     )
   }, [selectedTrack, isLiveMode, selectedTalk])
 
+  const [mutateAppData] =
+    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
+
   useEffect(() => {
-    clearInterval(timer)
-    setTimer(
+    if (!settings.initialized) {
+      return
+    }
+    if (!selectedTrack || !selectedTalk) {
+      return
+    }
+    clearInterval(karteTimer)
+    setKarteTimer(
       window.setInterval(() => {
         window.tracker.track('watch_video', {
-          track_name: selectedTrack?.name,
-          talk_id: selectedTalk?.id,
-          talk_name: selectedTalk?.title,
+          track_name: selectedTrack.name,
+          talk_id: selectedTalk.id,
+          talk_name: selectedTalk.title,
         })
       }, 120 * 1000),
     )
-  }, [selectedTrack, selectedTalk])
+    clearTimeout(pointTimer)
+    if (!settings.profile.isAttendOffline && selectedTalk.onAir) {
+      setPointTimer(
+        window.setInterval(() => {
+          mutateAppData({
+            profileId: `${settings.profile.id}`,
+            conference: settings.eventAbbr,
+            dkUiDataMutation: {
+              action: 'talkWatched',
+              payload: {
+                talkId: selectedTalk.id,
+                trackId: selectedTrack?.id || 0,
+                slotId: getSlotId(selectedTalk),
+              },
+            },
+          })
+            .unwrap()
+            .catch((err) => console.error(err))
+        }, 120 * 1000),
+      )
+    }
+  }, [selectedTrack, selectedTalk, settings.initialized])
 
-  if (!settings.isInitialized) {
+  if (!settings.initialized) {
     // TODO show loading
     return <></>
   }

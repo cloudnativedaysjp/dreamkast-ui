@@ -9,9 +9,16 @@ import {
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1ByEventAbbrMyProfileQuery,
   Track,
+  useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
+  useGetApiV1ProfileByProfileIdPointsQuery,
 } from '../../../generated/dreamkast-api.generated'
 import { NextPage } from 'next'
-import { setProfile } from '../../../store/settings'
+import {
+  setProfile,
+  setEventAbbr,
+  setAppData,
+  setPointData,
+} from '../../../store/settings'
 import { useDispatch } from 'react-redux'
 
 const IndexPage: NextPage = () => {
@@ -24,6 +31,10 @@ const IndexPage: NextPage = () => {
     }
     return ''
   }, [router])
+  useEffect(() => {
+    dispatch(setEventAbbr(eventAbbr))
+  }, [eventAbbr])
+
   const skip = eventAbbr === null
   const v1TracksQuery = useGetApiV1TracksQuery({ eventAbbr }, { skip })
   const { data: event } = useGetApiV1EventsByEventAbbrQuery(
@@ -39,6 +50,27 @@ const IndexPage: NextPage = () => {
       dispatch(setProfile(myProfileQuery.data))
     }
   }, [myProfileQuery.data])
+
+  const appDataQuery =
+    useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery(
+      { profileId: `${myProfileQuery?.data?.id}`, conference: eventAbbr },
+      { skip: !myProfileQuery?.data?.id },
+    )
+  useEffect(() => {
+    if (appDataQuery.data) {
+      dispatch(setAppData(appDataQuery.data))
+    }
+  }, [appDataQuery.data])
+
+  const pointQuery = useGetApiV1ProfileByProfileIdPointsQuery(
+    { profileId: `${myProfileQuery?.data?.id}`, conference: eventAbbr },
+    { skip: !myProfileQuery?.data?.id },
+  )
+  useEffect(() => {
+    if (pointQuery.data) {
+      dispatch(setPointData(pointQuery.data))
+    }
+  }, [pointQuery.data])
 
   const getTrack = () => {
     if (!v1TracksQuery.data) {

@@ -4,6 +4,7 @@ import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Event } from '../../generated/dreamkast-api.generated'
 import Link from 'next/link'
+import { TrailMapModal } from '../TrailMap/TrailMapModal'
 
 type Props = {
   event?: Event
@@ -13,6 +14,7 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
   return (
     <Styled.DesktopMenu>
+      <TrailMapModal />
       <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Top</Button>
       </Link>
