@@ -4,7 +4,7 @@ import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useEffect, useMemo } from 'react'
 import { Layout } from '../../../components/Layout'
 import {
-  getPointEventId,
+  getPointEventIdBySlot,
   getSlotId,
   makeTrackResolveMap,
 } from '../../../util/stampCollecting'
@@ -50,7 +50,7 @@ const IndexPage: NextPage = () => {
   useEffect(() => {
     const { key } = router.query
     if (!key) {
-      router.push(`/${eventAbbr}/ui`)
+      router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       return
     }
     if (!tracksQuery.data) {
@@ -58,27 +58,27 @@ const IndexPage: NextPage = () => {
     }
     const trackPos = eventMap[key as string]
     const track = tracksQuery.data[trackPos]
-    console.log(track)
+
     if (!track.onAirTalk) {
-      router.push(`/${eventAbbr}/ui`)
+      router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       return
     }
-    console.warn('#######1', track.id)
-    console.warn('#######2', track)
-    console.warn('#######3', track.onAirTalk)
     setTrackId(track.id)
     setTalkId((track.onAirTalk as OnAirTalk).talk_id)
   }, [router.isReady, tracksQuery.data, eventMap])
 
   // TODO add point using slotID/trackID/talkID
   useEffect(() => {
+    if (!settings.initialized) {
+      return
+    }
     if (!talksQuery.data) {
       return
     }
     const slotId = getSlotId(talksQuery.data)
 
     ;(async () => {
-      const pointEventId = getPointEventId(
+      const pointEventId = getPointEventIdBySlot(
         // TODO use random secret as salt
         eventAbbr,
         slotId,
@@ -103,11 +103,12 @@ const IndexPage: NextPage = () => {
             },
           },
         })
+        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       } catch (err) {
         console.error('stampFromUI Action', err)
       }
     })()
-  }, [talksQuery.data])
+  }, [talksQuery.data, settings.initialized])
 
   if (event) {
     return (

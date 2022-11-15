@@ -6,7 +6,7 @@ import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
-import { getPointEventId } from '../../util/stampCollecting'
+import { getPointEventIdBySlot } from '../../util/stampCollecting'
 
 type Props = {
   todo?: boolean
@@ -39,7 +39,7 @@ export const StampCard = (_: Props) => {
       if (!stamp.slotIdToBeStamped) {
         return
       }
-      const pointEventId = getPointEventId(
+      const pointEventId = getPointEventIdBySlot(
         // TODO use random secret as salt
         settings.eventAbbr,
         stamp.slotIdToBeStamped,

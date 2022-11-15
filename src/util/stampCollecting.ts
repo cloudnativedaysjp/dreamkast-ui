@@ -8,9 +8,13 @@ export function getSlotId(talk: Talk): number {
   return talk.dayId * 100 + talk.slotNum
 }
 
-export function getPointEventId(salt: string, slotId: number): string {
+export function getPointEventIdBySlot(salt: string, slotId: number): string {
+  return getPointEventId(salt, 100000 + slotId)
+}
+
+export function getPointEventId(salt: string, eventNum: number): string {
   const shasum = createHash('sha1')
-  return shasum.update(`${salt}/10${slotId}`).digest('hex')
+  return shasum.update(`${salt}/${eventNum}`).digest('hex')
 }
 
 export function makeTrackResolveMap(eventAbbr: string) {
