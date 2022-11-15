@@ -145,7 +145,9 @@ const WrappedApp = ({ Component, pageProps, env }: WrappedAppProps) => {
 
 WrappedApp.getInitialProps = wrapper.getInitialAppProps(
   (_store) => async (appContext) => {
-    validateEnv()
+    if (typeof window === 'undefined') {
+      validateEnv()
+    }
     return {
       pageProps: (await App.getInitialProps(appContext)).pageProps,
       env: { ...ENV },
