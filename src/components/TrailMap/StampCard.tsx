@@ -6,7 +6,7 @@ import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
-import { createHash } from 'crypto'
+import { getPointEventId } from '../../util/stampCollecting'
 
 type Props = {
   todo?: boolean
@@ -40,6 +40,7 @@ export const StampCard = (_: Props) => {
         return
       }
       const pointEventId = getPointEventId(
+        // TODO use random secret as salt
         settings.eventAbbr,
         stamp.slotIdToBeStamped,
       )
@@ -98,11 +99,6 @@ export const StampCard = (_: Props) => {
       </Styled.Container>
     </>
   )
-}
-
-function getPointEventId(confName: string, slotId: number): string {
-  const shasum = createHash('sha1')
-  return shasum.update(`${confName}/10${slotId}`).digest('hex')
 }
 
 const stampLocation = [
