@@ -1,5 +1,6 @@
 import { Talk } from '../generated/dreamkast-api.generated'
 import { createHash } from 'crypto'
+import { isStorageAvailable } from './sessionstorage'
 
 export function getSlotId(talk: Talk): number {
   if (talk.dayId == null || talk.slotNum == null) {
@@ -24,4 +25,29 @@ export function makeTrackResolveMap(eventAbbr: string) {
     accum[getPointEventId(eventAbbr, eventNum)] = curr
     return accum
   }, {} as Record<string, number>)
+}
+
+type StampResult = 'ok' | 'skipped' | 'invalid' | 'error'
+const keyQRCodeStampResult = 'qrCodeStampResult'
+
+export const setQRCodeStampResult = (res: StampResult) => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keyQRCodeStampResult, res)
+  }
+}
+
+export const resetQRCodeStampResult = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keyQRCodeStampResult)
+  }
+}
+
+export const getQRCodeStampResult = (): StampResult | null => {
+  if (isStorageAvailable('sessionStorage')) {
+    const res = sessionStorage.getItem(keyQRCodeStampResult)
+    if (res === 'ok' || res === 'skipped' || res === 'invalid' || res == null) {
+      return res
+    }
+  }
+  return 'error'
 }

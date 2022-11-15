@@ -6,7 +6,11 @@ import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
-import { getPointEventIdBySlot } from '../../util/stampCollecting'
+import {
+  getPointEventIdBySlot,
+  getQRCodeStampResult,
+  resetQRCodeStampResult,
+} from '../../util/stampCollecting'
 
 type Props = {
   todo?: boolean
@@ -15,6 +19,7 @@ type Props = {
 export const StampCard = (_: Props) => {
   const settings = useSelector(settingsSelector)
   const stamp = useSelector(stampSelector)
+  const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
   const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
   const [stamped, setStamped] = useState<boolean>(false)
   const [mutateAppData] =
@@ -28,6 +33,22 @@ export const StampCard = (_: Props) => {
     setPinnedStamp(stamp)
   }, [stamp, pinnedStamp])
 
+  // get stamp by offline user via QR code
+  useEffect(() => {
+    const res = getQRCodeStampResult()
+    if (!res) {
+      return
+    } else if (res === 'ok') {
+      setStamped(true)
+      setAlreadyAdded(true)
+    } else {
+      // TODO show error info
+      console.error(`unexpected result: ${res}`)
+    }
+    resetQRCodeStampResult()
+  }, [])
+
+  // get stamp by online user
   useEffect(() => {
     if (!settings.initialized) {
       return
@@ -73,29 +94,50 @@ export const StampCard = (_: Props) => {
     return <></>
   }
 
+  const StampsNotYetAdded = stampLocation.map((loc, i) => (
+    <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
+      {i < pinnedStamp.stamps.length ? (
+        <Styled.Stamp
+          src={`/cndt2022/ui/cndt2022_trademark.png`}
+        ></Styled.Stamp>
+      ) : (
+        ''
+      )}
+      {i === pinnedStamp.stamps.length && stamped ? (
+        <Styled.Stamp
+          className={'showAnimation'}
+          src={`/cndt2022/ui/cndt2022_trademark.png`}
+        ></Styled.Stamp>
+      ) : (
+        ''
+      )}
+    </Styled.StampFrame>
+  ))
+  const StampsAlreadyAdded = stampLocation.map((loc, i) => (
+    <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
+      {i < pinnedStamp.stamps.length - 1 ? (
+        <Styled.Stamp
+          src={`/cndt2022/ui/cndt2022_trademark.png`}
+        ></Styled.Stamp>
+      ) : (
+        ''
+      )}
+      {i === pinnedStamp.stamps.length - 1 && stamped ? (
+        <Styled.Stamp
+          className={'showAnimation'}
+          src={`/cndt2022/ui/cndt2022_trademark.png`}
+        ></Styled.Stamp>
+      ) : (
+        ''
+      )}
+    </Styled.StampFrame>
+  ))
+
   return (
     <>
       <Styled.Container>
         <Styled.TrailMapImg src={`/cndt2022/ui/wave.jpg`}></Styled.TrailMapImg>
-        {stampLocation.map((loc, i) => (
-          <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
-            {i < pinnedStamp.stamps.length ? (
-              <Styled.Stamp
-                src={`/cndt2022/ui/cndt2022_trademark.png`}
-              ></Styled.Stamp>
-            ) : (
-              ''
-            )}
-            {i === pinnedStamp.stamps.length && stamped ? (
-              <Styled.Stamp
-                className={'showAnimation'}
-                src={`/cndt2022/ui/cndt2022_trademark.png`}
-              ></Styled.Stamp>
-            ) : (
-              ''
-            )}
-          </Styled.StampFrame>
-        ))}
+        {alreadyAdded ? StampsAlreadyAdded : StampsNotYetAdded}
       </Styled.Container>
     </>
   )

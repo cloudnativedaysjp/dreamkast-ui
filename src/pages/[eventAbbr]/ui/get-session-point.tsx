@@ -7,6 +7,7 @@ import {
   getPointEventIdBySlot,
   getSlotId,
   makeTrackResolveMap,
+  setQRCodeStampResult,
 } from '../../../util/stampCollecting'
 import {
   useGetApiV1TalksByTalkIdQuery,
@@ -50,6 +51,7 @@ const IndexPage: NextPage = () => {
   useEffect(() => {
     const { key } = router.query
     if (!key) {
+      setQRCodeStampResult('invalid')
       router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       return
     }
@@ -60,6 +62,7 @@ const IndexPage: NextPage = () => {
     const track = tracksQuery.data[trackPos]
 
     if (!track.onAirTalk) {
+      setQRCodeStampResult('invalid')
       router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       return
     }
@@ -91,7 +94,7 @@ const IndexPage: NextPage = () => {
             pointEventId,
           },
         })
-        await mutateAppData({
+        const res = await mutateAppData({
           profileId: `${settings.profile.id}`,
           conference: settings.eventAbbr,
           dkUiDataMutation: {
@@ -102,10 +105,26 @@ const IndexPage: NextPage = () => {
               slotId,
             },
           },
-        })
+        }).unwrap()
+        console.warn(res)
+        if (!res) {
+          setQRCodeStampResult('error')
+          router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+          return
+        }
+
+        const { status } = res as { status: string; message: string }
+        if (status === 'skipped') {
+          setQRCodeStampResult('skipped')
+          router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+          return
+        }
+        setQRCodeStampResult('ok')
         router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       } catch (err) {
         console.error('stampFromUI Action', err)
+        setQRCodeStampResult('error')
+        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       }
     })()
   }, [talksQuery.data, settings.initialized])
