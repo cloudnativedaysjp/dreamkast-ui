@@ -4,7 +4,7 @@ export const ENV = {
   NEXT_PUBLIC_AUTH0_AUDIENCE: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE ?? '',
   NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH ?? '',
   NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL ?? '',
-  NEXT_PUBLIC_EVENT_SALT: process.env.NEXT_PUBLIC_EVENT_SALT ?? '',
+  NEXT_PUBLIC_EVENT_SALT: process.env.NEXT_PUBLIC_EVENT_SALT ?? 'cndt2022',
 } as const
 
 export function validateEnv() {
@@ -14,7 +14,6 @@ export function validateEnv() {
     'NEXT_PUBLIC_AUTH0_AUDIENCE',
     'NEXT_PUBLIC_BASE_PATH',
     'NEXT_PUBLIC_API_BASE_URL',
-    'NEXT_PUBLIC_EVENT_SALT',
   ]
 
   for (const v of requiredEnvVars) {
