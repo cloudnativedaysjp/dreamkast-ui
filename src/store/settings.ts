@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Profile } from '../generated/dreamkast-api.generated'
+import {
+  DkUiData,
+  Profile,
+  ProfilePointsResponse,
+} from '../generated/dreamkast-api.generated'
 import { RootState } from './index'
+import { createSelector } from 'reselect'
 
 type SettingsState = {
-  isInitialized: boolean
+  eventAbbr: string
   profile: Profile
   showVideo: boolean
+  appData: DkUiData
+  appDataInitialized: boolean
+  pointData: ProfilePointsResponse
+  pointDataInitialized: boolean
 }
 
 const initialState: SettingsState = {
-  isInitialized: false,
+  eventAbbr: '',
   profile: {
     id: 0,
     name: '',
@@ -17,23 +26,67 @@ const initialState: SettingsState = {
     isAttendOffline: false,
   },
   showVideo: false,
+  appData: {
+    watchedTalksOnline: {
+      watchingTime: [],
+      prevTimestamp: 0,
+    },
+    stampChallenges: [],
+  },
+  appDataInitialized: false,
+  pointData: {
+    total: 0,
+    points: [],
+  },
+  pointDataInitialized: false,
 }
 
 const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    setEventAbbr: (state, action: PayloadAction<string>) => {
+      state.eventAbbr = action.payload
+    },
     setProfile: (state, action: PayloadAction<Profile>) => {
       state.profile = action.payload
       state.showVideo = !action.payload.isAttendOffline
-      state.isInitialized = true
     },
     setShowVideo: (state, action: PayloadAction<boolean>) => {
       state.showVideo = action.payload
     },
+    setAppData: (state, action: PayloadAction<DkUiData>) => {
+      state.appData = action.payload
+      state.appDataInitialized = true
+    },
+    setPointData: (state, action: PayloadAction<ProfilePointsResponse>) => {
+      state.pointData = action.payload
+      state.pointDataInitialized = true
+    },
   },
 })
 
-export const { setProfile, setShowVideo } = settingsSlice.actions
-export const settingsSelector = (state: RootState) => state.settings
+export const {
+  setProfile,
+  setShowVideo,
+  setEventAbbr,
+  setAppData,
+  setPointData,
+} = settingsSlice.actions
+
+export const settingsSelector = (s: RootState) => {
+  return {
+    initialized: !!(s.settings.profile.id && s.settings.eventAbbr),
+    ...s.settings,
+  }
+}
+export const stampSelector = createSelector(settingsSelector, (s) => {
+  return {
+    initialized: s.appDataInitialized,
+    canGetNewStamp: !!s.appData.stampChallenges.find((i) => i.waiting),
+    slotIdToBeStamped: s.appData.stampChallenges.find((i) => i.waiting)?.slotId,
+    stamps: s.appData.stampChallenges.filter((i) => i.condition === 'stamped'),
+  }
+})
+
 export default settingsSlice
