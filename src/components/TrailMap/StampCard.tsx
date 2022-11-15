@@ -9,7 +9,7 @@ import {
 import {
   getPointEventIdBySlot,
   getQRCodeStampResult,
-  resetQRCodeStampResult,
+  clearQRCodeStampResult,
 } from '../../util/stampCollecting'
 
 type Props = {
@@ -45,7 +45,7 @@ export const StampCard = (_: Props) => {
       // TODO show error info
       console.error(`unexpected result: ${res}`)
     }
-    resetQRCodeStampResult()
+    clearQRCodeStampResult()
   }, [])
 
   // get stamp by online user

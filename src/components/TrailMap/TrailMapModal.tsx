@@ -3,7 +3,10 @@ import { Modal } from '@material-ui/core'
 import { StampCard } from './StampCard'
 import { settingsSelector, setTrailMapOpen } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
-import { getQRCodeStampResult } from '../../util/stampCollecting'
+import {
+  clearTrailMapOpenNext,
+  getTrailMapOpenNext,
+} from '../../util/stampCollecting'
 
 type Props = {
   todo?: boolean
@@ -15,8 +18,8 @@ export const TrailMapModal = (_: Props) => {
 
   // get stamp by offline user via QR code
   useEffect(() => {
-    const res = getQRCodeStampResult()
-    if (res) {
+    if (getTrailMapOpenNext()) {
+      clearTrailMapOpenNext()
       dispatch(setTrailMapOpen(true))
     }
   }, [])

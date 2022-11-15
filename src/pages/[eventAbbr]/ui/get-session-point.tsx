@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useEffect, useMemo } from 'react'
@@ -8,6 +8,8 @@ import {
   getSlotId,
   makeTrackResolveMap,
   setQRCodeStampResult,
+  setTrailMapOpenNext,
+  QRCodeRequestResult,
 } from '../../../util/stampCollecting'
 import {
   useGetApiV1TalksByTalkIdQuery,
@@ -48,11 +50,19 @@ const IndexPage: NextPage = () => {
     { skip: talkId === null },
   )
 
+  const goTrailMap = useCallback(
+    (res: QRCodeRequestResult) => {
+      setQRCodeStampResult(res)
+      setTrailMapOpenNext()
+      router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+    },
+    [eventAbbr],
+  )
+
   useEffect(() => {
     const { key } = router.query
     if (!key) {
-      setQRCodeStampResult('invalid')
-      router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+      goTrailMap('invalid')
       return
     }
     if (!tracksQuery.data) {
@@ -62,8 +72,7 @@ const IndexPage: NextPage = () => {
     const track = tracksQuery.data[trackPos]
 
     if (!track.onAirTalk) {
-      setQRCodeStampResult('invalid')
-      router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+      goTrailMap('invalid')
       return
     }
     setTrackId(track.id)
@@ -108,23 +117,18 @@ const IndexPage: NextPage = () => {
         }).unwrap()
         console.warn(res)
         if (!res) {
-          setQRCodeStampResult('error')
-          router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
           return
         }
 
         const { status } = res as { status: string; message: string }
         if (status === 'skipped') {
-          setQRCodeStampResult('skipped')
-          router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+          goTrailMap('skipped')
           return
         }
-        setQRCodeStampResult('ok')
-        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+        goTrailMap('ok')
       } catch (err) {
         console.error('stampFromUI Action', err)
-        setQRCodeStampResult('error')
-        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+        goTrailMap('error')
       }
     })()
   }, [talksQuery.data, settings.initialized])

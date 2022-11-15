@@ -27,22 +27,23 @@ export function makeTrackResolveMap(eventAbbr: string) {
   }, {} as Record<string, number>)
 }
 
-type StampResult = 'ok' | 'skipped' | 'invalid' | 'error'
+export type QRCodeRequestResult = 'ok' | 'skipped' | 'invalid' | 'error'
 const keyQRCodeStampResult = 'qrCodeStampResult'
+const keyTrailMapOpenNext = 'trailMapOpenNext'
 
-export const setQRCodeStampResult = (res: StampResult) => {
+export const setQRCodeStampResult = (res: QRCodeRequestResult) => {
   if (isStorageAvailable('sessionStorage')) {
     sessionStorage.setItem(keyQRCodeStampResult, res)
   }
 }
 
-export const resetQRCodeStampResult = () => {
+export const clearQRCodeStampResult = () => {
   if (isStorageAvailable('sessionStorage')) {
     sessionStorage.removeItem(keyQRCodeStampResult)
   }
 }
 
-export const getQRCodeStampResult = (): StampResult | null => {
+export const getQRCodeStampResult = (): QRCodeRequestResult | null => {
   if (isStorageAvailable('sessionStorage')) {
     const res = sessionStorage.getItem(keyQRCodeStampResult)
     if (res === 'ok' || res === 'skipped' || res === 'invalid' || res == null) {
@@ -51,3 +52,23 @@ export const getQRCodeStampResult = (): StampResult | null => {
   }
   return 'error'
 }
+
+export const setTrailMapOpenNext = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keyTrailMapOpenNext, 'y')
+  }
+}
+
+export const clearTrailMapOpenNext = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keyTrailMapOpenNext)
+  }
+}
+
+export const getTrailMapOpenNext = (): boolean => {
+  if (isStorageAvailable('sessionStorage')) {
+    return !!sessionStorage.getItem(keyTrailMapOpenNext)
+  }
+  return false
+}
+
