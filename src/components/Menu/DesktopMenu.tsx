@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Event } from '../../generated/dreamkast-api.generated'
+import Link from 'next/link'
 
 type Props = {
   event?: Event
@@ -12,12 +13,12 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
   return (
     <Styled.DesktopMenu>
-      <CommonStyled.MenuLink href={`/${event?.abbr}/ui`} rel="noreferrer">
+      <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Top</Button>
-      </CommonStyled.MenuLink>
-      <CommonStyled.MenuLink href={`/${event?.abbr}/ui/info`} rel="noreferrer">
+      </Link>
+      <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Info</Button>
-      </CommonStyled.MenuLink>
+      </Link>
       <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Grafana</Button>
       </CommonStyled.MenuLink>
