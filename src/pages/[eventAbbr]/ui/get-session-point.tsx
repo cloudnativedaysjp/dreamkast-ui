@@ -60,6 +60,9 @@ const IndexPage: NextPage = () => {
   )
 
   useEffect(() => {
+    if (!router.isReady) {
+      return
+    }
     const { key } = router.query
     if (!key) {
       goTrailMap('invalid')
