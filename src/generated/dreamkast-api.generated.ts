@@ -8,7 +8,10 @@ export const addTagTypes = [
   'ChatMessage',
   'Sponsor',
   'Booth',
-  'Dreamkast-function',
+  'Point',
+  'Vote',
+  'DkUiData',
+  'ViewerCount',
 ] as const
 const injectedRtkApi = api
   .enhanceEndpoints({
@@ -169,7 +172,16 @@ const injectedRtkApi = api
           url: `/api/v1/profile/${queryArg.profileId}/points`,
           params: { conference: queryArg.conference },
         }),
-        providesTags: ['Dreamkast-function'],
+        providesTags: ['Point'],
+      }),
+      optionsApiV1ProfileByProfileIdPoints: build.mutation<
+        OptionsApiV1ProfileByProfileIdPointsApiResponse,
+        OptionsApiV1ProfileByProfileIdPointsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/profile/${queryArg.profileId}/points`,
+          method: 'OPTIONS',
+        }),
       }),
       postApiV1TalksByTalkIdVote: build.mutation<
         PostApiV1TalksByTalkIdVoteApiResponse,
@@ -180,7 +192,16 @@ const injectedRtkApi = api
           method: 'POST',
           body: queryArg.vote,
         }),
-        invalidatesTags: ['Dreamkast-function'],
+        invalidatesTags: ['Vote'],
+      }),
+      optionsApiV1TalksByTalkIdVote: build.mutation<
+        OptionsApiV1TalksByTalkIdVoteApiResponse,
+        OptionsApiV1TalksByTalkIdVoteApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/vote`,
+          method: 'OPTIONS',
+        }),
       }),
       postApiV1ProfileByProfileIdPoint: build.mutation<
         PostApiV1ProfileByProfileIdPointApiResponse,
@@ -191,7 +212,45 @@ const injectedRtkApi = api
           method: 'POST',
           body: queryArg.profilePoint,
         }),
-        invalidatesTags: ['Dreamkast-function'],
+        invalidatesTags: ['Point'],
+      }),
+      optionsApiV1ProfileByProfileIdPoint: build.mutation<
+        OptionsApiV1ProfileByProfileIdPointApiResponse,
+        OptionsApiV1ProfileByProfileIdPointApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/profile/${queryArg.profileId}/point`,
+          method: 'OPTIONS',
+        }),
+      }),
+      getApiV1AppDataByProfileIdConferenceAndConference: build.query<
+        GetApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
+        GetApiV1AppDataByProfileIdConferenceAndConferenceApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
+        }),
+        providesTags: ['DkUiData'],
+      }),
+      postApiV1AppDataByProfileIdConferenceAndConference: build.mutation<
+        PostApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
+        PostApiV1AppDataByProfileIdConferenceAndConferenceApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
+          method: 'POST',
+          body: queryArg.dkUiDataMutation,
+        }),
+        invalidatesTags: ['DkUiData'],
+      }),
+      optionsApiV1AppDataByProfileIdConferenceAndConference: build.mutation<
+        OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
+        OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
+          method: 'OPTIONS',
+        }),
       }),
       getApiV1TracksByTrackIdViewerCount: build.query<
         GetApiV1TracksByTrackIdViewerCountApiResponse,
@@ -200,7 +259,7 @@ const injectedRtkApi = api
         query: (queryArg) => ({
           url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
         }),
-        providesTags: ['Dreamkast-function'],
+        providesTags: ['ViewerCount'],
       }),
       optionsApiV1TracksByTrackIdViewerCount: build.mutation<
         OptionsApiV1TracksByTrackIdViewerCountApiResponse,
@@ -210,7 +269,6 @@ const injectedRtkApi = api
           url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
           method: 'OPTIONS',
         }),
-        invalidatesTags: ['Dreamkast-function'],
       }),
     }),
     overrideExisting: false,
@@ -314,17 +372,48 @@ export type GetApiV1ProfileByProfileIdPointsApiArg = {
   conference: string
   profileId: string
 }
+export type OptionsApiV1ProfileByProfileIdPointsApiResponse = unknown
+export type OptionsApiV1ProfileByProfileIdPointsApiArg = {
+  profileId: string
+}
 export type PostApiV1TalksByTalkIdVoteApiResponse =
   /** status 200 200 response */ EmptySchema
 export type PostApiV1TalksByTalkIdVoteApiArg = {
   talkId: string
   vote: VoteResponse
 }
+export type OptionsApiV1TalksByTalkIdVoteApiResponse = unknown
+export type OptionsApiV1TalksByTalkIdVoteApiArg = {
+  talkId: string
+}
 export type PostApiV1ProfileByProfileIdPointApiResponse =
   /** status 200 200 response */ EmptySchema
 export type PostApiV1ProfileByProfileIdPointApiArg = {
   profileId: string
   profilePoint: ProfilePointRequest
+}
+export type OptionsApiV1ProfileByProfileIdPointApiResponse = unknown
+export type OptionsApiV1ProfileByProfileIdPointApiArg = {
+  profileId: string
+}
+export type GetApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
+  /** status 200 200 response */ DkUiData
+export type GetApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
+  profileId: string
+  conference: string
+}
+export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
+  /** status 200 200 response */ EmptySchema
+export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
+  profileId: string
+  conference: string
+  dkUiDataMutation: DkUiDataMutation
+}
+export type OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
+  unknown
+export type OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
+  profileId: string
+  conference: string
 }
 export type GetApiV1TracksByTrackIdViewerCountApiResponse =
   /** status 200 200 response */ ViewerCountResponse
@@ -488,6 +577,29 @@ export type ProfilePointRequest = {
   conference: string
   pointEventId: string
 }
+export type DkUiData = {
+  watchedTalksOnline: {
+    watchingTime?:
+      | {
+          [key: string]: any
+        }
+      | undefined
+    prevTimestamp?: number | undefined
+  }
+  stampChallenges: {
+    condition?: string | undefined
+    waiting: boolean
+    slotId: number
+    timestamp?: number | undefined
+  }[]
+  [key: string]: any
+}
+export type DkUiDataMutation = {
+  payload: {
+    [key: string]: any
+  }
+  action: string
+}
 export type ViewerCountResponse = {
   trackId: number
   viewerCount: number
@@ -509,8 +621,14 @@ export const {
   useGetApiV1SponsorsQuery,
   useGetApiV1BoothsByBoothIdQuery,
   useGetApiV1ProfileByProfileIdPointsQuery,
+  useOptionsApiV1ProfileByProfileIdPointsMutation,
   usePostApiV1TalksByTalkIdVoteMutation,
+  useOptionsApiV1TalksByTalkIdVoteMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
+  useOptionsApiV1ProfileByProfileIdPointMutation,
+  useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
+  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
+  useOptionsApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   useGetApiV1TracksByTrackIdViewerCountQuery,
   useOptionsApiV1TracksByTrackIdViewerCountMutation,
 } = injectedRtkApi
