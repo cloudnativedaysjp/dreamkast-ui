@@ -19,6 +19,7 @@ import { setApiBaseUrl, setToken, setUser } from '../store/auth'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { ENV, validateEnv } from '../config'
 import { tokenSelector } from '../store/authSelector'
+import { EnvProvider } from '../context/env'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -135,9 +136,11 @@ const WrappedApp = ({ Component, pageProps, env }: WrappedAppProps) => {
         redirectUri={baseUrl}
         audience={env.NEXT_PUBLIC_AUTH0_AUDIENCE}
       >
-        <AppComponent>
-          <Component {...pageProps} />
-        </AppComponent>
+        <EnvProvider env={env}>
+          <AppComponent>
+            <Component {...pageProps} />
+          </AppComponent>
+        </EnvProvider>
       </Auth0Provider>
     </>
   )

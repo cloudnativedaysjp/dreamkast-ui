@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useEffect, useMemo } from 'react'
 import { Layout } from '../../../components/Layout'
 import {
-  getPointEventIdBySlot,
   getSlotId,
   makeTrackResolveMap,
   setQRCodeStampResult,
   setTrailMapOpenNext,
   QRCodeRequestResult,
+  getSessionEventNum,
 } from '../../../util/trailMap'
 import {
   useGetApiV1TalksByTalkIdQuery,
@@ -20,6 +20,7 @@ import {
 import { settingsSelector } from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
+import { EnvCtx } from '../../../context/env'
 
 type OnAirTalk = {
   talk_id: number
@@ -28,6 +29,7 @@ type OnAirTalk = {
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
+  const envCtx = useContext(EnvCtx)
   const [talkId, setTalkId] = useState<number | null>(null)
   const [trackId, setTrackId] = useState<number | null>(null)
   const settings = useSelector(settingsSelector)
@@ -38,7 +40,7 @@ const IndexPage: NextPage = () => {
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   const eventMap = useMemo(() => {
-    return makeTrackResolveMap(eventAbbr)
+    return makeTrackResolveMap(envCtx.getPointEventId)
   }, [eventAbbr])
 
   const tracksQuery = useGetApiV1TracksQuery(
@@ -74,7 +76,7 @@ const IndexPage: NextPage = () => {
     const trackPos = eventMap[key as string]
     const track = tracksQuery.data[trackPos]
 
-    if (!track.onAirTalk) {
+    if (!track?.onAirTalk) {
       goTrailMap('invalid')
       return
     }
@@ -93,11 +95,8 @@ const IndexPage: NextPage = () => {
     const slotId = getSlotId(talksQuery.data)
 
     ;(async () => {
-      const pointEventId = getPointEventIdBySlot(
-        // TODO use random secret as salt
-        eventAbbr,
-        slotId,
-      )
+      const eventNum = getSessionEventNum(slotId)
+      const pointEventId = envCtx.getPointEventId(eventNum)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
 import { settingsSelector, stampSelector } from '../../store/settings'
@@ -7,16 +7,18 @@ import {
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
 import {
-  getPointEventIdBySlot,
   getQRCodeStampResult,
   clearQRCodeStampResult,
+  getSessionEventNum,
 } from '../../util/trailMap'
+import { EnvCtx } from '../../context/env'
 
 type Props = {
   todo?: boolean
 }
 
 export const StampCard = (_: Props) => {
+  const envCtx = useContext(EnvCtx)
   const settings = useSelector(settingsSelector)
   const stamp = useSelector(stampSelector)
   const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
@@ -60,11 +62,8 @@ export const StampCard = (_: Props) => {
       if (!stamp.slotIdToBeStamped) {
         return
       }
-      const pointEventId = getPointEventIdBySlot(
-        // TODO use random secret as salt
-        settings.eventAbbr,
-        stamp.slotIdToBeStamped,
-      )
+      const eventNum = getSessionEventNum(stamp.slotIdToBeStamped)
+      const pointEventId = envCtx.getPointEventId(eventNum)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,
