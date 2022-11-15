@@ -40,7 +40,7 @@ export const RegisteredTalks: React.FC<Props> = ({ event }) => {
                       <Styled.TalkInfo color="textSecondary" gutterBottom>
                         {talkInfo(talk)}
                       </Styled.TalkInfo>
-                      <Link href={`${event.abbr}/talks/${talk.talkId}`}>
+                      <Link href={`/${event.abbr}/talks/${talk.talkId}`}>
                         <Typography variant="h6">{talk.talkTitle}</Typography>
                       </Link>
                       <Styled.Pos color="textSecondary">
