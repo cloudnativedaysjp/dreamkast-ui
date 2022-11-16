@@ -14,15 +14,18 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
   return (
     <Styled.DesktopMenu>
-      <TrailMapModal />
       <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Top</Button>
       </Link>
+      <TrailMapModal />
       <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Info</Button>
       </Link>
-      <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
+      <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer" target="_blank">
         <Button style={{ color: '#423A57' }}>Grafana</Button>
+      </CommonStyled.MenuLink>
+      <CommonStyled.MenuLink href="https://miro.com/app/board/uXjVPWsauOI=/?share_link_id=129888291104" rel="noreferrer" target="_blank">
+        <Button style={{ color: '#423A57' }}>WhiteBoard</Button>
       </CommonStyled.MenuLink>
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/timetables`}
