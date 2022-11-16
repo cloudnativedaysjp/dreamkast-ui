@@ -117,7 +117,6 @@ const IndexPage: NextPage = () => {
             },
           },
         }).unwrap()
-        console.warn(res)
         if (!res) {
           return
         }

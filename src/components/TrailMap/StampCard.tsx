@@ -96,16 +96,14 @@ export const StampCard = (_: Props) => {
   const StampsNotYetAdded = stampLocation.map((loc, i) => (
     <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
       {i < pinnedStamp.stamps.length ? (
-        <Styled.Stamp
-          src={`/cndt2022/ui/cndt2022_trademark.png`}
-        ></Styled.Stamp>
+        <Styled.Stamp src={`/cndt2022/ui/cndt2022_stamp.png`}></Styled.Stamp>
       ) : (
         ''
       )}
       {i === pinnedStamp.stamps.length && stamped ? (
         <Styled.Stamp
           className={'showAnimation'}
-          src={`/cndt2022/ui/cndt2022_trademark.png`}
+          src={`/cndt2022/ui/cndt2022_stamp.png`}
         ></Styled.Stamp>
       ) : (
         ''
@@ -115,16 +113,14 @@ export const StampCard = (_: Props) => {
   const StampsAlreadyAdded = stampLocation.map((loc, i) => (
     <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
       {i < pinnedStamp.stamps.length - 1 ? (
-        <Styled.Stamp
-          src={`/cndt2022/ui/cndt2022_trademark.png`}
-        ></Styled.Stamp>
+        <Styled.Stamp src={`/cndt2022/ui/cndt2022_stamp.png`}></Styled.Stamp>
       ) : (
         ''
       )}
       {i === pinnedStamp.stamps.length - 1 && stamped ? (
         <Styled.Stamp
           className={'showAnimation'}
-          src={`/cndt2022/ui/cndt2022_trademark.png`}
+          src={`/cndt2022/ui/cndt2022_stamp.png`}
         ></Styled.Stamp>
       ) : (
         ''
@@ -134,62 +130,63 @@ export const StampCard = (_: Props) => {
 
   return (
     <>
-      <Styled.Container>
-        <Styled.TrailMapImg src={`/cndt2022/ui/wave.jpg`}></Styled.TrailMapImg>
+      <Styled.StampCardContainer>
+        <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}>
+        </Styled.StampCard>
         {alreadyAdded ? StampsAlreadyAdded : StampsNotYetAdded}
-      </Styled.Container>
+      </Styled.StampCardContainer>
     </>
   )
 }
 
 const stampLocation = [
   {
-    top: 25,
-    left: 5,
+    top: 32,
+    left: 7,
   },
   {
-    top: 25,
-    left: 20,
+    top: 32,
+    left: 22,
   },
   {
-    top: 25,
-    left: 35,
+    top: 32,
+    left: 37,
   },
   {
-    top: 25,
-    left: 50,
+    top: 32,
+    left: 52,
   },
   {
-    top: 25,
-    left: 65,
+    top: 32,
+    left: 67,
   },
   {
-    top: 25,
-    left: 80,
+    top: 32,
+    left: 82,
   },
 
   {
-    top: 60,
-    left: 5,
+    top: 70,
+    left: 7,
   },
   {
-    top: 60,
-    left: 20,
+    top: 70,
+    left: 22,
   },
   {
-    top: 60,
-    left: 35,
+    top: 70,
+    left: 37,
   },
   {
-    top: 60,
-    left: 50,
+    top: 70,
+    left: 52,
   },
   {
-    top: 60,
-    left: 65,
+    top: 70,
+    left: 67,
   },
   {
-    top: 60,
-    left: 80,
+    top: 70,
+    left: 82,
   },
 ]

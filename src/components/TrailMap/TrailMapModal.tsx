@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { Modal } from '@material-ui/core'
-import { StampCard } from './StampCard'
 import { settingsSelector, setTrailMapOpen } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearTrailMapOpenNext, getTrailMapOpenNext } from '../../util/trailMap'
+import { TrailMap } from './TrailMap'
+import * as Styled from './styled'
 
 type Props = {
   todo?: boolean
@@ -22,12 +22,11 @@ export const TrailMapModal = (_: Props) => {
   }, [])
 
   return (
-    <Modal
+    <Styled.TrailMapModal
       open={settings.isTrailMapOpen}
       onClose={() => dispatch(setTrailMapOpen(false))}
     >
-      {/*TODO*/}
-      <StampCard></StampCard>
-    </Modal>
+      <TrailMap></TrailMap>
+    </Styled.TrailMapModal>
   )
 }
