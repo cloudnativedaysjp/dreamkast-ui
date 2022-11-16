@@ -131,8 +131,7 @@ export const StampCard = (_: Props) => {
   return (
     <>
       <Styled.StampCardContainer>
-        <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}>
-        </Styled.StampCard>
+        <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}></Styled.StampCard>
         {alreadyAdded ? StampsAlreadyAdded : StampsNotYetAdded}
       </Styled.StampCardContainer>
     </>
