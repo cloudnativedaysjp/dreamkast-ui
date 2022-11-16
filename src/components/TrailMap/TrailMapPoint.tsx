@@ -48,7 +48,11 @@ export const TrailMapPoint = () => {
     <div>
       <Styled.TrailMapPointContainer>
         {trailingImage}
-        <div className={'ticket'}>抽選券 {ticket} 枚ゲット！</div>
+        {ticket > 0 ? (
+          <div className={'ticket'}>抽選券 {ticket} 枚ゲット！</div>
+        ) : (
+          ''
+        )}
         <div className={'point'}>
           {ticket > 0 ? `${ticket * 100} + ` : ''}
           {frac}pt
