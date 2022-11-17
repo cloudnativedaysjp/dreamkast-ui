@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   DkUiData,
+  Event,
   Profile,
   ProfilePointsResponse,
 } from '../generated/dreamkast-api.generated'
@@ -9,16 +10,19 @@ import { createSelector } from 'reselect'
 
 type SettingsState = {
   eventAbbr: string
+  event: Event | null
   profile: Profile
   showVideo: boolean
   appData: DkUiData
   appDataInitialized: boolean
   pointData: ProfilePointsResponse
   pointDataInitialized: boolean
+  isTrailMapOpen: boolean
 }
 
 const initialState: SettingsState = {
   eventAbbr: '',
+  event: null,
   profile: {
     id: 0,
     name: '',
@@ -39,6 +43,7 @@ const initialState: SettingsState = {
     points: [],
   },
   pointDataInitialized: false,
+  isTrailMapOpen: false,
 }
 
 const settingsSlice = createSlice({
@@ -47,6 +52,9 @@ const settingsSlice = createSlice({
   reducers: {
     setEventAbbr: (state, action: PayloadAction<string>) => {
       state.eventAbbr = action.payload
+    },
+    setEvent: (state, action: PayloadAction<Event>) => {
+      state.event = action.payload
     },
     setProfile: (state, action: PayloadAction<Profile>) => {
       state.profile = action.payload
@@ -63,6 +71,9 @@ const settingsSlice = createSlice({
       state.pointData = action.payload
       state.pointDataInitialized = true
     },
+    setTrailMapOpen: (state, action: PayloadAction<boolean>) => {
+      state.isTrailMapOpen = action.payload
+    },
   },
 })
 
@@ -70,8 +81,10 @@ export const {
   setProfile,
   setShowVideo,
   setEventAbbr,
+  setEvent,
   setAppData,
   setPointData,
+  setTrailMapOpen,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => {

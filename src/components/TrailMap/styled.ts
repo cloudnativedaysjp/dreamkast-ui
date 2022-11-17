@@ -1,27 +1,82 @@
 import styled, { keyframes } from 'styled-components'
-import { Button } from '@material-ui/core'
+import { Button, Modal } from '@material-ui/core'
+
+export const TrailMapModal = styled(Modal)`
+  width: 100vw;
+`
 
 export const Container = styled.div`
   width: 90%;
   max-width: 600px;
-  top: 50%;
+  top: 50px;
   left: 50%;
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
 `
 
-export const TrailMapImg = styled.img`
+export const TrailMapHeader = styled.img`
   width: 100%;
+  height: 100%;
+`
+
+export const TrailMapPointContainer = styled.div`
+  position: relative;
+  > img {
+    width: 100%;
+    border: 5px solid #ffffff;
+    z-index: 10;
+  }
+
+  .point {
+    top: 50%;
+    left: 50%;
+    font-size: 30pt;
+    font-weight: 900;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10%;
+    z-index: 20;
+    position: absolute;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+  }
+
+  .ticket {
+    top: 0;
+    font-size: 14pt;
+    z-index: 20;
+    position: absolute;
+    font-weight: 500;
+    color: #993527;
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+  }
+`
+
+export const StampCardContainer = styled.div`
+  width: 100%;
+  padding-top: 40%;
+  position: relative;
+`
+
+export const StampCard = styled.img`
+  top: 0;
+  width: 100%;
+  position: absolute;
+  border: 5px solid #ffffff;
+  z-index: 10;
 `
 
 export const StampFrame = styled.div<{ top: string; left: string }>`
   background-color: rgba(239, 235, 233, 0.9);
   top: ${(props) => props.top};
   left: ${(props) => props.left};
-  min-width: 12%; // TODO
-  height: 15%;
-  padding: 0.5%;
+  width: 10%;
+  padding-top: 10%;
   position: absolute;
+  z-index: 20;
 `
 
 const stamping = keyframes`
@@ -49,10 +104,9 @@ export const Stamp = styled.img`
   font-size: 28px;
   font-weight: bold;
   line-height: 1;
-  border: 1px solid #c00;
-  border-radius: 50%;
-  padding: 10%;
   transform: rotate(10deg) scale(1);
+  top: 0;
+  position: absolute;
 
   &.showAnimation {
     visibility: hidden;
@@ -67,6 +121,25 @@ const pulsing = keyframes`
   }
   60% {
     box-shadow: 0 0 0 1em transparent;
+  }
+`
+
+export const TrailMapRule = styled.div`
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #efebe9;
+  border: 5px solid #ffffff;
+
+  > h3 {
+    margin-block-start: 5px;
+    margin-block-end: 5px;
+    margin-left: 15px;
+    border-left: 5px solid #3b203b;
+    padding-left: 10px;
+  }
+  > ul {
+    margin-block-start: 5px;
+    margin-block-end: 5px;
   }
 `
 

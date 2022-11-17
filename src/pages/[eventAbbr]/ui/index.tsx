@@ -1,76 +1,24 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { useRouter } from 'next/router'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Layout } from '../../../components/Layout'
 import { TrackSelector } from '../../../components/TrackSelector'
 import { TrackView } from '../../../components/Track'
 import { isStorageAvailable } from '../../../util/sessionstorage'
 import {
   useGetApiV1TracksQuery,
-  useGetApiV1EventsByEventAbbrQuery,
-  useGetApiV1ByEventAbbrMyProfileQuery,
   Track,
-  useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
-  useGetApiV1ProfileByProfileIdPointsQuery,
 } from '../../../generated/dreamkast-api.generated'
 import { NextPage } from 'next'
-import {
-  setProfile,
-  setEventAbbr,
-  setAppData,
-  setPointData,
-} from '../../../store/settings'
-import { useDispatch } from 'react-redux'
+import { useInitSetup } from '../../../components/hooks/useInitSetup'
+import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 
 const IndexPage: NextPage = () => {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const eventAbbr = useMemo<string>(() => {
-    if (router.asPath !== router.route) {
-      const { eventAbbr } = router.query
-      return eventAbbr as string
-    }
-    return ''
-  }, [router])
-  useEffect(() => {
-    dispatch(setEventAbbr(eventAbbr))
-  }, [eventAbbr])
+  const { eventAbbr, event } = useInitSetup()
+  useAppDataSetup()
 
-  const skip = eventAbbr === null
-  const v1TracksQuery = useGetApiV1TracksQuery({ eventAbbr }, { skip })
-  const { data: event } = useGetApiV1EventsByEventAbbrQuery(
+  const v1TracksQuery = useGetApiV1TracksQuery(
     { eventAbbr },
-    { skip },
+    { skip: !eventAbbr },
   )
-  const myProfileQuery = useGetApiV1ByEventAbbrMyProfileQuery(
-    { eventAbbr },
-    { skip },
-  )
-  useEffect(() => {
-    if (myProfileQuery.data) {
-      dispatch(setProfile(myProfileQuery.data))
-    }
-  }, [myProfileQuery.data])
-
-  const appDataQuery =
-    useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery(
-      { profileId: `${myProfileQuery?.data?.id}`, conference: eventAbbr },
-      { skip: !myProfileQuery?.data?.id },
-    )
-  useEffect(() => {
-    if (appDataQuery.data) {
-      dispatch(setAppData(appDataQuery.data))
-    }
-  }, [appDataQuery.data])
-
-  const pointQuery = useGetApiV1ProfileByProfileIdPointsQuery(
-    { profileId: `${myProfileQuery?.data?.id}`, conference: eventAbbr },
-    { skip: !myProfileQuery?.data?.id },
-  )
-  useEffect(() => {
-    if (pointQuery.data) {
-      dispatch(setPointData(pointQuery.data))
-    }
-  }, [pointQuery.data])
 
   const getTrack = () => {
     if (!v1TracksQuery.data) {

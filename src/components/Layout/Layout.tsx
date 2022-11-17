@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { DesktopMenu, MobileMenu } from '../Menu'
 import AppBar from '@material-ui/core/AppBar'
 import { Event } from '../../generated/dreamkast-api.generated'
+import { TrailMapModal } from '../TrailMap/TrailMapModal'
 
 type Props = {
   children?: ReactNode
@@ -48,6 +49,7 @@ export const Layout: React.FC<Props> = ({
           <MobileMenu event={event} url={url} />
         </AppBar>
       </header>
+      <TrailMapModal></TrailMapModal>
       <Styled.ChildrenContainer>{children}</Styled.ChildrenContainer>
       <Styled.Footer>
         <Styled.FooterLink
