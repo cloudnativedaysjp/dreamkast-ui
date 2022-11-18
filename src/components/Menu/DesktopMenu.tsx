@@ -17,6 +17,13 @@ export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
       <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Top</Button>
       </Link>
+      <CommonStyled.MenuLink
+        href="https://sites.google.com/view/cndt2022-guide"
+        rel="noreferrer"
+        target="_blank"
+      >
+        <Button style={{ color: '#423A57' }}>Guide</Button>
+      </CommonStyled.MenuLink>
       <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Info</Button>
       </Link>

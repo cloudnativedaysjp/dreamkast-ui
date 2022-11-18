@@ -21,6 +21,13 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
         <Button style={{ color: '#423A57' }}>Info</Button>
       </Link>
       <TrailMapButton />
+      <CommonStyled.MenuLink
+        href="https://sites.google.com/view/cndt2022-guide"
+        rel="noreferrer"
+        target="_blank"
+      >
+        <Button style={{ color: '#423A57' }}>Guide</Button>
+      </CommonStyled.MenuLink>
       <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Grafana</Button>
       </CommonStyled.MenuLink>
