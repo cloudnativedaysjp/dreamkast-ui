@@ -3,8 +3,11 @@ import * as Styled from './styled'
 import { StampCard } from './StampCard'
 import { TrailMapPoint } from './TrailMapPoint'
 import { TrailMapRule } from './TrailMapRule'
+import { useStampCompleteBonus } from '../hooks/useStampCompleteBonus'
 
 export const TrailMap = () => {
+  useStampCompleteBonus()
+
   return (
     <Styled.Container>
       <Styled.TrailMapHeader

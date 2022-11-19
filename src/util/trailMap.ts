@@ -16,6 +16,10 @@ export function getChatEventNum(slotId: number) {
   return 110000 + slotId
 }
 
+export function getAllStampCompEventNum() {
+  return 120001
+}
+
 export function makeTrackResolveMap(genFn: (eventNum: number) => string) {
   const trackId = [0, 1, 2, 3, 4, 5]
   return trackId.reduce((accum, curr) => {
@@ -29,6 +33,7 @@ export type QRCodeRequestResult = 'ok' | 'skipped' | 'invalid' | 'error'
 const keyQRCodeStampResult = 'qrCodeStampResult'
 const keyTrailMapOpenNext = 'trailMapOpenNext'
 const keyGotChatPoint = 'gotChatPoint'
+const keyAllStampCollected = 'allStampCollected'
 
 export const setQRCodeStampResult = (res: QRCodeRequestResult) => {
   if (isStorageAvailable('sessionStorage')) {
@@ -80,6 +85,19 @@ export const setGotChatPoint = (slotId: number) => {
 export const getGotChatPoint = (slotId: number): boolean => {
   if (isStorageAvailable('sessionStorage')) {
     return !!sessionStorage.getItem(`${keyGotChatPoint}${slotId}`)
+  }
+  return false
+}
+
+export const setAllStampCollected = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keyAllStampCollected, 'y')
+  }
+}
+
+export const getAllStampCollected = (): boolean => {
+  if (isStorageAvailable('sessionStorage')) {
+    return !!sessionStorage.getItem(keyAllStampCollected)
   }
   return false
 }
