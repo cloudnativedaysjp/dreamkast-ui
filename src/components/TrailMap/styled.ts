@@ -50,7 +50,7 @@ export const TrailMapPointContainer = styled.div`
   .point {
     top: 50%;
     left: 50%;
-    font-size: 30pt;
+    font-size: min(6vw, 30px);
     font-weight: 900;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10%;
@@ -62,7 +62,7 @@ export const TrailMapPointContainer = styled.div`
 
   .ticket {
     top: 0;
-    font-size: 14pt;
+    font-size: min(4vw, 16px);
     z-index: 20;
     position: absolute;
     font-weight: 500;
