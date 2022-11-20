@@ -32,7 +32,18 @@ export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
         <Button style={{ color: '#423A57' }}>Your Plan</Button>
       </Link>
       <TrailMapButton />
-      <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
+      <CommonStyled.MenuLink
+        href="https://miro.com/app/board/uXjVPWsauOI=/"
+        rel="noreferrer"
+        target="_blank"
+      >
+        <Button style={{ color: '#423A57' }}>Whiteboard</Button>
+      </CommonStyled.MenuLink>
+      <CommonStyled.MenuLink
+        href={`/${event?.abbr}/o11y`}
+        rel="noreferrer"
+        target="_blank"
+      >
         <Button style={{ color: '#423A57' }}>Grafana</Button>
       </CommonStyled.MenuLink>
       <CommonStyled.MenuLink
