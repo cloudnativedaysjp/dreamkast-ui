@@ -8,6 +8,8 @@ import { usePostApiV1ProfileByProfileIdPointMutation } from '../../../generated/
 import { settingsSelector } from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
+import { CircularProgress } from '@material-ui/core'
+import * as CommonStyled from '../../../styles/styled'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
@@ -52,7 +54,9 @@ const IndexPage: NextPage = () => {
   if (event) {
     return (
       <Layout title={event.name} event={event}>
-        <div></div>
+        <CommonStyled.BaseCenterContainer>
+          <CircularProgress color="primary" size={60} />
+        </CommonStyled.BaseCenterContainer>
       </Layout>
     )
   }

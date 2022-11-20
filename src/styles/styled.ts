@@ -40,3 +40,11 @@ export const MenuLink = styled.a`
 export const ButtonContainer = styled.div`
   padding-bottom: 10px;
 `
+
+export const BaseCenterContainer = styled.div`
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+`
