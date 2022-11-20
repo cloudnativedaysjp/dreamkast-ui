@@ -150,7 +150,7 @@ export const Stamp = styled.img`
 
 const pulsing = keyframes`
   0% {
-    box-shadow: 0 0 0 0 rgba(153, 53, 39, 0.5);
+    box-shadow: 0 0 0 0 rgba(150, 129, 180, 0.5);
   }
   60% {
     box-shadow: 0 0 0 1em transparent;
