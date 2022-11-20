@@ -156,6 +156,15 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     }
   }
 
+  useEffect(() => {
+    if (!settings.profile.isAttendOffline) {
+      return
+    }
+    if (showCountdown) {
+      updateView()
+    }
+  }, [showCountdown, settings.profile.isAttendOffline])
+
   const stopUpdate = () => {
     setShowCountdown(false)
     setIsLiveMode(false)
