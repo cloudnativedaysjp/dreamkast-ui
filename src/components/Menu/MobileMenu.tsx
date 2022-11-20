@@ -43,7 +43,7 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
             <InfoIcon />
           </ListItemIcon>
           <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
-            <Button style={{ color: '#423A57' }}>Info</Button>
+            <Button style={{ color: '#423A57' }}>Your Plan</Button>
           </Link>
         </ListItem>
         <ListItem button key="guide">
@@ -55,7 +55,7 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
             rel="noreferrer"
             target="_blank"
           >
-            <Button style={{ color: '#423A57' }}>Guide</Button>
+            <Button style={{ color: '#423A57' }}>Attendee Guide</Button>
           </CommonStyled.MenuLink>
         </ListItem>
         <ListItem button key="timetable">

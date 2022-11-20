@@ -22,10 +22,10 @@ export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
         rel="noreferrer"
         target="_blank"
       >
-        <Button style={{ color: '#423A57' }}>Guide</Button>
+        <Button style={{ color: '#423A57' }}>Attendee Guide</Button>
       </CommonStyled.MenuLink>
       <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
-        <Button style={{ color: '#423A57' }}>Info</Button>
+        <Button style={{ color: '#423A57' }}>Your Plan</Button>
       </Link>
       <TrailMapButton />
       <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
