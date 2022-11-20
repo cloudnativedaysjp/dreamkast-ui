@@ -5,6 +5,8 @@ import * as CommonStyled from '../../styles/styled'
 import { Event } from '../../generated/dreamkast-api.generated'
 import Link from 'next/link'
 import { TrailMapButton } from '../TrailMap/TrailMapButton'
+import { useSelector } from 'react-redux'
+import { settingsSelector } from '../../store/settings'
 
 type Props = {
   event?: Event
@@ -12,13 +14,18 @@ type Props = {
 }
 
 export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
+  const settings = useSelector(settingsSelector)
+  const guideUrl = (): string => {
+    if (settings.profile.isAttendOffline) {
+      return 'https://sites.google.com/view/cndt2022-guide/現地参加オフライン'
+    } else {
+      return 'https://sites.google.com/view/cndt2022-guide/オンライン参加'
+    }
+  }
+
   return (
     <Styled.DesktopMenu>
-      <CommonStyled.MenuLink
-        href="https://sites.google.com/view/cndt2022-guide"
-        rel="noreferrer"
-        target="_blank"
-      >
+      <CommonStyled.MenuLink href={guideUrl()} rel="noreferrer" target="_blank">
         <Button style={{ color: '#423A57' }}>Attendee Guide</Button>
       </CommonStyled.MenuLink>
       <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
