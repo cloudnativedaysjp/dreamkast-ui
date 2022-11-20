@@ -5,6 +5,7 @@ import { DesktopMenu, MobileMenu } from '../Menu'
 import AppBar from '@material-ui/core/AppBar'
 import { Event } from '../../generated/dreamkast-api.generated'
 import { TrailMapModal } from '../TrailMap/TrailMapModal'
+import Link from 'next/link'
 
 type Props = {
   children?: ReactNode
@@ -39,11 +40,11 @@ export const Layout: React.FC<Props> = ({
       <header>
         <AppBar position="static">
           <Styled.Header>
-            <a href={`/${event?.abbr}/ui`} rel="noopener noreferrer">
+            <Link href={`/${event?.abbr}/ui`} rel="noopener noreferrer">
               <Styled.HeaderImg
                 src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
               />
-            </a>
+            </Link>
             <DesktopMenu event={event} url={url} />
           </Styled.Header>
           <MobileMenu event={event} url={url} />

@@ -20,6 +20,7 @@ export const Header = styled(Toolbar)`
 
 export const HeaderImg = styled.img`
   height: 40px;
+  cursor: pointer;
 `
 
 export const ChildrenContainer = styled.div`
