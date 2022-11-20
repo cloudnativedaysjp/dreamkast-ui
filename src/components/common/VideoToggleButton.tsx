@@ -16,7 +16,7 @@ export const VideoToggleButton = () => {
       startIcon={settings.showVideo ? <VideocamOff /> : <Videocam />}
       onClick={() => dispatch(setShowVideo(!settings.showVideo))}
     >
-      {settings.showVideo ? 'Stop Video' : 'Show Video'}
+      {settings.showVideo ? '視聴画面を隠す' : '視聴画面を表示'}
     </Button>
   )
 }
