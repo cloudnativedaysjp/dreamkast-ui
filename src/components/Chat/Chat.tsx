@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import * as Styled from './styled'
 import { ChatMessageForm } from './internal/ChatMessageForm'
 import dayjs from 'dayjs'
@@ -14,7 +14,17 @@ import {
   GetApiV1ChatMessagesApiResponse,
   Talk,
   usePostApiV1ChatMessagesMutation,
+  usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
+import {
+  getChatEventNum,
+  getGotChatPoint,
+  getSlotId,
+  setGotChatPoint,
+} from '../../util/trailMap'
+import { settingsSelector } from '../../store/settings'
+import { useSelector } from 'react-redux'
+import { EnvCtx } from '../../context/env'
 
 type Props = {
   event: Event
@@ -105,6 +115,8 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     useState<ChatMessageContainer>(initialChatMessage)
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
+  const envCtx = useContext(EnvCtx)
+  const settings = useSelector(settingsSelector)
 
   const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
     {
@@ -115,6 +127,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     { skip: !talk?.id },
   )
   const [createChatMsg] = usePostApiV1ChatMessagesMutation()
+  const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   useEffect(() => {
     if (isLoading) {
@@ -178,6 +191,21 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     onSendReply(data)
   }
 
+  const slotId = useMemo(() => {
+    if (!talk) {
+      return null
+    }
+    return getSlotId(talk)
+  }, [talk])
+  const chatPointEventId = useMemo(() => {
+    if (!slotId) {
+      return null
+    }
+    const eventNum = getChatEventNum(slotId)
+    return envCtx.getPointEventId(eventNum)
+  }, [slotId, envCtx])
+  const isAlreadyGotChatPoint = !!slotId && getGotChatPoint(slotId)
+
   const onSendReply = (data: MessageInputs) => {
     if (!talk) return
     const chatMessage = {
@@ -189,10 +217,29 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
       messageType: (data.isQuestion ? 'qa' : 'chat') as MessageType,
     }
 
-    createChatMsg({ chatMessage })
-      .unwrap()
-      .catch((err) => console.error(err))
-    setSelectedMessage(initialChatMessage)
+    ;(async () => {
+      try {
+        await createChatMsg({ chatMessage }).unwrap()
+        setSelectedMessage(initialChatMessage)
+
+        if (!slotId || !chatPointEventId) {
+          return
+        }
+        if (isAlreadyGotChatPoint) {
+          return
+        }
+        await postPointEvent({
+          profileId: `${settings.profile.id}`,
+          profilePoint: {
+            conference: settings.eventAbbr,
+            pointEventId: chatPointEventId,
+          },
+        }).unwrap()
+        setGotChatPoint(slotId)
+      } catch (err) {
+        console.error(err)
+      }
+    })()
   }
 
   const onChecked = (

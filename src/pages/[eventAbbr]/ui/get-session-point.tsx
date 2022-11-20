@@ -93,6 +93,9 @@ const IndexPage: NextPage = () => {
       return
     }
     const slotId = getSlotId(talksQuery.data)
+    if (slotId === 0) {
+      return
+    }
 
     ;(async () => {
       const eventNum = getSessionEventNum(slotId)
