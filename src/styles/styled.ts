@@ -48,3 +48,8 @@ export const BaseCenterContainer = styled.div`
   transform: translate(-50%, -50%);
   position: absolute;
 `
+
+export const SuspendContainer = styled.div`
+  background-color: white;
+  margin: 5px;
+`

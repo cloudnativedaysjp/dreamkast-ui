@@ -2,11 +2,18 @@ import React from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
+import { Skeleton } from '@material-ui/lab'
 
 export const TrailMapPoint = () => {
   const settings = useSelector(settingsSelector)
   if (!settings.pointDataInitialized) {
-    return <></>
+    return (
+      <Styled.TrailMapPointSuspendContainer>
+        <div className={'suspend'}>
+          <Skeleton variant="rect" animation={'wave'} className={'skeleton'} />
+        </div>
+      </Styled.TrailMapPointSuspendContainer>
+    )
   }
 
   const { total } = settings.pointData
@@ -45,19 +52,17 @@ export const TrailMapPoint = () => {
   })()
 
   return (
-    <div>
-      <Styled.TrailMapPointContainer>
-        {trailingImage}
-        {ticket > 0 ? (
-          <div className={'ticket'}>抽選券 {ticket} 枚ゲット！</div>
-        ) : (
-          ''
-        )}
-        <div className={'point'}>
-          {ticket > 0 ? `${ticket * 100} + ` : ''}
-          {frac}pt
-        </div>
-      </Styled.TrailMapPointContainer>
-    </div>
+    <Styled.TrailMapPointContainer>
+      {trailingImage}
+      {ticket > 0 ? (
+        <div className={'ticket'}>抽選券 {ticket} 枚ゲット！</div>
+      ) : (
+        ''
+      )}
+      <div className={'point'}>
+        {ticket > 0 ? `${ticket * 100} + ` : ''}
+        {frac}pt
+      </div>
+    </Styled.TrailMapPointContainer>
   )
 }

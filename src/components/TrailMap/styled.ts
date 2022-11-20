@@ -19,6 +19,26 @@ export const TrailMapHeader = styled.img`
   height: 100%;
 `
 
+export const TrailMapPointSuspendContainer = styled.div`
+  width: 100%;
+  padding-top: 50%;
+  height: 0;
+  position: relative;
+  margin-bottom: 5px;
+  .suspend {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: whitesmoke;
+    .skeleton {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`
+
 export const TrailMapPointContainer = styled.div`
   position: relative;
   > img {
@@ -58,7 +78,20 @@ export const TrailMapPointContainer = styled.div`
 export const StampCardContainer = styled.div`
   width: 100%;
   padding-top: 40%;
+  height: 0;
   position: relative;
+  .suspend {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: white;
+    .skeleton {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `
 
 export const StampCard = styled.img`
