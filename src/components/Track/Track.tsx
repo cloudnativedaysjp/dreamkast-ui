@@ -63,7 +63,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
       trackId: `${selectedTrack?.id}`,
       conferenceDayIds: dayId,
     },
-    { skip: !dayId },
+    { skip: !dayId || !selectedTrack?.id },
   )
   useEffect(() => {
     if (isLoading) {
@@ -206,6 +206,10 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     if (!settings.profile.isAttendOffline && selectedTalk.onAir) {
       setPointTimer(
         window.setInterval(() => {
+          const slotId = getSlotId(selectedTalk)
+          if (slotId === 0) {
+            return
+          }
           mutateAppData({
             profileId: `${settings.profile.id}`,
             conference: settings.eventAbbr,
@@ -214,7 +218,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
               payload: {
                 talkId: selectedTalk.id,
                 trackId: selectedTrack?.id || 0,
-                slotId: getSlotId(selectedTalk),
+                slotId: slotId,
               },
             },
           })
