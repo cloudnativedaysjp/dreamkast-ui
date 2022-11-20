@@ -14,9 +14,6 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
   return (
     <Styled.DesktopMenu>
-      <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
-        <Button style={{ color: '#423A57' }}>Top</Button>
-      </Link>
       <CommonStyled.MenuLink
         href="https://sites.google.com/view/cndt2022-guide"
         rel="noreferrer"
