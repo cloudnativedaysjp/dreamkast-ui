@@ -21,6 +21,8 @@ import { settingsSelector } from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
 import { EnvCtx } from '../../../context/env'
+import { CircularProgress } from '@material-ui/core'
+import * as CommonStyled from '../../../styles/styled'
 
 type OnAirTalk = {
   talk_id: number
@@ -140,7 +142,9 @@ const IndexPage: NextPage = () => {
   if (event) {
     return (
       <Layout title={event.name} event={event}>
-        <div></div>
+        <CommonStyled.BaseCenterContainer>
+          <CircularProgress color="primary" size={60} />
+        </CommonStyled.BaseCenterContainer>
       </Layout>
     )
   }

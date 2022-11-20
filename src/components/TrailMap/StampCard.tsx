@@ -12,6 +12,7 @@ import {
   getSessionEventNum,
 } from '../../util/trailMap'
 import { EnvCtx } from '../../context/env'
+import { Skeleton } from '@material-ui/lab'
 
 type Props = {
   todo?: boolean
@@ -90,7 +91,13 @@ export const StampCard = (_: Props) => {
   }, [settings.initialized, stamp.canGetNewStamp])
 
   if (!pinnedStamp) {
-    return <></>
+    return (
+      <Styled.StampCardContainer>
+        <div className={'suspend'}>
+          <Skeleton variant="rect" animation={'wave'} className={'skeleton'} />
+        </div>
+      </Styled.StampCardContainer>
+    )
   }
 
   const StampsNotYetAdded = stampLocation.map((loc, i) => (
