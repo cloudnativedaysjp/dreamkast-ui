@@ -4,6 +4,7 @@ import { StampCard } from './StampCard'
 import { TrailMapPoint } from './TrailMapPoint'
 import { TrailMapRule } from './TrailMapRule'
 import { useStampCompleteBonus } from '../hooks/useStampCompleteBonus'
+import { TrailMapPointHistory } from './TrailMapPointHistory'
 
 export const TrailMap = () => {
   useStampCompleteBonus()
@@ -17,6 +18,7 @@ export const TrailMap = () => {
         <TrailMapPoint></TrailMapPoint>
         <StampCard></StampCard>
         <TrailMapRule></TrailMapRule>
+        <TrailMapPointHistory></TrailMapPointHistory>
       </Styled.InnerContainer>
     </Styled.Container>
   )
