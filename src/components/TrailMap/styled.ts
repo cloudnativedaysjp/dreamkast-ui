@@ -7,11 +7,18 @@ export const TrailMapModal = styled(Modal)`
 
 export const Container = styled.div`
   width: 90%;
+  height: calc(100vh - 100px);
   max-width: 600px;
   top: 50px;
   left: 50%;
   position: absolute;
   transform: translate(-50%, 0);
+  overflow-y: scroll;
+`
+
+export const InnerContainer = styled.div`
+  width: 100%;
+  overflow-y: scroll;
 `
 
 export const TrailMapHeader = styled.img`

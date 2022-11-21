@@ -10,12 +10,14 @@ export const TrailMap = () => {
 
   return (
     <Styled.Container>
-      <Styled.TrailMapHeader
-        src={`/cndt2022/ui/trailmap_header.jpg`}
-      ></Styled.TrailMapHeader>
-      <TrailMapPoint></TrailMapPoint>
-      <StampCard></StampCard>
-      <TrailMapRule></TrailMapRule>
+      <Styled.InnerContainer>
+        <Styled.TrailMapHeader
+          src={`/cndt2022/ui/trailmap_header.jpg`}
+        ></Styled.TrailMapHeader>
+        <TrailMapPoint></TrailMapPoint>
+        <StampCard></StampCard>
+        <TrailMapRule></TrailMapRule>
+      </Styled.InnerContainer>
     </Styled.Container>
   )
 }
