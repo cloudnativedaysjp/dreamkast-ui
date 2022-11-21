@@ -191,3 +191,10 @@ export const TrailMapButton = styled(Button)`
     box-shadow: 0 0 0 1em transparent;
   }
 `
+
+export const PointHistoryTable = styled.div`
+  margin-top: 5px;
+  border-radius: 0;
+  background-color: white;
+  padding: 5px;
+`
