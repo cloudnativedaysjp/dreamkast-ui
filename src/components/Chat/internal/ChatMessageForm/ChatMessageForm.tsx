@@ -25,6 +25,7 @@ export const ChatMessageForm: React.FC<Props> = ({
   onSendMessage,
   onSendQuestion,
 }) => {
+  const CHAT_BODY_MAX_LENGTH = 512
   const {
     register,
     handleSubmit,
@@ -72,6 +73,10 @@ export const ChatMessageForm: React.FC<Props> = ({
     }
   }, [isSubmitSuccessful, reset])
 
+  useEffect(() => {
+    setBtnDisabled((watchChatMessage as string).length > CHAT_BODY_MAX_LENGTH)
+  }, [watchChatMessage])
+
   return (
     <Styled.Container>
       {/* {isVisibleForm && ( */}
@@ -84,7 +89,10 @@ export const ChatMessageForm: React.FC<Props> = ({
           color="secondary"
           size="small"
           onKeyPress={handleKeyPress}
-          {...register('chatMessage', { required: true, maxLength: 512 })}
+          {...register('chatMessage', {
+            required: true,
+            maxLength: CHAT_BODY_MAX_LENGTH,
+          })}
         />
         {errors.chatMessage?.types?.maxLength && (
           <Styled.WarningText>
