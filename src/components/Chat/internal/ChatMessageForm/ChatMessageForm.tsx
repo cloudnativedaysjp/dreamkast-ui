@@ -31,8 +31,12 @@ export const ChatMessageForm: React.FC<Props> = ({
     reset,
     watch,
     getValues,
-    formState: { isSubmitSuccessful },
-  } = useForm<MessageInputs>()
+    formState: { errors, isSubmitSuccessful },
+  } = useForm<MessageInputs>({
+    mode: 'onChange',
+    criteriaMode: 'all',
+    shouldFocusError: false,
+  })
   const [btnDisabled, setBtnDisabled] = useState<boolean>(false)
 
   const watchChatMessage = watch('chatMessage')
@@ -80,8 +84,12 @@ export const ChatMessageForm: React.FC<Props> = ({
           color="secondary"
           size="small"
           onKeyPress={handleKeyPress}
-          {...register('chatMessage')}
+          {...register('chatMessage', { required: true, maxLength: 512 })}
         />
+        {errors.chatMessage?.types?.maxLength && (
+          <Styled.label>一度に書き込める最大文字数は512文字です</Styled.label>
+        )}
+
         <Input type="hidden" {...register('isQuestion')} />
         <Styled.ButtonContainer>
           <ReactionButton
