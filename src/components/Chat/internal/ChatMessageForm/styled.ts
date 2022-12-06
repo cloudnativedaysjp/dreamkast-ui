@@ -46,6 +46,10 @@ export const TextField = styled(MuiTextField)`
   width: 100%;
   padding: 2px 10px !important;
 `
+export const WarningText = styled.div`
+  width: 100%;
+  padding: 2px 10px !important;
+`
 
 export const CheckBoxContainer = styled.div`
   width: 100%;

@@ -87,7 +87,9 @@ export const ChatMessageForm: React.FC<Props> = ({
           {...register('chatMessage', { required: true, maxLength: 512 })}
         />
         {errors.chatMessage?.types?.maxLength && (
-          <Styled.label>一度に書き込める最大文字数は512文字です</Styled.label>
+          <Styled.WarningText>
+            一度に書き込める最大文字数は512文字です
+          </Styled.WarningText>
         )}
 
         <Input type="hidden" {...register('isQuestion')} />
