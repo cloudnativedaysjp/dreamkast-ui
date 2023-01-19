@@ -564,7 +564,6 @@ export type ProfilePointsResponse = {
     pointEventId: string
     point?: number | undefined
     timestamp?: number | undefined
-    desc?: string | undefined
   }[]
 }
 export type ErrorSchema = {
