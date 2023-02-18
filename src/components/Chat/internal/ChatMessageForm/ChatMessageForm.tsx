@@ -74,7 +74,7 @@ export const ChatMessageForm: React.FC<Props> = ({
   }, [isSubmitSuccessful, reset])
 
   useEffect(() => {
-    setBtnDisabled((watchChatMessage as string).length > CHAT_BODY_MAX_LENGTH)
+    setBtnDisabled((watchChatMessage || '').length > CHAT_BODY_MAX_LENGTH)
   }, [watchChatMessage])
 
   return (
@@ -96,7 +96,7 @@ export const ChatMessageForm: React.FC<Props> = ({
         />
         {errors.chatMessage?.types?.maxLength && (
           <Styled.WarningText>
-            一度に書き込める最大文字数は512文字です
+            一度に書き込める最大文字数は{CHAT_BODY_MAX_LENGTH}文字です
           </Styled.WarningText>
         )}
 
