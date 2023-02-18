@@ -11,6 +11,7 @@ import { TrailMapButton } from '../TrailMap/TrailMapButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
+import { useMenuContents } from './hooks'
 
 type Props = {
   event?: Event
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export const MobileMenu: React.FC<Props> = ({ event, url }) => {
+  const { guideUrl, isPreEvent } = useMenuContents()
   const [state, setState] = React.useState(false)
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -46,18 +48,26 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
             <Button style={{ color: '#423A57' }}>Your Plan</Button>
           </Link>
         </ListItem>
-        <ListItem button key="guide">
-          <ListItemIcon>
-            <MapIcon />
-          </ListItemIcon>
-          <CommonStyled.MenuLink
-            href="https://sites.google.com/view/cndt2022-guide"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <Button style={{ color: '#423A57' }}>Attendee Guide</Button>
-          </CommonStyled.MenuLink>
-        </ListItem>
+
+        {isPreEvent ? (
+          ''
+        ) : (
+          <>
+            <ListItem button key="guide">
+              <ListItemIcon>
+                <MapIcon />
+              </ListItemIcon>
+              <CommonStyled.MenuLink
+                href={guideUrl()}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <Button style={{ color: '#423A57' }}>Attendee Guide</Button>
+              </CommonStyled.MenuLink>
+            </ListItem>
+          </>
+        )}
+
         <ListItem button key="timetable">
           <ListItemIcon>
             <TableChartIcon />
@@ -89,7 +99,7 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
       <Drawer open={state} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
-      <TrailMapButton />
+      {isPreEvent ? '' : <TrailMapButton />}
       <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Grafana</Button>
       </CommonStyled.MenuLink>
