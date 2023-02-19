@@ -8,9 +8,8 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
-import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
 import dayjs from 'dayjs'
+import { useTracksWithLiveTalk } from './hooks'
 
 type Props = {
   selectedTrack: number
@@ -24,17 +23,7 @@ export const LiveTrackList: React.FC<Props> = ({
   tracks,
   onChange,
 }) => {
-  const { talks } = useSelector(settingsSelector)
-
-  const data = tracks.map((tr) => {
-    const talkId = tr.onAirTalk
-      ? ((tr.onAirTalk as any)?.talk_id as string)
-      : ''
-    return {
-      track: tr,
-      talk: talks[talkId],
-    }
-  })
+  const data = useTracksWithLiveTalk(tracks)
 
   return (
     <Styled.Container>

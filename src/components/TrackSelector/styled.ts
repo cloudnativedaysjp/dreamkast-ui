@@ -68,7 +68,7 @@ export const Title = styled.div`
 `
 
 export const List = styled.div`
-  padding: 5px;
+  padding: 5px 5px 10px;
 `
 
 export const TrackSelectorButton = styled(Button)`
