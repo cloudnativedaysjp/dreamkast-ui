@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import * as Styled from './styled'
 import { setViewTrackIdToSessionStorage } from '../../util/viewTrackId'
 import { Track } from '../../generated/dreamkast-api.generated'
+import { FormatListBulleted } from '@material-ui/icons'
+import { LiveTalkModalButton } from './styled'
+import { LiveTrackList } from './LiveTrackList'
 
 type Props = {
   tracks: Track[]
@@ -15,6 +18,7 @@ export const TrackSelector: React.FC<Props> = ({
   selectTrack,
 }) => {
   const [item, setItem] = useState<number>(0)
+  const [isModalOpen, setModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (selectedTrack) setItem(selectedTrack.id)
@@ -39,17 +43,33 @@ export const TrackSelector: React.FC<Props> = ({
     }
   }
   return (
-    <Styled.TrackMenuContainer
-      value={item}
-      color="primary"
-      onChange={handleChange}
-      exclusive
-    >
-      {tracks.map((track) => (
-        <Styled.MenuItem key={track.id} value={track.id}>
-          {track.name}
-        </Styled.MenuItem>
-      ))}
-    </Styled.TrackMenuContainer>
+    <>
+      <Styled.TrackMenuContainer
+        value={item}
+        color="primary"
+        onChange={handleChange}
+        exclusive
+      >
+        {tracks.map((track) => (
+          <Styled.MenuItem key={track.id} value={track.id}>
+            {track.name}
+          </Styled.MenuItem>
+        ))}
+        <div>
+          <LiveTalkModalButton
+            color="primary"
+            onClick={() => setModalOpen(true)}
+          >
+            <FormatListBulleted />
+          </LiveTalkModalButton>
+        </div>
+      </Styled.TrackMenuContainer>
+      <Styled.LiveTalkModal
+        open={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      >
+        <LiveTrackList tracks={tracks}></LiveTrackList>
+      </Styled.LiveTalkModal>
+    </>
   )
 }
