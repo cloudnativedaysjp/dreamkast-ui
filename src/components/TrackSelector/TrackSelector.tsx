@@ -25,7 +25,7 @@ export const TrackSelector: React.FC<Props> = ({
   }, [selectedTrack])
 
   const handleChange = (
-    _event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement> | null,
     selectItem: number | null,
   ) => {
     if (selectItem) {
@@ -68,7 +68,14 @@ export const TrackSelector: React.FC<Props> = ({
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
       >
-        <LiveTrackList tracks={tracks}></LiveTrackList>
+        <LiveTrackList
+          selectedTrack={item}
+          tracks={tracks}
+          onChange={(i) => {
+            setModalOpen(false)
+            handleChange(null, i)
+          }}
+        />
       </Styled.LiveTalkModal>
     </>
   )

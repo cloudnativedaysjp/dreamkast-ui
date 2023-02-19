@@ -1,53 +1,80 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import * as Styled from './styled'
 import { Track } from '../../generated/dreamkast-api.generated'
-import { Grid } from '@material-ui/core'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import dayjs from 'dayjs'
 
 type Props = {
+  selectedTrack: number
   tracks: Track[]
+
+  onChange: (selectedItem: number | null) => void
 }
 
-export const LiveTrackList: React.FC<Props> = ({ tracks }) => {
+export const LiveTrackList: React.FC<Props> = ({
+  selectedTrack,
+  tracks,
+  onChange,
+}) => {
   const { talks } = useSelector(settingsSelector)
 
-  const data = tracks
-    .map((tr) => {
-      const talkId = tr.onAirTalk
-        ? ((tr.onAirTalk as any)?.talk_id as string)
-        : ''
-      return {
-        track: tr,
-        talk: talks[talkId],
-      }
-    })
-    .filter(({ talk }) => !!talk)
+  const data = tracks.map((tr) => {
+    const talkId = tr.onAirTalk
+      ? ((tr.onAirTalk as any)?.talk_id as string)
+      : ''
+    return {
+      track: tr,
+      talk: talks[talkId],
+    }
+  })
 
   return (
     <Styled.Container>
       <Styled.InnerContainer>
-        {data.map(({ talk, track }) => (
-          <Grid
-            container
-            spacing={1}
-            justifyContent="center"
-            alignItems="flex-start"
-          >
-            <Grid item xs={3}>
-              ID={track.id}
-            </Grid>
-            <Grid item>
-              {dayjs(talk.startTime).format('HH:mm')}-
-              {dayjs(talk.endTime).format('HH:mm')}
-              <br />
-              {talk.title}
-              <br />
-              {talk.speakers?.map((s) => s.name).join(', ')}
-            </Grid>
-          </Grid>
-        ))}
+        <Styled.Title>ライブセッション</Styled.Title>
+        <Styled.List>
+          <TableContainer>
+            <Table aria-label="live-talks">
+              <TableBody>
+                {data.map(({ talk, track }) => (
+                  <TableRow key={track.id}>
+                    <TableCell style={{ borderBottom: 'none', width: '150px' }}>
+                      <Styled.TrackSelectorButton
+                        className={track.id === selectedTrack ? 'selected' : ''}
+                        onClick={() => onChange(track.id)}
+                      >
+                        {track.name}
+                      </Styled.TrackSelectorButton>
+                    </TableCell>
+                    <TableCell align={'left'} style={{ borderBottom: 'none' }}>
+                      {!talk ? (
+                        ''
+                      ) : (
+                        <>
+                          {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
+                          {dayjs(talk.startTime).format('HH:mm')}-
+                          {dayjs(talk.endTime).format('HH:mm')}
+                          <br />
+                          {talk.title}
+                          <br />
+                          {talk.speakers?.map((s) => s.name).join(', ')}
+                        </>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Styled.List>
       </Styled.InnerContainer>
     </Styled.Container>
   )
