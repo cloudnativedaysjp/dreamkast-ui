@@ -8,7 +8,6 @@ test.skip('TrackSelector', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     <TrackSelector
       selectedTrack={Tracks[0]}
-      tracks={Tracks}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       selectTrack={() => {}}
     />,

@@ -1,6 +1,5 @@
 import React from 'react'
 import * as Styled from './styled'
-import { Track } from '../../generated/dreamkast-api.generated'
 import {
   Table,
   TableBody,
@@ -13,17 +12,12 @@ import { useTracksWithLiveTalk } from './hooks'
 
 type Props = {
   selectedTrack: number
-  tracks: Track[]
 
   onChange: (selectedItem: number | null) => void
 }
 
-export const LiveTrackList: React.FC<Props> = ({
-  selectedTrack,
-  tracks,
-  onChange,
-}) => {
-  const data = useTracksWithLiveTalk(tracks)
+export const LiveTrackList: React.FC<Props> = ({ selectedTrack, onChange }) => {
+  const data = useTracksWithLiveTalk()
 
   return (
     <Styled.Container>

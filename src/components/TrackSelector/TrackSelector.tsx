@@ -110,7 +110,6 @@ export const TrackSelector: React.FC<Props> = ({
       >
         <LiveTrackList
           selectedTrack={item}
-          tracks={tracks}
           onChange={(i) => {
             setModalOpen(false)
             handleChange(null, i)
