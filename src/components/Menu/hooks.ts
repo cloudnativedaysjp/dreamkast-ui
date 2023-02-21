@@ -10,7 +10,7 @@ export const useMenuContents = () => {
       return 'https://sites.google.com/view/cndt2022-guide/オンライン参加'
     }
   }
-  const isPreEvent = true
+  const isPreEvent = settings.conferenceDay?.internal
 
   return {
     guideUrl,
