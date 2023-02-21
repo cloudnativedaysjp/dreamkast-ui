@@ -9,9 +9,10 @@ import { useTracksWithLiveTalk } from './hooks'
 import { Theme, Tooltip } from '@material-ui/core'
 import dayjs from 'dayjs'
 import { withStyles } from '@material-ui/styles'
+import { useSelector } from 'react-redux'
+import { settingsSelector } from '../../store/settings'
 
 type Props = {
-  tracks: Track[]
   selectedTrack: Track | null
   selectTrack: (track: Track) => void
 }
@@ -27,11 +28,11 @@ const HtmlTooltip = withStyles((theme: Theme) => ({
 }))(Tooltip)
 
 export const TrackSelector: React.FC<Props> = ({
-  tracks,
   selectedTrack,
   selectTrack,
 }) => {
-  const data = useTracksWithLiveTalk(tracks)
+  const { tracks } = useSelector(settingsSelector)
+  const data = useTracksWithLiveTalk()
 
   const [item, setItem] = useState<number>(0)
   const [isModalOpen, setModalOpen] = useState<boolean>(false)

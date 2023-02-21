@@ -2,10 +2,8 @@ import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { Talk, Track } from '../../generated/dreamkast-api.generated'
 
-export const useTracksWithLiveTalk = (
-  tracks: Track[],
-): { track: Track; talk?: Talk }[] => {
-  const { talks } = useSelector(settingsSelector)
+export const useTracksWithLiveTalk = (): { track: Track; talk?: Talk }[] => {
+  const { talks, tracks } = useSelector(settingsSelector)
 
   return tracks.map((tr) => {
     if (!tr.onAirTalk) {

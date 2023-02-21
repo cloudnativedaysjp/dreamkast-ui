@@ -6,7 +6,6 @@ import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
-import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 import {
   Event,
@@ -24,9 +23,15 @@ type Props = {
   event: Event
   selectedTrack: Track | null
   propTalks?: Talk[]
+
+  refetch: () => void
 }
 
-export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
+export const TrackView: React.FC<Props> = ({
+  event,
+  selectedTrack,
+  refetch: refetchAll,
+}) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -42,17 +47,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
 
-  // TODO remove following and use settings store instead of that
-  const dayId = useMemo(() => {
-    const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
-    let dayId = ''
-    event?.conferenceDays?.forEach((day) => {
-      if (day.date == today && day.id) {
-        dayId = String(day.id)
-      }
-    })
-    return dayId
-  }, [event])
+  const dayId = settings.conferenceDay?.id
 
   const onAirTalkExists = useMemo(() => {
     return talks.filter((talk) => !!talk.onAir).length > 0
@@ -183,6 +178,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
       {
         received: (msg: { [trackId: number]: Talk }) => {
           refetch() // onAirの切り替わった新しいTalk一覧を取得
+          refetchAll()
           setNextTalk(msg)
           if (!selectedTrack || !selectedTalk) return
           if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)
