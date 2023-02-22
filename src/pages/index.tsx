@@ -73,11 +73,14 @@ const IndexPage: NextPage = () => {
     return (
       <Layout title={event.name} event={event}>
         <TrackSelector
-          tracks={tracks}
           selectedTrack={selectedTrack}
           selectTrack={setSelectedTrack}
         />
-        <TrackView event={event} selectedTrack={selectedTrack} />
+        <TrackView
+          event={event}
+          selectedTrack={selectedTrack}
+          refetch={() => null}
+        />
       </Layout>
     )
   } else {
