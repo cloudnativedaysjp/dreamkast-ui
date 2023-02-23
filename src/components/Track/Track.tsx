@@ -42,6 +42,7 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
 
+  // TODO remove following and use settings store instead of that
   const dayId = useMemo(() => {
     const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
     let dayId = ''

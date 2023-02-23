@@ -7,10 +7,16 @@ import {
 } from '../generated/dreamkast-api.generated'
 import { RootState } from './index'
 import { createSelector } from 'reselect'
+import dayjs from 'dayjs'
 
 type SettingsState = {
   eventAbbr: string
   event: Event | null
+  conferenceDay: {
+    id: string
+    date: string | undefined
+    internal: boolean | undefined
+  } | null
   profile: Profile
   showVideo: boolean
   appData: DkUiData
@@ -23,6 +29,7 @@ type SettingsState = {
 const initialState: SettingsState = {
   eventAbbr: '',
   event: null,
+  conferenceDay: null,
   profile: {
     id: 0,
     name: '',
@@ -55,6 +62,17 @@ const settingsSlice = createSlice({
     },
     setEvent: (state, action: PayloadAction<Event>) => {
       state.event = action.payload
+      const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
+      const confDay = action.payload?.conferenceDays?.find(
+        (day) => day.date === today,
+      )
+      if (confDay) {
+        state.conferenceDay = {
+          id: String(confDay.id),
+          date: confDay.date,
+          internal: confDay.internal,
+        }
+      }
     },
     setProfile: (state, action: PayloadAction<Profile>) => {
       state.profile = action.payload
