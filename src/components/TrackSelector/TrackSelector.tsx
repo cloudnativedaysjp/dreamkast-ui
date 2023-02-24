@@ -109,6 +109,7 @@ export const TrackSelector: React.FC<Props> = ({
         onClose={() => setModalOpen(false)}
       >
         <LiveTrackList
+          data={data}
           selectedTrack={item}
           onChange={(i) => {
             setModalOpen(false)
