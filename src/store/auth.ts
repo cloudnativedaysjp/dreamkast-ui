@@ -7,12 +7,14 @@ type AuthState = {
 
   // TODO move to appropriate redux store
   apiBaseUrl: string
+  wsBaseUrl: string
 }
 
 const initialState: AuthState = {
   user: null,
   token: '',
   apiBaseUrl: '',
+  wsBaseUrl: '',
 }
 
 const authSlice = createSlice({
@@ -27,6 +29,7 @@ const authSlice = createSlice({
     },
     setApiBaseUrl: (state, action: PayloadAction<string>) => {
       state.apiBaseUrl = action.payload
+      state.wsBaseUrl = action.payload.replace('http', 'ws')
     },
   },
 })
