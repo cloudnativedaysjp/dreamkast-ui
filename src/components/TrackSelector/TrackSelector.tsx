@@ -41,10 +41,7 @@ export const TrackSelector: React.FC<Props> = ({
     if (selectedTrack) setItem(selectedTrack.id)
   }, [selectedTrack])
 
-  const handleChange = (
-    _event: React.MouseEvent<HTMLElement> | null,
-    selectItem: number | null,
-  ) => {
+  const handleChange = (selectItem: number | null) => {
     if (selectItem) {
       setViewTrackIdToSessionStorage(selectItem)
     }
@@ -62,47 +59,44 @@ export const TrackSelector: React.FC<Props> = ({
 
   return (
     <>
-      <Styled.TrackMenuContainer
-        value={item}
-        color="primary"
-        onChange={handleChange}
-        exclusive
-      >
-        {data.map(({ track, talk }) => (
-          <HtmlTooltip
-            title={
-              <React.Fragment>
-                <div>
-                  {!talk ? (
-                    'ライブセッションはありません'
-                  ) : (
-                    <>
-                      {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
-                      {dayjs(talk.startTime).format('HH:mm')}-
-                      {dayjs(talk.endTime).format('HH:mm')}
-                      <br />
-                      {talk.title}
-                      <br />
-                      {talk.speakers?.map((s) => s.name).join(', ')}
-                    </>
-                  )}
-                </div>
-              </React.Fragment>
-            }
-          >
-            <Styled.MenuItem key={track.id} value={track.id}>
-              {track.name}
-            </Styled.MenuItem>
-          </HtmlTooltip>
-        ))}
-        <div>
-          <LiveTalkModalButton
-            color="primary"
-            onClick={() => setModalOpen(true)}
-          >
-            <FormatListBulleted />
-          </LiveTalkModalButton>
-        </div>
+      <Styled.TrackMenuContainer>
+        <Styled.TrackSelectorButtonGroup
+          value={item}
+          color="primary"
+          onChange={(_, i) => handleChange(i)}
+          exclusive
+        >
+          {data.map(({ track, talk }) => (
+            <HtmlTooltip
+              title={
+                <React.Fragment>
+                  <div>
+                    {!talk ? (
+                      'ライブセッションはありません'
+                    ) : (
+                      <>
+                        {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
+                        {dayjs(talk.startTime).format('HH:mm')}-
+                        {dayjs(talk.endTime).format('HH:mm')}
+                        <br />
+                        {talk.title}
+                        <br />
+                        {talk.speakers?.map((s) => s.name).join(', ')}
+                      </>
+                    )}
+                  </div>
+                </React.Fragment>
+              }
+            >
+              <Styled.MenuItem key={track.id} value={track.id}>
+                {track.name}
+              </Styled.MenuItem>
+            </HtmlTooltip>
+          ))}
+        </Styled.TrackSelectorButtonGroup>
+        <LiveTalkModalButton color="primary" onClick={() => setModalOpen(true)}>
+          <FormatListBulleted />
+        </LiveTalkModalButton>
       </Styled.TrackMenuContainer>
       <Styled.LiveTalkModal
         open={isModalOpen}
@@ -113,7 +107,7 @@ export const TrackSelector: React.FC<Props> = ({
           selectedTrack={item}
           onChange={(i) => {
             setModalOpen(false)
-            handleChange(null, i)
+            handleChange(i)
           }}
         />
       </Styled.LiveTalkModal>

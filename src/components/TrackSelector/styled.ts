@@ -1,12 +1,16 @@
 import styled from 'styled-components'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import { Button, IconButton, Modal } from '@material-ui/core'
+import { ToggleButtonGroup } from '@material-ui/lab'
 
-export const TrackMenuContainer = styled(ToggleButtonGroup)`
+export const TrackMenuContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   padding: 20px 0;
+`
+
+export const TrackSelectorButtonGroup = styled(ToggleButtonGroup)`
+  width: calc(100% - 55px);
 `
 
 export const MenuItem = styled(ToggleButton)`
@@ -30,6 +34,9 @@ export const MenuItem = styled(ToggleButton)`
 `
 
 export const LiveTalkModalButton = styled(IconButton)`
+  float: right;
+  width: 49.2px;
+  height: 49.2px;
   margin-left: 5px;
   border-radius: 5px;
   border: 1.5px solid rgba(66, 58, 87, 0.5);
