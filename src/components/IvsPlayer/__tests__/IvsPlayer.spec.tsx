@@ -11,7 +11,7 @@ test('IvsPlayer', () => {
       }
       nextTalk={Talks[0]}
       autoplay={true}
-      showCountdown={true}
+      shouldUpdate={true}
       updateView={() => {
         return
       }}
