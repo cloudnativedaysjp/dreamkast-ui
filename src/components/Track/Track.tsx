@@ -6,7 +6,6 @@ import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
 import ActionCable from 'actioncable'
-import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 import {
   Event,
@@ -19,14 +18,21 @@ import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/trailMap'
+import { authSelector } from '../../store/authSelector'
 
 type Props = {
   event: Event
   selectedTrack: Track | null
   propTalks?: Talk[]
+
+  refetch: () => void
 }
 
-export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
+export const TrackView: React.FC<Props> = ({
+  event,
+  selectedTrack,
+  refetch: refetchAll,
+}) => {
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
@@ -38,21 +44,12 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
+  const { wsBaseUrl } = useSelector(authSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
 
-  // TODO remove following and use settings store instead of that
-  const dayId = useMemo(() => {
-    const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
-    let dayId = ''
-    event?.conferenceDays?.forEach((day) => {
-      if (day.date == today && day.id) {
-        dayId = String(day.id)
-      }
-    })
-    return dayId
-  }, [event])
+  const dayId = settings.conferenceDay?.id
 
   const onAirTalkExists = useMemo(() => {
     return talks.filter((talk) => !!talk.onAir).length > 0
@@ -113,14 +110,6 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     }
   }, [talks])
 
-  const actionCableUrl = () => {
-    if (window.location.protocol == 'http:') {
-      return `ws://${window.location.host}/cable`
-    } else {
-      return `wss://${window.location.host}/cable`
-    }
-  }
-
   const getNextTalk = () => {
     if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
   }
@@ -175,14 +164,15 @@ export const TrackView: React.FC<Props> = ({ event, selectedTrack }) => {
     if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
-    const wsUrl = actionCableUrl()
-    const cable = actionCable.createConsumer(wsUrl)
+    const actionCableUrl = `${wsBaseUrl}cable`
+    const cable = actionCable.createConsumer(actionCableUrl)
     setChatCable(cable)
     cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
         received: (msg: { [trackId: number]: Talk }) => {
           refetch() // onAirの切り替わった新しいTalk一覧を取得
+          refetchAll()
           setNextTalk(msg)
           if (!selectedTrack || !selectedTalk) return
           if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)

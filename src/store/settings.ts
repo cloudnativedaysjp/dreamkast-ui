@@ -4,6 +4,8 @@ import {
   Event,
   Profile,
   ProfilePointsResponse,
+  Talk,
+  Track,
 } from '../generated/dreamkast-api.generated'
 import { RootState } from './index'
 import { createSelector } from 'reselect'
@@ -24,6 +26,8 @@ type SettingsState = {
   pointData: ProfilePointsResponse
   pointDataInitialized: boolean
   isTrailMapOpen: boolean
+  talks: Record<string, Talk>
+  tracks: Track[]
 }
 
 const initialState: SettingsState = {
@@ -51,6 +55,8 @@ const initialState: SettingsState = {
   },
   pointDataInitialized: false,
   isTrailMapOpen: false,
+  talks: {},
+  tracks: [],
 }
 
 const settingsSlice = createSlice({
@@ -92,6 +98,15 @@ const settingsSlice = createSlice({
     setTrailMapOpen: (state, action: PayloadAction<boolean>) => {
       state.isTrailMapOpen = action.payload
     },
+    setTalks: (state, action: PayloadAction<Talk[]>) => {
+      state.talks = action.payload.reduce((accum, t) => {
+        accum[t.id] = t
+        return accum
+      }, {} as Record<string, Talk>)
+    },
+    setTracks: (state, action: PayloadAction<Track[]>) => {
+      state.tracks = action.payload
+    },
   },
 })
 
@@ -103,6 +118,8 @@ export const {
   setAppData,
   setPointData,
   setTrailMapOpen,
+  setTalks,
+  setTracks,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => {
