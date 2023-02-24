@@ -10,7 +10,7 @@ import { VideoToggleButton } from '../common/VideoToggleButton'
 type Props = {
   playBackUrl?: string | null
   autoplay: boolean
-  showCountdown: boolean
+  shouldUpdate: boolean
   nextTalk?: Talk
   updateView: () => void
   stopUpdate: () => void
@@ -25,7 +25,7 @@ declare function registerIVSTech(
 export const IvsPlayer: React.FC<Props> = ({
   playBackUrl,
   autoplay,
-  showCountdown,
+  shouldUpdate,
   nextTalk,
   updateView,
   stopUpdate,
@@ -33,19 +33,6 @@ export const IvsPlayer: React.FC<Props> = ({
 }) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
-  const [counter, setCounter] = useState<number>(5)
-  const [timer, setTimer] = useState<NodeJS.Timer>()
-
-  const cancelUpdate = () => {
-    clearInterval(timer as NodeJS.Timer)
-    setCounter(5)
-    stopUpdate()
-  }
-
-  const updateSession = () => {
-    updateView()
-    setCounter(5)
-  }
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -82,17 +69,6 @@ export const IvsPlayer: React.FC<Props> = ({
     console.log(playerRef.current.currentSource())
   }, [playBackUrl])
 
-  useEffect(() => {
-    if (counter === 0) updateSession()
-
-    const timer =
-      showCountdown &&
-      counter > 0 &&
-      setInterval(() => setCounter(counter - 1), 1000)
-    setTimer(timer as NodeJS.Timer)
-    return () => clearInterval(timer as NodeJS.Timer)
-  }, [counter, showCountdown])
-
   return (
     <CommonStyled.Container>
       <Styled.IvsPlayerContainer>
@@ -104,17 +80,16 @@ export const IvsPlayer: React.FC<Props> = ({
           playsInline
           muted={false}
         />
-        {showCountdown && (
+        {shouldUpdate && (
           <Styled.OverLayContainer>
             <Styled.TextContainer>
-              <p>次のセッションまで {counter}秒</p>
               <Styled.NextTitle>{nextTalk?.title}</Styled.NextTitle>
             </Styled.TextContainer>
             <Styled.ButtonContainer>
-              <Styled.PlayerButton onClick={cancelUpdate}>
+              <Styled.PlayerButton onClick={stopUpdate}>
                 キャンセル
               </Styled.PlayerButton>
-              <Styled.PlayerButton onClick={updateSession}>
+              <Styled.PlayerButton onClick={updateView}>
                 すぐに再生
               </Styled.PlayerButton>
             </Styled.ButtonContainer>
