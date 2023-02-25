@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import * as Styled from './styled'
 import { setViewTrackIdToSessionStorage } from '../../util/viewTrackId'
 import { Track } from '../../generated/dreamkast-api.generated'
-import { FormatListBulleted } from '@material-ui/icons'
-import { LiveTalkModalButton } from './styled'
-import { PLiveTrackList } from './PLiveTrackList'
+import { PLiveTalkList } from './PLiveTalkList'
 import { useTracksWithLiveTalk } from './hooks'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
+import { LiveTalkModalButton } from './LiveTalkModalButton'
 
 type Props = {
   selectedTrack: Track | null
@@ -23,7 +22,6 @@ export const TrackSelector: React.FC<Props> = ({
   const data = useTracksWithLiveTalk()
 
   const [item, setItem] = useState<number>(0)
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (selectedTrack) setItem(selectedTrack.id)
@@ -53,24 +51,19 @@ export const TrackSelector: React.FC<Props> = ({
           selectedTrack={item}
           onChange={handleChange}
         ></PTrackSelectorButtonGroup>
-        <LiveTalkModalButton color="primary" onClick={() => setModalOpen(true)}>
-          <FormatListBulleted />
-        </LiveTalkModalButton>
+        <LiveTalkModalButton
+          content={(closeModal) => (
+            <PLiveTalkList
+              data={data}
+              selectedTrack={item}
+              onChange={(i) => {
+                closeModal()
+                handleChange(i)
+              }}
+            />
+          )}
+        ></LiveTalkModalButton>
       </Styled.TrackMenuContainer>
-
-      <Styled.LiveTalkModal
-        open={isModalOpen}
-        onClose={() => setModalOpen(false)}
-      >
-        <PLiveTrackList
-          data={data}
-          selectedTrack={item}
-          onChange={(i) => {
-            setModalOpen(false)
-            handleChange(i)
-          }}
-        />
-      </Styled.LiveTalkModal>
     </>
   )
 }
