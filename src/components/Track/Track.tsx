@@ -80,7 +80,9 @@ export const TrackView: React.FC<Props> = ({
 
   useEffect(() => {
     if (isLiveMode) {
-      refetch()
+      if (data) {
+        refetch()
+      }
     }
   }, [isLiveMode])
 
@@ -155,10 +157,11 @@ export const TrackView: React.FC<Props> = ({
     }
   }, [shouldUpdate, settings.profile.isAttendOffline])
 
-  const stopUpdate = () => {
-    setShouldUpdate(false)
-    setIsLiveMode(false)
-  }
+  useEffect(() => {
+    if (shouldUpdate) {
+      updateView()
+    }
+  }, [shouldUpdate])
 
   useEffect(() => {
     if (chatCable) chatCable.disconnect()
@@ -245,11 +248,7 @@ export const TrackView: React.FC<Props> = ({
         <Grid item xs={12} md={8}>
           <IvsPlayer
             playBackUrl={videoId}
-            nextTalk={getNextTalk()}
             autoplay={true}
-            shouldUpdate={shouldUpdate}
-            updateView={updateView}
-            stopUpdate={stopUpdate}
             showStopVideoButton={
               isSmallerThanMd && settings.profile.isAttendOffline
             }

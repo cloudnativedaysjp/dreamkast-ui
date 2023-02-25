@@ -14,35 +14,6 @@ exports[`IvsPlayer 1`] = `
       muted={false}
       playsInline={true}
     />
-    <div
-      className="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
-    >
-      <div
-        className="styled__TextContainer-sc-1l56t7n-5 iOqMQw"
-      >
-        <div
-          className="styled__NextTitle-sc-1l56t7n-6 YFoGk"
-        >
-          ほげふが
-        </div>
-      </div>
-      <div
-        className="styled__ButtonContainer-sc-1l56t7n-3 bneEhI"
-      >
-        <button
-          className="styled__PlayerButton-sc-1l56t7n-4 hZsbOo"
-          onClick={[Function]}
-        >
-          キャンセル
-        </button>
-        <button
-          className="styled__PlayerButton-sc-1l56t7n-4 hZsbOo"
-          onClick={[Function]}
-        >
-          すぐに再生
-        </button>
-      </div>
-    </div>
   </div>
 </div>
 `;
