@@ -11,7 +11,7 @@ type Props = {
   onChange: (selectedItem: number | null) => void
 }
 
-export const TrackSelectorButtonGroup: React.FC<Props> = ({
+export const PTrackSelectorButtonGroup: React.FC<Props> = ({
   data,
   selectedTrack,
   onChange,

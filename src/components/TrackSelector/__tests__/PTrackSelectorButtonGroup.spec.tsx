@@ -2,16 +2,16 @@ import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
 
 import { MockTrackWithTalks } from '../../../testhelper/fixture'
-import { TrackSelectorButtonGroup } from '../TrackSelectorButtonGroup'
+import { PTrackSelectorButtonGroup } from '../PTrackSelectorButtonGroup'
 import theme from '../../../styles/theme'
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/styles'
 
-describe('TrackSelectorButtonGroup', function () {
+describe('PTrackSelectorButtonGroup', function () {
   it('renders without crash', () => {
     const data = MockTrackWithTalks()
     render(
       <MUIThemeProvider theme={theme}>
-        <TrackSelectorButtonGroup
+        <PTrackSelectorButtonGroup
           data={data}
           selectedTrack={0}
           onChange={() => null}
@@ -23,7 +23,7 @@ describe('TrackSelectorButtonGroup', function () {
   it('renders when data empty', () => {
     render(
       <MUIThemeProvider theme={theme}>
-        <TrackSelectorButtonGroup
+        <PTrackSelectorButtonGroup
           data={[]}
           selectedTrack={0}
           onChange={() => null}
@@ -37,7 +37,7 @@ describe('TrackSelectorButtonGroup', function () {
     const spy = jest.fn()
     const screen = render(
       <MUIThemeProvider theme={theme}>
-        <TrackSelectorButtonGroup
+        <PTrackSelectorButtonGroup
           data={data}
           selectedTrack={0}
           onChange={spy}

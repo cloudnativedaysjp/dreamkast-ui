@@ -1,25 +1,25 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react'
-import { LiveTrackList } from '../LiveTrackList'
+import { PLiveTrackList } from '../PLiveTrackList'
 import { MockTrackWithTalks } from '../../../testhelper/fixture'
 
-describe('LiveTrackList', () => {
+describe('PLiveTrackList', () => {
   it('renders without crash', () => {
     const data = MockTrackWithTalks()
     render(
-      <LiveTrackList data={data} selectedTrack={0} onChange={() => null} />,
+      <PLiveTrackList data={data} selectedTrack={0} onChange={() => null} />,
     )
   })
 
   it('renders when data empty', () => {
-    render(<LiveTrackList data={[]} selectedTrack={0} onChange={() => null} />)
+    render(<PLiveTrackList data={[]} selectedTrack={0} onChange={() => null} />)
   })
 
   it('called onChange callback when track selected', () => {
     const data = MockTrackWithTalks()
     const spy = jest.fn()
     const screen = render(
-      <LiveTrackList data={data} selectedTrack={0} onChange={spy} />,
+      <PLiveTrackList data={data} selectedTrack={0} onChange={spy} />,
     )
     fireEvent.click(screen.getByText(data[0].track.name))
 

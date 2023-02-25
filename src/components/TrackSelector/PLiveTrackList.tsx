@@ -18,7 +18,7 @@ type Props = {
   onChange: (selectedItem: number | null) => void
 }
 
-export const LiveTrackList: React.FC<Props> = ({
+export const PLiveTrackList: React.FC<Props> = ({
   data,
   selectedTrack,
   onChange,

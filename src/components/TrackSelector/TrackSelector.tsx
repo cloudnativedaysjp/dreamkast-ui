@@ -4,11 +4,11 @@ import { setViewTrackIdToSessionStorage } from '../../util/viewTrackId'
 import { Track } from '../../generated/dreamkast-api.generated'
 import { FormatListBulleted } from '@material-ui/icons'
 import { LiveTalkModalButton } from './styled'
-import { LiveTrackList } from './LiveTrackList'
+import { PLiveTrackList } from './PLiveTrackList'
 import { useTracksWithLiveTalk } from './hooks'
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
-import { TrackSelectorButtonGroup } from './TrackSelectorButtonGroup'
+import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 
 type Props = {
   selectedTrack: Track | null
@@ -48,11 +48,11 @@ export const TrackSelector: React.FC<Props> = ({
   return (
     <>
       <Styled.TrackMenuContainer>
-        <TrackSelectorButtonGroup
+        <PTrackSelectorButtonGroup
           data={data}
           selectedTrack={item}
           onChange={handleChange}
-        ></TrackSelectorButtonGroup>
+        ></PTrackSelectorButtonGroup>
         <LiveTalkModalButton color="primary" onClick={() => setModalOpen(true)}>
           <FormatListBulleted />
         </LiveTalkModalButton>
@@ -62,7 +62,7 @@ export const TrackSelector: React.FC<Props> = ({
         open={isModalOpen}
         onClose={() => setModalOpen(false)}
       >
-        <LiveTrackList
+        <PLiveTrackList
           data={data}
           selectedTrack={item}
           onChange={(i) => {
