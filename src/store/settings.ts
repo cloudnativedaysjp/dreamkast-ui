@@ -10,8 +10,13 @@ import {
 import { RootState } from './index'
 import { createSelector } from 'reselect'
 import dayjs from 'dayjs'
+import {
+  getViewTrackIdFromSessionStorage,
+  setViewTrackIdToSessionStorage,
+} from '../util/viewTrackId'
 
 type SettingsState = {
+  // カンファレンスイベント
   eventAbbr: string
   event: Event | null
   conferenceDay: {
@@ -19,14 +24,27 @@ type SettingsState = {
     date: string | undefined
     internal: boolean | undefined
   } | null
+
+  // ユーザプロファイル
   profile: Profile
+
+  // ビデオ表示・非表示（オフライン参加のみ有効）
   showVideo: boolean
+
+  // トラックID
+  viewTrackId: number
+
+  // ポイントデータ
   appData: DkUiData
   appDataInitialized: boolean
   pointData: ProfilePointsResponse
   pointDataInitialized: boolean
   isTrailMapOpen: boolean
+
+  // 全talk
   talks: Record<string, Talk>
+
+  // 全track
   tracks: Track[]
 }
 
@@ -41,6 +59,7 @@ const initialState: SettingsState = {
     isAttendOffline: false,
   },
   showVideo: false,
+  viewTrackId: getViewTrackIdFromSessionStorage() || 0,
   appData: {
     watchedTalksOnline: {
       watchingTime: [],
@@ -87,6 +106,19 @@ const settingsSlice = createSlice({
     setShowVideo: (state, action: PayloadAction<boolean>) => {
       state.showVideo = action.payload
     },
+    setViewTrackId: (state, action: PayloadAction<number | null>) => {
+      if (!action.payload) {
+        return
+      }
+      const selectedTrack = state.tracks.find(({ id }) => id === action.payload)
+      if (!selectedTrack) {
+        return
+      }
+      state.viewTrackId = action.payload
+      setViewTrackIdToSessionStorage(action.payload)
+      window.location.href =
+        window.location.href.split('#')[0] + '#' + selectedTrack.name
+    },
     setAppData: (state, action: PayloadAction<DkUiData>) => {
       state.appData = action.payload
       state.appDataInitialized = true
@@ -120,6 +152,7 @@ export const {
   setTrailMapOpen,
   setTalks,
   setTracks,
+  setViewTrackId,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => {
