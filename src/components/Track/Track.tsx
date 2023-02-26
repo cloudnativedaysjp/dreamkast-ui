@@ -149,15 +149,6 @@ export const TrackView: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (!settings.profile.isAttendOffline) {
-      return
-    }
-    if (shouldUpdate) {
-      updateView()
-    }
-  }, [shouldUpdate, settings.profile.isAttendOffline])
-
-  useEffect(() => {
     if (shouldUpdate) {
       updateView()
     }
