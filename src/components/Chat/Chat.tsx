@@ -70,7 +70,7 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
         // create a websocket connection when the cache subscription starts
         await cacheDataLoaded
         const { wsBaseUrl } = (getState() as RootState).auth
-        const wsUrl = `${wsBaseUrl}cable`
+        const wsUrl = new URL('/cable', wsBaseUrl).toString()
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const actionCable = require('actioncable') // cannot import actioncable at the top of module since it depends on window
