@@ -158,7 +158,7 @@ export const TrackView: React.FC<Props> = ({
     if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
-    const actionCableUrl = `${wsBaseUrl}cable`
+    const actionCableUrl = new URL('/cable', wsBaseUrl).toString()
     const cable = actionCable.createConsumer(actionCableUrl)
     setChatCable(cable)
     cable.subscriptions.create(
