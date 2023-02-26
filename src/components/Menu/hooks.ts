@@ -5,9 +5,9 @@ export const useMenuContents = () => {
   const settings = useSelector(settingsSelector)
   const guideUrl = (): string => {
     if (settings.profile.isAttendOffline) {
-      return 'https://sites.google.com/view/cndt2022-guide/現地参加オフライン'
+      return 'https://sites.google.com/view/cicd2023/現地参加オフライン'
     } else {
-      return 'https://sites.google.com/view/cndt2022-guide/オンライン参加'
+      return 'https://sites.google.com/view/cicd2023/オンライン参加'
     }
   }
   const isPreEvent = settings.conferenceDay?.internal
