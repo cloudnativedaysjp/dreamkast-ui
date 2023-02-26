@@ -39,7 +39,7 @@ export const TrackView: React.FC<Props> = ({
   const [karteTimer, setKarteTimer] = useState<number>()
   const [pointTimer, setPointTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
-  const [showCountdown, setShowCountdown] = useState<boolean>(false)
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
@@ -80,7 +80,9 @@ export const TrackView: React.FC<Props> = ({
 
   useEffect(() => {
     if (isLiveMode) {
-      refetch()
+      if (data) {
+        refetch()
+      }
     }
   }, [isLiveMode])
 
@@ -95,7 +97,7 @@ export const TrackView: React.FC<Props> = ({
   useEffect(() => {
     if (
       !talks.length ||
-      showCountdown ||
+      shouldUpdate ||
       (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
     )
       return
@@ -122,7 +124,7 @@ export const TrackView: React.FC<Props> = ({
   }
 
   const updateView = () => {
-    setShowCountdown(false)
+    setShouldUpdate(false)
     if (
       !nextTalk ||
       !selectedTrack ||
@@ -147,18 +149,10 @@ export const TrackView: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    if (!settings.profile.isAttendOffline) {
-      return
-    }
-    if (showCountdown) {
+    if (shouldUpdate) {
       updateView()
     }
-  }, [showCountdown, settings.profile.isAttendOffline])
-
-  const stopUpdate = () => {
-    setShowCountdown(false)
-    setIsLiveMode(false)
-  }
+  }, [shouldUpdate])
 
   useEffect(() => {
     if (chatCable) chatCable.disconnect()
@@ -176,7 +170,7 @@ export const TrackView: React.FC<Props> = ({
           setNextTalk(msg)
           if (!selectedTrack || !selectedTalk) return
           if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)
-            setShowCountdown(true)
+            setShouldUpdate(true)
         },
       },
     )
@@ -245,11 +239,7 @@ export const TrackView: React.FC<Props> = ({
         <Grid item xs={12} md={8}>
           <IvsPlayer
             playBackUrl={videoId}
-            nextTalk={getNextTalk()}
             autoplay={true}
-            showCountdown={showCountdown}
-            updateView={updateView}
-            stopUpdate={stopUpdate}
             showStopVideoButton={
               isSmallerThanMd && settings.profile.isAttendOffline
             }
