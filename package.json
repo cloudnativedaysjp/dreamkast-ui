@@ -27,7 +27,7 @@
         "actioncable": "^5.2.8-1",
         "axios": "^0.27.2",
         "dayjs": "^1.11.5",
-        "linkify-react": "^4.0.0",
+        "linkify-react": "^3.0.4",
         "linkifyjs": "^3.0.5",
         "next": "12.3.4",
         "next-redux-wrapper": "^8.0.0",
