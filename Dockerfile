@@ -9,6 +9,8 @@ FROM node:16.19.1-alpine
 WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
+ARG SENTRY_AUTH_TOKEN
+ENV SENTRY_AUTH_TOKEN $SENTRY_AUTH_TOKEN
 RUN yarn build
 
 CMD [ "yarn", "start", "-p", "3001" ]
