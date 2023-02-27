@@ -2,7 +2,7 @@
 // with Sentry.
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require('@sentry/nextjs')
 
 module.exports = {}
 
@@ -10,4 +10,4 @@ module.exports = withSentryConfig(
   module.exports,
   { silent: true },
   { hideSourcemaps: false }, // FIXME: 本来は望ましくないので、あとでソースマップはオフにする
-);
+)
