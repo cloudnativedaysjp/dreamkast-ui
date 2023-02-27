@@ -9,5 +9,5 @@ module.exports = {}
 module.exports = withSentryConfig(
   module.exports,
   { silent: true },
-  { hideSourcemaps: true },
+  { hideSourcemaps: false }, // FIXME: 本来は望ましくないので、あとでソースマップはオフにする
 );
