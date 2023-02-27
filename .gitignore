@@ -38,3 +38,9 @@ yarn-error.log*
 .env
 
 tsconfig.tsbuildinfo
+
+# Sentry
+.sentryclirc
+
+# Sentry
+next.config.original.js

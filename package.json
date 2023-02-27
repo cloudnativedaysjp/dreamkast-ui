@@ -19,6 +19,7 @@
         "@material-ui/icons": "^4.11.3",
         "@material-ui/lab": "^4.0.0-alpha.61",
         "@reduxjs/toolkit": "1.9.1",
+        "@sentry/nextjs": "^7.38.0",
         "@types/axios": "^0.14.0",
         "@types/linkifyjs": "^2.1.4",
         "@types/moment": "^2.13.0",
