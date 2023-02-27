@@ -47,5 +47,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          secrets: |
-            "sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}"
+          envs:
+            SENTRY_AUTH_TOKEN = ${{ secrets.SENTRY_AUTH_TOKEN }}"

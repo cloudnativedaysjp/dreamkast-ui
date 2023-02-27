@@ -9,7 +9,7 @@ FROM node:16.19.1-alpine
 WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
-RUN --mount=type=secret,id=sentry_auth_token,dst=/base/.sentryclirc yarn build
+RUN yarn build
 
 CMD [ "yarn", "start", "-p", "3001" ]
 EXPOSE 3001
