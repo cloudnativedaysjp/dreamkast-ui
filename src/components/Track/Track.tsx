@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/trailMap'
-import { authSelector } from '../../store/authSelector'
 
 type Props = {
   event: Event
@@ -44,7 +43,6 @@ export const TrackView: React.FC<Props> = ({
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
-  const { wsBaseUrl } = useSelector(authSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
   const [_, setError] = useState()
@@ -112,6 +110,14 @@ export const TrackView: React.FC<Props> = ({
     }
   }, [talks])
 
+  const actionCableUrl = () => {
+    if (window.location.protocol == 'http:') {
+      return `ws://${window.location.host}/cable`
+    } else {
+      return `wss://${window.location.host}/cable`
+    }
+  }
+
   const getNextTalk = () => {
     if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
   }
@@ -158,8 +164,8 @@ export const TrackView: React.FC<Props> = ({
     if (chatCable) chatCable.disconnect()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
-    const actionCableUrl = new URL('/cable', wsBaseUrl).toString()
-    const cable = actionCable.createConsumer(actionCableUrl)
+    const wsUrl = actionCableUrl()
+    const cable = actionCable.createConsumer(wsUrl)
     setChatCable(cable)
     cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
