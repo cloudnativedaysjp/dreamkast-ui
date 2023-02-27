@@ -10,7 +10,7 @@ WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
 ARG SENTRY_AUTH_TOKEN
-RUN SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN yarn build
+RUN SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} yarn build
 
 CMD [ "yarn", "start", "-p", "3001" ]
 EXPOSE 3001
