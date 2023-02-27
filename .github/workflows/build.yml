@@ -48,4 +48,4 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           secrets: |
-            "sentry_auth_token=${{ secrets.SENTRY_AUTH_TOKEN }}"
+            "sentry_auth_token: ${{ secrets.SENTRY_AUTH_TOKEN }}"
