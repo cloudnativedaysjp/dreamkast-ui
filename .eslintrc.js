@@ -28,5 +28,6 @@ module.exports = {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       JSON.parse(require('fs').readFileSync('.prettierrc', 'utf8')),
     ],
+    '@typescript-eslint/no-var-requires': 'off',
   },
 }
