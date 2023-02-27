@@ -11,5 +11,5 @@ module.exports = {}
 module.exports = withSentryConfig(
   module.exports,
   { silent: true },
-  { hideSourcemaps: false }, // FIXME: 本来は望ましくないので、あとでソースマップはオフにする
+  { hideSourceMaps: false }, // FIXME: 本来は望ましくないので、あとでソースマップはオフにする
 )
