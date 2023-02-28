@@ -25,6 +25,7 @@ import {
 import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { EnvCtx } from '../../context/env'
+import { RootState } from '../../store'
 
 type Props = {
   event: Event
@@ -64,14 +65,12 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
       }),
       async onCacheEntryAdded(
         arg,
-        { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved, getState },
       ) {
         // create a websocket connection when the cache subscription starts
         await cacheDataLoaded
-        const wsUrl =
-          window.location.protocol === 'http:'
-            ? `ws://${window.location.host}/cable`
-            : `wss://${window.location.host}/cable`
+        const { wsBaseUrl } = (getState() as RootState).auth
+        const wsUrl = new URL('/cable', wsBaseUrl).toString()
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const actionCable = require('actioncable') // cannot import actioncable at the top of module since it depends on window
