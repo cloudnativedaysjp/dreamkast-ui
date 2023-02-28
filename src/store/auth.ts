@@ -29,10 +29,13 @@ const authSlice = createSlice({
     },
     setApiBaseUrl: (state, action: PayloadAction<string>) => {
       state.apiBaseUrl = action.payload
+    },
+    setWsBaseUrl: (state, action: PayloadAction<string>) => {
       state.wsBaseUrl = action.payload.replace('http', 'ws')
     },
   },
 })
 
-export const { setUser, setToken, setApiBaseUrl } = authSlice.actions
+export const { setUser, setToken, setApiBaseUrl, setWsBaseUrl } =
+  authSlice.actions
 export default authSlice
