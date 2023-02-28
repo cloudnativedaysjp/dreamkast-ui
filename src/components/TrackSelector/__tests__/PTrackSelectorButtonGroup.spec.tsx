@@ -7,7 +7,7 @@ import theme from '../../../styles/theme'
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/styles'
 
 describe('PTrackSelectorButtonGroup', function () {
-  it('renders without crash', () => {
+  it('should render without crash', () => {
     const data = MockTrackWithTalks()
     render(
       <MUIThemeProvider theme={theme}>
@@ -20,7 +20,7 @@ describe('PTrackSelectorButtonGroup', function () {
     )
   })
 
-  it('renders when data empty', () => {
+  it('should render when data empty', () => {
     render(
       <MUIThemeProvider theme={theme}>
         <PTrackSelectorButtonGroup
@@ -32,7 +32,7 @@ describe('PTrackSelectorButtonGroup', function () {
     )
   })
 
-  it('called onChange callback when track selected', () => {
+  it('should call onChange callback when track selected', () => {
     const data = MockTrackWithTalks()
     const spy = jest.fn()
     const screen = render(

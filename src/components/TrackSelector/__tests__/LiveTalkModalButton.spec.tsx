@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react'
 import { LiveTalkModalButton } from '../LiveTalkModalButton'
 
 describe('LiveTalkModalButton', () => {
-  it('does not render modal by default', () => {
+  it('should not render modal by default', () => {
     const screen = render(
       <LiveTalkModalButton
         content={(closeModal) => (
@@ -14,7 +14,7 @@ describe('LiveTalkModalButton', () => {
     expect(screen.queryByTestId('tgt')).toBeNull()
   })
 
-  it('renders modal when button clicked', () => {
+  it('should render modal when button clicked', () => {
     const screen = render(
       <LiveTalkModalButton
         content={(closeModal) => (
@@ -26,7 +26,7 @@ describe('LiveTalkModalButton', () => {
     expect(screen.queryByTestId('tgt')).toBeTruthy()
   })
 
-  it('hides modal when closeModal called', () => {
+  it('should hide modal when closeModal called', () => {
     const screen = render(
       <LiveTalkModalButton
         content={(closeModal) => (

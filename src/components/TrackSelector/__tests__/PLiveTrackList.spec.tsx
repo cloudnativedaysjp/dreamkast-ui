@@ -4,18 +4,18 @@ import { PLiveTalkList } from '../PLiveTalkList'
 import { MockTrackWithTalks } from '../../../testhelper/fixture'
 
 describe('PLiveTrackList', () => {
-  it('renders without crash', () => {
+  it('should render without crash', () => {
     const data = MockTrackWithTalks()
     render(
       <PLiveTalkList data={data} selectedTrack={0} onChange={() => null} />,
     )
   })
 
-  it('renders when data empty', () => {
+  it('should render when data empty', () => {
     render(<PLiveTalkList data={[]} selectedTrack={0} onChange={() => null} />)
   })
 
-  it('called onChange callback when track selected', () => {
+  it('should call onChange callback when track selected', () => {
     const data = MockTrackWithTalks()
     const spy = jest.fn()
     const screen = render(
