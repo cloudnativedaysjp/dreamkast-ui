@@ -1,6 +1,6 @@
 import React from 'react'
 import * as Styled from './styled'
-import { Track } from '../../generated/dreamkast-api.generated'
+import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { PLiveTalkList } from './PLiveTalkList'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -10,15 +10,18 @@ import {
 } from '../../store/settings'
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 import { LiveTalkModalButton } from './LiveTalkModalButton'
+import { ContainerComponent } from '../../util/types'
 
-type Props = {
-  selectedTrack: Track | null
-  selectTrack: (track: Track) => void
+export const TrackSelector: React.FC = () => {
+  return (
+    <CTrackSelector
+      content={(props) => <PTrackSelector {...props} />}
+    ></CTrackSelector>
+  )
 }
 
-export const TrackSelector: React.FC<Props> = () => {
+export const CTrackSelector: ContainerComponent<PProps> = ({ content }) => {
   const { viewTrackId } = useSelector(settingsSelector)
-  // TODO move to selector
   const { tracksWithLiveTalk } = useSelector(trackSelector)
 
   const dispatch = useDispatch()
@@ -26,6 +29,21 @@ export const TrackSelector: React.FC<Props> = () => {
     dispatch(setViewTrackId(selectItem))
   }
 
+  return content({ viewTrackId, tracksWithLiveTalk, handleChange })
+}
+
+type PProps = {
+  viewTrackId: number
+  tracksWithLiveTalk: { track: Track; talk?: Talk }[]
+
+  handleChange: (selectedItem: number | null) => void
+}
+
+const PTrackSelector: React.FC<PProps> = ({
+  viewTrackId,
+  tracksWithLiveTalk,
+  handleChange,
+}) => {
   return (
     <>
       <Styled.TrackMenuContainer>
