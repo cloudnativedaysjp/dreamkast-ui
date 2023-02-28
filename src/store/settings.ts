@@ -170,7 +170,7 @@ export const stampSelector = createSelector(settingsSelector, (s) => {
   }
 })
 
-export const trackSelector = createSelector(settingsSelector, (s) => {
+export const tracksSelector = createSelector(settingsSelector, (s) => {
   const tracksWithLiveTalk = s.tracks.map((tr) => {
     if (!tr.onAirTalk) {
       return {
@@ -184,6 +184,14 @@ export const trackSelector = createSelector(settingsSelector, (s) => {
     }
   })
   return { tracksWithLiveTalk }
+})
+
+export const selectedTrackSelector = createSelector(settingsSelector, (s) => {
+  if (s.tracks.length === 0) {
+    return null
+  }
+  const selected = s.tracks.find((track) => track.id == s.viewTrackId)
+  return selected || s.tracks[0]
 })
 
 export default settingsSlice

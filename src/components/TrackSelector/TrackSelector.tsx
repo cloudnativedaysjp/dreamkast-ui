@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   settingsSelector,
   setViewTrackId,
-  trackSelector,
+  tracksSelector,
 } from '../../store/settings'
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 import { LiveTalkModalButton } from './LiveTalkModalButton'
@@ -22,7 +22,7 @@ export const TrackSelector: React.FC = () => {
 
 export const CTrackSelector: ContainerComponent<PProps> = ({ content }) => {
   const { viewTrackId } = useSelector(settingsSelector)
-  const { tracksWithLiveTalk } = useSelector(trackSelector)
+  const { tracksWithLiveTalk } = useSelector(tracksSelector)
 
   const dispatch = useDispatch()
   const handleChange = (selectItem: number | null) => {
