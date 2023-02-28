@@ -59,7 +59,7 @@ const initialState: SettingsState = {
     isAttendOffline: false,
   },
   showVideo: false,
-  viewTrackId: getViewTrackIdFromSessionStorage() || 0,
+  viewTrackId: 0,
   appData: {
     watchedTalksOnline: {
       watchingTime: [],
@@ -82,6 +82,9 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
+    loadFromStorage: (state) => {
+      state.viewTrackId = getViewTrackIdFromSessionStorage() || 0
+    },
     setEventAbbr: (state, action: PayloadAction<string>) => {
       state.eventAbbr = action.payload
     },
@@ -143,6 +146,7 @@ const settingsSlice = createSlice({
 })
 
 export const {
+  loadFromStorage,
   setProfile,
   setShowVideo,
   setEventAbbr,
