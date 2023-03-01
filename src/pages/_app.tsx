@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import { wrapper } from '../store'
 import Head from 'next/head'
 import {
@@ -14,12 +14,11 @@ import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
-import { useDispatch, useSelector } from 'react-redux'
-import { setApiBaseUrl, setToken, setUser, setWsBaseUrl } from '../store/auth'
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
+import { useDispatch } from 'react-redux'
+import { setApiBaseUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
-import { tokenSelector } from '../store/authSelector'
 import { EnvProvider } from '../context/env'
+import { AuthProvider, useAccessToken } from '../context/auth'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -33,11 +32,7 @@ const GlobalStyle = createGlobalStyle`
   }`
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const AppComponent: any = (props: { children: React.ReactElement }) => {
-  const { children } = props
-  const [_, setError] = useState()
-  const dispatch = useDispatch()
-
+const AppComponent: any = ({ children }: PropsWithChildren) => {
   // Remove the server-side injected CSS.(https://material-ui.com/guides/server-rendering/)
   useEffect(() => {
     TagManager.initialize({ gtmId: 'GTM-MWQZPVN' })
@@ -47,43 +42,7 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
     }
   }, [])
 
-  const {
-    user,
-    isAuthenticated,
-    isLoading,
-    getAccessTokenSilently,
-    loginWithRedirect,
-  } = useAuth0()
-
-  useEffect(() => {
-    if (isLoading) {
-      return
-    }
-    if (!isAuthenticated) {
-      loginWithRedirect().catch((err) => {
-        err.message = 'Login with redirect: ' + err.message
-        setError(() => {
-          throw err
-        })
-      })
-      return
-    }
-    if (user) {
-      dispatch(setUser(user))
-    }
-    getAccessTokenSilently()
-      .then((token) => {
-        dispatch(setToken(token))
-      })
-      .catch((err) => {
-        err.message = 'Get token silently: ' + err.message
-        setError(() => {
-          throw err
-        })
-      })
-  }, [isAuthenticated, isLoading])
-
-  const token = useSelector(tokenSelector)
+  const token = useAccessToken()
   if (!token) {
     return <></>
   }
@@ -110,44 +69,29 @@ const AppComponent: any = (props: { children: React.ReactElement }) => {
   )
 }
 
-type WrappedAppProps = AppProps & { env: typeof ENV }
-const WrappedApp = ({ Component, pageProps, env }: WrappedAppProps) => {
-  const [baseUrl, setBaseUrl] = useState('')
+type RootAppProps = AppProps & { env: typeof ENV }
+const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
+  // inject env vars to redux
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(setApiBaseUrl(env.NEXT_PUBLIC_API_BASE_URL))
     dispatch(setWsBaseUrl(env.NEXT_PUBLIC_DK_URL))
   }, [])
 
-  useEffect(() => {
-    const url = new URL(env.NEXT_PUBLIC_BASE_PATH, window.location.origin)
-    setBaseUrl(url.href)
-  }, [setBaseUrl])
-
-  // Only CSR is supported since dynamic host origin resolution cannot be performed in SSR.
-  if (!baseUrl) {
-    return <></>
-  }
   return (
     <>
-      <Auth0Provider
-        domain={env.NEXT_PUBLIC_AUTH0_DOMAIN}
-        clientId={env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
-        redirectUri={baseUrl}
-        audience={env.NEXT_PUBLIC_AUTH0_AUDIENCE}
-      >
+      <AuthProvider env={env}>
         <EnvProvider env={env}>
           <AppComponent>
             <Component {...pageProps} />
           </AppComponent>
         </EnvProvider>
-      </Auth0Provider>
+      </AuthProvider>
     </>
   )
 }
 
-WrappedApp.getInitialProps = wrapper.getInitialAppProps(
+RootApp.getInitialProps = wrapper.getInitialAppProps(
   (_store) => async (appContext) => {
     if (typeof window === 'undefined') {
       validateEnv()
@@ -159,4 +103,4 @@ WrappedApp.getInitialProps = wrapper.getInitialAppProps(
   },
 )
 
-export default wrapper.withRedux(WrappedApp)
+export default wrapper.withRedux(RootApp)
