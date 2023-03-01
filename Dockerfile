@@ -3,7 +3,9 @@
 FROM node:16.19.1-alpine AS base
 WORKDIR /base
 COPY --link package.json yarn.lock ./
-RUN yarn install
+RUN --mount=type=cache,target=/tmp/yarn_cache \
+  YARN_CACHE_FOLDER=/tmp/yarn_cache \
+  yarn install
 
 FROM node:16.19.1-alpine
 WORKDIR /base
