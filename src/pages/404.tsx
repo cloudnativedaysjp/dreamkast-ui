@@ -5,7 +5,7 @@ const Error404 = () => {
     <Styled.ErrorMessage>
       404 Not Found
       <br />
-      ページが存在しません。URLをご確認ください。
+      お探しのコンテンツは存在しません。URLをご確認ください。
     </Styled.ErrorMessage>
   )
 }
