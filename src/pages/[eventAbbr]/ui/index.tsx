@@ -6,14 +6,11 @@ import { NextPage } from 'next'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
-import { selectedTrackSelector } from '../../../store/settings'
-import { useSelector } from 'react-redux'
 
 const IndexPage: NextPage = () => {
   const { event } = useInitSetup()
   useAppDataSetup()
   const { refetch } = useGetTalksAndTracks()
-  const selectedTrack = useSelector(selectedTrackSelector)
 
   if (!event) {
     return <div></div>
@@ -21,11 +18,7 @@ const IndexPage: NextPage = () => {
   return (
     <Layout title={event.name} event={event}>
       <TrackSelector />
-      <TrackView
-        event={event}
-        selectedTrack={selectedTrack}
-        refetch={refetch}
-      />
+      <TrackView event={event} refetch={refetch} />
     </Layout>
   )
 }

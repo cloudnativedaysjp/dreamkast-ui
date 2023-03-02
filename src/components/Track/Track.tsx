@@ -10,29 +10,25 @@ import 'dayjs/locale/ja'
 import {
   Event,
   Talk,
-  Track,
   useGetApiV1TalksQuery,
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
+import { selectedTrackSelector, settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
 import { authSelector } from '../../store/auth'
 
 type Props = {
   event: Event
-  selectedTrack: Track | null
   propTalks?: Talk[]
 
   refetch: () => void
 }
 
-export const TrackView: React.FC<Props> = ({
-  event,
-  selectedTrack,
-  refetch: refetchAll,
-}) => {
+export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
+  const selectedTrack = useSelector(selectedTrackSelector)
+
   const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
   const [selectedTalk, setSelectedTalk] = useState<Talk>()
