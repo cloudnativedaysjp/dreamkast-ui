@@ -141,6 +141,9 @@ const settingsSlice = createSlice({
         state.isLiveMode = false
       }
     },
+    setIsLiveMode: (state, action: PayloadAction<boolean>) => {
+      state.isLiveMode = action.payload
+    },
     setAppData: (state, action: PayloadAction<DkUiData>) => {
       state.appData = action.payload
       state.appDataInitialized = true
@@ -204,6 +207,7 @@ export const {
   setViewTrackId,
   setViewTalkId,
   setInitialViewTalk,
+  setIsLiveMode,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
@@ -215,6 +219,11 @@ const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
 const viewTrackIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTrackId,
+)
+
+export const isLiveModeSelector = createSelector(
+  settingsSelector,
+  (s) => s.isLiveMode,
 )
 
 export const settingsInitializedSelector = createSelector(

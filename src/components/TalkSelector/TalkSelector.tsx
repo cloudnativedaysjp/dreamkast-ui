@@ -10,10 +10,7 @@ type Props = {
   talks: Talk[]
   isLiveMode?: boolean
   selectTalk: (talk: Talk) => void
-  changeLiveMode?: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    mode: boolean,
-  ) => void
+  changeLiveMode: (mode: boolean) => void
   small?: boolean
 }
 
@@ -111,7 +108,11 @@ export const TalkSelector: React.FC<Props> = ({
         })}
       </Styled.List>
       <Styled.Footer>
-        <Checkbox size="small" checked={isLiveMode} onChange={changeLiveMode} />
+        <Checkbox
+          size="small"
+          checked={isLiveMode}
+          onChange={(_, checked) => changeLiveMode(checked)}
+        />
         <Styled.label>ライブ中のセッションに自動遷移する</Styled.label>
       </Styled.Footer>
     </Styled.Container>

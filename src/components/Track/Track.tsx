@@ -20,6 +20,8 @@ import {
   settingsSelector,
   setViewTalkId,
   settingsVideoIdSelector,
+  isLiveModeSelector,
+  setIsLiveMode,
 } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
@@ -40,7 +42,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const [karteTimer, setKarteTimer] = useState<number>()
   const [pointTimer, setPointTimer] = useState<number>()
-  const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
@@ -50,6 +51,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
 
+  const isLiveMode = useSelector(isLiveModeSelector)
   useEffect(() => {
     if (isLiveMode && talks.length > 0) {
       refetch()
@@ -60,11 +62,8 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     dispatch(setViewTalkId(talk.id))
   }
 
-  const onChecked = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-  ) => {
-    setIsLiveMode(checked)
+  const changeLiveMode = (checked: boolean) => {
+    dispatch(setIsLiveMode(checked))
   }
 
   const updateView = () => {
@@ -205,7 +204,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
-            changeLiveMode={onChecked}
+            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
             small
           />
@@ -232,7 +231,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
-            changeLiveMode={onChecked}
+            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
           />
         </Grid>
