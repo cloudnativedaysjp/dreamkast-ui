@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
-import ActionCable from 'actioncable'
 import 'dayjs/locale/ja'
-import {
-  Event,
-  Talk,
-  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
-} from '../../generated/dreamkast-api.generated'
+import { Event, Talk } from '../../generated/dreamkast-api.generated'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   useSelectedTalk,
@@ -22,11 +17,13 @@ import {
   settingsVideoIdSelector,
   isLiveModeSelector,
   setIsLiveMode,
-  autoUpdateTalkInLive,
 } from '../../store/settings'
-import { useMediaQuery, useTheme } from '@material-ui/core'
-import { getSlotId } from '../../util/sessionstorage/trailMap'
-import { authSelector } from '../../store/auth'
+import {
+  useKarteTracking,
+  useLiveTalkUpdate,
+  useSizeChecker,
+  useTrailMapTracking,
+} from '../TrackSelector/hooks'
 
 type Props = {
   event: Event
@@ -36,21 +33,22 @@ type Props = {
 }
 
 export const TrackView: React.FC<Props> = ({ event, refetch }) => {
-  const { track: selectedTrack, talks } = useSelectedTrack()
   const dispatch = useDispatch()
+  const { track: selectedTrack, talks } = useSelectedTrack()
   const { talk: selectedTalk } = useSelectedTalk()
-  const videoId = useSelector(settingsVideoIdSelector)
 
-  const [karteTimer, setKarteTimer] = useState<number>()
-  const [pointTimer, setPointTimer] = useState<number>()
-  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const { wsBaseUrl } = useSelector(authSelector)
-  const theme = useTheme()
-  const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
-
+  const videoId = useSelector(settingsVideoIdSelector)
   const isLiveMode = useSelector(isLiveModeSelector)
+
+  useKarteTracking()
+  useTrailMapTracking()
+  useLiveTalkUpdate(event.abbr, () => {
+    refetch() // onAirの切り替わった新しいTalk一覧を取得
+  })
+  const isSmallerThanMd = useSizeChecker()
+
   useEffect(() => {
     if (isLiveMode && talks.length > 0) {
       refetch()
@@ -64,74 +62,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const selectTalk = (talk: Talk) => {
     dispatch(setViewTalkId(talk.id))
   }
-
-  useEffect(() => {
-    if (chatCable) chatCable.disconnect()
-    chatCable?.ensureActiveConnection()
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const actionCable = require('actioncable')
-    const actionCableUrl = new URL('/cable', wsBaseUrl).toString()
-    const cable = actionCable.createConsumer(actionCableUrl)
-    setChatCable(cable)
-
-    cable.subscriptions.create(
-      { channel: 'OnAirChannel', eventAbbr: event?.abbr },
-      {
-        received: (nextTalk: { [trackId: number]: Talk }) => {
-          refetch() // onAirの切り替わった新しいTalk一覧を取得
-          dispatch(autoUpdateTalkInLive(nextTalk))
-        },
-      },
-    )
-    // TODO reconsider the trigger to re-connect actioncable
-  }, [selectedTrack, isLiveMode, selectedTalk])
-
-  const [mutateAppData] =
-    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
-
-  useEffect(() => {
-    if (!initialized) {
-      return
-    }
-    if (!selectedTrack || !selectedTalk) {
-      return
-    }
-    clearInterval(karteTimer)
-    setKarteTimer(
-      window.setInterval(() => {
-        window.tracker.track('watch_video', {
-          track_name: selectedTrack.name,
-          talk_id: selectedTalk.id,
-          talk_name: selectedTalk.title,
-        })
-      }, 120 * 1000),
-    )
-    clearTimeout(pointTimer)
-    if (!settings.profile.isAttendOffline && selectedTalk.onAir) {
-      setPointTimer(
-        window.setInterval(() => {
-          const slotId = getSlotId(selectedTalk)
-          if (slotId === 0) {
-            return
-          }
-          mutateAppData({
-            profileId: `${settings.profile.id}`,
-            conference: settings.eventAbbr,
-            dkUiDataMutation: {
-              action: 'talkWatched',
-              payload: {
-                talkId: selectedTalk.id,
-                trackId: selectedTrack?.id || 0,
-                slotId: slotId,
-              },
-            },
-          })
-            .unwrap()
-            .catch((err) => console.error(err))
-        }, 120 * 1000),
-      )
-    }
-  }, [selectedTrack, selectedTalk, initialized])
 
   if (!initialized) {
     // TODO show loading

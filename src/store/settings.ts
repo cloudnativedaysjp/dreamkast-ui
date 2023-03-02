@@ -141,7 +141,7 @@ const settingsSlice = createSlice({
         state.isLiveMode = false
       }
     },
-    autoUpdateTalkInLive: (
+    liveTalkUpdate: (
       s,
       action: PayloadAction<{ [trackId: number]: Talk }>,
     ) => {
@@ -166,6 +166,7 @@ const settingsSlice = createSlice({
         return
       }
 
+      // Karte
       window.location.href =
         window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
       window.tracker.track('trigger_survey', {
@@ -242,7 +243,7 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
-  autoUpdateTalkInLive,
+  liveTalkUpdate,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
