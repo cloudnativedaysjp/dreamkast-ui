@@ -31,8 +31,10 @@ type SettingsState = {
   // ビデオ表示・非表示（オフライン参加のみ有効）
   showVideo: boolean
 
-  // トラックID
+  // 視聴track&talk
   viewTrackId: number
+  viewTalkId: number
+  isLiveMode: boolean
 
   // ポイントデータ
   appData: DkUiData
@@ -42,7 +44,7 @@ type SettingsState = {
   isTrailMapOpen: boolean
 
   // 全talk
-  talks: Record<string, Talk>
+  talks: Record<number, Talk>
 
   // 全track
   tracks: Track[]
@@ -60,6 +62,8 @@ const initialState: SettingsState = {
   },
   showVideo: false,
   viewTrackId: 0,
+  viewTalkId: 0,
+  isLiveMode: true,
   appData: {
     watchedTalksOnline: {
       watchingTime: [],
@@ -122,6 +126,21 @@ const settingsSlice = createSlice({
       window.location.href =
         window.location.href.split('#')[0] + '#' + selectedTrack.name
     },
+    setViewTalkId: (state, action: PayloadAction<number | null>) => {
+      console.warn(action.payload)
+      if (!action.payload) {
+        return
+      }
+      const selectedTalk = state.talks[action.payload]
+      console.warn(selectedTalk)
+      if (!selectedTalk) {
+        return
+      }
+      state.viewTalkId = action.payload
+      if (!selectedTalk.onAir) {
+        state.isLiveMode = false
+      }
+    },
     setAppData: (state, action: PayloadAction<DkUiData>) => {
       state.appData = action.payload
       state.appDataInitialized = true
@@ -137,7 +156,7 @@ const settingsSlice = createSlice({
       state.talks = action.payload.reduce((accum, t) => {
         accum[t.id] = t
         return accum
-      }, {} as Record<string, Talk>)
+      }, {} as Record<number, Talk>)
     },
     setTracks: (state, action: PayloadAction<Track[]>) => {
       state.tracks = action.payload
@@ -157,6 +176,7 @@ export const {
   setTalks,
   setTracks,
   setViewTrackId,
+  setViewTalkId,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => {
@@ -184,18 +204,50 @@ export const tracksSelector = createSelector(settingsSelector, (s) => {
     const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
     return {
       track: tr,
-      talk: s.talks[talkId],
+      talk: s.talks[parseInt(talkId)],
     }
   })
   return { tracksWithLiveTalk }
 })
 
-export const selectedTrackSelector = createSelector(settingsSelector, (s) => {
-  if (s.tracks.length === 0) {
-    return null
-  }
-  const selected = s.tracks.find((track) => track.id == s.viewTrackId)
-  return selected || s.tracks[0]
-})
+export const selectedTrackSelector = createSelector(
+  settingsSelector,
+  (s): { track?: Track; talks: Talk[]; onAirTalk?: Talk } => {
+    if (s.tracks.length === 0) {
+      return {
+        talks: [],
+      }
+    }
+    const selectedTrack =
+      s.tracks.find((track) => track.id == s.viewTrackId) || s.tracks[0]
+    const selectedTalks = Object.values(s.talks).filter((t) => {
+      return t.trackId === selectedTrack.id
+    })
+    const onAirTalk = selectedTalks.find((talk) => talk.onAir)
+    return {
+      track: selectedTrack,
+      talks: selectedTalks,
+      onAirTalk,
+    }
+  },
+)
+
+export const selectedTalkSelector = createSelector(
+  settingsSelector,
+  (s): { talk?: Talk } => {
+    console.warn('selectedTalkSelector')
+    const talks = Object.values(s.talks).filter((t) => {
+      return t.trackId === s.viewTrackId
+    })
+    if (talks.length === 0) {
+      return {}
+    }
+    console.warn(s.viewTalkId)
+    const selectedTalk = talks.find((t) => t.id === s.viewTalkId)
+    return {
+      talk: selectedTalk || talks[0],
+    }
+  },
+)
 
 export default settingsSlice

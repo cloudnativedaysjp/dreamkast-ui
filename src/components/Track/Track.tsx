@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
@@ -10,11 +10,15 @@ import 'dayjs/locale/ja'
 import {
   Event,
   Talk,
-  useGetApiV1TalksQuery,
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
 } from '../../generated/dreamkast-api.generated'
-import { useSelector } from 'react-redux'
-import { selectedTrackSelector, settingsSelector } from '../../store/settings'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectedTalkSelector,
+  selectedTrackSelector,
+  settingsSelector,
+  setViewTalkId,
+} from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
 import { authSelector } from '../../store/auth'
@@ -26,12 +30,16 @@ type Props = {
   refetch: () => void
 }
 
-export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
-  const selectedTrack = useSelector(selectedTrackSelector)
+export const TrackView: React.FC<Props> = ({ event, refetch }) => {
+  const {
+    track: selectedTrack,
+    talks,
+    onAirTalk,
+  } = useSelector(selectedTrackSelector)
+  const dispatch = useDispatch()
+  const { talk: selectedTalk } = useSelector(selectedTalkSelector)
 
-  const [talks, setTalks] = useState<Talk[]>([])
   const [videoId, setVideoId] = useState<string | null>()
-  const [selectedTalk, setSelectedTalk] = useState<Talk>()
   const [karteTimer, setKarteTimer] = useState<number>()
   const [pointTimer, setPointTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
@@ -43,50 +51,15 @@ export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
   const { wsBaseUrl } = useSelector(authSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
-  const [_, setError] = useState()
-
-  const dayId = settings.conferenceDay?.id
-
-  const onAirTalkExists = useMemo(() => {
-    return talks.filter((talk) => !!talk.onAir).length > 0
-  }, [talks])
-
-  const { data, isLoading, isError, error, refetch } = useGetApiV1TalksQuery(
-    {
-      eventAbbr: event.abbr,
-      trackId: `${selectedTrack?.id}`,
-      conferenceDayIds: dayId,
-    },
-    { skip: !dayId || !selectedTrack?.id },
-  )
-  useEffect(() => {
-    if (isLoading) {
-      return
-    }
-    if (isError) {
-      setError(() => {
-        throw error
-      })
-      return
-    }
-    if (data) {
-      setTalks(data)
-    }
-  }, [data, isLoading, isError])
 
   useEffect(() => {
-    if (isLiveMode) {
-      if (data) {
-        refetch()
-      }
+    if (isLiveMode && talks.length > 0) {
+      refetch()
     }
   }, [isLiveMode])
 
   const selectTalk = (talk: Talk) => {
-    if (!talk.onAir) {
-      setIsLiveMode(false)
-    }
-    setSelectedTalk(talk)
+    dispatch(setViewTalkId(talk.id))
     setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
 
@@ -98,19 +71,15 @@ export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
     )
       return
     beforeTrackId.current = selectedTrack?.id
-    const onAirTalk = talks.find((talk) => talk.onAir)
-    setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
-    if (!onAirTalkExists) {
+    const nextTalk = onAirTalk ? onAirTalk : talks[0]
+    dispatch(setViewTalkId(nextTalk.id))
+    if (!onAirTalk) {
       // NOTE just for testing
       setVideoId(selectedTrack?.videoId)
     } else {
       setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
     }
   }, [talks])
-
-  const getNextTalk = () => {
-    if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
-  }
 
   const onChecked = (
     _event: React.ChangeEvent<HTMLInputElement>,
@@ -140,7 +109,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
         talk_name: selectedTalk?.title,
       })
       setVideoId(nextTalk[selectedTrack.id].videoId)
-      setSelectedTalk(getNextTalk())
+      dispatch(setViewTalkId(nextTalk[selectedTrack.id].id))
     }
   }
 
@@ -162,7 +131,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch: refetchAll }) => {
       {
         received: (msg: { [trackId: number]: Talk }) => {
           refetch() // onAirの切り替わった新しいTalk一覧を取得
-          refetchAll()
           setNextTalk(msg)
           if (!selectedTrack || !selectedTalk) return
           if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)
