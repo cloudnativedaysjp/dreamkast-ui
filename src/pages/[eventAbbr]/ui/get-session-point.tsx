@@ -17,7 +17,10 @@ import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../../generated/dreamkast-api.generated'
-import {settingsInitializedSelector, settingsSelector} from '../../../store/settings'
+import {
+  settingsInitializedSelector,
+  settingsSelector,
+} from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
 import { EnvCtx } from '../../../context/env'

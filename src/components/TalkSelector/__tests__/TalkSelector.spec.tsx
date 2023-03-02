@@ -9,6 +9,7 @@ test('TalkSelector', () => {
       selectedTalk={MockTalks()[0]}
       selectedTrackId={1}
       talks={MockTalks()}
+      changeLiveMode={() => null}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       selectTalk={() => {}}
     />,

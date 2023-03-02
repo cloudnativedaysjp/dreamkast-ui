@@ -141,10 +141,7 @@ const settingsSlice = createSlice({
         state.isLiveMode = false
       }
     },
-    liveTalkUpdate: (
-      s,
-      action: PayloadAction<{ [trackId: number]: Talk }>,
-    ) => {
+    liveTalkUpdate: (s, action: PayloadAction<{ [trackId: number]: Talk }>) => {
       const nextTalks = action.payload
       if (!s.isLiveMode) {
         return
