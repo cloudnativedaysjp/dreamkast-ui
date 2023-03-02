@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
@@ -19,6 +19,7 @@ import {
   settingsInitializedSelector,
   settingsSelector,
   setViewTalkId,
+  settingsVideoIdSelector,
 } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
@@ -32,18 +33,17 @@ type Props = {
 }
 
 export const TrackView: React.FC<Props> = ({ event, refetch }) => {
-  const { track: selectedTrack, talks, onAirTalk } = useSelectedTrack()
+  const { track: selectedTrack, talks } = useSelectedTrack()
   const dispatch = useDispatch()
   const { talk: selectedTalk } = useSelectedTalk()
+  const videoId = useSelector(settingsVideoIdSelector)
 
-  const [videoId, setVideoId] = useState<string | null>()
   const [karteTimer, setKarteTimer] = useState<number>()
   const [pointTimer, setPointTimer] = useState<number>()
   const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
   const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
-  const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const { wsBaseUrl } = useSelector(authSelector)
@@ -58,27 +58,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const selectTalk = (talk: Talk) => {
     dispatch(setViewTalkId(talk.id))
-    setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
   }
-
-  useEffect(() => {
-    if (
-      !talks.length ||
-      shouldUpdate ||
-      (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
-    )
-      return
-    beforeTrackId.current = selectedTrack?.id
-    // TODO activate following
-    // const nextTalk = onAirTalk ? onAirTalk : talks[0]
-    // dispatch(setViewTalkId(nextTalk.id))
-    if (!onAirTalk) {
-      // NOTE just for testing
-      setVideoId(selectedTrack?.videoId)
-    } else {
-      setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
-    }
-  }, [talks])
 
   const onChecked = (
     _event: React.ChangeEvent<HTMLInputElement>,
@@ -107,7 +87,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         talk_id: selectedTalk?.id,
         talk_name: selectedTalk?.title,
       })
-      setVideoId(nextTalk[selectedTrack.id].videoId)
       dispatch(setViewTalkId(nextTalk[selectedTrack.id].id))
     }
   }

@@ -4,6 +4,7 @@ import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { PLiveTalkList } from './PLiveTalkList'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  setInitialViewTalk,
   settingsSelector,
   setViewTrackId,
   useTracks,
@@ -27,6 +28,7 @@ export const CTrackSelector: ContainerComponent<PProps> = ({ content }) => {
   const dispatch = useDispatch()
   const handleChange = (selectItem: number | null) => {
     dispatch(setViewTrackId(selectItem))
+    dispatch(setInitialViewTalk())
   }
 
   return content({ viewTrackId, tracksWithLiveTalk, handleChange })

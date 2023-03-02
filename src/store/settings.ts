@@ -153,10 +153,39 @@ const settingsSlice = createSlice({
       state.isTrailMapOpen = action.payload
     },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
+      if (action.payload.length === 0) {
+        return
+      }
       state.talks = action.payload
     },
     setTracks: (state, action: PayloadAction<Track[]>) => {
+      if (action.payload.length === 0) {
+        return
+      }
       state.tracks = action.payload
+    },
+    setInitialViewTalk: (s) => {
+      const selectedTrack = s.tracks.find((t) => t.id == s.viewTrackId)
+      if (!selectedTrack) {
+        s.viewTrackId = s.tracks[0].id
+      }
+      const selectedTalks = s.talks.filter((t) => t.trackId === s.viewTrackId)
+      if (!selectedTalks.length) {
+        return
+      }
+      const selectedTalk = selectedTalks.find((t) => t.id === s.viewTalkId)
+      // 選択されているtalkが視聴トラックに存在する場合は、何もしない
+      if (selectedTalk) {
+        return
+      }
+      const onAirTalk = selectedTalks.find((talk) => talk.onAir)
+      if (onAirTalk) {
+        s.viewTalkId = onAirTalk.id
+        s.isLiveMode = true
+      } else {
+        s.viewTalkId = selectedTalks[0].id
+        s.isLiveMode = false
+      }
     },
   },
 })
@@ -174,13 +203,14 @@ export const {
   setTracks,
   setViewTrackId,
   setViewTalkId,
+  setInitialViewTalk,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
 
 const appDataSelector = createSelector(settingsSelector, (s) => s.appData)
-const _tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
-const _talksSelector = createSelector(settingsSelector, (s) => s.talks)
+const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
+const talksSelector = createSelector(settingsSelector, (s) => s.talks)
 const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
 const viewTrackIdSelector = createSelector(
   settingsSelector,
@@ -194,6 +224,30 @@ export const settingsInitializedSelector = createSelector(
   },
 )
 
+export const settingsVideoIdSelector = createSelector(
+  tracksSelector,
+  talksSelector,
+  viewTrackIdSelector,
+  viewTalkIdSelector,
+  (tracks, talks, viewTrackId, viewTalkId) => {
+    if (tracks.length === 0) {
+      return ''
+    }
+    if (talks.length === 0) {
+      return ''
+    }
+    const selectedTrack = tracks.find((t) => t.id === viewTrackId)
+    const selectedTalk = talks.find((t) => t.id === viewTalkId)
+    if (selectedTalk?.onAir) {
+      console.warn('videoId: onAir', selectedTrack?.videoId)
+      return selectedTrack?.videoId || ''
+    } else {
+      console.warn('videoId: recorded', selectedTalk?.videoId)
+      return selectedTalk?.videoId || ''
+    }
+  },
+)
+
 export const useStamps = () => {
   const appData = useSelector(appDataSelector)
   return {
@@ -204,8 +258,8 @@ export const useStamps = () => {
 }
 
 export const useTracks = () => {
-  const tracks = useSelector(_tracksSelector)
-  const talks = useSelector(_talksSelector)
+  const tracks = useSelector(tracksSelector)
+  const talks = useSelector(talksSelector)
   const tracksWithLiveTalk = tracks.map((tr) => {
     if (!tr.onAirTalk) {
       return {
@@ -226,8 +280,8 @@ export const useSelectedTrack = (): {
   talks: Talk[]
   onAirTalk?: Talk
 } => {
-  const tracks = useSelector(_tracksSelector)
-  const talks = useSelector(_talksSelector)
+  const tracks = useSelector(tracksSelector)
+  const talks = useSelector(talksSelector)
   const viewTrackId = useSelector(viewTrackIdSelector)
   if (tracks.length === 0) {
     return {
@@ -248,7 +302,7 @@ export const useSelectedTrack = (): {
 }
 
 export const useSelectedTalk = () => {
-  const talks = useSelector(_talksSelector)
+  const talks = useSelector(talksSelector)
   const viewTrackId = useSelector(viewTrackIdSelector)
   const viewTalkId = useSelector(viewTalkIdSelector)
 

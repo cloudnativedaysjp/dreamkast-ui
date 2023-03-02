@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setTalks, settingsSelector, setTracks } from '../../store/settings'
+import {
+  setInitialViewTalk,
+  setTalks,
+  settingsSelector,
+  setTracks,
+} from '../../store/settings'
 import {
   useGetApiV1TalksQuery,
   useGetApiV1TracksQuery,
@@ -7,13 +12,25 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 
 export const useGetTalksAndTracks = () => {
+  const dispatch = useDispatch()
   const talksQuery = useGetTalks()
   const tracksQuery = useGetTracks()
+  const [isDoneFirstQuery, setDoneFirstQuery] = useState<boolean>(false)
 
   const refetch = useCallback(() => {
     talksQuery.refetch()
     tracksQuery.refetch()
   }, [talksQuery.refetch, tracksQuery.refetch])
+
+  useEffect(() => {
+    if (isDoneFirstQuery) {
+      return
+    }
+    if (talksQuery.data && tracksQuery.data) {
+      dispatch(setInitialViewTalk())
+      setDoneFirstQuery(true)
+    }
+  }, [talksQuery.data, tracksQuery.data, isDoneFirstQuery])
 
   return {
     isLoading: talksQuery.isLoading || tracksQuery.isLoading,
@@ -50,6 +67,7 @@ export const useGetTalks = () => {
   }, [data, isLoading, isError])
 
   return {
+    data,
     isLoading,
     refetch,
   }
@@ -81,6 +99,7 @@ export const useGetTracks = () => {
   }, [data, isLoading, isError])
 
   return {
+    data,
     isLoading,
     refetch,
   }
