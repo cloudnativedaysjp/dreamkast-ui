@@ -10,7 +10,7 @@ import {
   getQRCodeStampResult,
   clearQRCodeStampResult,
   getSessionEventNum,
-} from '../../util/trailMap'
+} from '../../util/sessionstorage/trailMap'
 import { EnvCtx } from '../../context/env'
 import { Skeleton } from '@material-ui/lab'
 

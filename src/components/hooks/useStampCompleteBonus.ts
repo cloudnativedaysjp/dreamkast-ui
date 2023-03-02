@@ -5,7 +5,7 @@ import {
   getAllStampCollected,
   getAllStampCompEventNum,
   setAllStampCollected,
-} from '../../util/trailMap'
+} from '../../util/sessionstorage/trailMap'
 import { EnvCtx } from '../../context/env'
 import { useContext, useEffect } from 'react'
 

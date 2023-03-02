@@ -21,7 +21,7 @@ import {
   getGotChatPoint,
   getSlotId,
   setGotChatPoint,
-} from '../../util/trailMap'
+} from '../../util/sessionstorage/trailMap'
 import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { EnvCtx } from '../../context/env'

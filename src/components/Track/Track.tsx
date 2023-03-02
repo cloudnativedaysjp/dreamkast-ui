@@ -17,7 +17,7 @@ import {
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
-import { getSlotId } from '../../util/trailMap'
+import { getSlotId } from '../../util/sessionstorage/trailMap'
 import { authSelector } from '../../store/authSelector'
 
 type Props = {

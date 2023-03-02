@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import { settingsSelector, setTrailMapOpen } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearTrailMapOpenNext, getTrailMapOpenNext } from '../../util/trailMap'
+import {
+  clearTrailMapOpenNext,
+  getTrailMapOpenNext,
+} from '../../util/sessionstorage/trailMap'
 import { TrailMap } from './TrailMap'
 import * as Styled from './styled'
 

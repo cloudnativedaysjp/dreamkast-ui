@@ -10,7 +10,7 @@ import {
   setTrailMapOpenNext,
   QRCodeRequestResult,
   getSessionEventNum,
-} from '../../../util/trailMap'
+} from '../../../util/sessionstorage/trailMap'
 import {
   useGetApiV1TalksByTalkIdQuery,
   useGetApiV1TracksQuery,

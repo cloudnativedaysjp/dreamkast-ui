@@ -1,5 +1,5 @@
-import { Talk } from '../generated/dreamkast-api.generated'
-import { isStorageAvailable } from './sessionstorage'
+import { Talk } from '../../generated/dreamkast-api.generated'
+import { isStorageAvailable } from './index'
 
 export function getSlotId(talk: Talk): number {
   if (talk.dayId == null || talk.slotNum == null) {

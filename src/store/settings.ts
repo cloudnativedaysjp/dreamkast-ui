@@ -13,7 +13,7 @@ import dayjs from 'dayjs'
 import {
   getViewTrackIdFromSessionStorage,
   setViewTrackIdToSessionStorage,
-} from '../util/viewTrackId'
+} from '../util/sessionstorage/viewTrackId'
 
 type SettingsState = {
   // カンファレンスイベント

@@ -1,4 +1,4 @@
-import { isStorageAvailable } from './sessionstorage'
+import { isStorageAvailable } from './index'
 
 export const setViewTrackIdToSessionStorage = (viewTrackId: number) => {
   if (isStorageAvailable('sessionStorage')) {
