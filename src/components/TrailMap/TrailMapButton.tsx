@@ -1,11 +1,11 @@
 import React from 'react'
 import { Badge } from '@material-ui/core'
 import * as Styled from './styled'
-import { setTrailMapOpen, stampSelector } from '../../store/settings'
-import { useDispatch, useSelector } from 'react-redux'
+import { setTrailMapOpen, useStamps } from '../../store/settings'
+import { useDispatch } from 'react-redux'
 
 export const TrailMapButton = () => {
-  const stamp = useSelector(stampSelector)
+  const stamp = useStamps()
   const dispatch = useDispatch()
   return (
     <Badge

@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
-import { settingsSelector, stampSelector } from '../../store/settings'
+import {
+  settingsInitializedSelector,
+  settingsSelector,
+  useStamps,
+} from '../../store/settings'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
@@ -21,7 +25,8 @@ type Props = {
 export const StampCard = (_: Props) => {
   const envCtx = useContext(EnvCtx)
   const settings = useSelector(settingsSelector)
-  const stamp = useSelector(stampSelector)
+  const initialized = useSelector(settingsInitializedSelector)
+  const stamp = useStamps()
   const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
   const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
   const [stamped, setStamped] = useState<boolean>(false)
@@ -30,7 +35,7 @@ export const StampCard = (_: Props) => {
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   useEffect(() => {
-    if (!stamp.initialized || pinnedStamp !== null) {
+    if (!settings.appDataInitialized || pinnedStamp !== null) {
       return
     }
     setPinnedStamp(stamp)
@@ -53,7 +58,7 @@ export const StampCard = (_: Props) => {
 
   // get stamp by online user
   useEffect(() => {
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     if (!stamp.canGetNewStamp) {
@@ -88,7 +93,7 @@ export const StampCard = (_: Props) => {
         console.error('stampFromUI Action', err)
       }
     })()
-  }, [settings.initialized, stamp.canGetNewStamp])
+  }, [initialized, stamp.canGetNewStamp])
 
   if (!pinnedStamp) {
     return (

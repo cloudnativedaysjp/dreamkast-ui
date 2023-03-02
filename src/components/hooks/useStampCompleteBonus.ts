@@ -1,4 +1,4 @@
-import { settingsSelector, stampSelector } from '../../store/settings'
+import { settingsSelector, useStamps } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { usePostApiV1ProfileByProfileIdPointMutation } from '../../generated/dreamkast-api.generated'
 import {
@@ -10,7 +10,7 @@ import { EnvCtx } from '../../context/env'
 import { useContext, useEffect } from 'react'
 
 export const useStampCompleteBonus = () => {
-  const { stamps } = useSelector(stampSelector)
+  const { stamps } = useStamps()
   const settings = useSelector(settingsSelector)
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
   const envCtx = useContext(EnvCtx)

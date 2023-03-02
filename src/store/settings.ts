@@ -14,6 +14,7 @@ import {
   getViewTrackIdFromSessionStorage,
   setViewTrackIdToSessionStorage,
 } from '../util/sessionstorage/viewTrackId'
+import { useSelector } from 'react-redux'
 
 type SettingsState = {
   // カンファレンスイベント
@@ -175,23 +176,37 @@ export const {
   setViewTalkId,
 } = settingsSlice.actions
 
-export const settingsSelector = (s: RootState) => {
+export const settingsSelector = (s: RootState) => s.settings
+
+const appDataSelector = createSelector(settingsSelector, (s) => s.appData)
+const _tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
+const _talksSelector = createSelector(settingsSelector, (s) => s.talks)
+const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
+const viewTrackIdSelector = createSelector(
+  settingsSelector,
+  (s) => s.viewTrackId,
+)
+
+export const settingsInitializedSelector = createSelector(
+  settingsSelector,
+  (s) => {
+    return !!(s.profile.id && s.eventAbbr)
+  },
+)
+
+export const useStamps = () => {
+  const appData = useSelector(appDataSelector)
   return {
-    initialized: !!(s.settings.profile.id && s.settings.eventAbbr),
-    ...s.settings,
+    canGetNewStamp: !!appData.stampChallenges.find((i) => i.waiting),
+    slotIdToBeStamped: appData.stampChallenges.find((i) => i.waiting)?.slotId,
+    stamps: appData.stampChallenges.filter((i) => i.condition === 'stamped'),
   }
 }
-export const stampSelector = createSelector(settingsSelector, (s) => {
-  return {
-    initialized: s.appDataInitialized,
-    canGetNewStamp: !!s.appData.stampChallenges.find((i) => i.waiting),
-    slotIdToBeStamped: s.appData.stampChallenges.find((i) => i.waiting)?.slotId,
-    stamps: s.appData.stampChallenges.filter((i) => i.condition === 'stamped'),
-  }
-})
 
-export const tracksSelector = createSelector(settingsSelector, (s) => {
-  const tracksWithLiveTalk = s.tracks.map((tr) => {
+export const useTracks = () => {
+  const tracks = useSelector(_tracksSelector)
+  const talks = useSelector(_talksSelector)
+  const tracksWithLiveTalk = tracks.map((tr) => {
     if (!tr.onAirTalk) {
       return {
         track: tr,
@@ -200,47 +215,52 @@ export const tracksSelector = createSelector(settingsSelector, (s) => {
     const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
     return {
       track: tr,
-      talk: s.talks.find((t) => t.id === parseInt(talkId)),
+      talk: talks.find((t) => t.id === parseInt(talkId)),
     }
   })
   return { tracksWithLiveTalk }
-})
+}
 
-export const selectedTrackSelector = createSelector(
-  settingsSelector,
-  (s): { track?: Track; talks: Talk[]; onAirTalk?: Talk } => {
-    if (s.tracks.length === 0) {
-      return {
-        talks: [],
-      }
-    }
-    const selectedTrack =
-      s.tracks.find((track) => track.id == s.viewTrackId) || s.tracks[0]
-    const selectedTalks = s.talks.filter((t) => {
-      return t.trackId === selectedTrack.id
-    })
-    const onAirTalk = selectedTalks.find((talk) => talk.onAir)
+export const useSelectedTrack = (): {
+  track?: Track
+  talks: Talk[]
+  onAirTalk?: Talk
+} => {
+  const tracks = useSelector(_tracksSelector)
+  const talks = useSelector(_talksSelector)
+  const viewTrackId = useSelector(viewTrackIdSelector)
+  if (tracks.length === 0) {
     return {
-      track: selectedTrack,
-      talks: selectedTalks,
-      onAirTalk,
+      talks: [],
     }
-  },
-)
+  }
+  const selectedTrack =
+    tracks.find((track) => track.id == viewTrackId) || tracks[0]
+  const selectedTalks = talks.filter((t) => {
+    return t.trackId === selectedTrack.id
+  })
+  const onAirTalk = selectedTalks.find((talk) => talk.onAir)
+  return {
+    track: selectedTrack,
+    talks: selectedTalks,
+    onAirTalk,
+  }
+}
 
-export const selectedTalkSelector = createSelector(
-  settingsSelector,
-  (s): { talk?: Talk } => {
-    const talksInTrack = s.talks.filter((t) => {
-      return t.trackId === s.viewTrackId
-    })
-    if (talksInTrack.length === 0) {
-      return {}
-    }
-    return {
-      talk: talksInTrack.find((t) => t.id === s.viewTalkId) || talksInTrack[0],
-    }
-  },
-)
+export const useSelectedTalk = () => {
+  const talks = useSelector(_talksSelector)
+  const viewTrackId = useSelector(viewTrackIdSelector)
+  const viewTalkId = useSelector(viewTalkIdSelector)
+
+  const talksInTrack = talks.filter((t) => {
+    return t.trackId === viewTrackId
+  })
+  if (talksInTrack.length === 0) {
+    return {}
+  }
+  return {
+    talk: talksInTrack.find((t) => t.id === viewTalkId) || talksInTrack[0],
+  }
+}
 
 export default settingsSlice

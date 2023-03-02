@@ -14,8 +14,9 @@ import {
 } from '../../generated/dreamkast-api.generated'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  selectedTalkSelector,
-  selectedTrackSelector,
+  useSelectedTalk,
+  useSelectedTrack,
+  settingsInitializedSelector,
   settingsSelector,
   setViewTalkId,
 } from '../../store/settings'
@@ -31,13 +32,9 @@ type Props = {
 }
 
 export const TrackView: React.FC<Props> = ({ event, refetch }) => {
-  const {
-    track: selectedTrack,
-    talks,
-    onAirTalk,
-  } = useSelector(selectedTrackSelector)
+  const { track: selectedTrack, talks, onAirTalk } = useSelectedTrack()
   const dispatch = useDispatch()
-  const { talk: selectedTalk } = useSelector(selectedTalkSelector)
+  const { talk: selectedTalk } = useSelectedTalk()
 
   const [videoId, setVideoId] = useState<string | null>()
   const [karteTimer, setKarteTimer] = useState<number>()
@@ -48,6 +45,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
   const settings = useSelector(settingsSelector)
+  const initialized = useSelector(settingsInitializedSelector)
   const { wsBaseUrl } = useSelector(authSelector)
   const theme = useTheme()
   const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
@@ -145,7 +143,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
 
   useEffect(() => {
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     if (!selectedTrack || !selectedTalk) {
@@ -186,9 +184,9 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         }, 120 * 1000),
       )
     }
-  }, [selectedTrack, selectedTalk, settings.initialized])
+  }, [selectedTrack, selectedTalk, initialized])
 
-  if (!settings.initialized) {
+  if (!initialized) {
     // TODO show loading
     return <></>
   }

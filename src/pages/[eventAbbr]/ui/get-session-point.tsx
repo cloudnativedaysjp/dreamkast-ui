@@ -17,7 +17,7 @@ import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../../generated/dreamkast-api.generated'
-import { settingsSelector } from '../../../store/settings'
+import {settingsInitializedSelector, settingsSelector} from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
 import { EnvCtx } from '../../../context/env'
@@ -35,6 +35,7 @@ const IndexPage: NextPage = () => {
   const [talkId, setTalkId] = useState<number | null>(null)
   const [trackId, setTrackId] = useState<number | null>(null)
   const settings = useSelector(settingsSelector)
+  const initialized = useSelector(settingsInitializedSelector)
   const { eventAbbr, event } = useInitSetup()
 
   const [mutateAppData] =
@@ -88,7 +89,7 @@ const IndexPage: NextPage = () => {
 
   // TODO add point using slotID/trackID/talkID
   useEffect(() => {
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     if (!talksQuery.data) {
@@ -137,7 +138,7 @@ const IndexPage: NextPage = () => {
         goTrailMap('error')
       }
     })()
-  }, [talksQuery.data, settings.initialized])
+  }, [talksQuery.data, initialized])
 
   if (event) {
     return (
