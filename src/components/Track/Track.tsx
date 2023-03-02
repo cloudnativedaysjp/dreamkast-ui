@@ -22,6 +22,7 @@ import {
   settingsVideoIdSelector,
   isLiveModeSelector,
   setIsLiveMode,
+  autoUpdateTalkInLive,
 } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
@@ -42,9 +43,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const [karteTimer, setKarteTimer] = useState<number>()
   const [pointTimer, setPointTimer] = useState<number>()
-  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
   const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
-  const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const { wsBaseUrl } = useSelector(authSelector)
@@ -58,63 +57,33 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     }
   }, [isLiveMode])
 
-  const selectTalk = (talk: Talk) => {
-    dispatch(setViewTalkId(talk.id))
-  }
-
   const changeLiveMode = (checked: boolean) => {
     dispatch(setIsLiveMode(checked))
   }
 
-  const updateView = () => {
-    setShouldUpdate(false)
-    if (
-      !nextTalk ||
-      !selectedTrack ||
-      !nextTalk[selectedTrack.id] ||
-      !selectedTalk
-    )
-      return
-    if (
-      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
-      selectedTalk.id != nextTalk[selectedTrack.id].id
-    ) {
-      window.location.href =
-        window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-      window.tracker.track('trigger_survey', {
-        track_name: selectedTrack?.name,
-        talk_id: selectedTalk?.id,
-        talk_name: selectedTalk?.title,
-      })
-      dispatch(setViewTalkId(nextTalk[selectedTrack.id].id))
-    }
+  const selectTalk = (talk: Talk) => {
+    dispatch(setViewTalkId(talk.id))
   }
 
   useEffect(() => {
-    if (shouldUpdate) {
-      updateView()
-    }
-  }, [shouldUpdate])
-
-  useEffect(() => {
     if (chatCable) chatCable.disconnect()
+    chatCable?.ensureActiveConnection()
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const actionCable = require('actioncable')
     const actionCableUrl = new URL('/cable', wsBaseUrl).toString()
     const cable = actionCable.createConsumer(actionCableUrl)
     setChatCable(cable)
+
     cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: event?.abbr },
       {
-        received: (msg: { [trackId: number]: Talk }) => {
+        received: (nextTalk: { [trackId: number]: Talk }) => {
           refetch() // onAirの切り替わった新しいTalk一覧を取得
-          setNextTalk(msg)
-          if (!selectedTrack || !selectedTalk) return
-          if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)
-            setShouldUpdate(true)
+          dispatch(autoUpdateTalkInLive(nextTalk))
         },
       },
     )
+    // TODO reconsider the trigger to re-connect actioncable
   }, [selectedTrack, isLiveMode, selectedTalk])
 
   const [mutateAppData] =

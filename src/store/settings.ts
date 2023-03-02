@@ -141,6 +141,40 @@ const settingsSlice = createSlice({
         state.isLiveMode = false
       }
     },
+    autoUpdateTalkInLive: (
+      s,
+      action: PayloadAction<{ [trackId: number]: Talk }>,
+    ) => {
+      const nextTalks = action.payload
+      if (!s.isLiveMode) {
+        return
+      }
+      if (!s.viewTalkId || !s.viewTrackId) {
+        return
+      }
+      const nextTalk = nextTalks[s.viewTrackId]
+      if (nextTalk.trackId !== s.viewTrackId) {
+        console.error('trackId mismatched: something wrong with backend')
+        return
+      }
+      if (nextTalk.id === s.viewTalkId) {
+        return
+      }
+      const selectedTrack = s.tracks.find((t) => t.id === s.viewTrackId)
+      const selectedTalk = s.talks.find((t) => t.id === s.viewTalkId)
+      if (!selectedTalk || !selectedTrack) {
+        return
+      }
+
+      window.location.href =
+        window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
+      window.tracker.track('trigger_survey', {
+        track_name: selectedTrack?.name,
+        talk_id: selectedTalk?.id,
+        talk_name: selectedTalk?.title,
+      })
+      s.viewTalkId = nextTalk.id
+    },
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
     },
@@ -168,7 +202,7 @@ const settingsSlice = createSlice({
       state.tracks = action.payload
     },
     setInitialViewTalk: (s) => {
-      const selectedTrack = s.tracks.find((t) => t.id == s.viewTrackId)
+      const selectedTrack = s.tracks.find((t) => t.id === s.viewTrackId)
       if (!selectedTrack) {
         s.viewTrackId = s.tracks[0].id
       }
@@ -208,6 +242,7 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
+  autoUpdateTalkInLive,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
