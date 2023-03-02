@@ -6,13 +6,17 @@ import { Event } from '../../generated/dreamkast-api.generated'
 import Link from 'next/link'
 import { TrailMapButton } from '../TrailMap/TrailMapButton'
 import { useMenuContents } from './hooks'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useSelector } from 'react-redux'
+import { authSelector } from '../../store/authSelector'
 
 type Props = {
   event?: Event
-  url: string
 }
 
-export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
+export const DesktopMenu: React.FC<Props> = ({ event }) => {
+  const { logout } = useAuth0()
+  const { dkUrl } = useSelector(authSelector)
   const { guideUrl, isPreEvent } = useMenuContents()
 
   return (
@@ -63,7 +67,10 @@ export const DesktopMenu: React.FC<Props> = ({ event, url }) => {
       >
         <Button style={{ color: '#423A57' }}>Timetable</Button>
       </CommonStyled.MenuLink>
-      <Button href={url} style={{ color: '#423A57' }}>
+      <Button
+        style={{ color: '#423A57' }}
+        onClick={() => logout({ returnTo: dkUrl })}
+      >
         Logout
       </Button>
     </Styled.DesktopMenu>

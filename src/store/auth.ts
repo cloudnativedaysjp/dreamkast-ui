@@ -8,6 +8,7 @@ type AuthState = {
   // TODO move to appropriate redux store
   apiBaseUrl: string
   wsBaseUrl: string
+  dkUrl: string
 }
 
 const initialState: AuthState = {
@@ -15,6 +16,7 @@ const initialState: AuthState = {
   token: '',
   apiBaseUrl: '',
   wsBaseUrl: '',
+  dkUrl: '',
 }
 
 const authSlice = createSlice({
@@ -33,9 +35,12 @@ const authSlice = createSlice({
     setWsBaseUrl: (state, action: PayloadAction<string>) => {
       state.wsBaseUrl = action.payload.replace('http', 'ws')
     },
+    setDkUrl: (state, action: PayloadAction<string>) => {
+      state.dkUrl = action.payload
+    },
   },
 })
 
-export const { setUser, setToken, setApiBaseUrl, setWsBaseUrl } =
+export const { setUser, setToken, setApiBaseUrl, setWsBaseUrl, setDkUrl } =
   authSlice.actions
 export default authSlice

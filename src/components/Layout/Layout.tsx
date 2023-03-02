@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode } from 'react'
 import * as Styled from './styled'
 import Head from 'next/head'
 import { DesktopMenu, MobileMenu } from '../Menu'
@@ -18,14 +18,6 @@ export const Layout: React.FC<Props> = ({
   title = 'This is the default title',
   event,
 }) => {
-  const [url, setUrl] = useState<string>('')
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setUrl(window.location.origin + '/logout')
-    }
-  }, [])
-
   return (
     <Styled.Container eventAbbr={event?.abbr}>
       <Head>
@@ -45,9 +37,9 @@ export const Layout: React.FC<Props> = ({
                 src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
               />
             </Link>
-            <DesktopMenu event={event} url={url} />
+            <DesktopMenu event={event} />
           </Styled.Header>
-          <MobileMenu event={event} url={url} />
+          <MobileMenu event={event} />
         </AppBar>
       </header>
       <TrailMapModal></TrailMapModal>

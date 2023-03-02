@@ -12,13 +12,17 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
 import { useMenuContents } from './hooks'
+import { useAuth0 } from '@auth0/auth0-react'
+import { authSelector } from '../../store/authSelector'
+import { useSelector } from 'react-redux'
 
 type Props = {
   event?: Event
-  url: string
 }
 
-export const MobileMenu: React.FC<Props> = ({ event, url }) => {
+export const MobileMenu: React.FC<Props> = ({ event }) => {
+  const { logout } = useAuth0()
+  const { dkUrl } = useSelector(authSelector)
   const { guideUrl, isPreEvent } = useMenuContents()
   const [state, setState] = React.useState(false)
   const toggleDrawer =
@@ -83,7 +87,10 @@ export const MobileMenu: React.FC<Props> = ({ event, url }) => {
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <Button href={url} style={{ color: '#423A57' }}>
+          <Button
+            style={{ color: '#423A57' }}
+            onClick={() => logout({ returnTo: dkUrl })}
+          >
             Logout
           </Button>
         </ListItem>
