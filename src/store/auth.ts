@@ -1,5 +1,6 @@
 import { User } from '@auth0/auth0-react'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './index'
 
 type AuthState = {
   user: User | null
@@ -44,3 +45,5 @@ const authSlice = createSlice({
 export const { setUser, setToken, setApiBaseUrl, setWsBaseUrl, setDkUrl } =
   authSlice.actions
 export default authSlice
+
+export const authSelector = (state: RootState) => state.auth

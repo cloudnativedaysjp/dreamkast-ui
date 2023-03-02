@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
-import { authSelector } from '../../store/authSelector'
+import { authSelector } from '../../store/auth'
 
 type Props = {
   event: Event

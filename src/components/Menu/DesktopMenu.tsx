@@ -8,7 +8,7 @@ import { TrailMapButton } from '../TrailMap/TrailMapButton'
 import { useMenuContents } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useSelector } from 'react-redux'
-import { authSelector } from '../../store/authSelector'
+import { authSelector } from '../../store/auth'
 
 type Props = {
   event?: Event

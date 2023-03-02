@@ -13,7 +13,7 @@ import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
 import { useMenuContents } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
-import { authSelector } from '../../store/authSelector'
+import { authSelector } from '../../store/auth'
 import { useSelector } from 'react-redux'
 
 type Props = {
