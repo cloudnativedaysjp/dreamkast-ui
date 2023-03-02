@@ -44,7 +44,7 @@ type SettingsState = {
   isTrailMapOpen: boolean
 
   // 全talk
-  talks: Record<number, Talk>
+  talks: Talk[]
 
   // 全track
   tracks: Track[]
@@ -78,7 +78,7 @@ const initialState: SettingsState = {
   },
   pointDataInitialized: false,
   isTrailMapOpen: false,
-  talks: {},
+  talks: [],
   tracks: [],
 }
 
@@ -127,15 +127,14 @@ const settingsSlice = createSlice({
         window.location.href.split('#')[0] + '#' + selectedTrack.name
     },
     setViewTalkId: (state, action: PayloadAction<number | null>) => {
-      console.warn(action.payload)
       if (!action.payload) {
         return
       }
-      const selectedTalk = state.talks[action.payload]
-      console.warn(selectedTalk)
+      const selectedTalk = state.talks.find((t) => t.id === action.payload)
       if (!selectedTalk) {
         return
       }
+
       state.viewTalkId = action.payload
       if (!selectedTalk.onAir) {
         state.isLiveMode = false
@@ -153,10 +152,7 @@ const settingsSlice = createSlice({
       state.isTrailMapOpen = action.payload
     },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
-      state.talks = action.payload.reduce((accum, t) => {
-        accum[t.id] = t
-        return accum
-      }, {} as Record<number, Talk>)
+      state.talks = action.payload
     },
     setTracks: (state, action: PayloadAction<Track[]>) => {
       state.tracks = action.payload
@@ -204,7 +200,7 @@ export const tracksSelector = createSelector(settingsSelector, (s) => {
     const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
     return {
       track: tr,
-      talk: s.talks[parseInt(talkId)],
+      talk: s.talks.find((t) => t.id === parseInt(talkId)),
     }
   })
   return { tracksWithLiveTalk }
@@ -220,7 +216,7 @@ export const selectedTrackSelector = createSelector(
     }
     const selectedTrack =
       s.tracks.find((track) => track.id == s.viewTrackId) || s.tracks[0]
-    const selectedTalks = Object.values(s.talks).filter((t) => {
+    const selectedTalks = s.talks.filter((t) => {
       return t.trackId === selectedTrack.id
     })
     const onAirTalk = selectedTalks.find((talk) => talk.onAir)
@@ -235,17 +231,14 @@ export const selectedTrackSelector = createSelector(
 export const selectedTalkSelector = createSelector(
   settingsSelector,
   (s): { talk?: Talk } => {
-    console.warn('selectedTalkSelector')
-    const talks = Object.values(s.talks).filter((t) => {
+    const talksInTrack = s.talks.filter((t) => {
       return t.trackId === s.viewTrackId
     })
-    if (talks.length === 0) {
+    if (talksInTrack.length === 0) {
       return {}
     }
-    console.warn(s.viewTalkId)
-    const selectedTalk = talks.find((t) => t.id === s.viewTalkId)
     return {
-      talk: selectedTalk || talks[0],
+      talk: talksInTrack.find((t) => t.id === s.viewTalkId) || talksInTrack[0],
     }
   },
 )

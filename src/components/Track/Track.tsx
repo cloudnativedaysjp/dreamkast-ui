@@ -71,8 +71,9 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     )
       return
     beforeTrackId.current = selectedTrack?.id
-    const nextTalk = onAirTalk ? onAirTalk : talks[0]
-    dispatch(setViewTalkId(nextTalk.id))
+    // TODO activate following
+    // const nextTalk = onAirTalk ? onAirTalk : talks[0]
+    // dispatch(setViewTalkId(nextTalk.id))
     if (!onAirTalk) {
       // NOTE just for testing
       setVideoId(selectedTrack?.videoId)
