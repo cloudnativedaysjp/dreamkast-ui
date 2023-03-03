@@ -5,6 +5,7 @@ import { createWrapper, Context } from 'next-redux-wrapper'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
 import auth from './auth'
 import settings from './settings'
+import points from './points'
 
 const makeStore = (_: Context) => {
   const store = configureStore({
@@ -12,6 +13,7 @@ const makeStore = (_: Context) => {
       [dreamkastApi.reducerPath]: dreamkastApi.reducer,
       [auth.name]: auth.reducer,
       [settings.name]: settings.reducer,
+      [points.name]: points.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(dreamkastApi.middleware),

@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
-  DkUiData,
   Event,
   Profile,
-  ProfilePointsResponse,
   Talk,
   Track,
 } from '../generated/dreamkast-api.generated'
@@ -26,6 +24,12 @@ type SettingsState = {
     internal: boolean | undefined
   } | null
 
+  // 全talk
+  talks: Talk[]
+
+  // 全track
+  tracks: Track[]
+
   // ユーザプロファイル
   profile: Profile
 
@@ -36,25 +40,14 @@ type SettingsState = {
   viewTrackId: number
   viewTalkId: number
   isLiveMode: boolean
-
-  // ポイントデータ
-  appData: DkUiData
-  appDataInitialized: boolean
-  pointData: ProfilePointsResponse
-  pointDataInitialized: boolean
-  isTrailMapOpen: boolean
-
-  // 全talk
-  talks: Talk[]
-
-  // 全track
-  tracks: Track[]
 }
 
 const initialState: SettingsState = {
   eventAbbr: '',
   event: null,
   conferenceDay: null,
+  talks: [],
+  tracks: [],
   profile: {
     id: 0,
     name: '',
@@ -65,22 +58,6 @@ const initialState: SettingsState = {
   viewTrackId: 0,
   viewTalkId: 0,
   isLiveMode: true,
-  appData: {
-    watchedTalksOnline: {
-      watchingTime: [],
-      prevTimestamp: 0,
-    },
-    stampChallenges: [],
-  },
-  appDataInitialized: false,
-  pointData: {
-    total: 0,
-    points: [],
-  },
-  pointDataInitialized: false,
-  isTrailMapOpen: false,
-  talks: [],
-  tracks: [],
 }
 
 const settingsSlice = createSlice({
@@ -176,17 +153,6 @@ const settingsSlice = createSlice({
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
     },
-    setAppData: (state, action: PayloadAction<DkUiData>) => {
-      state.appData = action.payload
-      state.appDataInitialized = true
-    },
-    setPointData: (state, action: PayloadAction<ProfilePointsResponse>) => {
-      state.pointData = action.payload
-      state.pointDataInitialized = true
-    },
-    setTrailMapOpen: (state, action: PayloadAction<boolean>) => {
-      state.isTrailMapOpen = action.payload
-    },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
       if (action.payload.length === 0) {
         return
@@ -231,9 +197,6 @@ export const {
   setShowVideo,
   setEventAbbr,
   setEvent,
-  setAppData,
-  setPointData,
-  setTrailMapOpen,
   setTalks,
   setTracks,
   setViewTrackId,
@@ -245,7 +208,6 @@ export const {
 
 export const settingsSelector = (s: RootState) => s.settings
 
-const appDataSelector = createSelector(settingsSelector, (s) => s.appData)
 const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
 const talksSelector = createSelector(settingsSelector, (s) => s.talks)
 const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
@@ -281,6 +243,7 @@ export const settingsVideoIdSelector = createSelector(
     const selectedTrack = tracks.find((t) => t.id === viewTrackId)
     const selectedTalk = talks.find((t) => t.id === viewTalkId)
     if (selectedTalk?.onAir) {
+      // TODO remove following
       console.warn('videoId: onAir', selectedTrack?.videoId)
       return selectedTrack?.videoId || ''
     } else {
@@ -289,15 +252,6 @@ export const settingsVideoIdSelector = createSelector(
     }
   },
 )
-
-export const useStamps = () => {
-  const appData = useSelector(appDataSelector)
-  return {
-    canGetNewStamp: !!appData.stampChallenges.find((i) => i.waiting),
-    slotIdToBeStamped: appData.stampChallenges.find((i) => i.waiting)?.slotId,
-    stamps: appData.stampChallenges.filter((i) => i.condition === 'stamped'),
-  }
-}
 
 export const useTracks = () => {
   const tracks = useSelector(tracksSelector)

@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
 import auth from '../store/auth'
 import settings from '../store/settings'
+import points from '../store/points'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { render, RenderOptions } from '@testing-library/react'
 import { Provider } from 'react-redux'
@@ -28,6 +29,7 @@ export function renderWithProviders(
     preloadedState = {
       auth: auth.getInitialState(),
       settings: settings.getInitialState(),
+      points: points.getInitialState(),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       api: {} as any,
     },

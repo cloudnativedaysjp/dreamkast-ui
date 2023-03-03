@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 import {
   settingsInitializedSelector,
   settingsSelector,
-  useStamps,
 } from '../../store/settings'
+import { pointsSelector, useStamps } from '../../store/points'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
@@ -25,6 +25,7 @@ type Props = {
 export const StampCard = (_: Props) => {
   const envCtx = useContext(EnvCtx)
   const settings = useSelector(settingsSelector)
+  const points = useSelector(pointsSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const stamp = useStamps()
   const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
@@ -35,7 +36,7 @@ export const StampCard = (_: Props) => {
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   useEffect(() => {
-    if (!settings.appDataInitialized || pinnedStamp !== null) {
+    if (!points.appDataInitialized || pinnedStamp !== null) {
       return
     }
     setPinnedStamp(stamp)
