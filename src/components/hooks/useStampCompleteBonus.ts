@@ -7,14 +7,14 @@ import {
   getAllStampCompEventNum,
   setAllStampCollected,
 } from '../../util/sessionstorage/trailMap'
-import { EnvCtx } from '../../context/env'
+import { PrivateCtx } from '../../context/private'
 import { useContext, useEffect } from 'react'
 
 export const useStampCompleteBonus = () => {
   const { stamps } = useStamps()
   const settings = useSelector(settingsSelector)
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
-  const envCtx = useContext(EnvCtx)
+  const envCtx = useContext(PrivateCtx)
 
   useEffect(() => {
     if (stamps.length < 12) {

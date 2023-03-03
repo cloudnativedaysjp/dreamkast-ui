@@ -17,7 +17,7 @@ import App from 'next/app'
 import { useDispatch } from 'react-redux'
 import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
-import { EnvProvider } from '../context/env'
+import { PrivateCtxProvider } from '../context/private'
 import { AuthProvider, useAccessToken } from '../context/auth'
 
 const GlobalStyle = createGlobalStyle`
@@ -82,11 +82,11 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
   return (
     <>
       <AuthProvider env={env}>
-        <EnvProvider env={env}>
+        <PrivateCtxProvider env={env}>
           <AppComponent>
             <Component {...pageProps} />
           </AppComponent>
-        </EnvProvider>
+        </PrivateCtxProvider>
       </AuthProvider>
     </>
   )

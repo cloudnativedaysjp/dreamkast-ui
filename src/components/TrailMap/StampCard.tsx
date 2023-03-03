@@ -15,7 +15,7 @@ import {
   clearQRCodeStampResult,
   getSessionEventNum,
 } from '../../util/sessionstorage/trailMap'
-import { EnvCtx } from '../../context/env'
+import { PrivateCtx } from '../../context/private'
 import { Skeleton } from '@material-ui/lab'
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 }
 
 export const StampCard = (_: Props) => {
-  const envCtx = useContext(EnvCtx)
+  const { getPointEventId } = useContext(PrivateCtx)
   const settings = useSelector(settingsSelector)
   const points = useSelector(pointsSelector)
   const initialized = useSelector(settingsInitializedSelector)
@@ -70,7 +70,7 @@ export const StampCard = (_: Props) => {
         return
       }
       const eventNum = getSessionEventNum(stamp.slotIdToBeStamped)
-      const pointEventId = envCtx.getPointEventId(eventNum)
+      const pointEventId = getPointEventId(eventNum)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,
