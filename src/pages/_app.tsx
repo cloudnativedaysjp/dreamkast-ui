@@ -15,7 +15,7 @@ import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
 import { useDispatch, useSelector } from 'react-redux'
-import { setApiBaseUrl, setToken, setUser } from '../store/auth'
+import { setApiBaseUrl, setToken, setUser, setWsBaseUrl } from '../store/auth'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { ENV, validateEnv } from '../config'
 import { tokenSelector } from '../store/authSelector'
@@ -117,6 +117,7 @@ const WrappedApp = ({ Component, pageProps, env }: WrappedAppProps) => {
 
   useEffect(() => {
     dispatch(setApiBaseUrl(env.NEXT_PUBLIC_API_BASE_URL))
+    dispatch(setWsBaseUrl(env.NEXT_PUBLIC_DK_URL))
   }, [])
 
   useEffect(() => {
