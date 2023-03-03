@@ -1,229 +1,69 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
 import { Chat } from '../Chat'
 import Grid from '@material-ui/core/Grid'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
 import { Sponsors } from '../Sponsors'
-import ActionCable from 'actioncable'
 import 'dayjs/locale/ja'
+import { Event, Talk } from '../../generated/dreamkast-api.generated'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-  Event,
-  Talk,
-  Track,
-  useGetApiV1TalksQuery,
-  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
-} from '../../generated/dreamkast-api.generated'
-import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
-import { useMediaQuery, useTheme } from '@material-ui/core'
-import { getSlotId } from '../../util/trailMap'
-import { authSelector } from '../../store/authSelector'
+  useSelectedTalk,
+  useSelectedTrack,
+  settingsInitializedSelector,
+  settingsSelector,
+  setViewTalkId,
+  settingsVideoIdSelector,
+  isLiveModeSelector,
+  setIsLiveMode,
+} from '../../store/settings'
+import {
+  useKarteTracking,
+  useLiveTalkUpdate,
+  useSizeChecker,
+  useTrailMapTracking,
+} from '../TrackSelector/hooks'
 
 type Props = {
   event: Event
-  selectedTrack: Track | null
   propTalks?: Talk[]
 
   refetch: () => void
 }
 
-export const TrackView: React.FC<Props> = ({
-  event,
-  selectedTrack,
-  refetch: refetchAll,
-}) => {
-  const [talks, setTalks] = useState<Talk[]>([])
-  const [videoId, setVideoId] = useState<string | null>()
-  const [selectedTalk, setSelectedTalk] = useState<Talk>()
-  const [karteTimer, setKarteTimer] = useState<number>()
-  const [pointTimer, setPointTimer] = useState<number>()
-  const [isLiveMode, setIsLiveMode] = useState<boolean>(true)
-  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false)
-  const [chatCable, setChatCable] = useState<ActionCable.Cable | null>(null)
-  const [nextTalk, setNextTalk] = useState<{ [trackId: number]: Talk }>()
-  const beforeTrackId = useRef<number | undefined>(selectedTrack?.id)
+export const TrackView: React.FC<Props> = ({ event, refetch }) => {
+  const dispatch = useDispatch()
+  const { track: selectedTrack, talks } = useSelectedTrack()
+  const { talk: selectedTalk } = useSelectedTalk()
+
   const settings = useSelector(settingsSelector)
-  const { wsBaseUrl } = useSelector(authSelector)
-  const theme = useTheme()
-  const isSmallerThanMd = !useMediaQuery(theme.breakpoints.up('md'))
-  const [_, setError] = useState()
+  const initialized = useSelector(settingsInitializedSelector)
+  const videoId = useSelector(settingsVideoIdSelector)
+  const isLiveMode = useSelector(isLiveModeSelector)
 
-  const dayId = settings.conferenceDay?.id
-
-  const onAirTalkExists = useMemo(() => {
-    return talks.filter((talk) => !!talk.onAir).length > 0
-  }, [talks])
-
-  const { data, isLoading, isError, error, refetch } = useGetApiV1TalksQuery(
-    {
-      eventAbbr: event.abbr,
-      trackId: `${selectedTrack?.id}`,
-      conferenceDayIds: dayId,
-    },
-    { skip: !dayId || !selectedTrack?.id },
-  )
-  useEffect(() => {
-    if (isLoading) {
-      return
-    }
-    if (isError) {
-      setError(() => {
-        throw error
-      })
-      return
-    }
-    if (data) {
-      setTalks(data)
-    }
-  }, [data, isLoading, isError])
+  useKarteTracking()
+  useTrailMapTracking()
+  useLiveTalkUpdate(event.abbr, () => {
+    refetch() // onAirの切り替わった新しいTalk一覧を取得
+  })
+  const isSmallerThanMd = useSizeChecker()
 
   useEffect(() => {
-    if (isLiveMode) {
-      if (data) {
-        refetch()
-      }
+    if (isLiveMode && talks.length > 0) {
+      refetch()
     }
   }, [isLiveMode])
 
+  const changeLiveMode = (checked: boolean) => {
+    dispatch(setIsLiveMode(checked))
+  }
+
   const selectTalk = (talk: Talk) => {
-    if (!talk.onAir) {
-      setIsLiveMode(false)
-    }
-    setSelectedTalk(talk)
-    setVideoId(talk.onAir ? selectedTrack?.videoId : talk.videoId)
+    dispatch(setViewTalkId(talk.id))
   }
 
-  useEffect(() => {
-    if (
-      !talks.length ||
-      shouldUpdate ||
-      (!isLiveMode && beforeTrackId.current === selectedTrack?.id)
-    )
-      return
-    beforeTrackId.current = selectedTrack?.id
-    const onAirTalk = talks.find((talk) => talk.onAir)
-    setSelectedTalk(onAirTalk ? onAirTalk : talks[0])
-    if (!onAirTalkExists) {
-      // NOTE just for testing
-      setVideoId(selectedTrack?.videoId)
-    } else {
-      setVideoId(onAirTalk ? selectedTrack?.videoId : talks[0].videoId)
-    }
-  }, [talks])
-
-  const getNextTalk = () => {
-    if (selectedTrack && nextTalk) return nextTalk[selectedTrack.id]
-  }
-
-  const onChecked = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-  ) => {
-    setIsLiveMode(checked)
-  }
-
-  const updateView = () => {
-    setShouldUpdate(false)
-    if (
-      !nextTalk ||
-      !selectedTrack ||
-      !nextTalk[selectedTrack.id] ||
-      !selectedTalk
-    )
-      return
-    if (
-      selectedTrack.id == nextTalk[selectedTrack.id].trackId &&
-      selectedTalk.id != nextTalk[selectedTrack.id].id
-    ) {
-      window.location.href =
-        window.location.href.split('#')[0] + '#' + selectedTalk.id // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-      window.tracker.track('trigger_survey', {
-        track_name: selectedTrack?.name,
-        talk_id: selectedTalk?.id,
-        talk_name: selectedTalk?.title,
-      })
-      setVideoId(nextTalk[selectedTrack.id].videoId)
-      setSelectedTalk(getNextTalk())
-    }
-  }
-
-  useEffect(() => {
-    if (shouldUpdate) {
-      updateView()
-    }
-  }, [shouldUpdate])
-
-  useEffect(() => {
-    if (chatCable) chatCable.disconnect()
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const actionCable = require('actioncable')
-    const actionCableUrl = new URL('/cable', wsBaseUrl).toString()
-    const cable = actionCable.createConsumer(actionCableUrl)
-    setChatCable(cable)
-    cable.subscriptions.create(
-      { channel: 'OnAirChannel', eventAbbr: event?.abbr },
-      {
-        received: (msg: { [trackId: number]: Talk }) => {
-          refetch() // onAirの切り替わった新しいTalk一覧を取得
-          refetchAll()
-          setNextTalk(msg)
-          if (!selectedTrack || !selectedTalk) return
-          if (isLiveMode && msg[selectedTrack.id].id != selectedTalk.id)
-            setShouldUpdate(true)
-        },
-      },
-    )
-  }, [selectedTrack, isLiveMode, selectedTalk])
-
-  const [mutateAppData] =
-    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
-
-  useEffect(() => {
-    if (!settings.initialized) {
-      return
-    }
-    if (!selectedTrack || !selectedTalk) {
-      return
-    }
-    clearInterval(karteTimer)
-    setKarteTimer(
-      window.setInterval(() => {
-        window.tracker.track('watch_video', {
-          track_name: selectedTrack.name,
-          talk_id: selectedTalk.id,
-          talk_name: selectedTalk.title,
-        })
-      }, 120 * 1000),
-    )
-    clearTimeout(pointTimer)
-    if (!settings.profile.isAttendOffline && selectedTalk.onAir) {
-      setPointTimer(
-        window.setInterval(() => {
-          const slotId = getSlotId(selectedTalk)
-          if (slotId === 0) {
-            return
-          }
-          mutateAppData({
-            profileId: `${settings.profile.id}`,
-            conference: settings.eventAbbr,
-            dkUiDataMutation: {
-              action: 'talkWatched',
-              payload: {
-                talkId: selectedTalk.id,
-                trackId: selectedTrack?.id || 0,
-                slotId: slotId,
-              },
-            },
-          })
-            .unwrap()
-            .catch((err) => console.error(err))
-        }, 120 * 1000),
-      )
-    }
-  }, [selectedTrack, selectedTalk, settings.initialized])
-
-  if (!settings.initialized) {
+  if (!initialized) {
     // TODO show loading
     return <></>
   }
@@ -263,7 +103,7 @@ export const TrackView: React.FC<Props> = ({
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
-            changeLiveMode={onChecked}
+            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
             small
           />
@@ -290,7 +130,7 @@ export const TrackView: React.FC<Props> = ({
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
-            changeLiveMode={onChecked}
+            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
           />
         </Grid>

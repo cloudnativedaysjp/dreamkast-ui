@@ -3,7 +3,7 @@ import { ENV } from '../config'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUser } from '../store/auth'
-import { tokenSelector } from '../store/authSelector'
+import { authSelector } from '../store/auth'
 
 type Props = {
   env: typeof ENV
@@ -79,5 +79,6 @@ export const useAccessToken = () => {
       })
   }, [isAuthenticated, isLoading])
 
-  return useSelector(tokenSelector)
+  const { token } = useSelector(authSelector)
+  return token
 }

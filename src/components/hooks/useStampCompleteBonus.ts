@@ -1,19 +1,20 @@
-import { settingsSelector, stampSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
+import { settingsSelector } from '../../store/settings'
+import { useStamps } from '../../store/points'
 import { usePostApiV1ProfileByProfileIdPointMutation } from '../../generated/dreamkast-api.generated'
 import {
   getAllStampCollected,
   getAllStampCompEventNum,
   setAllStampCollected,
-} from '../../util/trailMap'
-import { EnvCtx } from '../../context/env'
+} from '../../util/sessionstorage/trailMap'
+import { PrivateCtx } from '../../context/private'
 import { useContext, useEffect } from 'react'
 
 export const useStampCompleteBonus = () => {
-  const { stamps } = useSelector(stampSelector)
+  const { stamps } = useStamps()
   const settings = useSelector(settingsSelector)
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
-  const envCtx = useContext(EnvCtx)
+  const envCtx = useContext(PrivateCtx)
 
   useEffect(() => {
     if (stamps.length < 12) {

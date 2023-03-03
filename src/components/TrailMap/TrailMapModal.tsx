@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
-import { settingsSelector, setTrailMapOpen } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearTrailMapOpenNext, getTrailMapOpenNext } from '../../util/trailMap'
+import { pointsSelector, setTrailMapOpen } from '../../store/points'
+import {
+  clearTrailMapOpenNext,
+  getTrailMapOpenNext,
+} from '../../util/sessionstorage/trailMap'
 import { TrailMap } from './TrailMap'
 import * as Styled from './styled'
 
@@ -10,7 +13,7 @@ type Props = {
 }
 
 export const TrailMapModal = (_: Props) => {
-  const settings = useSelector(settingsSelector)
+  const points = useSelector(pointsSelector)
   const dispatch = useDispatch()
 
   // get stamp by offline user via QR code
@@ -23,7 +26,7 @@ export const TrailMapModal = (_: Props) => {
 
   return (
     <Styled.TrailMapModal
-      open={settings.isTrailMapOpen}
+      open={points.isTrailMapOpen}
       onClose={() => dispatch(setTrailMapOpen(false))}
     >
       <TrailMap></TrailMap>

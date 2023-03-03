@@ -3,7 +3,7 @@ import {
   useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
   useGetApiV1ProfileByProfileIdPointsQuery,
 } from '../../generated/dreamkast-api.generated'
-import { setAppData, setPointData } from '../../store/settings'
+import { setAppData, setPointData } from '../../store/points'
 import { useDispatch, useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 

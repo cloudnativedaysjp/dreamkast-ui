@@ -1,7 +1,12 @@
 import { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { setEvent, setEventAbbr, setProfile } from '../../store/settings'
+import {
+  loadFromStorage,
+  setEvent,
+  setEventAbbr,
+  setProfile,
+} from '../../store/settings'
 import {
   useGetApiV1ByEventAbbrMyProfileQuery,
   useGetApiV1EventsByEventAbbrQuery,
@@ -10,6 +15,10 @@ import {
 export const useInitSetup = () => {
   const router = useRouter()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadFromStorage())
+  }, [])
 
   const eventAbbr = useMemo<string>(() => {
     const { eventAbbr } = router.query

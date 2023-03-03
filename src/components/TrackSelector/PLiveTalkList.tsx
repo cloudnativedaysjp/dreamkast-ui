@@ -8,17 +8,21 @@ import {
   TableRow,
 } from '@material-ui/core'
 import dayjs from 'dayjs'
-import { useTracksWithLiveTalk } from './hooks'
+import { Talk, Track } from '../../generated/dreamkast-api.generated'
 
 type Props = {
+  data: { track: Track; talk?: Talk }[]
+
   selectedTrack: number
 
   onChange: (selectedItem: number | null) => void
 }
 
-export const LiveTrackList: React.FC<Props> = ({ selectedTrack, onChange }) => {
-  const data = useTracksWithLiveTalk()
-
+export const PLiveTalkList: React.FC<Props> = ({
+  data,
+  selectedTrack,
+  onChange,
+}) => {
   return (
     <Styled.Container>
       <Styled.InnerContainer>

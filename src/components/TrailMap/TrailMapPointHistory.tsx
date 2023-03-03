@@ -1,6 +1,6 @@
 import React from 'react'
 import * as Styled from './styled'
-import { settingsSelector } from '../../store/settings'
+import { pointsSelector } from '../../store/points'
 import { useSelector } from 'react-redux'
 import {
   Paper,
@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 
 export const TrailMapPointHistory = () => {
-  const { pointData } = useSelector(settingsSelector)
+  const { pointData } = useSelector(pointsSelector)
   return (
     <Styled.PointHistoryTable>
       <TableContainer component={Paper}>

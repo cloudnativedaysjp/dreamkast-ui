@@ -10,17 +10,20 @@ import {
   setTrailMapOpenNext,
   QRCodeRequestResult,
   getSessionEventNum,
-} from '../../../util/trailMap'
+} from '../../../util/sessionstorage/trailMap'
 import {
   useGetApiV1TalksByTalkIdQuery,
   useGetApiV1TracksQuery,
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../../generated/dreamkast-api.generated'
-import { settingsSelector } from '../../../store/settings'
+import {
+  settingsInitializedSelector,
+  settingsSelector,
+} from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
-import { EnvCtx } from '../../../context/env'
+import { PrivateCtx } from '../../../context/private'
 import { CircularProgress } from '@material-ui/core'
 import * as CommonStyled from '../../../styles/styled'
 
@@ -31,10 +34,11 @@ type OnAirTalk = {
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
-  const envCtx = useContext(EnvCtx)
+  const { getPointEventId } = useContext(PrivateCtx)
   const [talkId, setTalkId] = useState<number | null>(null)
   const [trackId, setTrackId] = useState<number | null>(null)
   const settings = useSelector(settingsSelector)
+  const initialized = useSelector(settingsInitializedSelector)
   const { eventAbbr, event } = useInitSetup()
 
   const [mutateAppData] =
@@ -42,7 +46,7 @@ const IndexPage: NextPage = () => {
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   const eventMap = useMemo(() => {
-    return makeTrackResolveMap(envCtx.getPointEventId)
+    return makeTrackResolveMap(getPointEventId)
   }, [eventAbbr])
 
   const tracksQuery = useGetApiV1TracksQuery(
@@ -88,7 +92,7 @@ const IndexPage: NextPage = () => {
 
   // TODO add point using slotID/trackID/talkID
   useEffect(() => {
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     if (!talksQuery.data) {
@@ -101,7 +105,7 @@ const IndexPage: NextPage = () => {
 
     ;(async () => {
       const eventNum = getSessionEventNum(slotId)
-      const pointEventId = envCtx.getPointEventId(eventNum)
+      const pointEventId = getPointEventId(eventNum)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,
@@ -137,7 +141,7 @@ const IndexPage: NextPage = () => {
         goTrailMap('error')
       }
     })()
-  }, [talksQuery.data, settings.initialized])
+  }, [talksQuery.data, initialized])
 
   if (event) {
     return (

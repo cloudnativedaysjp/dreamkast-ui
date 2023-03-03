@@ -21,10 +21,10 @@ import {
   getGotChatPoint,
   getSlotId,
   setGotChatPoint,
-} from '../../util/trailMap'
+} from '../../util/sessionstorage/trailMap'
 import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
-import { EnvCtx } from '../../context/env'
+import { PrivateCtx } from '../../context/private'
 import { RootState } from '../../store'
 
 type Props = {
@@ -113,7 +113,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     useState<ChatMessageContainer>(initialChatMessage)
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
-  const envCtx = useContext(EnvCtx)
+  const { getPointEventId } = useContext(PrivateCtx)
   const settings = useSelector(settingsSelector)
 
   const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
@@ -200,8 +200,8 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
       return null
     }
     const eventNum = getChatEventNum(slotId)
-    return envCtx.getPointEventId(eventNum)
-  }, [slotId, envCtx])
+    return getPointEventId(eventNum)
+  }, [slotId])
   const isAlreadyGotChatPoint = !!slotId && getGotChatPoint(slotId)
 
   const onSendReply = (data: MessageInputs) => {

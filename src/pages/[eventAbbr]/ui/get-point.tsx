@@ -3,9 +3,12 @@ import { useRouter } from 'next/router'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useEffect } from 'react'
 import { Layout } from '../../../components/Layout'
-import { setTrailMapOpenNext } from '../../../util/trailMap'
+import { setTrailMapOpenNext } from '../../../util/sessionstorage/trailMap'
 import { usePostApiV1ProfileByProfileIdPointMutation } from '../../../generated/dreamkast-api.generated'
-import { settingsSelector } from '../../../store/settings'
+import {
+  settingsInitializedSelector,
+  settingsSelector,
+} from '../../../store/settings'
 import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
 import { CircularProgress } from '@material-ui/core'
@@ -14,6 +17,7 @@ import * as CommonStyled from '../../../styles/styled'
 const IndexPage: NextPage = () => {
   const router = useRouter()
   const settings = useSelector(settingsSelector)
+  const initialized = useSelector(settingsInitializedSelector)
   const { eventAbbr, event } = useInitSetup()
 
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
@@ -27,7 +31,7 @@ const IndexPage: NextPage = () => {
     if (!router.isReady) {
       return
     }
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     const { key } = router.query
@@ -49,7 +53,7 @@ const IndexPage: NextPage = () => {
       .finally(() => {
         goTrailMap()
       })
-  }, [router.isReady, settings.initialized])
+  }, [router.isReady, initialized])
 
   if (event) {
     return (

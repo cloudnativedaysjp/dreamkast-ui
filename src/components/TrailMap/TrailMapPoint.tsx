@@ -1,12 +1,12 @@
 import React from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
+import { pointsSelector } from '../../store/points'
 import { Skeleton } from '@material-ui/lab'
 
 export const TrailMapPoint = () => {
-  const settings = useSelector(settingsSelector)
-  if (!settings.pointDataInitialized) {
+  const points = useSelector(pointsSelector)
+  if (!points.pointDataInitialized) {
     return (
       <Styled.TrailMapPointSuspendContainer>
         <div className={'suspend'}>
@@ -16,7 +16,7 @@ export const TrailMapPoint = () => {
     )
   }
 
-  const { total } = settings.pointData
+  const { total } = points.pointData
   const ticket = Math.floor(total / 100)
   const frac = total % 100
 

@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import * as Styled from './styled'
 import { useSelector } from 'react-redux'
-import { settingsSelector, stampSelector } from '../../store/settings'
+import {
+  settingsInitializedSelector,
+  settingsSelector,
+} from '../../store/settings'
+import { pointsSelector, useStamps } from '../../store/points'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
@@ -10,8 +14,8 @@ import {
   getQRCodeStampResult,
   clearQRCodeStampResult,
   getSessionEventNum,
-} from '../../util/trailMap'
-import { EnvCtx } from '../../context/env'
+} from '../../util/sessionstorage/trailMap'
+import { PrivateCtx } from '../../context/private'
 import { Skeleton } from '@material-ui/lab'
 
 type Props = {
@@ -19,9 +23,11 @@ type Props = {
 }
 
 export const StampCard = (_: Props) => {
-  const envCtx = useContext(EnvCtx)
+  const { getPointEventId } = useContext(PrivateCtx)
   const settings = useSelector(settingsSelector)
-  const stamp = useSelector(stampSelector)
+  const points = useSelector(pointsSelector)
+  const initialized = useSelector(settingsInitializedSelector)
+  const stamp = useStamps()
   const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
   const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
   const [stamped, setStamped] = useState<boolean>(false)
@@ -30,7 +36,7 @@ export const StampCard = (_: Props) => {
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 
   useEffect(() => {
-    if (!stamp.initialized || pinnedStamp !== null) {
+    if (!points.appDataInitialized || pinnedStamp !== null) {
       return
     }
     setPinnedStamp(stamp)
@@ -53,7 +59,7 @@ export const StampCard = (_: Props) => {
 
   // get stamp by online user
   useEffect(() => {
-    if (!settings.initialized) {
+    if (!initialized) {
       return
     }
     if (!stamp.canGetNewStamp) {
@@ -64,7 +70,7 @@ export const StampCard = (_: Props) => {
         return
       }
       const eventNum = getSessionEventNum(stamp.slotIdToBeStamped)
-      const pointEventId = envCtx.getPointEventId(eventNum)
+      const pointEventId = getPointEventId(eventNum)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,
@@ -88,7 +94,7 @@ export const StampCard = (_: Props) => {
         console.error('stampFromUI Action', err)
       }
     })()
-  }, [settings.initialized, stamp.canGetNewStamp])
+  }, [initialized, stamp.canGetNewStamp])
 
   if (!pinnedStamp) {
     return (
