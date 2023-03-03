@@ -29,6 +29,23 @@ export const ChildrenContainer = styled.div`
   padding: 10px;
 `
 
+export const ErrorContainer = styled.div`
+  height: calc(100vh - 64px);
+  background: rgba(255, 255, 255, 0.7);
+`
+
+export const ErrorMessage = styled.div`
+  padding: 30px;
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+`
+
 export const Footer = styled.footer`
   grid-row-start: 2;
   grid-row-end: 3;
