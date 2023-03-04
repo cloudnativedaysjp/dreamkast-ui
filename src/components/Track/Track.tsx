@@ -59,8 +59,8 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     dispatch(setIsLiveMode(checked))
   }
 
-  const selectTalk = (talk: Talk) => {
-    dispatch(setViewTalkId(talk.id))
+  const selectTalk = (talkId: number) => {
+    dispatch(setViewTalkId(talkId))
   }
 
   if (!initialized) {

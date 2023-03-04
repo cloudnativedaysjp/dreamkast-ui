@@ -9,7 +9,7 @@ type Props = {
   selectedTalk?: Talk
   talks: Talk[]
   isLiveMode?: boolean
-  selectTalk: (talk: Talk) => void
+  selectTalk: (talkId: number) => void
   changeLiveMode: (mode: boolean) => void
   small?: boolean
 }
@@ -93,7 +93,7 @@ export const TalkSelector: React.FC<Props> = ({
                 key={talk.id}
                 disabled={!talk.available}
                 selected={talk.id === selectedTalk?.id}
-                onClick={() => selectTalk(talk)}
+                onClick={() => selectTalk(talk.id)}
               >
                 <Styled.Text>
                   {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
