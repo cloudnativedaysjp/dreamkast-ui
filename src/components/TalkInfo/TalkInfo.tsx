@@ -21,22 +21,19 @@ export const TalkInfo: React.FC<Props> = ({
 
   return (
     <Styled.Container>
-      {selectedTalk?.onAir && (
-        <Styled.Live>LIVE 👥 {viewerCount || 0}</Styled.Live>
-      )}
+      {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
       {showVideoToggle && <VideoToggleButton />}
       <PTalkInfo
         eventAbbr={eventAbbr}
         selectedTalk={selectedTalk}
         selectedTrack={selectedTrack}
         showVideoToggle={showVideoToggle}
-        viewerCount={viewerCount}
       />
     </Styled.Container>
   )
 }
 
-export const PTalkInfo: React.FC<Props & { viewerCount?: string }> = ({
+export const PTalkInfo: React.FC<Props> = ({
   eventAbbr,
   selectedTalk,
   selectedTrack,

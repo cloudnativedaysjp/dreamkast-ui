@@ -11,12 +11,12 @@ describe('PTalkInfo', () => {
         eventAbbr={MockEvent().abbr}
         selectedTalk={MockTalkA1()}
         selectedTrack={MockTrackA()}
-        viewerCount={'5'}
         showVideoToggle={true}
       />,
     )
   })
-  it('should render when data empty', () => {
+
+  it('should render when props undefined', () => {
     render(<PTalkInfo eventAbbr={MockEvent().abbr} />)
   })
 })

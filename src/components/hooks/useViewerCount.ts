@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
 
 export const useViewerCount = (selectedTrackId: number | undefined) => {
-  const [viewerCount, setViewerCount] = useState<string>('')
+  const [viewerCount, setViewerCount] = useState<number>(0)
 
   const { data, isError, isLoading, error } =
     useGetApiV1TracksByTrackIdViewerCountQuery(
@@ -19,9 +19,7 @@ export const useViewerCount = (selectedTrackId: number | undefined) => {
       return
     }
     if (data) {
-      setViewerCount(data.viewerCount.toString())
-    } else {
-      setViewerCount('-')
+      setViewerCount(data.viewerCount)
     }
   }, [data, isLoading, isError])
 
