@@ -208,12 +208,19 @@ export const {
 
 export const settingsSelector = (s: RootState) => s.settings
 
-const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
-const talksSelector = createSelector(settingsSelector, (s) => s.talks)
-const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
-const viewTrackIdSelector = createSelector(
+export const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
+export const talksSelector = createSelector(settingsSelector, (s) => s.talks)
+export const viewTalkIdSelector = createSelector(
+  settingsSelector,
+  (s) => s.viewTalkId,
+)
+export const viewTrackIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTrackId,
+)
+export const setShowVideoSelector = createSelector(
+  settingsSelector,
+  (s) => s.showVideo,
 )
 
 export const isLiveModeSelector = createSelector(

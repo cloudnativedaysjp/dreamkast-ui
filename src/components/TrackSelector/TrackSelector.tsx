@@ -5,9 +5,9 @@ import { PLiveTalkList } from './PLiveTalkList'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setInitialViewTalk,
-  settingsSelector,
   setViewTrackId,
   useTracks,
+  viewTrackIdSelector,
 } from '../../store/settings'
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 import { LiveTalkModalButton } from './LiveTalkModalButton'
@@ -22,7 +22,7 @@ export const TrackSelector: React.FC = () => {
 }
 
 export const CTrackSelector: ContainerComponent<PProps> = ({ content }) => {
-  const { viewTrackId } = useSelector(settingsSelector)
+  const viewTrackId = useSelector(viewTrackIdSelector)
   const { tracksWithLiveTalk } = useTracks()
 
   const dispatch = useDispatch()
