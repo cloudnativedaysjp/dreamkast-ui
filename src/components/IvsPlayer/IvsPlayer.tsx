@@ -9,7 +9,7 @@ import { VideoToggleButton } from '../common/VideoToggleButton'
 type Props = {
   playBackUrl?: string | null
   autoplay: boolean
-  showStopVideoButton?: boolean
+  showVideoToggle?: boolean
 }
 
 declare function registerIVSTech(
@@ -20,7 +20,7 @@ declare function registerIVSTech(
 export const IvsPlayer: React.FC<Props> = ({
   playBackUrl,
   autoplay,
-  showStopVideoButton = false,
+  showVideoToggle = false,
 }) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
@@ -72,7 +72,7 @@ export const IvsPlayer: React.FC<Props> = ({
           muted={false}
         />
       </Styled.IvsPlayerContainer>
-      {showStopVideoButton && <VideoToggleButton />}
+      {showVideoToggle && <VideoToggleButton />}
     </CommonStyled.Container>
   )
 }

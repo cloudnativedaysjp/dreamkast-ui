@@ -80,7 +80,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           <IvsPlayer
             playBackUrl={videoId}
             autoplay={true}
-            showStopVideoButton={
+            showVideoToggle={
               isSmallerThanMd && settings.profile.isAttendOffline
             }
           ></IvsPlayer>

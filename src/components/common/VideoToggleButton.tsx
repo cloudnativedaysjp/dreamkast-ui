@@ -9,6 +9,7 @@ export const VideoToggleButton = () => {
   const settings = useSelector(settingsSelector)
   return (
     <Button
+      data-testid={'toggle-btn'}
       variant="contained"
       size="small"
       color="primary"
