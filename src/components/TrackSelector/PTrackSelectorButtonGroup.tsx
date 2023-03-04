@@ -46,7 +46,11 @@ export const PTrackSelectorButtonGroup: React.FC<Props> = ({
             </React.Fragment>
           }
         >
-          <Styled.MenuItem key={track.id} value={track.id}>
+          <Styled.MenuItem
+            key={track.id}
+            value={track.id}
+            selected={selectedTrack === track.id}
+          >
             {track.name}
           </Styled.MenuItem>
         </HtmlTooltip>
