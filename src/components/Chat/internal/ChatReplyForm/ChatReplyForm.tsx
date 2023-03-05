@@ -31,6 +31,7 @@ export const ChatReplyForm: React.FC<Props> = ({
     <Styled.Paper>
       <Styled.ChatReplyForm onSubmit={handleSubmit(onSendReply)}>
         <Styled.TextField
+          inputProps={{ 'data-testid': 'message-reply-form' }}
           color="secondary"
           size="small"
           onKeyPress={handleKeyPress}
@@ -48,6 +49,7 @@ export const ChatReplyForm: React.FC<Props> = ({
               取消
             </Button>
             <Button
+              data-testid="submit-reply"
               type="submit"
               disabled={!watchChatMessage}
               variant="contained"

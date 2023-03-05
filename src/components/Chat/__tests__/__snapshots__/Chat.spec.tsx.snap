@@ -91,7 +91,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
                   data-messageid="286"
-                  data-testid="message-menu"
+                  data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -120,6 +120,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
                   data-messageid="286"
+                  data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -154,7 +155,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
                   data-messageid="288"
-                  data-testid="message-menu"
+                  data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -183,6 +184,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
                   data-messageid="288"
+                  data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -292,7 +294,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
                   data-messageid="289"
-                  data-testid="message-menu"
+                  data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -339,7 +341,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
                   data-messageid="346"
-                  data-testid="message-menu"
+                  data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
@@ -368,6 +370,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 <div
                   class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
                   data-messageid="346"
+                  data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"

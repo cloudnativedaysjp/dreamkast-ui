@@ -95,7 +95,7 @@ export const ChatMessage: React.FC<Props> = ({
 
           <Grid item xs={1}>
             <Styled.MenuButton
-              data-testid="message-menu"
+              data-testid="message-menu-btn"
               onClick={openChatMessageMenu}
               data-messageid={chatMessage?.id}
               data-replyto={chatMessage?.replyTo}
@@ -115,6 +115,7 @@ export const ChatMessage: React.FC<Props> = ({
             {!selected &&
               chatMessage?.body != 'このメッセージは削除されました' && (
                 <Styled.ReplyButton
+                  data-testid="message-reply-btn"
                   data-messageId={chatMessage?.id}
                   onClick={onClickReplyButton}
                 >
