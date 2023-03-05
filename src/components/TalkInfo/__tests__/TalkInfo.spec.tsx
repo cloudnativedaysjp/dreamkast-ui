@@ -6,7 +6,7 @@ import { PTalkInfo } from '../TalkInfo'
 // TODO fix following by extracting Presentation Component
 describe('PTalkInfo', () => {
   it('should render without crash', () => {
-    render(
+    const screen = render(
       <PTalkInfo
         eventAbbr={MockEvent().abbr}
         selectedTalk={MockTalkA1()}
@@ -14,9 +14,11 @@ describe('PTalkInfo', () => {
         showVideoToggle={true}
       />,
     )
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should render when props undefined', () => {
-    render(<PTalkInfo eventAbbr={MockEvent().abbr} />)
+    const screen = render(<PTalkInfo eventAbbr={MockEvent().abbr} />)
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 })
