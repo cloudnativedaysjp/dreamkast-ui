@@ -1,6 +1,9 @@
 import React from 'react'
 import { renderWithProviders, setupStore } from '../../testhelper/store'
 import {
+  liveTalkUpdate,
+  setInitialViewTalk,
+  setIsLiveMode,
   setTalks,
   setTracks,
   setViewTalkId,
@@ -23,6 +26,7 @@ import {
   MockTracks,
 } from '../../testhelper/fixture'
 import { useSelector } from 'react-redux'
+import { Talk } from '../../generated/dreamkast-api.generated'
 
 describe('useTracks', () => {
   it('should provide tracks along with corresponding live talk', () => {
@@ -257,7 +261,7 @@ describe('useSelectedTalk', () => {
   })
 })
 
-describe('videoIdSelector', () => {
+describe('selector:videoIdSelector', () => {
   it('should provide the videoId of the track when selected talk is live', () => {
     let got = ''
     const want = MockTrackA().videoId
@@ -363,6 +367,173 @@ describe('videoIdSelector', () => {
     store.dispatch(setViewTrackId(MockTrackA().id))
     renderWithProviders(<Test />, { store })
 
+    expect(got).toStrictEqual(want)
+  })
+})
+
+describe('action:setInitialViewTalk', () => {
+  const archive = (t: Talk) => {
+    t.onAir = false
+    return t
+  }
+
+  const onAir = (t: Talk) => {
+    t.onAir = true
+    return t
+  }
+
+  it('should set the first track as viewing Track', () => {
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+
+    store.dispatch(setInitialViewTalk())
+
+    const got = {
+      viewTrackId: store.getState().settings.viewTrackId,
+    }
+    const want = {
+      viewTrackId: MockTrackA().id,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should set the live talk of the selected track as viewing Talk', () => {
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(
+      setTalks([
+        archive(MockTalkA1()),
+        onAir(MockTalkA2()),
+        archive(MockTalkA3()),
+      ]),
+    )
+
+    store.dispatch(setInitialViewTalk())
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+      isLiveMode: store.getState().settings.isLiveMode,
+    }
+    const want = {
+      viewTalkId: MockTalkA2().id,
+      isLiveMode: true,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should set the selected talk of the selected track as viewing Talk', () => {
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(
+      setTalks([
+        archive(MockTalkA1()),
+        archive(MockTalkA2()),
+        archive(MockTalkA3()),
+      ]),
+    )
+
+    store.dispatch(setInitialViewTalk())
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+      isLiveMode: store.getState().settings.isLiveMode,
+    }
+    const want = {
+      viewTalkId: MockTalkA1().id,
+      isLiveMode: false,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should skip talk setting when already selected', () => {
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(
+      setTalks([
+        archive(MockTalkA1()),
+        onAir(MockTalkA2()),
+        archive(MockTalkA3()),
+      ]),
+    )
+    store.dispatch(setViewTalkId(MockTalkA3().id))
+
+    store.dispatch(setInitialViewTalk())
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+      isLiveMode: store.getState().settings.isLiveMode,
+    }
+    const want = {
+      viewTalkId: MockTalkA3().id,
+      isLiveMode: false,
+    }
+    expect(got).toStrictEqual(want)
+  })
+})
+
+describe('action:liveTalkUpdate', () => {
+  it('should set next talkId', () => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setIsLiveMode(true))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(liveTalkUpdate(nextTalks))
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+    }
+    const want = {
+      viewTalkId: MockTalkA2().id,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should skip setting next talk when not live mode', () => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setIsLiveMode(false))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(liveTalkUpdate(nextTalks))
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+    }
+    const want = {
+      viewTalkId: MockTalkA1().id,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should skip setting next talk when viewTalkId is not set', () => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setIsLiveMode(true))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(liveTalkUpdate(nextTalks))
+
+    const got = {
+      viewTalkId: store.getState().settings.viewTalkId,
+    }
+    const want = {
+      viewTalkId: 0,
+    }
     expect(got).toStrictEqual(want)
   })
 })

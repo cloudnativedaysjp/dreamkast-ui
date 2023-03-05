@@ -143,7 +143,7 @@ const settingsSlice = createSlice({
       // Karte
       window.location.href =
         window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-      window.tracker.track('trigger_survey', {
+      window.tracker?.track('trigger_survey', {
         track_name: selectedTrack?.name,
         talk_id: selectedTalk?.id,
         talk_name: selectedTalk?.title,
