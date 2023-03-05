@@ -12,7 +12,9 @@ export const waitToBeSatisfied = async (
       }
       spent += interval
       if (spent > timeout) {
-        reject()
+        reject(
+          new Error(`timeout(${timeout} ms): condition has not been satisfied: ${fn}`),
+        )
         return
       }
     }, interval)
