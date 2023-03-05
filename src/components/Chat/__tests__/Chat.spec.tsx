@@ -14,6 +14,7 @@ import { setupMockServer } from '../../../testhelper/msw'
 import { setProfile } from '../../../store/settings'
 import { setWsBaseUrl } from '../../../store/auth'
 import { fireEvent } from '@testing-library/react'
+import { waitToBeSatisfied } from '../../../testhelper/waitToBeSatisfied'
 
 const server = setupMockServer(
   rest.get(`/api/v1/chat_messages`, (_, res, ctx) => {
@@ -123,18 +124,6 @@ describe('Chat', () => {
     })
     fireEvent.click(screen.getByTestId('submit-chat'))
 
-    const ok = await new Promise((resolve) => {
-      let count = 0
-      setInterval(() => {
-        if (called) {
-          resolve(true)
-        }
-        count++
-        if (count > 10) {
-          resolve(false)
-        }
-      }, 10)
-    })
-    expect(ok).toBeTruthy()
+    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
   })
 })
