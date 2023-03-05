@@ -1,10 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setShowVideo,
-  setShowVideoSelector,
-} from '../../store/settings'
+import { setShowVideo, setShowVideoSelector } from '../../store/settings'
 import { Videocam, VideocamOff } from '@material-ui/icons'
 
 export const VideoToggleButton = () => {
