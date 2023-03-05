@@ -260,20 +260,25 @@ export const settingsVideoIdSelector = createSelector(
   },
 )
 
+export type TrackWithTalk = {
+  track: Track
+  talk?: Talk
+}
+
 export const useTracks = () => {
   const tracks = useSelector(tracksSelector)
   const talks = useSelector(talksSelector)
-  const tracksWithLiveTalk = tracks.map((tr) => {
+  const tracksWithLiveTalk: TrackWithTalk[] = tracks.map((tr) => {
+    const res = { track: tr } as TrackWithTalk
     if (!tr.onAirTalk) {
-      return {
-        track: tr,
-      }
+      return res
     }
     const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
-    return {
-      track: tr,
-      talk: talks.find((t) => t.id === parseInt(talkId)),
+    const talk = talks.find((t) => t.id === parseInt(talkId))
+    if (talk) {
+      res.talk = talk
     }
+    return res
   })
   return { tracksWithLiveTalk }
 }
