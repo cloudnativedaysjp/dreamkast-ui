@@ -179,4 +179,40 @@ describe('Chat', () => {
     expect(await waitToBeSatisfied(() => called)).toBeTruthy()
     expect(got).toStrictEqual(want)
   })
+
+  it('should delete message', async () => {
+    let called = false
+    let got: ChatMessage = {}
+    const want: ChatMessage = {
+      body: 'このメッセージは削除されました',
+      eventAbbr: 'cndt2022',
+    }
+
+    server.use(
+      rest.put('/api/v1/chat_messages/:msgId', async (req, res) => {
+        const msgId = parseInt(req.params.msgId as string)
+        console.warn(msgId)
+        got = (await req.json()) as ChatMessage
+        called = true
+        return res()
+      }),
+    )
+
+    const mockProps = {
+      event: MockEvent(),
+      talk: MockTalkA1(),
+    }
+
+    const store = setupStore()
+    store.dispatch(setProfile(MockProfile()))
+    store.dispatch(setWsBaseUrl('http://localhost:8080'))
+    const screen = renderWithProviders(<Chat {...mockProps} />, { store })
+    await screen.findAllByText('わいわい')
+
+    fireEvent.click(screen.getAllByTestId('message-menu')[0])
+    fireEvent.click(await screen.findByTestId('message-delete-btn'))
+
+    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    expect(got).toStrictEqual(want)
+  })
 })

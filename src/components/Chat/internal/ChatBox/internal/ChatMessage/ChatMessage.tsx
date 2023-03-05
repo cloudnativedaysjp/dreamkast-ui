@@ -95,6 +95,7 @@ export const ChatMessage: React.FC<Props> = ({
 
           <Grid item xs={1}>
             <Styled.MenuButton
+              data-testid="message-menu"
               onClick={openChatMessageMenu}
               data-messageid={chatMessage?.id}
               data-replyto={chatMessage?.replyTo}
