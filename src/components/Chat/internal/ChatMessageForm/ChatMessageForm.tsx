@@ -86,6 +86,7 @@ export const ChatMessageForm: React.FC<Props> = ({
           <Styled.label>オートスクロール</Styled.label>
         </Styled.CheckBoxContainer>
         <Styled.TextField
+          inputProps={{ 'data-testid': 'message-form' }}
           color="secondary"
           size="small"
           onKeyPress={handleKeyPress}
@@ -118,6 +119,7 @@ export const ChatMessageForm: React.FC<Props> = ({
             onSendReply={handleSendMessage}
           />
           <Button
+            data-testid={'submit-chat'}
             type="submit"
             disabled={!watchChatMessage || btnDisabled}
             variant="contained"
