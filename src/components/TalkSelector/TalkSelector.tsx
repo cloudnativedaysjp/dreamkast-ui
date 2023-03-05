@@ -109,6 +109,6 @@ const isAvailable = (
   conferanceDayDate?: string | null,
 ) => {
   if (!conferanceDayDate) return true // okui: これであってる？
-  const startDate = `${conferanceDayDate} ${dayjs(startTime).tz().format('HH:mm')}`
+  const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
   return now - dayjs(startDate).unix() >= 0
 }
