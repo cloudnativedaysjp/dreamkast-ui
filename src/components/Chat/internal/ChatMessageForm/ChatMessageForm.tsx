@@ -128,6 +128,7 @@ export const ChatMessageForm: React.FC<Props> = ({
             送信
           </Button>
           <Button
+            data-testid={'submit-qa'}
             type="submit"
             disabled={!watchChatMessage || btnDisabled}
             variant="contained"

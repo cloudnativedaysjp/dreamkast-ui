@@ -558,6 +558,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
           </button>
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            data-testid="submit-qa"
             disabled=""
             tabindex="-1"
             type="submit"
@@ -825,6 +826,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
           </button>
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            data-testid="submit-qa"
             disabled=""
             tabindex="-1"
             type="submit"

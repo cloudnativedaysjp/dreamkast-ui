@@ -9,7 +9,10 @@ import {
   MockProfile,
   MockTalkA1,
 } from '../../../testhelper/fixture'
-import { GetApiV1ChatMessagesApiResponse } from '../../../generated/dreamkast-api.generated'
+import {
+  ChatMessage,
+  GetApiV1ChatMessagesApiResponse,
+} from '../../../generated/dreamkast-api.generated'
 import { setupMockServer } from '../../../testhelper/msw'
 import { setProfile } from '../../../store/settings'
 import { setWsBaseUrl } from '../../../store/auth'
@@ -101,8 +104,18 @@ describe('Chat', () => {
 
   it('should create new chat', async () => {
     let called = false
+    let got: ChatMessage = {}
+    const want: ChatMessage = {
+      body: 'テスト',
+      eventAbbr: 'cndt2022',
+      messageType: 'chat',
+      roomId: 701,
+      roomType: 'talk',
+    }
+
     server.use(
-      rest.post('/api/v1/chat_messages', (_, res) => {
+      rest.post('/api/v1/chat_messages', async (req, res) => {
+        got = (await req.json()) as ChatMessage
         called = true
         return res()
       }),
@@ -120,10 +133,50 @@ describe('Chat', () => {
     await screen.findAllByText('わいわい')
 
     fireEvent.change(screen.getByTestId('message-form'), {
-      target: { value: 'テスト' },
+      target: { value: want.body },
     })
     fireEvent.click(screen.getByTestId('submit-chat'))
 
     expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should create new qa', async () => {
+    let called = false
+    let got: ChatMessage = {}
+    const want: ChatMessage = {
+      body: 'テスト',
+      eventAbbr: 'cndt2022',
+      messageType: 'qa',
+      roomId: 701,
+      roomType: 'talk',
+    }
+
+    server.use(
+      rest.post('/api/v1/chat_messages', async (req, res) => {
+        got = (await req.json()) as ChatMessage
+        called = true
+        return res()
+      }),
+    )
+
+    const mockProps = {
+      event: MockEvent(),
+      talk: MockTalkA1(),
+    }
+
+    const store = setupStore()
+    store.dispatch(setProfile(MockProfile()))
+    store.dispatch(setWsBaseUrl('http://localhost:8080'))
+    const screen = renderWithProviders(<Chat {...mockProps} />, { store })
+    await screen.findAllByText('わいわい')
+
+    fireEvent.change(screen.getByTestId('message-form'), {
+      target: { value: want.body },
+    })
+    fireEvent.click(screen.getByTestId('submit-qa'))
+
+    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    expect(got).toStrictEqual(want)
   })
 })

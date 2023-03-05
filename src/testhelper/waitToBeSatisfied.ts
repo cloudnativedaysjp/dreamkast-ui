@@ -6,7 +6,6 @@ export const waitToBeSatisfied = async (
   return await new Promise((resolve, reject) => {
     let spent = 0
     setInterval(() => {
-      console.warn('time:', spent)
       if (fn()) {
         resolve(true)
         return
