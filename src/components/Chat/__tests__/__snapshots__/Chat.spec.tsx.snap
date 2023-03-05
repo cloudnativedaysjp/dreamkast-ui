@@ -19,6 +19,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
         >
           <button
             aria-controls="simple-tabpanel-0"
+            aria-labelledby="simple-tabpanel-0"
             aria-selected="true"
             class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki Mui-selected"
             id="simple-tab-0"
@@ -37,6 +38,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
           </button>
           <button
             aria-controls="simple-tabpanel-1"
+            aria-labelledby="simple-tabpanel-1"
             aria-selected="false"
             class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki"
             id="simple-tab-1"
@@ -61,9 +63,10 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
       </div>
     </div>
     <div
-      aria-labelledby="mui-p-61072-T-0"
+      aria-controls="simple-tabpanel-0"
+      aria-labelledby="simple-tabpanel-0"
       class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
-      id="mui-p-61072-P-0"
+      id="simple-tab-0"
       role="tabpanel"
     >
       <div
@@ -380,10 +383,11 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
       </div>
     </div>
     <div
-      aria-labelledby="mui-p-61072-T-1"
+      aria-controls="simple-tabpanel-1"
+      aria-labelledby="simple-tabpanel-1"
       class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
       hidden=""
-      id="mui-p-61072-P-1"
+      id="simple-tab-1"
       role="tabpanel"
     />
     <div

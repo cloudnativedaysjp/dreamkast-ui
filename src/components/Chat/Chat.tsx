@@ -161,6 +161,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
+      'aria-labelledby': `simple-tabpanel-${index}`,
     }
   }
 
@@ -259,7 +260,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
           <Styled.Tab label="Chat / QA" value="0" {...a11yProps(0)} />
           <Styled.Tab label="QA Only" value="1" {...a11yProps(1)} />
         </Styled.TabContainer>
-        <Styled.TabPanel value="0">
+        <Styled.TabPanel value="0" {...a11yProps(0)}>
           <ChatBox
             event={event}
             talk={talk}
@@ -272,7 +273,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
             onClickCloseButton={onClickCloseButton}
           />
         </Styled.TabPanel>
-        <Styled.TabPanel value="1">
+        <Styled.TabPanel value="1" {...a11yProps(1)}>
           <ChatBox
             event={event}
             talk={talk}
