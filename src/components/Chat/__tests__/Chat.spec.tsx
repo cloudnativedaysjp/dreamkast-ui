@@ -1,0 +1,58 @@
+import React from 'react'
+import 'cross-fetch/polyfill'
+import { rest } from 'msw'
+import { Chat } from '../Chat'
+import { renderWithProviders, setupStore } from '../../../testhelper/store'
+import {
+  MockChats,
+  MockEvent,
+  MockProfile,
+  MockTalkA1,
+} from '../../../testhelper/fixture'
+import { GetApiV1ChatMessagesApiResponse } from '../../../generated/dreamkast-api.generated'
+import { setupMockServer } from '../../../testhelper/msw'
+import { setProfile } from '../../../store/settings'
+import { setWsBaseUrl } from '../../../store/auth'
+
+const server = setupMockServer()
+
+describe('Chat', () => {
+  it('should fetch chat data and render without crash',  async () => {
+    const got = {
+      eventAbbr: '',
+      roomId: '',
+      roomType: '',
+    }
+
+    const fn = jest.fn()
+    server.use(
+      rest.get(`/api/v1/chat_messages`, (req, res, ctx) => {
+        got.eventAbbr = req.url.searchParams.get('eventAbbr') as string
+        got.roomId = req.url.searchParams.get('roomId') as string
+        got.roomType = req.url.searchParams.get('roomType') as string
+        fn()
+        return res(ctx.json(MockChats() as GetApiV1ChatMessagesApiResponse))
+      }),
+    )
+
+    const mockProps = {
+      event: MockEvent(),
+      talk: MockTalkA1(),
+    }
+
+    const store = setupStore()
+    store.dispatch(setProfile(MockProfile()))
+    store.dispatch(setWsBaseUrl('http://localhost:8080'))
+    const screen = renderWithProviders(<Chat {...mockProps} />, { store })
+    const want = {
+      eventAbbr: mockProps.event.abbr,
+      roomId: `${mockProps.talk.id}`,
+      roomType: 'talk',
+    }
+
+    await screen.findAllByText('わいわい')
+    expect(fn).toHaveBeenCalled()
+    expect(got).toStrictEqual(want)
+    expect(screen.asFragment()).toMatchSnapshot()
+  })
+})

@@ -1,0 +1,570 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chat should fetch chat data and render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__Container-sc-1llqfms-0 lbZauL"
+  >
+    <div
+      class="MuiTabs-root styled__TabContainer-sc-1llqfms-1 cDIVIW"
+    >
+      <div
+        class="MuiTabs-scroller MuiTabs-fixed"
+        style="overflow: hidden;"
+      >
+        <div
+          aria-label="simple tabs example"
+          class="MuiTabs-flexContainer"
+          role="tablist"
+        >
+          <button
+            aria-controls="simple-tabpanel-0"
+            aria-selected="true"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki Mui-selected"
+            id="simple-tab-0"
+            role="tab"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiTab-wrapper"
+            >
+              Chat / QA
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            aria-controls="simple-tabpanel-1"
+            aria-selected="false"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki"
+            id="simple-tab-1"
+            role="tab"
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiTab-wrapper"
+            >
+              QA Only
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+        <span
+          class="PrivateTabIndicator-root-1 PrivateTabIndicator-colorSecondary-3 MuiTabs-indicator"
+          style="left: 0px; width: 0px;"
+        />
+      </div>
+    </div>
+    <div
+      aria-labelledby="mui-p-61072-T-0"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      id="mui-p-61072-P-0"
+      role="tabpanel"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-5 styled__Box-sc-7eb3vm-0 ldgwby"
+        id="message-box"
+      >
+        <div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                08:41
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  data-messageid="286"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                <div
+                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                >
+                  わいわい
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  data-messageid="286"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                11:27
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  data-messageid="288"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                <div
+                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                >
+                  わいわい
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  data-messageid="288"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+            >
+              がやがや
+            </div>
+            <div
+              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              data-messageid="343"
+              data-replyto="288"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+            >
+              👍
+            </div>
+            <div
+              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              data-messageid="344"
+              data-replyto="288"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+            >
+              このメッセージは削除されました
+            </div>
+            <div
+              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              data-messageid="345"
+              data-replyto="288"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 dEmyVI MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                11:26
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  data-messageid="289"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                <div
+                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                >
+                  このメッセージは削除されました
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                13:40
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  data-messageid="346"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                <div
+                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                >
+                  🎉
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+              >
+                <div
+                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  data-messageid="346"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="mui-p-61072-T-1"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      hidden=""
+      id="mui-p-61072-P-1"
+      role="tabpanel"
+    />
+    <div
+      class="styled__Container-sc-nbl6ba-0 isgeOe"
+    >
+      <form
+        class="styled__ChatMessageForm-sc-nbl6ba-5"
+      >
+        <div
+          class="styled__CheckBoxContainer-sc-nbl6ba-9 eLVoYy"
+        >
+          <span
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-6 MuiCheckbox-root MuiCheckbox-colorSecondary PrivateSwitchBase-checked-7 Mui-checked MuiIconButton-colorSecondary"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                checked=""
+                class="PrivateSwitchBase-input-9"
+                data-indeterminate="false"
+                type="checkbox"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </span>
+          <div
+            class="styled__label-sc-nbl6ba-10"
+          >
+            オートスクロール
+          </div>
+        </div>
+        <div
+          class="MuiFormControl-root MuiTextField-root styled__TextField-sc-nbl6ba-7 eNztZv"
+        >
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorSecondary MuiInput-colorSecondary MuiInputBase-formControl MuiInput-formControl MuiInputBase-marginDense MuiInput-marginDense"
+          >
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiInput-input MuiInputBase-inputMarginDense MuiInput-inputMarginDense"
+              name="chatMessage"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline"
+        >
+          <input
+            class="MuiInputBase-input MuiInput-input"
+            name="isQuestion"
+            type="hidden"
+            value=""
+          />
+        </div>
+        <div
+          class="styled__ButtonContainer-sc-nbl6ba-6 cfAxmx"
+        >
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline"
+          >
+            <input
+              class="MuiInputBase-input MuiInput-input"
+              name="chatMessage"
+              type="hidden"
+              value="👍"
+            />
+          </div>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+            tabindex="0"
+            type="submit"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              👍
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <form
+            class="styled__ChatMessageForm-sc-158ay7x-0"
+          >
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInput-underline"
+            >
+              <input
+                class="MuiInputBase-input MuiInput-input"
+                name="chatMessage"
+                type="hidden"
+                value="👏"
+              />
+            </div>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              tabindex="0"
+              type="submit"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                👏
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </form>
+          <form
+            class="styled__ChatMessageForm-sc-158ay7x-0"
+          >
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInput-underline"
+            >
+              <input
+                class="MuiInputBase-input MuiInput-input"
+                name="chatMessage"
+                type="hidden"
+                value="🎉"
+              />
+            </div>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              tabindex="0"
+              type="submit"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                🎉
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </form>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            disabled=""
+            tabindex="-1"
+            type="submit"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              送信
+            </span>
+          </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained Mui-disabled Mui-disabled"
+            disabled=""
+            tabindex="-1"
+            type="submit"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              質問する
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

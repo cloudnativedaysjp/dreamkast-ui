@@ -1,4 +1,10 @@
-import { Event, Talk, Track } from '../generated/dreamkast-api.generated'
+import {
+  ChatMessage,
+  Event,
+  Profile,
+  Talk,
+  Track,
+} from '../generated/dreamkast-api.generated'
 import { deepcopy } from './index'
 
 export const MockEvent = () =>
@@ -19,7 +25,6 @@ export const MockEvent = () =>
       { id: 20, date: '2022-10-20', internal: true },
     ],
   })
-
 export const MockTalkA1 = () =>
   deepcopy<Talk>({
     id: 701,
@@ -239,3 +244,120 @@ export const MockTrackWithTalks = (() => [
   { track: MockTrackB(), talk: MockTalkB1() },
   { track: MockTrackC(), talk: MockTalkC1() },
 ]) as () => { track: Track; talk: Talk }[]
+
+export const MockProfile = () =>
+  deepcopy<Profile>({
+    id: 1,
+    email: 'test@example.com',
+    name: 'テスト タロウ',
+    isAttendOffline: true,
+    registeredTalks: [],
+  })
+
+export const MockChatUser1 = () =>
+  deepcopy<ChatMessage>({
+    id: 286,
+    profileId: 1,
+    speakerId: null,
+    body: 'わいわい',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-03T23:41:05.985Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChatUser2 = () =>
+  deepcopy<ChatMessage>({
+    id: 288,
+    profileId: 2,
+    speakerId: null,
+    body: 'わいわい',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-04T02:27:07.781Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1Deleted = () =>
+  deepcopy<ChatMessage>({
+    id: 289,
+    profileId: 1,
+    speakerId: null,
+    body: 'このメッセージは削除されました',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-04T02:26:59.349Z',
+    replyTo: null,
+    messageType: 'qa',
+  })
+
+export const MockChatUser1Reply = () =>
+  deepcopy<ChatMessage>({
+    id: 343,
+    profileId: 1,
+    speakerId: null,
+    body: 'がやがや',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:39:46.685Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1ReplyIcon = () =>
+  deepcopy<ChatMessage>({
+    id: 344,
+    profileId: 1,
+    speakerId: null,
+    body: '👍',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:05.116Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1ReplyDeleted = () =>
+  deepcopy<ChatMessage>({
+    id: 345,
+    profileId: 1,
+    speakerId: null,
+    body: 'このメッセージは削除されました',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:13.004Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1Icon = () =>
+  deepcopy<ChatMessage>({
+    id: 346,
+    profileId: 1,
+    speakerId: null,
+    body: '🎉',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:27.030Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChats = (() => [
+  MockChatUser1(),
+  MockChatUser2(),
+  MockChatUser1Deleted(),
+  MockChatUser1Reply(),
+  MockChatUser1ReplyIcon(),
+  MockChatUser1ReplyDeleted(),
+  MockChatUser1Icon(),
+]) as () => ChatMessage[]

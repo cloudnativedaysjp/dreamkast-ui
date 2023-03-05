@@ -114,7 +114,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
   const { getPointEventId } = useContext(PrivateCtx)
-  const settings = useSelector(settingsSelector)
+  const { profile } = useSelector(settingsSelector)
 
   const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
     {
@@ -227,9 +227,9 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
           return
         }
         await postPointEvent({
-          profileId: `${settings.profile.id}`,
+          profileId: `${profile.id}`,
           profilePoint: {
-            conference: settings.eventAbbr,
+            conference: event.abbr,
             pointEventId: chatPointEventId,
           },
         }).unwrap()
