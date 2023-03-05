@@ -8,6 +8,7 @@ import {
   useSelectedTalk,
   useSelectedTrack,
   useTracks,
+  videoIdSelector,
 } from '../settings'
 import {
   MockTalkA1,
@@ -21,6 +22,7 @@ import {
   MockTrackC,
   MockTracks,
 } from '../../testhelper/fixture'
+import { useSelector } from 'react-redux'
 
 describe('useTracks', () => {
   it('should provide tracks along with corresponding live talk', () => {
@@ -253,6 +255,116 @@ describe('useSelectedTalk', () => {
     store.dispatch(setTracks(MockTracks()))
     store.dispatch(setTalks(MockTalks()))
     store.dispatch(setViewTrackId(0))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+})
+
+describe('videoIdSelector', () => {
+  it('should provide the videoId of the track when selected talk is live', () => {
+    let got = ''
+    const want = MockTrackA().videoId
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide the videoId of the talk when selected talk is not live', () => {
+    let got = ''
+    const want = MockTalkA3().videoId
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA3().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide empty string when no talks', () => {
+    let got = ''
+    const want = ''
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide empty string when no tracks', () => {
+    let got = ''
+    const want = ''
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide empty string when no track selected', () => {
+    let got = ''
+    const want = ''
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide empty string when no talk selected', () => {
+    let got = ''
+    const want = ''
+
+    const Test = () => {
+      got = useSelector(videoIdSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setViewTrackId(MockTrackA().id))
     renderWithProviders(<Test />, { store })
 
     expect(got).toStrictEqual(want)

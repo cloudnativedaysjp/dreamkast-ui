@@ -235,7 +235,7 @@ export const settingsInitializedSelector = createSelector(
   },
 )
 
-export const settingsVideoIdSelector = createSelector(
+export const videoIdSelector = createSelector(
   tracksSelector,
   talksSelector,
   viewTrackIdSelector,
@@ -248,14 +248,17 @@ export const settingsVideoIdSelector = createSelector(
       return ''
     }
     const selectedTrack = tracks.find((t) => t.id === viewTrackId)
+    if (!selectedTrack) {
+      return ''
+    }
     const selectedTalk = talks.find((t) => t.id === viewTalkId)
-    if (selectedTalk?.onAir) {
-      // TODO remove following
-      console.warn('videoId: onAir', selectedTrack?.videoId)
-      return selectedTrack?.videoId || ''
+    if (!selectedTalk) {
+      return ''
+    }
+    if (selectedTalk.onAir) {
+      return selectedTrack.videoId || '' // TODO 配信はありません、の画面を出す
     } else {
-      console.warn('videoId: recorded', selectedTalk?.videoId)
-      return selectedTalk?.videoId || ''
+      return selectedTalk.videoId || '' // TODO アーカイブ中です、の画面を出す
     }
   },
 )
