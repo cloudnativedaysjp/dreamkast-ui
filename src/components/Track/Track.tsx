@@ -99,7 +99,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         </Grid>
         <Grid item xs={12} md={4} style={{ height: '100%' }}>
           <TalkSelector
-            selectedTalk={selectedTalk}
+            selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
@@ -126,7 +126,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <TalkSelector
-            selectedTalk={selectedTalk}
+            selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
