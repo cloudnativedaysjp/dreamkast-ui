@@ -4,6 +4,9 @@ import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { Theme, Tooltip } from '@material-ui/core'
 import dayjs from 'dayjs'
 import { withStyles } from '@material-ui/styles'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   data: { track: Track; talk?: Talk }[]
@@ -34,8 +37,8 @@ export const PTrackSelectorButtonGroup: React.FC<Props> = ({
                 ) : (
                   <>
                     {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
-                    {dayjs(talk.startTime).format('HH:mm')}-
-                    {dayjs(talk.endTime).format('HH:mm')}
+                    {dayjs(talk.startTime).tz().format('HH:mm')}-
+                    {dayjs(talk.endTime).tz().format('HH:mm')}
                     <br />
                     {talk.title}
                     <br />

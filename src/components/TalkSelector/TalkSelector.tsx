@@ -3,6 +3,9 @@ import * as Styled from './styled'
 import { Checkbox } from '@material-ui/core'
 import dayjs from 'dayjs'
 import { Talk } from '../../generated/dreamkast-api.generated'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   selectedTrackId?: number
@@ -59,8 +62,8 @@ export const PTalkSelector: React.FC<Props & { now: number }> = ({
               >
                 <Styled.Text>
                   {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
-                  {dayjs(talk.startTime).format('HH:mm')}-
-                  {dayjs(talk.endTime).format('HH:mm')}
+                  {dayjs(talk.startTime).tz().format('HH:mm')}-
+                  {dayjs(talk.endTime).tz().format('HH:mm')}
                   <br />
                   {talk.title}
                 </Styled.Text>
@@ -106,6 +109,6 @@ const isAvailable = (
   conferanceDayDate?: string | null,
 ) => {
   if (!conferanceDayDate) return true // okui: これであってる？
-  const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
+  const startDate = `${conferanceDayDate} ${dayjs(startTime).tz().format('HH:mm')}`
   return now - dayjs(startDate).unix() >= 0
 }

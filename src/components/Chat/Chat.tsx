@@ -26,6 +26,9 @@ import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { PrivateCtx } from '../../context/private'
 import { RootState } from '../../store'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   event: Event
