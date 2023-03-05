@@ -13,6 +13,9 @@ import {
   setViewTrackIdToSessionStorage,
 } from '../util/sessionstorage/viewTrackId'
 import { useSelector } from 'react-redux'
+import { setupDayjs } from '../util/setupDayjs'
+
+setupDayjs()
 
 type SettingsState = {
   // カンファレンスイベント
@@ -72,7 +75,7 @@ const settingsSlice = createSlice({
     },
     setEvent: (state, action: PayloadAction<Event>) => {
       state.event = action.payload
-      const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
+      const today = dayjs(new Date()).tz().format('YYYY-MM-DD')
       const confDay = action.payload?.conferenceDays?.find(
         (day) => day.date === today,
       )

@@ -13,12 +13,14 @@ import { useSelector } from 'react-redux'
 import { NextPage } from 'next'
 import { CircularProgress } from '@material-ui/core'
 import * as CommonStyled from '../../../styles/styled'
+import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const { eventAbbr, event } = useInitSetup()
+  const { eventAbbr } = useRouterQuery()
+  const { event } = useInitSetup(eventAbbr)
 
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
 

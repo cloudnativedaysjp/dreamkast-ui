@@ -26,6 +26,7 @@ import { NextPage } from 'next'
 import { PrivateCtx } from '../../../context/private'
 import { CircularProgress } from '@material-ui/core'
 import * as CommonStyled from '../../../styles/styled'
+import {useRouterQuery} from "../../../components/hooks/useRouterQuery";
 
 type OnAirTalk = {
   talk_id: number
@@ -39,7 +40,8 @@ const IndexPage: NextPage = () => {
   const [trackId, setTrackId] = useState<number | null>(null)
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const { eventAbbr, event } = useInitSetup()
+  const { eventAbbr } = useRouterQuery()
+  const { event } = useInitSetup(eventAbbr)
 
   const [mutateAppData] =
     usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()

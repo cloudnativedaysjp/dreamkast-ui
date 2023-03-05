@@ -6,9 +6,11 @@ import { NextPage } from 'next'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
+import {useRouterQuery} from "../../../components/hooks/useRouterQuery";
 
 const IndexPage: NextPage = () => {
-  const { event } = useInitSetup()
+  const { eventAbbr } = useRouterQuery()
+  const { event } = useInitSetup(eventAbbr)
   useAppDataSetup()
   const { refetch } = useGetTalksAndTracks()
 
