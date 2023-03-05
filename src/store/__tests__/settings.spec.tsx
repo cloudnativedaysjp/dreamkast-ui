@@ -142,12 +142,10 @@ describe('useSelectedTrack', () => {
     expect(got).toStrictEqual(want)
   })
 
-  it('should fallback to first track when not selected', () => {
+  it('should provide undefined when not selected', () => {
     let got: any = null
     const want = {
-      track: MockTrackA(),
-      talks: [MockTalkA1(), MockTalkA2(), MockTalkA3()],
-      onAirTalk: MockTalkA1(),
+      talks: [],
     }
 
     const Test = () => {
@@ -204,11 +202,9 @@ describe('useSelectedTalk', () => {
     expect(got).toStrictEqual(want)
   })
 
-  it('should provide the first talk when no talk selected', () => {
+  it('should provide no talk when no talk selected', () => {
     let got: any = null
-    const want = {
-      talk: MockTalkA1(),
-    }
+    const want = {}
 
     const Test = () => {
       got = useSelectedTalk()

@@ -299,11 +299,13 @@ export const useSelectedTrack = (): {
       talks: [],
     }
   }
-  const selectedTrack =
-    tracks.find((track) => track.id == viewTrackId) || tracks[0]
-  const selectedTalks = talks.filter((t) => {
-    return t.trackId === selectedTrack.id
-  })
+  const selectedTrack = tracks.find((track) => track.id == viewTrackId)
+  if (!selectedTrack) {
+    return {
+      talks: [],
+    }
+  }
+  const selectedTalks = talks.filter((t) => t.trackId === selectedTrack.id)
   const onAirTalk = selectedTalks.find((talk) => talk.onAir)
   return {
     track: selectedTrack,
@@ -312,7 +314,7 @@ export const useSelectedTrack = (): {
   }
 }
 
-export const useSelectedTalk = () => {
+export const useSelectedTalk = (): { talk?: Talk } => {
   const talks = useSelector(talksSelector)
   const viewTrackId = useSelector(viewTrackIdSelector)
   const viewTalkId = useSelector(viewTalkIdSelector)
@@ -323,9 +325,11 @@ export const useSelectedTalk = () => {
   if (talksInTrack.length === 0) {
     return {}
   }
-  return {
-    talk: talksInTrack.find((t) => t.id === viewTalkId) || talksInTrack[0],
+  const talk = talksInTrack.find((t) => t.id === viewTalkId)
+  if (!talk) {
+    return {}
   }
+  return { talk }
 }
 
 export default settingsSlice
