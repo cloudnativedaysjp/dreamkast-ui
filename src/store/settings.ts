@@ -95,7 +95,7 @@ const settingsSlice = createSlice({
     },
     setConferenceDay: (state, action: PayloadAction<ConfDay>) => {
       const confDay = action.payload
-      if(!confDay) {
+      if (!confDay) {
         return
       }
       state.conferenceDay = {

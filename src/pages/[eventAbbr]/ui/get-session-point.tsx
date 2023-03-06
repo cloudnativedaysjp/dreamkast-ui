@@ -26,7 +26,7 @@ import { NextPage } from 'next'
 import { PrivateCtx } from '../../../context/private'
 import { CircularProgress } from '@material-ui/core'
 import * as CommonStyled from '../../../styles/styled'
-import {useRouterQuery} from "../../../components/hooks/useRouterQuery";
+import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
 
 type OnAirTalk = {
   talk_id: number
