@@ -17,6 +17,12 @@ import { setupDayjs } from '../util/setupDayjs'
 
 setupDayjs()
 
+type ConfDay = {
+  id?: number | undefined
+  date?: string | undefined
+  internal?: boolean | undefined
+}
+
 type SettingsState = {
   // カンファレンスイベント
   eventAbbr: string
@@ -85,6 +91,17 @@ const settingsSlice = createSlice({
           date: confDay.date,
           internal: confDay.internal,
         }
+      }
+    },
+    setConferenceDay: (state, action: PayloadAction<ConfDay>) => {
+      const confDay = action.payload
+      if(!confDay) {
+        return
+      }
+      state.conferenceDay = {
+        id: String(confDay.id),
+        date: confDay.date,
+        internal: confDay.internal,
       }
     },
     setProfile: (state, action: PayloadAction<Profile>) => {
@@ -200,6 +217,7 @@ export const {
   setShowVideo,
   setEventAbbr,
   setEvent,
+  setConferenceDay,
   setTalks,
   setTracks,
   setViewTrackId,
