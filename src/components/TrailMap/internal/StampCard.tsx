@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
-import * as Styled from './styled'
+import * as Styled from '../styled'
 import { useSelector } from 'react-redux'
 import {
   settingsInitializedSelector,
   settingsSelector,
-} from '../../store/settings'
-import { pointsSelector, useStamps } from '../../store/points'
+} from '../../../store/settings'
+import { pointsSelector, useStamps } from '../../../store/points'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
-} from '../../generated/dreamkast-api.generated'
+} from '../../../generated/dreamkast-api.generated'
 import {
   getQRCodeStampResult,
   clearQRCodeStampResult,
   getSessionEventNum,
-} from '../../util/sessionstorage/trailMap'
-import { PrivateCtx } from '../../context/private'
+} from '../../../util/sessionstorage/trailMap'
+import { PrivateCtx } from '../../../context/private'
 import { Skeleton } from '@material-ui/lab'
 
 type Props = {

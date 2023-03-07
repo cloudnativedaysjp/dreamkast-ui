@@ -1,6 +1,6 @@
 import React from 'react'
-import * as Styled from './styled'
-import { pointsSelector } from '../../store/points'
+import * as Styled from '../styled'
+import { pointsSelector } from '../../../store/points'
 import { useSelector } from 'react-redux'
 import {
   Paper,

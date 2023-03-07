@@ -1,10 +1,10 @@
 import React from 'react'
 import * as Styled from './styled'
-import { StampCard } from './StampCard'
-import { TrailMapPoint } from './TrailMapPoint'
-import { TrailMapRule } from './TrailMapRule'
-import { useStampCompleteBonus } from '../hooks/useStampCompleteBonus'
-import { TrailMapPointHistory } from './TrailMapPointHistory'
+import { StampCard } from './internal/StampCard'
+import { TrailMapPoint } from './internal/TrailMapPoint'
+import { TrailMapRule } from './internal/TrailMapRule'
+import { useStampCompleteBonus } from './hooks'
+import { TrailMapPointHistory } from './internal/TrailMapPointHistory'
 
 export const TrailMap = () => {
   useStampCompleteBonus()

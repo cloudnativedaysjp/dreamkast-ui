@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { PropsWithChildren, ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { pointsSelector, setTrailMapOpen } from '../../store/points'
 import {
   clearTrailMapOpenNext,
   getTrailMapOpenNext,
 } from '../../util/sessionstorage/trailMap'
-import { TrailMap } from './TrailMap'
 import * as Styled from './styled'
 
-type Props = {
-  todo?: boolean
-}
-
-export const TrailMapModal = (_: Props) => {
+export const TrailMapModal = ({ children }: PropsWithChildren) => {
   const points = useSelector(pointsSelector)
   const dispatch = useDispatch()
 
@@ -29,7 +24,7 @@ export const TrailMapModal = (_: Props) => {
       open={points.isTrailMapOpen}
       onClose={() => dispatch(setTrailMapOpen(false))}
     >
-      <TrailMap></TrailMap>
+      {children as ReactElement}
     </Styled.TrailMapModal>
   )
 }

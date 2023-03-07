@@ -1,7 +1,7 @@
 import React from 'react'
-import * as Styled from './styled'
+import * as Styled from '../styled'
 import { useSelector } from 'react-redux'
-import { pointsSelector } from '../../store/points'
+import { pointsSelector } from '../../../store/points'
 import { Skeleton } from '@material-ui/lab'
 
 export const TrailMapPoint = () => {
