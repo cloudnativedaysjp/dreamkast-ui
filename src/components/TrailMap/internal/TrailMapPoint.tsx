@@ -4,7 +4,7 @@ import { Skeleton } from '@material-ui/lab'
 import { ProfilePointsResponse } from '../../../generated/dreamkast-api.generated'
 
 type Props = {
-  isLoading: boolean
+  isLoading?: boolean
   pointData: ProfilePointsResponse
 }
 

@@ -5,6 +5,7 @@ import { appDataSelector, useStamps } from '../../../store/appData'
 import { Skeleton } from '@material-ui/lab'
 import { useAddStampIfSatisfied } from '../hooks'
 import { DkUiData } from '../../../generated/dreamkast-api.generated'
+import { stampLocation } from './const'
 
 export const StampCard = () => {
   const { appDataInitialized } = useSelector(appDataSelector)
@@ -84,54 +85,3 @@ export const PStampCard = ({
   )
 }
 
-const stampLocation = [
-  {
-    top: 32,
-    left: 7,
-  },
-  {
-    top: 32,
-    left: 22,
-  },
-  {
-    top: 32,
-    left: 37,
-  },
-  {
-    top: 32,
-    left: 52,
-  },
-  {
-    top: 32,
-    left: 67,
-  },
-  {
-    top: 32,
-    left: 82,
-  },
-
-  {
-    top: 70,
-    left: 7,
-  },
-  {
-    top: 70,
-    left: 22,
-  },
-  {
-    top: 70,
-    left: 37,
-  },
-  {
-    top: 70,
-    left: 52,
-  },
-  {
-    top: 70,
-    left: 67,
-  },
-  {
-    top: 70,
-    left: 82,
-  },
-]

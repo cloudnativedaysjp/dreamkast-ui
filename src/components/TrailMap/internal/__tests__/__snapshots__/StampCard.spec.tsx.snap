@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PStampCard should render when all stamped 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+  >
+    <img
+      class="styled__StampCard-sc-1t1auio-7 jeBhwm"
+      src="/cndt2022/ui/stamp_bg.jpg"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 howXrK"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PStampCard should render when not stamped at all 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+  >
+    <img
+      class="styled__StampCard-sc-1t1auio-7 jeBhwm"
+      src="/cndt2022/ui/stamp_bg.jpg"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 howXrK"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PStampCard should render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+  >
+    <img
+      class="styled__StampCard-sc-1t1auio-7 jeBhwm"
+      src="/cndt2022/ui/stamp_bg.jpg"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
+    >
+      <img
+        class="styled__Stamp-sc-1t1auio-9 hKSnww showAnimation"
+        src="/cndt2022/ui/cndt2022_stamp.png"
+      />
+    </div>
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 howXrK"
+    />
+    <div
+      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
+    />
+  </div>
+</DocumentFragment>
+`;

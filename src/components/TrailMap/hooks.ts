@@ -18,6 +18,7 @@ import {
 } from '../../util/sessionstorage/trailMap'
 import { PrivateCtx } from '../../context/private'
 import { useContext, useEffect, useState } from 'react'
+import { stampLocation } from './internal/const'
 
 export const useStampCompleteBonus = () => {
   const { stamps } = useStamps()
@@ -26,7 +27,7 @@ export const useStampCompleteBonus = () => {
   const envCtx = useContext(PrivateCtx)
 
   useEffect(() => {
-    if (stamps.length < 12) {
+    if (stamps.length < stampLocation.length) {
       return
     }
     if (getAllStampCollected()) {
@@ -56,6 +57,7 @@ export const useAddStampIfSatisfied = () => {
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const { canGetNewStamp, slotIdToBeStamped } = useStamps()
+
   const [addedByQRCode, setAddedByQRCode] = useState<boolean>(false)
   const [addedNew, setAddedNew] = useState<boolean>(false)
   const [mutateAppData] =
