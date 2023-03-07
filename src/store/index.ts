@@ -5,7 +5,7 @@ import { createWrapper, Context } from 'next-redux-wrapper'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
 import auth from './auth'
 import settings from './settings'
-import points from './points'
+import points from './appData'
 
 const makeStore = (_: Context) => {
   const store = configureStore({

@@ -32,8 +32,8 @@ const initialState: AppDataState = {
   isTrailMapOpen: false,
 }
 
-const pointsSlice = createSlice({
-  name: 'points',
+const appDataSlice = createSlice({
+  name: 'appData',
   initialState,
   reducers: {
     setAppData: (state, action: PayloadAction<DkUiData>) => {
@@ -50,19 +50,24 @@ const pointsSlice = createSlice({
   },
 })
 
-export const { setAppData, setPointData, setTrailMapOpen } = pointsSlice.actions
+export const { setAppData, setPointData, setTrailMapOpen } =
+  appDataSlice.actions
 
-export const pointsSelector = (s: RootState) => s.points
+export const appDataSelector = (s: RootState) => s.appData
 
-const appDataSelector = createSelector(pointsSelector, (s) => s.appData)
+const appDataInnerSelector = createSelector(appDataSelector, (s) => s.appData)
+const stampChallengesSelector = createSelector(
+  appDataInnerSelector,
+  (s) => s.stampChallenges,
+)
 
 export const useStamps = () => {
-  const appData = useSelector(appDataSelector)
+  const stampChallenges = useSelector(stampChallengesSelector)
   return {
-    canGetNewStamp: !!appData.stampChallenges.find((i) => i.waiting),
-    slotIdToBeStamped: appData.stampChallenges.find((i) => i.waiting)?.slotId,
-    stamps: appData.stampChallenges.filter((i) => i.condition === 'stamped'),
+    canGetNewStamp: !!stampChallenges.find((i) => i.waiting),
+    slotIdToBeStamped: stampChallenges.find((i) => i.waiting)?.slotId,
+    stamps: stampChallenges.filter((i) => i.condition === 'stamped'),
   }
 }
 
-export default pointsSlice
+export default appDataSlice

@@ -5,7 +5,7 @@ import {
   settingsInitializedSelector,
   settingsSelector,
 } from '../../../store/settings'
-import { pointsSelector, useStamps } from '../../../store/points'
+import { appDataSelector, useStamps } from '../../../store/appData'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
@@ -25,7 +25,7 @@ type Props = {
 export const StampCard = (_: Props) => {
   const { getPointEventId } = useContext(PrivateCtx)
   const settings = useSelector(settingsSelector)
-  const points = useSelector(pointsSelector)
+  const points = useSelector(appDataSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const stamp = useStamps()
   const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)

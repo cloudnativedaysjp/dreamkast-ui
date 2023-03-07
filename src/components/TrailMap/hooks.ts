@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
-import { useStamps } from '../../store/points'
+import { useStamps } from '../../store/appData'
 import { usePostApiV1ProfileByProfileIdPointMutation } from '../../generated/dreamkast-api.generated'
 import {
   getAllStampCollected,

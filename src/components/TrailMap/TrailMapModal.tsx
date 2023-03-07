@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { pointsSelector, setTrailMapOpen } from '../../store/points'
+import { appDataSelector, setTrailMapOpen } from '../../store/appData'
 import {
   clearTrailMapOpenNext,
   getTrailMapOpenNext,
@@ -8,7 +8,7 @@ import {
 import * as Styled from './styled'
 
 export const TrailMapModal = ({ children }: PropsWithChildren) => {
-  const points = useSelector(pointsSelector)
+  const points = useSelector(appDataSelector)
   const dispatch = useDispatch()
 
   // get stamp by offline user via QR code

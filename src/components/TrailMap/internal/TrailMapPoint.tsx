@@ -1,12 +1,15 @@
 import React from 'react'
 import * as Styled from '../styled'
-import { useSelector } from 'react-redux'
-import { pointsSelector } from '../../../store/points'
 import { Skeleton } from '@material-ui/lab'
+import { ProfilePointsResponse } from '../../../generated/dreamkast-api.generated'
 
-export const TrailMapPoint = () => {
-  const points = useSelector(pointsSelector)
-  if (!points.pointDataInitialized) {
+type Props = {
+  isLoading: boolean
+  pointData: ProfilePointsResponse
+}
+
+export const TrailMapPoint = ({ isLoading, pointData }: Props) => {
+  if (isLoading) {
     return (
       <Styled.TrailMapPointSuspendContainer>
         <div className={'suspend'}>
@@ -16,7 +19,7 @@ export const TrailMapPoint = () => {
     )
   }
 
-  const { total } = points.pointData
+  const { total } = pointData
   const ticket = Math.floor(total / 100)
   const frac = total % 100
 

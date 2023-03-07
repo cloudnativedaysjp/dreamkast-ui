@@ -1,7 +1,5 @@
 import React from 'react'
 import * as Styled from '../styled'
-import { pointsSelector } from '../../../store/points'
-import { useSelector } from 'react-redux'
 import {
   Paper,
   Table,
@@ -11,9 +9,13 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core'
+import { ProfilePointsResponse } from '../../../generated/dreamkast-api.generated'
 
-export const TrailMapPointHistory = () => {
-  const { pointData } = useSelector(pointsSelector)
+type Props = {
+  pointData: ProfilePointsResponse
+}
+
+export const TrailMapPointHistory = ({ pointData }: Props) => {
   return (
     <Styled.PointHistoryTable>
       <TableContainer component={Paper}>
