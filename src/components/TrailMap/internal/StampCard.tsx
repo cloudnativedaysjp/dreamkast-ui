@@ -1,102 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Styled from '../styled'
 import { useSelector } from 'react-redux'
-import {
-  settingsInitializedSelector,
-  settingsSelector,
-} from '../../../store/settings'
 import { appDataSelector, useStamps } from '../../../store/appData'
-import {
-  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
-  usePostApiV1ProfileByProfileIdPointMutation,
-} from '../../../generated/dreamkast-api.generated'
-import {
-  getQRCodeStampResult,
-  clearQRCodeStampResult,
-  getSessionEventNum,
-} from '../../../util/sessionstorage/trailMap'
-import { PrivateCtx } from '../../../context/private'
 import { Skeleton } from '@material-ui/lab'
+import { useAddStampIfSatisfied } from '../hooks'
+import { DkUiData } from '../../../generated/dreamkast-api.generated'
 
-type Props = {
-  todo?: boolean
-}
+export const StampCard = () => {
+  const { appDataInitialized } = useSelector(appDataSelector)
+  const { stamps } = useStamps()
+  const { addedNew, addedByQRCode } = useAddStampIfSatisfied()
 
-export const StampCard = (_: Props) => {
-  const { getPointEventId } = useContext(PrivateCtx)
-  const settings = useSelector(settingsSelector)
-  const points = useSelector(appDataSelector)
-  const initialized = useSelector(settingsInitializedSelector)
-  const stamp = useStamps()
-  const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false)
-  const [pinnedStamp, setPinnedStamp] = useState<typeof stamp | null>(null)
-  const [stamped, setStamped] = useState<boolean>(false)
-  const [mutateAppData] =
-    usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
-  const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
+  const [pinnedStamps, setPinnedStamps] = useState<
+    DkUiData['stampChallenges'] | null
+  >(null)
 
   useEffect(() => {
-    if (!points.appDataInitialized || pinnedStamp !== null) {
+    if (!appDataInitialized) {
       return
     }
-    setPinnedStamp(stamp)
-  }, [stamp, pinnedStamp])
+    if (pinnedStamps !== null) {
+      return
+    }
+    setPinnedStamps(stamps)
+  }, [stamps, pinnedStamps])
 
-  // get stamp by offline user via QR code
-  useEffect(() => {
-    const res = getQRCodeStampResult()
-    if (!res) {
-      return
-    } else if (res === 'ok') {
-      setStamped(true)
-      setAlreadyAdded(true)
-    } else {
-      // TODO show error info
-      console.error(`unexpected result: ${res}`)
-    }
-    clearQRCodeStampResult()
-  }, [])
-
-  // get stamp by online user
-  useEffect(() => {
-    if (!initialized) {
-      return
-    }
-    if (!stamp.canGetNewStamp) {
-      return
-    }
-    ;(async () => {
-      if (!stamp.slotIdToBeStamped) {
-        return
-      }
-      const eventNum = getSessionEventNum(stamp.slotIdToBeStamped)
-      const pointEventId = getPointEventId(eventNum)
-      try {
-        await postPointEvent({
-          profileId: `${settings.profile.id}`,
-          profilePoint: {
-            conference: settings.eventAbbr,
-            pointEventId,
-          },
-        })
-        await mutateAppData({
-          profileId: `${settings.profile.id}`,
-          conference: settings.eventAbbr,
-          dkUiDataMutation: {
-            action: 'stampedFromUI',
-            payload: {
-              slotId: stamp.slotIdToBeStamped,
-            },
-          },
-        })
-        setStamped(true)
-      } catch (err) {
-        console.error('stampFromUI Action', err)
-      }
-    })()
-  }, [initialized, stamp.canGetNewStamp])
-
-  if (!pinnedStamp) {
+  if (!pinnedStamps) {
     return (
       <Styled.StampCardContainer>
         <div className={'suspend'}>
@@ -106,46 +35,50 @@ export const StampCard = (_: Props) => {
     )
   }
 
-  const StampsNotYetAdded = stampLocation.map((loc, i) => (
-    <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
-      {i < pinnedStamp.stamps.length ? (
-        <Styled.Stamp src={`/cndt2022/ui/cndt2022_stamp.png`}></Styled.Stamp>
-      ) : (
-        ''
-      )}
-      {i === pinnedStamp.stamps.length && stamped ? (
-        <Styled.Stamp
-          className={'showAnimation'}
-          src={`/cndt2022/ui/cndt2022_stamp.png`}
-        ></Styled.Stamp>
-      ) : (
-        ''
-      )}
-    </Styled.StampFrame>
-  ))
-  const StampsAlreadyAdded = stampLocation.map((loc, i) => (
-    <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
-      {i < pinnedStamp.stamps.length - 1 ? (
-        <Styled.Stamp src={`/cndt2022/ui/cndt2022_stamp.png`}></Styled.Stamp>
-      ) : (
-        ''
-      )}
-      {i === pinnedStamp.stamps.length - 1 && stamped ? (
-        <Styled.Stamp
-          className={'showAnimation'}
-          src={`/cndt2022/ui/cndt2022_stamp.png`}
-        ></Styled.Stamp>
-      ) : (
-        ''
-      )}
-    </Styled.StampFrame>
-  ))
+  const showStampWithoutEffect = addedByQRCode
+    ? (i: number) => i < pinnedStamps.length - 1
+    : (i: number) => i < pinnedStamps.length
 
+  const showStampWithEffect = addedByQRCode
+    ? (i: number) => i === pinnedStamps.length - 1 && addedNew
+    : (i: number) => i === pinnedStamps.length && addedNew
+
+  return (
+    <PStampCard
+      showStampWithoutEffect={showStampWithoutEffect}
+      showStampWithEffect={showStampWithEffect}
+    ></PStampCard>
+  )
+}
+
+type Props = {
+  showStampWithoutEffect: (i: number) => boolean
+  showStampWithEffect: (i: number) => boolean
+}
+
+export const PStampCard = ({
+  showStampWithoutEffect,
+  showStampWithEffect,
+}: Props) => {
   return (
     <>
       <Styled.StampCardContainer>
         <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}></Styled.StampCard>
-        {alreadyAdded ? StampsAlreadyAdded : StampsNotYetAdded}
+        {stampLocation.map((loc, i) => (
+          <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
+            {showStampWithoutEffect(i) && (
+              <Styled.Stamp
+                src={`/cndt2022/ui/cndt2022_stamp.png`}
+              ></Styled.Stamp>
+            )}
+            {showStampWithEffect(i) && (
+              <Styled.Stamp
+                className={'showAnimation'}
+                src={`/cndt2022/ui/cndt2022_stamp.png`}
+              ></Styled.Stamp>
+            )}
+          </Styled.StampFrame>
+        ))}
       </Styled.StampCardContainer>
     </>
   )
