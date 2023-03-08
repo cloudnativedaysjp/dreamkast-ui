@@ -17,7 +17,7 @@ import { setupMockServer } from '../../../testhelper/msw'
 import { setProfile } from '../../../store/settings'
 import { setWsBaseUrl } from '../../../store/auth'
 import { fireEvent } from '@testing-library/react'
-import { waitToBeSatisfied } from '../../../testhelper/waitToBeSatisfied'
+import { waitFor } from '@testing-library/dom'
 
 const server = setupMockServer(
   rest.get(`/api/v1/chat_messages`, (_, res, ctx) => {
@@ -137,7 +137,7 @@ describe('Chat', () => {
     })
     fireEvent.click(screen.getByTestId('submit-chat'))
 
-    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    await waitFor(() => expect(called).toBeTruthy())
     expect(got).toStrictEqual(want)
   })
 
@@ -176,7 +176,7 @@ describe('Chat', () => {
     })
     fireEvent.click(screen.getByTestId('submit-qa'))
 
-    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    await waitFor(() => expect(called).toBeTruthy())
     expect(got).toStrictEqual(want)
   })
 
@@ -210,7 +210,7 @@ describe('Chat', () => {
     fireEvent.click(screen.getAllByTestId('message-menu-btn')[0])
     fireEvent.click(await screen.findByTestId('message-delete-btn'))
 
-    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    await waitFor(() => expect(called).toBeTruthy())
     expect(got).toStrictEqual(want)
   })
 
@@ -251,7 +251,7 @@ describe('Chat', () => {
     })
     fireEvent.click(screen.getByTestId('submit-reply'))
 
-    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    await waitFor(() => expect(called).toBeTruthy())
     expect(got).toStrictEqual(want)
   })
 })

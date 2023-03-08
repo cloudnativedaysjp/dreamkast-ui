@@ -17,11 +17,11 @@ import {
   DkUiDataMutation,
   ProfilePointRequest,
 } from '../../../generated/dreamkast-api.generated'
-import { waitToBeSatisfied } from '../../../testhelper/waitToBeSatisfied'
 import {
   setAllStampCollected,
   setQRCodeStampResult,
 } from '../../../util/sessionstorage/trailMap'
+import { waitFor } from '@testing-library/dom'
 
 const server = setupMockServer()
 
@@ -77,7 +77,7 @@ describe('useStampCompleteBonus', () => {
       </PrivateCtx.Provider>,
       { store },
     )
-    expect(await waitToBeSatisfied(() => called)).toBeTruthy()
+    await waitFor(() => expect(called).toBeTruthy())
     expect(got).toStrictEqual(want)
   })
 
@@ -117,7 +117,7 @@ describe('useStampCompleteBonus', () => {
       </PrivateCtx.Provider>,
       { store },
     )
-    await expect(waitToBeSatisfied(() => called)).rejects.toThrow()
+    await expect(waitFor(() => expect(called).toBeTruthy())).rejects.toThrow()
   })
 
   it('should not post when already posted', async () => {
@@ -157,7 +157,7 @@ describe('useStampCompleteBonus', () => {
       </PrivateCtx.Provider>,
       { store },
     )
-    await expect(waitToBeSatisfied(() => called)).rejects.toThrow()
+    await expect(waitFor(() => expect(called).toBeTruthy())).rejects.toThrow()
   })
 })
 
@@ -277,7 +277,7 @@ describe('useAddStampIfSatisfied', () => {
       { store },
     )
     await screen.findByTestId('tgt')
-    await expect(waitToBeSatisfied(() => called)).rejects.toThrow()
+    await expect(waitFor(() => expect(called).toBeTruthy())).rejects.toThrow()
   })
 
   it('should set addedByQRCode state to true when stamped by QRCode', async () => {
