@@ -1,5 +1,6 @@
 import {
   ChatMessage,
+  DkUiData,
   Event,
   Profile,
   Talk,
@@ -361,3 +362,12 @@ export const MockChats = (() => [
   MockChatUser1ReplyDeleted(),
   MockChatUser1Icon(),
 ]) as () => ChatMessage[]
+
+export const MockDkUiData = () =>
+  deepcopy<DkUiData>({
+    watchedTalksOnline: {
+      watchingTime: { '2101': 4080, '2102': 960, '2104': 1280 },
+      prevTimestamp: 1678274562,
+    },
+    stampChallenges: [],
+  })

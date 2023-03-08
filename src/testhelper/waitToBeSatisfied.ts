@@ -1,9 +1,9 @@
-export const waitToBeSatisfied = async (
+export const waitToBeSatisfied = (
   fn: () => boolean,
   timeout = 1000,
   interval = 10,
 ): Promise<boolean> => {
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     let spent = 0
     setInterval(() => {
       if (fn()) {
