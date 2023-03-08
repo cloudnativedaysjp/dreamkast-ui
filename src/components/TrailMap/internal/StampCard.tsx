@@ -66,7 +66,7 @@ export const PStampCard = ({
       <Styled.StampCardContainer>
         <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}></Styled.StampCard>
         {stampLocation.map((loc, i) => (
-          <Styled.StampFrame top={`${loc.top}%`} left={`${loc.left}%`}>
+          <Styled.StampFrame key={i} top={`${loc.top}%`} left={`${loc.left}%`}>
             {showStampWithoutEffect(i) && (
               <Styled.Stamp
                 src={`/cndt2022/ui/cndt2022_stamp.png`}
