@@ -4,7 +4,6 @@ import { TrackSelector } from '../../../components/TrackSelector'
 import { TrackView } from '../../../components/Track'
 import { NextPage } from 'next'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
-import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
 import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
 import { usePostPointEvent } from '../../../components/hooks/usePostPointEvent'
@@ -13,20 +12,21 @@ import { pointEventSavingSelector } from '../../../store/appData'
 import { useSelector } from 'react-redux'
 import * as CommonStyled from '../../../styles/styled'
 import { CircularProgress } from '@material-ui/core'
+import {useAppDataSetup} from "../../../components/hooks/useAppDataSetup";
 
 const IndexPage: NextPage = () => {
   const { eventAbbr } = useRouterQuery()
   const { event } = useInitSetup(eventAbbr)
-  useAppDataSetup()
+  const { refetch } = useGetTalksAndTracks()
   usePostPointEvent()
   usePostSessionPointEvent()
-  const { refetch } = useGetTalksAndTracks()
+  useAppDataSetup()
+
   const isPointEventSaving = useSelector(pointEventSavingSelector)
 
   if (!event) {
     return <div></div>
   }
-
   if (isPointEventSaving) {
     return (
       <Layout title={event.name} event={event}>
