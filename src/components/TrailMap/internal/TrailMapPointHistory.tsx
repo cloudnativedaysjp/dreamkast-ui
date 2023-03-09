@@ -27,6 +27,10 @@ const StyledTableCell = withStyles(() =>
 )(TableCell)
 
 export const TrailMapPointHistory = ({ pointData }: Props) => {
+  if (pointData.points.length === 0) {
+    return <div></div>
+  }
+
   return (
     <Styled.PointHistoryTable>
       <TableContainer>
