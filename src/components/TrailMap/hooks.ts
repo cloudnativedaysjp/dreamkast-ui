@@ -49,7 +49,7 @@ export const useStampCompleteBonus = () => {
       .catch((err) => {
         console.error(err)
       })
-  }, [])
+  }, [stamps.length])
 
   return
 }
