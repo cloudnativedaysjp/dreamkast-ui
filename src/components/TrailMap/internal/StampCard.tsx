@@ -64,18 +64,18 @@ export const PStampCard = ({
   return (
     <>
       <Styled.StampCardContainer>
-        <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}></Styled.StampCard>
+        <Styled.StampCard src={`/cicd2023/ui/stamp_bg.jpg`}></Styled.StampCard>
         {stampLocation.map((loc, i) => (
           <Styled.StampFrame key={i} top={`${loc.top}%`} left={`${loc.left}%`}>
             {showStampWithoutEffect(i) && (
               <Styled.Stamp
-                src={`/cndt2022/ui/cndt2022_stamp.png`}
+                src={`/cicd2023/ui/cicd2023_stamp.png`}
               ></Styled.Stamp>
             )}
             {showStampWithEffect(i) && (
               <Styled.Stamp
                 className={'showAnimation'}
-                src={`/cndt2022/ui/cndt2022_stamp.png`}
+                src={`/cicd2023/ui/cicd2023_stamp.png`}
               ></Styled.Stamp>
             )}
           </Styled.StampFrame>

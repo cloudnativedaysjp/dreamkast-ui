@@ -26,28 +26,28 @@ export const TrailMapPoint = ({ isLoading, pointData }: Props) => {
   const trailingImage = (() => {
     if (frac < 20) {
       return (
-        <img src={'/cndt2022/ui/trailmap_0.jpg'} alt={'Trail Mapの出発地点'} />
+        <img src={'/cicd2023/ui/trailmap_0.jpg'} alt={'Trail Mapの出発地点'} />
       )
     }
     if (frac < 40) {
       return (
-        <img src={'/cndt2022/ui/trailmap_25.jpg'} alt={'Trail Mapの3合目'} />
+        <img src={'/cicd2023/ui/trailmap_25.jpg'} alt={'Trail Mapの3合目'} />
       )
     }
     if (frac < 60) {
       return (
-        <img src={'/cndt2022/ui/trailmap_50.jpg'} alt={'Trail Mapの5合目'} />
+        <img src={'/cicd2023/ui/trailmap_50.jpg'} alt={'Trail Mapの5合目'} />
       )
     }
     if (frac < 80) {
       return (
-        <img src={'/cndt2022/ui/trailmap_75.jpg'} alt={'Trail Mapの8合目'} />
+        <img src={'/cicd2023/ui/trailmap_75.jpg'} alt={'Trail Mapの8合目'} />
       )
     }
     if (frac < 100) {
       return (
         <img
-          src={'/cndt2022/ui/trailmap_100.jpg'}
+          src={'/cicd2023/ui/trailmap_100.jpg'}
           alt={'Trail Mapの山頂付近'}
         />
       )
