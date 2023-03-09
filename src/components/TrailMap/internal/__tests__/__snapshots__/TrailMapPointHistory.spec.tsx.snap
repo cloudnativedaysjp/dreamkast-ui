@@ -6,7 +6,7 @@ exports[`TrailMapPointHistory should render without crash 1`] = `
     class="styled__PointHistoryTable-sc-1t1auio-12 PhTTt"
   >
     <div
-      class="MuiPaper-root MuiTableContainer-root MuiPaper-elevation1 MuiPaper-rounded"
+      class="MuiTableContainer-root"
     >
       <table
         aria-label="event-history"
@@ -19,13 +19,13 @@ exports[`TrailMapPointHistory should render without crash 1`] = `
             class="MuiTableRow-root MuiTableRow-head"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-head WithStyles(ForwardRef(TableCell))-head-1 MuiTableCell-sizeSmall"
               scope="col"
             >
               獲得ポイント
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-head WithStyles(ForwardRef(TableCell))-head-1 MuiTableCell-sizeSmall"
               scope="col"
             >
               達成条件
@@ -39,14 +39,14 @@ exports[`TrailMapPointHistory should render without crash 1`] = `
             class="MuiTableRow-root"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-body WithStyles(ForwardRef(TableCell))-body-2 MuiTableCell-sizeSmall"
               role="cell"
               scope="row"
             >
               50pt
             </th>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-body WithStyles(ForwardRef(TableCell))-body-2 MuiTableCell-sizeSmall"
             >
               セッション視聴: 1日目 スロット1
             </td>
@@ -55,14 +55,14 @@ exports[`TrailMapPointHistory should render without crash 1`] = `
             class="MuiTableRow-root"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-body WithStyles(ForwardRef(TableCell))-body-2 MuiTableCell-sizeSmall"
               role="cell"
               scope="row"
             >
               20pt
             </th>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              class="MuiTableCell-root MuiTableCell-body WithStyles(ForwardRef(TableCell))-body-2 MuiTableCell-sizeSmall"
             >
               セッション視聴: 1日目 スロット2
             </td>

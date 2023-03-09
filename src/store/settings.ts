@@ -228,7 +228,10 @@ export const {
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
-
+export const profileSelector = createSelector(
+  settingsSelector,
+  (s) => s.profile,
+)
 export const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
 export const talksSelector = createSelector(settingsSelector, (s) => s.talks)
 export const viewTalkIdSelector = createSelector(

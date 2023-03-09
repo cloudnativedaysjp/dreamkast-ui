@@ -8,7 +8,7 @@ import {
   MockEvent,
   MockProfile,
 } from '../../../testhelper/fixture'
-import { setAppData } from '../../../store/appData'
+import { setAppData, setStampAddedByQRCode } from '../../../store/appData'
 import { stampLocation } from '../internal/const'
 import { PrivateCtx } from '../../../context/private'
 import { setupMockServer } from '../../../testhelper/msw'
@@ -17,10 +17,7 @@ import {
   DkUiDataMutation,
   ProfilePointRequest,
 } from '../../../generated/dreamkast-api.generated'
-import {
-  setAllStampCollected,
-  setQRCodeStampResult,
-} from '../../../util/sessionstorage/trailMap'
+import { setAllStampCollected } from '../../../util/sessionstorage/trailMap'
 import { waitFor } from '@testing-library/dom'
 
 const server = setupMockServer()
@@ -286,20 +283,14 @@ describe('useAddStampIfSatisfied', () => {
     store.dispatch(setEventAbbr(MockEvent().abbr))
     store.dispatch(setProfile(MockProfile()))
     store.dispatch(setAppData(mockAppData))
-
-    setQRCodeStampResult('ok')
+    store.dispatch(setStampAddedByQRCode(true))
 
     const Test = () => {
       const { addedNew, addedByQRCode } = useAddStampIfSatisfied()
       return addedNew && addedByQRCode ? <div data-testid={'tgt'} /> : <div />
     }
 
-    const screen = renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: () => 'dummy' }}>
-        <Test />
-      </PrivateCtx.Provider>,
-      { store },
-    )
+    const screen = renderWithProviders(<Test />, { store })
     await screen.findByTestId('tgt')
   })
 })

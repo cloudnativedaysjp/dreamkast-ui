@@ -23,7 +23,7 @@ exports[`TrailMapPoint should render without crash 1`] = `
   >
     <img
       alt="Trail Mapの3合目"
-      src="/cndt2022/ui/trailmap_25.jpg"
+      src="/cicd2023/ui/trailmap_25.jpg"
     />
     <div
       class="point"

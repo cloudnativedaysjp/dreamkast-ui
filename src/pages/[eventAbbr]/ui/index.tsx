@@ -7,16 +7,36 @@ import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
 import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
+import { usePostPointEvent } from '../../../components/hooks/usePostPointEvent'
+import { usePostSessionPointEvent } from '../../../components/hooks/usePostSessionPointEvent'
+import { pointEventSavingSelector } from '../../../store/appData'
+import { useSelector } from 'react-redux'
+import * as CommonStyled from '../../../styles/styled'
+import { CircularProgress } from '@material-ui/core'
 
 const IndexPage: NextPage = () => {
   const { eventAbbr } = useRouterQuery()
   const { event } = useInitSetup(eventAbbr)
   useAppDataSetup()
+  usePostPointEvent()
+  usePostSessionPointEvent()
   const { refetch } = useGetTalksAndTracks()
+  const isPointEventSaving = useSelector(pointEventSavingSelector)
 
   if (!event) {
     return <div></div>
   }
+
+  if (isPointEventSaving) {
+    return (
+      <Layout title={event.name} event={event}>
+        <CommonStyled.BaseCenterContainer>
+          <CircularProgress color="primary" size={60} />
+        </CommonStyled.BaseCenterContainer>
+      </Layout>
+    )
+  }
+
   return (
     <Layout title={event.name} event={event}>
       <TrackSelector />

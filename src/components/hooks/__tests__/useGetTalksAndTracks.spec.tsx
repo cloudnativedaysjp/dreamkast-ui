@@ -110,12 +110,9 @@ describe('useGetTalksAndTracks', () => {
       const { isLoading, refetch } = useGetTalksAndTracks()
       const [count, setCount] = useState<number>(0)
       const [done, setDone] = useState<boolean>(false)
-      console.warn(count)
       useEffect(() => {
-        console.warn('isLoading: ', isLoading, 'count: ', count)
         if (!isLoading) {
           if (count < 2) {
-            console.warn('refetch called')
             refetch()
           } else {
             setDone(true)

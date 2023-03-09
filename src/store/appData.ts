@@ -13,6 +13,8 @@ type AppDataState = {
   pointData: ProfilePointsResponse
   pointDataInitialized: boolean
   isTrailMapOpen: boolean
+  isStampAddedByQRCode: boolean
+  isPointEventSaving: boolean
 }
 
 const initialState: AppDataState = {
@@ -30,6 +32,8 @@ const initialState: AppDataState = {
   },
   pointDataInitialized: false,
   isTrailMapOpen: false,
+  isStampAddedByQRCode: false,
+  isPointEventSaving: false,
 }
 
 const appDataSlice = createSlice({
@@ -47,13 +51,32 @@ const appDataSlice = createSlice({
     setTrailMapOpen: (state, action: PayloadAction<boolean>) => {
       state.isTrailMapOpen = action.payload
     },
+    setStampAddedByQRCode: (state, action: PayloadAction<boolean>) => {
+      state.isStampAddedByQRCode = action.payload
+    },
+    setPointEventSaving: (state, action: PayloadAction<boolean>) => {
+      state.isPointEventSaving = action.payload
+    },
   },
 })
 
-export const { setAppData, setPointData, setTrailMapOpen } =
-  appDataSlice.actions
+export const {
+  setAppData,
+  setPointData,
+  setTrailMapOpen,
+  setPointEventSaving,
+  setStampAddedByQRCode,
+} = appDataSlice.actions
 
 export const appDataSelector = (s: RootState) => s.appData
+export const pointEventSavingSelector = createSelector(
+  appDataSelector,
+  (s) => s.isPointEventSaving,
+)
+export const stampAddedByQRCodeSelector = createSelector(
+  appDataSelector,
+  (s) => s.isStampAddedByQRCode,
+)
 
 const appDataInnerSelector = createSelector(appDataSelector, (s) => s.appData)
 const stampChallengesSelector = createSelector(
