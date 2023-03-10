@@ -6,12 +6,15 @@ import { useRouter } from 'next/router'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
-  const { eventAbbr, pointEventId } = useRouterQuery()
+  const { isReady, eventAbbr, pointEventId } = useRouterQuery()
 
   useEffect(() => {
+    if (!isReady) {
+      return
+    }
     setPointEventId(pointEventId!)
     router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
-  }, [])
+  }, [isReady])
 
   return <></>
 }

@@ -6,9 +6,12 @@ import { useRouter } from 'next/router'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
-  const { eventAbbr, sessionPointEventId } = useRouterQuery()
+  const { isReady, eventAbbr, sessionPointEventId } = useRouterQuery()
 
   useEffect(() => {
+    if (!isReady) {
+      return
+    }
     setSessionPointEventId(sessionPointEventId!)
     router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
   }, [])
