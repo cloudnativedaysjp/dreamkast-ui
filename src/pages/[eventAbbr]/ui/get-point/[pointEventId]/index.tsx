@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { NextPage } from 'next'
 import { useRouterQuery } from '../../../../../components/hooks/useRouterQuery'
 import { setPointEventId } from '../../../../../util/sessionstorage/trailMap'

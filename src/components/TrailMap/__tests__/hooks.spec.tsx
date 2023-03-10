@@ -10,7 +10,7 @@ import {
 } from '../../../testhelper/fixture'
 import { setAppData, setStampAddedByQRCode } from '../../../store/appData'
 import { stampLocation } from '../internal/const'
-import { PrivateCtx } from '../../../context/private'
+import { TestPrivateCtxProvider } from '../../../context/private'
 import { setupMockServer } from '../../../testhelper/msw'
 import { rest } from 'msw'
 import {
@@ -69,9 +69,9 @@ describe('useStampCompleteBonus', () => {
     }
 
     renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: mockGetPointEventId }}>
+      <TestPrivateCtxProvider getPointEventId={mockGetPointEventId}>
         <Test />
-      </PrivateCtx.Provider>,
+      </TestPrivateCtxProvider>,
       { store },
     )
     await waitFor(() => expect(called).toBeTruthy())
@@ -109,9 +109,9 @@ describe('useStampCompleteBonus', () => {
     }
 
     renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: mockGetPointEventId }}>
+      <TestPrivateCtxProvider getPointEventId={mockGetPointEventId}>
         <Test />
-      </PrivateCtx.Provider>,
+      </TestPrivateCtxProvider>,
       { store },
     )
     await expect(waitFor(() => expect(called).toBeTruthy())).rejects.toThrow()
@@ -149,9 +149,9 @@ describe('useStampCompleteBonus', () => {
 
     setAllStampCollected()
     renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: mockGetPointEventId }}>
+      <TestPrivateCtxProvider getPointEventId={mockGetPointEventId}>
         <Test />
-      </PrivateCtx.Provider>,
+      </TestPrivateCtxProvider>,
       { store },
     )
     await expect(waitFor(() => expect(called).toBeTruthy())).rejects.toThrow()
@@ -229,9 +229,9 @@ describe('useAddStampIfSatisfied', () => {
     }
 
     const screen = renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: mockGetPointEventId }}>
+      <TestPrivateCtxProvider getPointEventId={mockGetPointEventId}>
         <Test />
-      </PrivateCtx.Provider>,
+      </TestPrivateCtxProvider>,
       { store },
     )
     await screen.findByTestId('tgt')
@@ -268,9 +268,9 @@ describe('useAddStampIfSatisfied', () => {
     }
 
     const screen = renderWithProviders(
-      <PrivateCtx.Provider value={{ getPointEventId: mockGetPointEventId }}>
+      <TestPrivateCtxProvider getPointEventId={mockGetPointEventId}>
         <Test />
-      </PrivateCtx.Provider>,
+      </TestPrivateCtxProvider>,
       { store },
     )
     await screen.findByTestId('tgt')

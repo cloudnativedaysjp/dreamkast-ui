@@ -31,3 +31,17 @@ export const PrivateCtxProvider = (props: PropsWithChildren<Props>) => {
 
   return <PrivateCtx.Provider value={ctx}>{props.children}</PrivateCtx.Provider>
 }
+
+export const TestPrivateCtxProvider = (
+  props: PropsWithChildren<{
+    getPointEventId: () => ''
+  }>,
+) => {
+  return (
+    <PrivateCtx.Provider
+      value={{ getPointEventId: props.getPointEventId, env: ENV }}
+    >
+      {props.children}
+    </PrivateCtx.Provider>
+  )
+}
