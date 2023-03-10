@@ -3,21 +3,16 @@ import {
   useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
   useGetApiV1ProfileByProfileIdPointsQuery,
 } from '../../generated/dreamkast-api.generated'
-import {
-  pointEventSavingSelector,
-  setAppData,
-  setPointData,
-} from '../../store/appData'
+import { setAppData, setPointData } from '../../store/appData'
 import { useDispatch, useSelector } from 'react-redux'
 import { settingsSelector } from '../../store/settings'
 
 export const useAppDataSetup = () => {
   const dispatch = useDispatch()
   const settings = useSelector(settingsSelector)
-  const isPointEventSaving = useSelector(pointEventSavingSelector)
   const { eventAbbr, profile } = settings
 
-  const skip = !eventAbbr || !profile.id || isPointEventSaving
+  const skip = !eventAbbr || !profile.id
   const appDataQuery =
     useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery(
       { profileId: `${profile.id}`, conference: eventAbbr },

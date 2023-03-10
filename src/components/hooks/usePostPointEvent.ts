@@ -8,12 +8,14 @@ import {
 import { useRouterQuery } from './useRouterQuery'
 import { usePostApiV1ProfileByProfileIdPointMutation } from '../../generated/dreamkast-api.generated'
 import { setPointEventSaving, setTrailMapOpen } from '../../store/appData'
-import { useRouter } from 'next/router'
+import {
+  clearPointEventId,
+  getPointEventId,
+} from '../../util/sessionstorage/trailMap'
 
 export const usePostPointEvent = () => {
   const dispatch = useDispatch()
-  const router = useRouter()
-  const { isReady, eventAbbr, pointEventId } = useRouterQuery()
+  const { isReady, eventAbbr } = useRouterQuery()
   const profile = useSelector(profileSelector)
   const initialized = useSelector(settingsInitializedSelector)
 
@@ -28,6 +30,8 @@ export const usePostPointEvent = () => {
     if (!isReady) {
       return
     }
+
+    const pointEventId = getPointEventId()
     if (!pointEventId) {
       setDone(true)
       return
@@ -57,16 +61,8 @@ export const usePostPointEvent = () => {
       })
       .finally(() => {
         setDone(true)
+        clearPointEventId()
         dispatch(setPointEventSaving(false))
-        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       })
-  }, [
-    isReady,
-    pointEventId,
-    initialized,
-    isDone,
-    postPointEvent,
-    profile,
-    eventAbbr,
-  ])
+  }, [isReady, initialized, isDone, postPointEvent, profile, eventAbbr])
 }

@@ -6,15 +6,20 @@ import { NextPage } from 'next'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
 import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
+import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
+import { withAuthProvider } from '../../../context/auth'
 import { usePostPointEvent } from '../../../components/hooks/usePostPointEvent'
 import { usePostSessionPointEvent } from '../../../components/hooks/usePostSessionPointEvent'
-import { pointEventSavingSelector } from '../../../store/appData'
 import { useSelector } from 'react-redux'
-import * as CommonStyled from '../../../styles/styled'
+import { pointEventSavingSelector } from '../../../store/appData'
 import { CircularProgress } from '@material-ui/core'
-import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
+import * as CommonStyled from '../../../styles/styled'
 
 const IndexPage: NextPage = () => {
+  return withAuthProvider(<IndexMain />)
+}
+
+const IndexMain = () => {
   const { eventAbbr } = useRouterQuery()
   const { event } = useInitSetup(eventAbbr)
   const { refetch } = useGetTalksAndTracks()
@@ -25,7 +30,7 @@ const IndexPage: NextPage = () => {
   const isPointEventSaving = useSelector(pointEventSavingSelector)
 
   if (!event) {
-    return <div></div>
+    return <></>
   }
   if (isPointEventSaving) {
     return (

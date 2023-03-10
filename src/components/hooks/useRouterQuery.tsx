@@ -15,9 +15,9 @@ export const useRouterQuery = () => {
       router.isReady
         ? {
             isReady: router.isReady,
-            eventAbbr: router.query['eventAbbr'],
-            sessionPointEventId: router.query['get-session-point'],
-            pointEventId: router.query['get-point'],
+            eventAbbr: router.query.eventAbbr || '',
+            pointEventId: router.query.pointEventId,
+            sessionPointEventId: router.query.sessionPointEventId,
           }
         : {}
     ) as QueryParams

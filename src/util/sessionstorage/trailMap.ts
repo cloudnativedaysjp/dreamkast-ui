@@ -31,6 +31,8 @@ export function makeTrackResolveMap(genFn: (eventNum: number) => string) {
 
 const keyGotChatPoint = 'gotChatPoint'
 const keyAllStampCollected = 'allStampCollected'
+const keyPointEventId = 'pointEventId'
+const keySessionPointEventId = 'sessionPointEventId'
 
 export const setGotChatPoint = (slotId: number) => {
   if (isStorageAvailable('sessionStorage')) {
@@ -56,4 +58,42 @@ export const getAllStampCollected = (): boolean => {
     return !!sessionStorage.getItem(keyAllStampCollected)
   }
   return false
+}
+
+export const setPointEventId = (key: string) => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keyPointEventId, key)
+  }
+}
+
+export const clearPointEventId = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keyPointEventId)
+  }
+}
+
+export const getPointEventId = (): string | null => {
+  if (isStorageAvailable('sessionStorage')) {
+    return sessionStorage.getItem(keyPointEventId)
+  }
+  return null
+}
+
+export const setSessionPointEventId = (key: string) => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keySessionPointEventId, key)
+  }
+}
+
+export const clearSessionPointEventId = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keySessionPointEventId)
+  }
+}
+
+export const getSessionPointEventId = (): string | null => {
+  if (isStorageAvailable('sessionStorage')) {
+    return sessionStorage.getItem(keySessionPointEventId)
+  }
+  return null
 }

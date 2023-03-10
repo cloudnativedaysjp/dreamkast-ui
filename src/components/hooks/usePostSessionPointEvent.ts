@@ -13,7 +13,9 @@ import {
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
 import {
+  clearSessionPointEventId,
   getSessionEventNum,
+  getSessionPointEventId,
   getSlotId,
   makeTrackResolveMap,
 } from '../../util/sessionstorage/trailMap'
@@ -22,7 +24,6 @@ import {
   setStampAddedByQRCode,
   setTrailMapOpen,
 } from '../../store/appData'
-import { useRouter } from 'next/router'
 
 type OnAirTalk = {
   talk_id: number
@@ -30,8 +31,7 @@ type OnAirTalk = {
 }
 export const usePostSessionPointEvent = () => {
   const dispatch = useDispatch()
-  const router = useRouter()
-  const { isReady, eventAbbr, sessionPointEventId } = useRouterQuery()
+  const { isReady, eventAbbr } = useRouterQuery()
   const profile = useSelector(profileSelector)
   const initialized = useSelector(settingsInitializedSelector)
   const { getPointEventId } = useContext(PrivateCtx)
@@ -64,6 +64,8 @@ export const usePostSessionPointEvent = () => {
     if (!isReady) {
       return
     }
+
+    const sessionPointEventId = getSessionPointEventId()
     if (!sessionPointEventId) {
       setDone(true)
       return
@@ -81,7 +83,7 @@ export const usePostSessionPointEvent = () => {
     }
     setTrackId(track.id)
     setTalkId((track.onAirTalk as OnAirTalk).talk_id)
-  }, [isReady, initialized, sessionPointEventId, tracksQuery, isDone])
+  }, [isReady, initialized, tracksQuery, isDone])
 
   useEffect(() => {
     if (isDone) {
@@ -129,8 +131,8 @@ export const usePostSessionPointEvent = () => {
         console.error('stampFromQR Action', err)
       } finally {
         setDone(true)
+        clearSessionPointEventId()
         dispatch(setPointEventSaving(false))
-        router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
       }
     })()
   }, [talksQuery.data, initialized])
