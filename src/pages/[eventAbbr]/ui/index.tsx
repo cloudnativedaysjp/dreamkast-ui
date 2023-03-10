@@ -12,7 +12,7 @@ import { pointEventSavingSelector } from '../../../store/appData'
 import { useSelector } from 'react-redux'
 import * as CommonStyled from '../../../styles/styled'
 import { CircularProgress } from '@material-ui/core'
-import {useAppDataSetup} from "../../../components/hooks/useAppDataSetup";
+import { useAppDataSetup } from '../../../components/hooks/useAppDataSetup'
 
 const IndexPage: NextPage = () => {
   const { eventAbbr } = useRouterQuery()
