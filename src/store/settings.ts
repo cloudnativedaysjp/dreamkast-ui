@@ -147,8 +147,8 @@ const settingsSlice = createSlice({
         return
       }
       const nextTalk = nextTalks[s.viewTrackId]
-      if (nextTalk.trackId !== s.viewTrackId) {
-        console.error('trackId mismatched: something wrong with backend')
+      if (nextTalk?.trackId !== s.viewTrackId) {
+        console.warn('trackId mismatched: something wrong with backend')
         return
       }
       if (nextTalk.id === s.viewTalkId) {
