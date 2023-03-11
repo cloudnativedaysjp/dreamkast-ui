@@ -2,10 +2,8 @@ import React, { useEffect } from 'react'
 import { NextPage } from 'next'
 import { useRouterQuery } from '../../../../../components/hooks/useRouterQuery'
 import { setSessionPointEventId } from '../../../../../util/sessionstorage/trailMap'
-import { useRouter } from 'next/router'
 
 const IndexPage: NextPage = () => {
-  const router = useRouter()
   const { isReady, eventAbbr, sessionPointEventId } = useRouterQuery()
 
   useEffect(() => {
@@ -13,7 +11,7 @@ const IndexPage: NextPage = () => {
       return
     }
     setSessionPointEventId(sessionPointEventId!)
-    router.replace(`/${eventAbbr}/ui`)
+    window.location.href = `/${eventAbbr}/ui`
   }, [])
   return <></>
 }
