@@ -13,7 +13,7 @@ const IndexPage: NextPage = () => {
       return
     }
     setSessionPointEventId(sessionPointEventId!)
-    router.replace(`/${eventAbbr}/ui`, undefined, { shallow: true })
+    router.replace(`/${eventAbbr}/ui`)
   }, [])
   return <></>
 }
