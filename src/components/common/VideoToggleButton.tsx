@@ -1,22 +1,23 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-import { setShowVideo, settingsSelector } from '../../store/settings'
+import { setShowVideo, setShowVideoSelector } from '../../store/settings'
 import { Videocam, VideocamOff } from '@material-ui/icons'
 
 export const VideoToggleButton = () => {
   const dispatch = useDispatch()
-  const settings = useSelector(settingsSelector)
+  const showVideo = useSelector(setShowVideoSelector)
   return (
     <Button
+      data-testid={'toggle-btn'}
       variant="contained"
       size="small"
       color="primary"
       disableElevation
-      startIcon={settings.showVideo ? <VideocamOff /> : <Videocam />}
-      onClick={() => dispatch(setShowVideo(!settings.showVideo))}
+      startIcon={showVideo ? <VideocamOff /> : <Videocam />}
+      onClick={() => dispatch(setShowVideo(!showVideo))}
     >
-      {settings.showVideo ? '視聴画面を隠す' : '視聴画面を表示'}
+      {showVideo ? '視聴画面を隠す' : '視聴画面を表示'}
     </Button>
   )
 }

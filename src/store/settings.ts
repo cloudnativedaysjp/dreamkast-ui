@@ -13,6 +13,15 @@ import {
   setViewTrackIdToSessionStorage,
 } from '../util/sessionstorage/viewTrackId'
 import { useSelector } from 'react-redux'
+import { setupDayjs } from '../util/setupDayjs'
+
+setupDayjs()
+
+type ConfDay = {
+  id?: number | undefined
+  date?: string | undefined
+  internal?: boolean | undefined
+}
 
 type SettingsState = {
   // カンファレンスイベント
@@ -72,7 +81,7 @@ const settingsSlice = createSlice({
     },
     setEvent: (state, action: PayloadAction<Event>) => {
       state.event = action.payload
-      const today = dayjs(new Date()).tz('Asia/Tokyo').format('YYYY-MM-DD')
+      const today = dayjs(new Date()).tz().format('YYYY-MM-DD')
       const confDay = action.payload?.conferenceDays?.find(
         (day) => day.date === today,
       )
@@ -82,6 +91,17 @@ const settingsSlice = createSlice({
           date: confDay.date,
           internal: confDay.internal,
         }
+      }
+    },
+    setConferenceDay: (state, action: PayloadAction<ConfDay>) => {
+      const confDay = action.payload
+      if (!confDay) {
+        return
+      }
+      state.conferenceDay = {
+        id: String(confDay.id),
+        date: confDay.date,
+        internal: confDay.internal,
       }
     },
     setProfile: (state, action: PayloadAction<Profile>) => {
@@ -143,7 +163,7 @@ const settingsSlice = createSlice({
       // Karte
       window.location.href =
         window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-      window.tracker.track('trigger_survey', {
+      window.tracker?.track('trigger_survey', {
         track_name: selectedTrack?.name,
         talk_id: selectedTalk?.id,
         talk_name: selectedTalk?.title,
@@ -197,6 +217,7 @@ export const {
   setShowVideo,
   setEventAbbr,
   setEvent,
+  setConferenceDay,
   setTalks,
   setTracks,
   setViewTrackId,
@@ -208,12 +229,19 @@ export const {
 
 export const settingsSelector = (s: RootState) => s.settings
 
-const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
-const talksSelector = createSelector(settingsSelector, (s) => s.talks)
-const viewTalkIdSelector = createSelector(settingsSelector, (s) => s.viewTalkId)
-const viewTrackIdSelector = createSelector(
+export const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
+export const talksSelector = createSelector(settingsSelector, (s) => s.talks)
+export const viewTalkIdSelector = createSelector(
+  settingsSelector,
+  (s) => s.viewTalkId,
+)
+export const viewTrackIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTrackId,
+)
+export const setShowVideoSelector = createSelector(
+  settingsSelector,
+  (s) => s.showVideo,
 )
 
 export const isLiveModeSelector = createSelector(
@@ -228,7 +256,7 @@ export const settingsInitializedSelector = createSelector(
   },
 )
 
-export const settingsVideoIdSelector = createSelector(
+export const videoIdSelector = createSelector(
   tracksSelector,
   talksSelector,
   viewTrackIdSelector,
@@ -241,32 +269,40 @@ export const settingsVideoIdSelector = createSelector(
       return ''
     }
     const selectedTrack = tracks.find((t) => t.id === viewTrackId)
+    if (!selectedTrack) {
+      return ''
+    }
     const selectedTalk = talks.find((t) => t.id === viewTalkId)
-    if (selectedTalk?.onAir) {
-      // TODO remove following
-      console.warn('videoId: onAir', selectedTrack?.videoId)
-      return selectedTrack?.videoId || ''
+    if (!selectedTalk) {
+      return ''
+    }
+    if (selectedTalk.onAir) {
+      return selectedTrack.videoId || '' // TODO 配信はありません、の画面を出す
     } else {
-      console.warn('videoId: recorded', selectedTalk?.videoId)
-      return selectedTalk?.videoId || ''
+      return selectedTalk.videoId || '' // TODO アーカイブ中です、の画面を出す
     }
   },
 )
 
+export type TrackWithTalk = {
+  track: Track
+  talk?: Talk
+}
+
 export const useTracks = () => {
   const tracks = useSelector(tracksSelector)
   const talks = useSelector(talksSelector)
-  const tracksWithLiveTalk = tracks.map((tr) => {
+  const tracksWithLiveTalk: TrackWithTalk[] = tracks.map((tr) => {
+    const res = { track: tr } as TrackWithTalk
     if (!tr.onAirTalk) {
-      return {
-        track: tr,
-      }
+      return res
     }
     const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
-    return {
-      track: tr,
-      talk: talks.find((t) => t.id === parseInt(talkId)),
+    const talk = talks.find((t) => t.id === parseInt(talkId))
+    if (talk) {
+      res.talk = talk
     }
+    return res
   })
   return { tracksWithLiveTalk }
 }
@@ -284,11 +320,13 @@ export const useSelectedTrack = (): {
       talks: [],
     }
   }
-  const selectedTrack =
-    tracks.find((track) => track.id == viewTrackId) || tracks[0]
-  const selectedTalks = talks.filter((t) => {
-    return t.trackId === selectedTrack.id
-  })
+  const selectedTrack = tracks.find((track) => track.id == viewTrackId)
+  if (!selectedTrack) {
+    return {
+      talks: [],
+    }
+  }
+  const selectedTalks = talks.filter((t) => t.trackId === selectedTrack.id)
   const onAirTalk = selectedTalks.find((talk) => talk.onAir)
   return {
     track: selectedTrack,
@@ -297,7 +335,7 @@ export const useSelectedTrack = (): {
   }
 }
 
-export const useSelectedTalk = () => {
+export const useSelectedTalk = (): { talk?: Talk } => {
   const talks = useSelector(talksSelector)
   const viewTrackId = useSelector(viewTrackIdSelector)
   const viewTalkId = useSelector(viewTalkIdSelector)
@@ -308,9 +346,11 @@ export const useSelectedTalk = () => {
   if (talksInTrack.length === 0) {
     return {}
   }
-  return {
-    talk: talksInTrack.find((t) => t.id === viewTalkId) || talksInTrack[0],
+  const talk = talksInTrack.find((t) => t.id === viewTalkId)
+  if (!talk) {
+    return {}
   }
+  return { talk }
 }
 
 export default settingsSlice

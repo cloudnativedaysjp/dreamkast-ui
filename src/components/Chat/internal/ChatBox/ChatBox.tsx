@@ -34,7 +34,9 @@ export const ChatBox: React.FC<Props> = ({
 }) => {
   useEffect(() => {
     const box = document.getElementById('message-box')
-    if (checked) box?.scrollBy(0, Array.from(messages).length * 100)
+    if (checked && box?.scrollBy) {
+      box?.scrollBy(0, Array.from(messages).length * 100)
+    }
   }, [messages])
   return (
     <Styled.Box overflow="scroll" id="message-box">

@@ -14,7 +14,7 @@ import {
   settingsInitializedSelector,
   settingsSelector,
   setViewTalkId,
-  settingsVideoIdSelector,
+  videoIdSelector,
   isLiveModeSelector,
   setIsLiveMode,
 } from '../../store/settings'
@@ -39,7 +39,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const videoId = useSelector(settingsVideoIdSelector)
+  const videoId = useSelector(videoIdSelector)
   const isLiveMode = useSelector(isLiveModeSelector)
 
   useKarteTracking()
@@ -59,8 +59,8 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     dispatch(setIsLiveMode(checked))
   }
 
-  const selectTalk = (talk: Talk) => {
-    dispatch(setViewTalkId(talk.id))
+  const selectTalk = (talkId: number) => {
+    dispatch(setViewTalkId(talkId))
   }
 
   if (!initialized) {
@@ -80,7 +80,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           <IvsPlayer
             playBackUrl={videoId}
             autoplay={true}
-            showStopVideoButton={
+            showVideoToggle={
               isSmallerThanMd && settings.profile.isAttendOffline
             }
           ></IvsPlayer>
@@ -91,15 +91,15 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         </Grid>
         <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <TalkInfo
-            event={event}
+            eventAbbr={event.abbr}
             selectedTalk={selectedTalk}
-            selectedTrackName={selectedTrack?.name}
-            selectedTrackId={selectedTrack?.id}
+            selectedTrack={selectedTrack}
+            showVideoToggle={settings.profile.isAttendOffline}
           />
         </Grid>
         <Grid item xs={12} md={4} style={{ height: '100%' }}>
           <TalkSelector
-            selectedTalk={selectedTalk}
+            selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}
@@ -115,10 +115,10 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
       <Grid container spacing={1} justifyContent="center" alignItems="stretch">
         <Grid item xs={12} md={4}>
           <TalkInfo
-            event={event}
+            eventAbbr={event.abbr}
             selectedTalk={selectedTalk}
-            selectedTrackName={selectedTrack?.name}
-            selectedTrackId={selectedTrack?.id}
+            selectedTrack={selectedTrack}
+            showVideoToggle={settings.profile.isAttendOffline}
           />
         </Grid>
         <Grid item xs={12} md={4}>
@@ -126,7 +126,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <TalkSelector
-            selectedTalk={selectedTalk}
+            selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
             isLiveMode={isLiveMode}

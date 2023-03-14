@@ -3,8 +3,6 @@ import * as Styled from './styled'
 import { ChatMessageContainer } from '../../../../../../util/chat'
 import MenuIcon from '@material-ui/icons/Menu'
 import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
 import { ChatReplyForm } from '../../../ChatReplyForm'
 import { MessageInputs } from '../../../ChatMessageRequest'
 import Linkify from 'linkify-react'
@@ -15,9 +13,9 @@ import {
   Talk,
   usePutApiV1ChatMessagesByMessageIdMutation,
 } from '../../../../../../generated/dreamkast-api.generated'
+import { setupDayjs } from '../../../../../../util/setupDayjs'
 
-dayjs.extend(timezone)
-dayjs.extend(utc)
+setupDayjs()
 
 type Props = {
   event?: Event
@@ -90,11 +88,12 @@ export const ChatMessage: React.FC<Props> = ({
       <Styled.ChatMessage isChat={isChat} isSelected={selected}>
         <Grid container>
           <Grid item xs={11}>
-            {dayjs(chatMessage?.createdAt).tz('Asia/Tokyo').format('HH:mm')}
+            {dayjs(chatMessage?.createdAt).tz().format('HH:mm')}
           </Grid>
 
           <Grid item xs={1}>
             <Styled.MenuButton
+              data-testid="message-menu-btn"
               onClick={openChatMessageMenu}
               data-messageid={chatMessage?.id}
               data-replyto={chatMessage?.replyTo}
@@ -114,6 +113,7 @@ export const ChatMessage: React.FC<Props> = ({
             {!selected &&
               chatMessage?.body != 'このメッセージは削除されました' && (
                 <Styled.ReplyButton
+                  data-testid="message-reply-btn"
                   data-messageId={chatMessage?.id}
                   onClick={onClickReplyButton}
                 >

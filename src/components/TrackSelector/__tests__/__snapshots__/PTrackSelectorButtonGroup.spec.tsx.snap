@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PTrackSelectorButtonGroup should render when data empty 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gWvZVB"
+    color="primary"
+    role="group"
+  />
+</DocumentFragment>
+`;
+
+exports[`PTrackSelectorButtonGroup should render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gWvZVB"
+    color="primary"
+    role="group"
+  >
+    <button
+      aria-pressed="false"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      tabindex="0"
+      type="button"
+      value="32"
+    >
+      <span
+        class="MuiToggleButton-label"
+      >
+        A
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      aria-pressed="false"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      tabindex="0"
+      type="button"
+      value="33"
+    >
+      <span
+        class="MuiToggleButton-label"
+      >
+        B
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      aria-pressed="false"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      tabindex="0"
+      type="button"
+      value="34"
+    >
+      <span
+        class="MuiToggleButton-label"
+      >
+        C
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

@@ -6,6 +6,9 @@ import { Event, RegisteredTalk } from '../../generated/dreamkast-api.generated'
 import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { CardContent, Link, Typography } from '@material-ui/core'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   event: Event
@@ -18,8 +21,8 @@ export const RegisteredTalks: React.FC<Props> = ({ event }) => {
   })
 
   const talkInfo = (talk: RegisteredTalk) => {
-    const start = dayjs(talk.talkStartTime).format('HH:mm')
-    const end = dayjs(talk.talkEndTime).format('HH:mm')
+    const start = dayjs(talk.talkStartTime).tz().format('HH:mm')
+    const end = dayjs(talk.talkEndTime).tz().format('HH:mm')
     return `${start}-${end} Track${talk.trackName} / ${talk.roomName}`
   }
 

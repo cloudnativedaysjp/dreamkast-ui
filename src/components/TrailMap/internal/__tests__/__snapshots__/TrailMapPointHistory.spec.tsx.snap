@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrailMapPointHistory should render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__PointHistoryTable-sc-1t1auio-12 PhTTt"
+  >
+    <div
+      class="MuiPaper-root MuiTableContainer-root MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <table
+        aria-label="event-history"
+        class="MuiTable-root"
+      >
+        <thead
+          class="MuiTableHead-root"
+        >
+          <tr
+            class="MuiTableRow-root MuiTableRow-head"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall"
+              scope="col"
+            >
+              獲得ポイント
+            </th>
+            <th
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeSmall"
+              scope="col"
+            >
+              達成条件
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="MuiTableBody-root"
+        >
+          <tr
+            class="MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              role="cell"
+              scope="row"
+            >
+              50pt
+            </th>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+            >
+              セッション視聴: 1日目 スロット1
+            </td>
+          </tr>
+          <tr
+            class="MuiTableRow-root"
+          >
+            <th
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+              role="cell"
+              scope="row"
+            >
+              20pt
+            </th>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeSmall"
+            >
+              セッション視聴: 1日目 スロット2
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</DocumentFragment>
+`;

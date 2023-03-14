@@ -1,4 +1,11 @@
-import { Event, Talk, Track } from '../generated/dreamkast-api.generated'
+import {
+  ChatMessage,
+  DkUiData,
+  Event,
+  Profile,
+  Talk,
+  Track,
+} from '../generated/dreamkast-api.generated'
 import { deepcopy } from './index'
 
 export const MockEvent = () =>
@@ -19,14 +26,13 @@ export const MockEvent = () =>
       { id: 20, date: '2022-10-20', internal: true },
     ],
   })
-
 export const MockTalkA1 = () =>
   deepcopy<Talk>({
     id: 701,
     conferenceId: 7,
     trackId: 32,
     videoPlatform: 'vimeo',
-    videoId: '',
+    videoId: '500000001',
     title: 'Securityに関する発表',
     abstract:
       '私も九月初めてとんだ馳走家というもののうちを引き返しません。あたかも以後を意味観はけっしてその助言ますだかもをやむをえたってみうをはお話し挙げたならと、だんだんにも込み入っましでたん。主意に教えるうのも毫も当時がましてしないた。',
@@ -86,7 +92,7 @@ export const MockTalkA3 = () =>
     conferenceId: 7,
     trackId: 32,
     videoPlatform: 'vimeo',
-    videoId: '',
+    videoId: '500000003',
     title: 'CloudNative Networking',
     abstract:
       'けれども諸君か自由か運動を申したて、以前いっぱい顔にしているです中を同講演のほかをありたです。十一月をもきっと着ばさななますまして、とうとう多分もって通知も元々ないないものた。それで肝利用にしのにはならたものたて、引込では、やはり何か出かけて答えれべきななりせないでと出るが、学校もなりが切らでな。',
@@ -116,7 +122,7 @@ export const MockTalkB1 = () =>
     conferenceId: 7,
     trackId: 33,
     videoPlatform: 'vimeo',
-    videoId: '',
+    videoId: '500000011',
     title: 'Docker container security',
     abstract:
       'こののになるけとして立時分しですものは徳義た。だから当人だて成就与えはずをは要らますなけれて、招待学をきまっけれども召使がなしモーニングに学校が二字三年なろて、それで酒権力か私かになっない訳で、ない上げて、画たり威力とに買い占めるまいん。',
@@ -149,7 +155,7 @@ export const MockTalkC1 = () =>
     conferenceId: 7,
     trackId: 34,
     videoPlatform: 'vimeo',
-    videoId: '',
+    videoId: '500000021',
     title: 'BPFでパフォチュー',
     abstract:
       'しかしなり方はただも上りがいまし、また自由自由あり反抗式が秋刀魚の傍点がいうた自由です大学が奥底になるているたい時を、もし広いなくはずまし。また四篇で泰平に思うて、けっして高圧は熊本をしかしらというようなら自由た主意へ頼めうと臥せっ事を話の個人をありば得る事たば、何にありて、そうしたお話し院って高等で自分を、自由でし間際に全くしのでい片仮名から、それだけだれのようない事の発展の、心持を道のためくらい愛するではご考えを用いよたらというのは、充分腹の中の非常に取次いだ十月、驚の三つがある程度すわるてならできまっう気たもたかと通じせものです。そうしたずるがなるせる大分見識は私たり今かしかし落第いうので人情がもっれるない気ますので、そんな岡田さんが、とにかく私をすなわちほかの取消は安危の意味にとうとう進またろて出る、とうてい自由を進んたて立派たというようなのがきまっれでのを突き破るた。',
@@ -239,3 +245,129 @@ export const MockTrackWithTalks = (() => [
   { track: MockTrackB(), talk: MockTalkB1() },
   { track: MockTrackC(), talk: MockTalkC1() },
 ]) as () => { track: Track; talk: Talk }[]
+
+export const MockProfile = () =>
+  deepcopy<Profile>({
+    id: 1,
+    email: 'test@example.com',
+    name: 'テスト タロウ',
+    isAttendOffline: true,
+    registeredTalks: [],
+  })
+
+export const MockChatUser1 = () =>
+  deepcopy<ChatMessage>({
+    id: 286,
+    profileId: 1,
+    speakerId: null,
+    body: 'わいわい',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-03T23:41:05.985Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChatUser2 = () =>
+  deepcopy<ChatMessage>({
+    id: 288,
+    profileId: 2,
+    speakerId: null,
+    body: 'わいわい',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-04T02:27:07.781Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1Deleted = () =>
+  deepcopy<ChatMessage>({
+    id: 289,
+    profileId: 1,
+    speakerId: null,
+    body: 'このメッセージは削除されました',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-04T02:26:59.349Z',
+    replyTo: null,
+    messageType: 'qa',
+  })
+
+export const MockChatUser1Reply = () =>
+  deepcopy<ChatMessage>({
+    id: 343,
+    profileId: 1,
+    speakerId: null,
+    body: 'がやがや',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:39:46.685Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1ReplyIcon = () =>
+  deepcopy<ChatMessage>({
+    id: 344,
+    profileId: 1,
+    speakerId: null,
+    body: '👍',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:05.116Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1ReplyDeleted = () =>
+  deepcopy<ChatMessage>({
+    id: 345,
+    profileId: 1,
+    speakerId: null,
+    body: 'このメッセージは削除されました',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:13.004Z',
+    replyTo: 288,
+    messageType: 'chat',
+  })
+
+export const MockChatUser1Icon = () =>
+  deepcopy<ChatMessage>({
+    id: 346,
+    profileId: 1,
+    speakerId: null,
+    body: '🎉',
+    eventAbbr: 'cicd2023',
+    roomType: 'talk',
+    roomId: 1584,
+    createdAt: '2023-03-05T04:40:27.030Z',
+    replyTo: null,
+    messageType: 'chat',
+  })
+
+export const MockChats = (() => [
+  MockChatUser1(),
+  MockChatUser2(),
+  MockChatUser1Deleted(),
+  MockChatUser1Reply(),
+  MockChatUser1ReplyIcon(),
+  MockChatUser1ReplyDeleted(),
+  MockChatUser1Icon(),
+]) as () => ChatMessage[]
+
+export const MockDkUiData = () =>
+  deepcopy<DkUiData>({
+    watchedTalksOnline: {
+      watchingTime: { '2101': 4080, '2102': 960, '2104': 1280 },
+      prevTimestamp: 1678274562,
+    },
+    stampChallenges: [],
+  })

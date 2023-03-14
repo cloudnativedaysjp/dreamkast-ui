@@ -29,6 +29,7 @@ describe('CTrackSelector', () => {
     )
 
     await screen.findByTestId('tgt')
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should update trackId when track selected', async () => {

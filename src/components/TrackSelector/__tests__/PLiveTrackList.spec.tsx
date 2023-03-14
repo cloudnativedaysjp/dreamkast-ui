@@ -6,13 +6,17 @@ import { MockTrackWithTalks } from '../../../testhelper/fixture'
 describe('PLiveTrackList', () => {
   it('should render without crash', () => {
     const data = MockTrackWithTalks()
-    render(
+    const screen = render(
       <PLiveTalkList data={data} selectedTrack={0} onChange={() => null} />,
     )
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should render when data empty', () => {
-    render(<PLiveTalkList data={[]} selectedTrack={0} onChange={() => null} />)
+    const screen = render(
+      <PLiveTalkList data={[]} selectedTrack={0} onChange={() => null} />,
+    )
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should call onChange callback when track selected', () => {

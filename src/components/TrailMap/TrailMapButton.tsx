@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge } from '@material-ui/core'
 import * as Styled from './styled'
-import { setTrailMapOpen, useStamps } from '../../store/points'
+import { setTrailMapOpen, useStamps } from '../../store/appData'
 import { useDispatch } from 'react-redux'
 
 export const TrailMapButton = () => {

@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PLiveTrackList should render when data empty 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__Container-sc-hs19f1-5 juYVoN"
+  >
+    <div
+      class="styled__InnerContainer-sc-hs19f1-6 kETmpm"
+    >
+      <div
+        class="styled__Title-sc-hs19f1-7 dnexiu"
+      >
+        ライブセッション
+      </div>
+      <div
+        class="styled__List-sc-hs19f1-8 itxwGm"
+      >
+        <div
+          class="MuiTableContainer-root"
+        >
+          <table
+            aria-label="live-talks"
+            class="MuiTable-root"
+          >
+            <tbody
+              class="MuiTableBody-root"
+            />
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PLiveTrackList should render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__Container-sc-hs19f1-5 juYVoN"
+  >
+    <div
+      class="styled__InnerContainer-sc-hs19f1-6 kETmpm"
+    >
+      <div
+        class="styled__Title-sc-hs19f1-7 dnexiu"
+      >
+        ライブセッション
+      </div>
+      <div
+        class="styled__List-sc-hs19f1-8 itxwGm"
+      >
+        <div
+          class="MuiTableContainer-root"
+        >
+          <table
+            aria-label="live-talks"
+            class="MuiTable-root"
+          >
+            <tbody
+              class="MuiTableBody-root"
+            >
+              <tr
+                class="MuiTableRow-root"
+              >
+                <td
+                  class="MuiTableCell-root MuiTableCell-body"
+                  style="width: 150px;"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TrackSelectorButton-sc-hs19f1-9 eoZIAb"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      A
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  <span
+                    class="styled__Live-sc-hs19f1-10 krSGTy"
+                  >
+                    LIVE
+                  </span>
+                   10:00-10:20
+                  <br />
+                  Securityに関する発表
+                  <br />
+                  高石 諒
+                </td>
+              </tr>
+              <tr
+                class="MuiTableRow-root"
+              >
+                <td
+                  class="MuiTableCell-root MuiTableCell-body"
+                  style="width: 150px;"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TrackSelectorButton-sc-hs19f1-9 eoZIAb"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      B
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                   13:20-14:00
+                  <br />
+                  Docker container security
+                  <br />
+                  奥村 秀司, 大川 文典
+                </td>
+              </tr>
+              <tr
+                class="MuiTableRow-root"
+              >
+                <td
+                  class="MuiTableCell-root MuiTableCell-body"
+                  style="width: 150px;"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TrackSelectorButton-sc-hs19f1-9 eoZIAb"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      C
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                   13:20-14:00
+                  <br />
+                  BPFでパフォチュー
+                  <br />
+                  大川 文典, スノー・ホワイト・パラダイス・エルサント・フロウ・ワスレナ・ピュア・プリンセス・リーブル・ラブ・ハイデルン・ドコドコ・ヤッタゼ・ヴァルキュリア・パッション・アールヴ・ノエル・チャコボシ・エルアリア・フロージア・メイドイン・ブルーム・エル
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

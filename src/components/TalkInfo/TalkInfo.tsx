@@ -1,58 +1,51 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import * as Styled from './styled'
-import { Event, Talk } from '../../generated/dreamkast-api.generated'
-import { useGetApiV1TracksByTrackIdViewerCountQuery } from '../../generated/dreamkast-api.generated'
-import { useSelector } from 'react-redux'
-import { settingsSelector } from '../../store/settings'
+import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { VideoToggleButton } from '../common/VideoToggleButton'
+import { useViewerCount } from '../hooks/useViewerCount'
 
 type Props = {
-  event?: Event
+  eventAbbr: string
   selectedTalk?: Talk
-  selectedTrackName?: string
-  selectedTrackId?: number
+  selectedTrack?: Track
+  showVideoToggle?: boolean
 }
 
 export const TalkInfo: React.FC<Props> = ({
-  event,
+  eventAbbr,
   selectedTalk,
-  selectedTrackName,
-  selectedTrackId,
+  selectedTrack,
+  showVideoToggle,
 }) => {
-  const [viewerCount, setViewerCount] = useState<string>()
-  const settings = useSelector(settingsSelector)
+  const viewerCount = useViewerCount(selectedTrack?.id)
 
-  const { data, isError, isLoading, error } =
-    useGetApiV1TracksByTrackIdViewerCountQuery(
-      { trackId: `${selectedTrackId}` },
-      { skip: !selectedTrackId, pollingInterval: 60 * 1000 },
-    )
-  useEffect(() => {
-    if (isLoading) {
-      return
-    }
-    if (isError) {
-      // TODO error handling
-      console.error(error)
-      return
-    }
-    if (data) {
-      setViewerCount(data.viewerCount.toString())
-    } else {
-      setViewerCount('-')
-    }
-  }, [data, isLoading, isError])
+  return (
+    <Styled.Container>
+      {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
+      {showVideoToggle && <VideoToggleButton />}
+      <PTalkInfo
+        eventAbbr={eventAbbr}
+        selectedTalk={selectedTalk}
+        selectedTrack={selectedTrack}
+        showVideoToggle={showVideoToggle}
+      />
+    </Styled.Container>
+  )
+}
 
+export const PTalkInfo: React.FC<Props> = ({
+  eventAbbr,
+  selectedTalk,
+  selectedTrack,
+}) => {
   const twitterURL = (trackName?: string) => {
-    const base = `http://twitter.com/share?url=https://event.cloudnativedays.jp/${event?.abbr}&related=@cloudnativedays&hashtags=${event?.abbr}`
+    const base = `http://twitter.com/share?url=https://event.cloudnativedays.jp/${eventAbbr}&related=@cloudnativedays&hashtags=${eventAbbr}`
     if (!trackName) return base
     return base + '_' + trackName
   }
 
   return (
-    <Styled.Container>
-      {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
-      {settings.profile.isAttendOffline && <VideoToggleButton />}
+    <>
       <Styled.Title>{selectedTalk?.title}</Styled.Title>
       <Styled.SpeakerContainer>
         <Styled.Speaker>
@@ -71,17 +64,20 @@ export const TalkInfo: React.FC<Props> = ({
       </Styled.SpeakerContainer>
       <Styled.Content>{selectedTalk?.abstract}</Styled.Content>
       <Styled.SocialHeader>
-        <Styled.TalkIcon src={`/${event?.abbr}/ui/talk_icon.png`} />
+        <Styled.TalkIcon src={`/${eventAbbr}/ui/talk_icon.png`} />
         一緒に盛り上がろう
       </Styled.SocialHeader>
       <Styled.ButtonContainer>
-        <Styled.ButtonLink href={twitterURL(selectedTrackName)} target="_blank">
+        <Styled.ButtonLink
+          href={twitterURL(selectedTrack?.name)}
+          target="_blank"
+        >
           <Styled.TweetButton>
-            <Styled.TwitterImg src={`/${event?.abbr}/ui/twitter_logo.png`} />
-            {`tweet #${event?.abbr}_${selectedTrackName}`}
+            <Styled.TwitterImg src={`/${eventAbbr}/ui/twitter_logo.png`} />
+            {`tweet #${eventAbbr}_${selectedTrack?.name}`}
           </Styled.TweetButton>
         </Styled.ButtonLink>
       </Styled.ButtonContainer>
-    </Styled.Container>
+    </>
   )
 }

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TrailMapPoint should render loading skeleton 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
+  >
+    <div
+      class="suspend"
+    >
+      <span
+        class="MuiSkeleton-root MuiSkeleton-rect skeleton MuiSkeleton-wave"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TrailMapPoint should render without crash 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__TrailMapPointContainer-sc-1t1auio-5 eZNYKX"
+  >
+    <img
+      alt="Trail Mapの3合目"
+      src="/cndt2022/ui/trailmap_25.jpg"
+    />
+    <div
+      class="point"
+    >
+      20pt
+    </div>
+  </div>
+</DocumentFragment>
+`;

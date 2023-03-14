@@ -33,6 +33,7 @@ export const ChatMessageMenu: React.FC<Props> = ({
       onClose={onClose}
     >
       <MenuItem
+        data-testid="message-delete-btn"
         onClick={onMenuClick}
         data-messageId={chatMessage?.id}
         disabled={menuItemDisabled()}

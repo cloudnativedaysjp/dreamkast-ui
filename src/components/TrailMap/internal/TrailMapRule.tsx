@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Styled from './styled'
+import * as Styled from '../styled'
 
 export const TrailMapRule = () => {
   return (

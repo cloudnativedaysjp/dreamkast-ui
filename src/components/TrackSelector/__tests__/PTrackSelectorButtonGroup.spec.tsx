@@ -9,7 +9,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/styles'
 describe('PTrackSelectorButtonGroup', function () {
   it('should render without crash', () => {
     const data = MockTrackWithTalks()
-    render(
+    const screen = render(
       <MUIThemeProvider theme={theme}>
         <PTrackSelectorButtonGroup
           data={data}
@@ -18,10 +18,11 @@ describe('PTrackSelectorButtonGroup', function () {
         />
       </MUIThemeProvider>,
     )
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should render when data empty', () => {
-    render(
+    const screen = render(
       <MUIThemeProvider theme={theme}>
         <PTrackSelectorButtonGroup
           data={[]}
@@ -30,6 +31,7 @@ describe('PTrackSelectorButtonGroup', function () {
         />
       </MUIThemeProvider>,
     )
+    expect(screen.asFragment()).toMatchSnapshot()
   })
 
   it('should call onChange callback when track selected', () => {

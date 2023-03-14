@@ -1,13 +1,24 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
-import { MockEvent, MockTalks } from '../../../testhelper/fixture'
-import { TalkInfo } from '../TalkInfo'
+import { render } from '@testing-library/react'
+import { MockEvent, MockTalkA1, MockTrackA } from '../../../testhelper/fixture'
+import { PTalkInfo } from '../TalkInfo'
 
 // TODO fix following by extracting Presentation Component
-test.skip('TalkInfo', () => {
-  const component = renderer.create(
-    <TalkInfo event={MockEvent()} selectedTalk={MockTalks()[0]} />,
-  )
-  const tree = component.toJSON()
-  expect(tree).toMatchSnapshot()
+describe('PTalkInfo', () => {
+  it('should render without crash', () => {
+    const screen = render(
+      <PTalkInfo
+        eventAbbr={MockEvent().abbr}
+        selectedTalk={MockTalkA1()}
+        selectedTrack={MockTrackA()}
+        showVideoToggle={true}
+      />,
+    )
+    expect(screen.asFragment()).toMatchSnapshot()
+  })
+
+  it('should render when props undefined', () => {
+    const screen = render(<PTalkInfo eventAbbr={MockEvent().abbr} />)
+    expect(screen.asFragment()).toMatchSnapshot()
+  })
 })

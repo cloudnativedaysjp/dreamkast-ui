@@ -26,6 +26,9 @@ import { settingsSelector } from '../../store/settings'
 import { useSelector } from 'react-redux'
 import { PrivateCtx } from '../../context/private'
 import { RootState } from '../../store'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   event: Event
@@ -114,7 +117,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
   const [checked, setChecked] = useState<boolean>(true)
   const [isVisibleForm, setIsVisibleForm] = useState<boolean>(true)
   const { getPointEventId } = useContext(PrivateCtx)
-  const settings = useSelector(settingsSelector)
+  const { profile } = useSelector(settingsSelector)
 
   const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
     {
@@ -161,6 +164,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
+      'aria-labelledby': `simple-tabpanel-${index}`,
     }
   }
 
@@ -227,9 +231,9 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
           return
         }
         await postPointEvent({
-          profileId: `${settings.profile.id}`,
+          profileId: `${profile.id}`,
           profilePoint: {
-            conference: settings.eventAbbr,
+            conference: event.abbr,
             pointEventId: chatPointEventId,
           },
         }).unwrap()
@@ -259,7 +263,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
           <Styled.Tab label="Chat / QA" value="0" {...a11yProps(0)} />
           <Styled.Tab label="QA Only" value="1" {...a11yProps(1)} />
         </Styled.TabContainer>
-        <Styled.TabPanel value="0">
+        <Styled.TabPanel value="0" {...a11yProps(0)}>
           <ChatBox
             event={event}
             talk={talk}
@@ -272,7 +276,7 @@ export const Chat: React.FC<Props> = ({ event, talk }) => {
             onClickCloseButton={onClickCloseButton}
           />
         </Styled.TabPanel>
-        <Styled.TabPanel value="1">
+        <Styled.TabPanel value="1" {...a11yProps(1)}>
           <ChatBox
             event={event}
             talk={talk}

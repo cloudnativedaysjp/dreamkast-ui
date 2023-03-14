@@ -1,104 +1,69 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import * as Styled from './styled'
 import { Checkbox } from '@material-ui/core'
 import dayjs from 'dayjs'
 import { Talk } from '../../generated/dreamkast-api.generated'
+import { setupDayjs } from '../../util/setupDayjs'
+
+setupDayjs()
 
 type Props = {
   selectedTrackId?: number
-  selectedTalk?: Talk
+  selectedTalkId?: number
   talks: Talk[]
   isLiveMode?: boolean
-  selectTalk: (talk: Talk) => void
+  selectTalk: (talkId: number) => void
   changeLiveMode: (mode: boolean) => void
   small?: boolean
 }
 
-interface TalkWithAvailable extends Talk {
-  available: boolean
+export const TalkSelector: React.FC<Props> = (props) => {
+  const [now, setNow] = useState<number>(dayjs().unix())
+
+  useEffect(() => {
+    if (!process.browser) return
+    const id = window.setInterval(() => {
+      setNow(dayjs().unix())
+    }, 1000)
+    return window.clearInterval(id)
+  }, [])
+
+  return <PTalkSelector {...props} now={now}></PTalkSelector>
 }
 
-const isAvailable = (
-  now: number,
-  startTime: string,
-  conferanceDayDate?: string | null,
-) => {
-  if (!conferanceDayDate) return true
-  const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
-  return now - dayjs(startDate).unix() >= 0
-}
-
-export const TalkSelector: React.FC<Props> = ({
+export const PTalkSelector: React.FC<Props & { now: number }> = ({
   selectedTrackId,
-  selectedTalk,
+  selectedTalkId,
   talks,
   isLiveMode,
   selectTalk,
   changeLiveMode,
   small = false,
+  now,
 }) => {
-  const [talksWithAvailableState, setTalksWithAvailableState] = useState<
-    TalkWithAvailable[]
-  >([])
-  const [now, setNow] = useState<number>(dayjs().unix())
-  const [id, setId] = useState<number>()
-
-  useEffect(() => {
-    if (!process.browser) return
-    setId(
-      window.setInterval(() => {
-        setNow(dayjs().unix())
-      }, 1000),
-    )
-    return window.clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    const filteredTalks = sortTalks(talks).filter((talk) => {
-      return talk.showOnTimetable
-    })
-    setTalksWithAvailableState(
-      filteredTalks.map((talk) => {
-        return {
-          ...talk,
-          available: isAvailable(now, talk.startTime, talk.conferenceDayDate),
-        }
-      }),
-    )
-  }, [talks, now])
-
-  const sortTalks = (talks: Talk[]): Talk[] => {
-    return [...talks].sort((n1, n2) => {
-      if (n1.startTime > n2.startTime) {
-        return 1
-      }
-
-      if (n1.startTime < n2.startTime) {
-        return -1
-      }
-
-      return 0
-    })
-  }
+  const availableTalks = useMemo(
+    () => extractAvailableTalks(talks, now),
+    [talks, now],
+  )
 
   return (
     <Styled.Container>
       <Styled.Title>このトラックのセッション</Styled.Title>
       <Styled.List height={small ? 350 : 497}>
-        {talksWithAvailableState.map((talk) => {
+        {availableTalks.map((talk) => {
           if (talk.trackId == selectedTrackId) {
             return (
               <Styled.Item
                 button
                 key={talk.id}
                 disabled={!talk.available}
-                selected={talk.id === selectedTalk?.id}
-                onClick={() => selectTalk(talk)}
+                selected={talk.id === selectedTalkId}
+                onClick={() => selectTalk(talk.id)}
               >
                 <Styled.Text>
                   {talk.onAir && <Styled.Live>LIVE</Styled.Live>}{' '}
-                  {dayjs(talk.startTime).format('HH:mm')}-
-                  {dayjs(talk.endTime).format('HH:mm')}
+                  {dayjs(talk.startTime).tz().format('HH:mm')}-
+                  {dayjs(talk.endTime).tz().format('HH:mm')}
                   <br />
                   {talk.title}
                 </Styled.Text>
@@ -117,4 +82,33 @@ export const TalkSelector: React.FC<Props> = ({
       </Styled.Footer>
     </Styled.Container>
   )
+}
+
+type TalkWithAvailable = Talk & {
+  available: boolean
+}
+
+export const extractAvailableTalks = (
+  talks: Talk[],
+  now: number,
+): TalkWithAvailable[] => {
+  return [...talks]
+    .sort((n1, n2) => dayjs(n1.startTime).unix() - dayjs(n2.startTime).unix())
+    .filter((talk) => talk.showOnTimetable)
+    .map((talk) => {
+      return {
+        ...talk,
+        available: isAvailable(now, talk.startTime, talk.conferenceDayDate),
+      }
+    })
+}
+
+const isAvailable = (
+  now: number,
+  startTime: string,
+  conferanceDayDate?: string | null,
+) => {
+  if (!conferanceDayDate) return true // okui: これであってる？
+  const startDate = `${conferanceDayDate} ${dayjs(startTime).format('HH:mm')}`
+  return now - dayjs(startDate).unix() >= 0
 }

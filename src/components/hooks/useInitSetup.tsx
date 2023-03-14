@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import {
   loadFromStorage,
@@ -12,18 +11,12 @@ import {
   useGetApiV1EventsByEventAbbrQuery,
 } from '../../generated/dreamkast-api.generated'
 
-export const useInitSetup = () => {
-  const router = useRouter()
+export const useInitSetup = (eventAbbr: string) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(loadFromStorage())
   }, [])
-
-  const eventAbbr = useMemo<string>(() => {
-    const { eventAbbr } = router.query
-    return router.isReady ? (eventAbbr as string) : ''
-  }, [router.isReady])
 
   useEffect(() => {
     dispatch(setEventAbbr(eventAbbr))
@@ -50,7 +43,6 @@ export const useInitSetup = () => {
   }, [myProfileQuery.data])
 
   return {
-    eventAbbr,
     event: eventQuery.data,
     profile: myProfileQuery.data,
   }
