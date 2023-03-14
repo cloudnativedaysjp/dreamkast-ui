@@ -84,7 +84,7 @@ export const TrailMapPointContainer = styled.div`
 
 export const StampCardContainer = styled.div`
   width: 100%;
-  padding-top: 40%;
+  padding-top: 23.6%;
   height: 0;
   position: relative;
   .suspend {
@@ -113,8 +113,8 @@ export const StampFrame = styled.div<{ top: string; left: string }>`
   background-color: rgba(239, 235, 233, 0.9);
   top: ${(props) => props.top};
   left: ${(props) => props.left};
-  width: 10%;
-  padding-top: 10%;
+  width: 12.5%;
+  padding-top: 12.5%;
   position: absolute;
   z-index: 20;
 `

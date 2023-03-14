@@ -18,7 +18,6 @@ import { useDispatch } from 'react-redux'
 import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
-import { AuthProvider, useAccessToken } from '../context/auth'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -41,11 +40,6 @@ const AppComponent: any = ({ children }: PropsWithChildren) => {
       jssStyles.parentNode.removeChild(jssStyles)
     }
   }, [])
-
-  const token = useAccessToken()
-  if (!token) {
-    return <></>
-  }
 
   return (
     <>
@@ -81,13 +75,11 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
 
   return (
     <>
-      <AuthProvider env={env}>
-        <PrivateCtxProvider env={env}>
-          <AppComponent>
-            <Component {...pageProps} />
-          </AppComponent>
-        </PrivateCtxProvider>
-      </AuthProvider>
+      <PrivateCtxProvider env={env}>
+        <AppComponent>
+          <Component {...pageProps} />
+        </AppComponent>
+      </PrivateCtxProvider>
     </>
   )
 }

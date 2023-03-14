@@ -16,7 +16,7 @@ export const TrailMap = () => {
     <Styled.Container>
       <Styled.InnerContainer>
         <Styled.TrailMapHeader
-          src={`/cndt2022/ui/trailmap_header.jpg`}
+          src={`/cicd2023/ui/trailmap_header.jpg`}
         ></Styled.TrailMapHeader>
         <TrailMapPoint
           isLoading={!pointDataInitialized}

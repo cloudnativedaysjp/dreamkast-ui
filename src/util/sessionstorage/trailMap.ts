@@ -29,52 +29,10 @@ export function makeTrackResolveMap(genFn: (eventNum: number) => string) {
   }, {} as Record<string, number>)
 }
 
-export type QRCodeRequestResult = 'ok' | 'skipped' | 'invalid' | 'error'
-const keyQRCodeStampResult = 'qrCodeStampResult'
-const keyTrailMapOpenNext = 'trailMapOpenNext'
 const keyGotChatPoint = 'gotChatPoint'
 const keyAllStampCollected = 'allStampCollected'
-
-export const setQRCodeStampResult = (res: QRCodeRequestResult) => {
-  if (isStorageAvailable('sessionStorage')) {
-    sessionStorage.setItem(keyQRCodeStampResult, res)
-  }
-}
-
-export const clearQRCodeStampResult = () => {
-  if (isStorageAvailable('sessionStorage')) {
-    sessionStorage.removeItem(keyQRCodeStampResult)
-  }
-}
-
-export const getQRCodeStampResult = (): QRCodeRequestResult | null => {
-  if (isStorageAvailable('sessionStorage')) {
-    const res = sessionStorage.getItem(keyQRCodeStampResult)
-    if (res === 'ok' || res === 'skipped' || res === 'invalid' || res == null) {
-      return res
-    }
-  }
-  return 'error'
-}
-
-export const setTrailMapOpenNext = () => {
-  if (isStorageAvailable('sessionStorage')) {
-    sessionStorage.setItem(keyTrailMapOpenNext, 'y')
-  }
-}
-
-export const clearTrailMapOpenNext = () => {
-  if (isStorageAvailable('sessionStorage')) {
-    sessionStorage.removeItem(keyTrailMapOpenNext)
-  }
-}
-
-export const getTrailMapOpenNext = (): boolean => {
-  if (isStorageAvailable('sessionStorage')) {
-    return !!sessionStorage.getItem(keyTrailMapOpenNext)
-  }
-  return false
-}
+const keyPointEventId = 'pointEventId'
+const keySessionPointEventId = 'sessionPointEventId'
 
 export const setGotChatPoint = (slotId: number) => {
   if (isStorageAvailable('sessionStorage')) {
@@ -100,4 +58,42 @@ export const getAllStampCollected = (): boolean => {
     return !!sessionStorage.getItem(keyAllStampCollected)
   }
   return false
+}
+
+export const setPointEventId = (key: string) => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keyPointEventId, key)
+  }
+}
+
+export const clearPointEventId = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keyPointEventId)
+  }
+}
+
+export const getPointEventId = (): string | null => {
+  if (isStorageAvailable('sessionStorage')) {
+    return sessionStorage.getItem(keyPointEventId)
+  }
+  return null
+}
+
+export const setSessionPointEventId = (key: string) => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.setItem(keySessionPointEventId, key)
+  }
+}
+
+export const clearSessionPointEventId = () => {
+  if (isStorageAvailable('sessionStorage')) {
+    sessionStorage.removeItem(keySessionPointEventId)
+  }
+}
+
+export const getSessionPointEventId = (): string | null => {
+  if (isStorageAvailable('sessionStorage')) {
+    return sessionStorage.getItem(keySessionPointEventId)
+  }
+  return null
 }

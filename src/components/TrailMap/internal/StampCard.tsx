@@ -6,6 +6,10 @@ import { Skeleton } from '@material-ui/lab'
 import { useAddStampIfSatisfied } from '../hooks'
 import { DkUiData } from '../../../generated/dreamkast-api.generated'
 import { stampLocation } from './const'
+import { useImgPreload } from '../../common/PreloadedImg'
+
+const imgStampBg = `/cicd2023/ui/stamp_bg.jpg`
+const imgStamp = `/cicd2023/ui/cicd2023_stamp.png`
 
 export const StampCard = () => {
   const { appDataInitialized } = useSelector(appDataSelector)
@@ -25,6 +29,9 @@ export const StampCard = () => {
     }
     setPinnedStamps(stamps)
   }, [stamps, pinnedStamps])
+
+  useImgPreload(imgStampBg)
+  useImgPreload(imgStamp)
 
   if (!pinnedStamps) {
     return (
@@ -64,18 +71,16 @@ export const PStampCard = ({
   return (
     <>
       <Styled.StampCardContainer>
-        <Styled.StampCard src={`/cndt2022/ui/stamp_bg.jpg`}></Styled.StampCard>
+        <Styled.StampCard src={imgStampBg}></Styled.StampCard>
         {stampLocation.map((loc, i) => (
           <Styled.StampFrame key={i} top={`${loc.top}%`} left={`${loc.left}%`}>
             {showStampWithoutEffect(i) && (
-              <Styled.Stamp
-                src={`/cndt2022/ui/cndt2022_stamp.png`}
-              ></Styled.Stamp>
+              <Styled.Stamp src={imgStamp}></Styled.Stamp>
             )}
             {showStampWithEffect(i) && (
               <Styled.Stamp
                 className={'showAnimation'}
-                src={`/cndt2022/ui/cndt2022_stamp.png`}
+                src={imgStamp}
               ></Styled.Stamp>
             )}
           </Styled.StampFrame>

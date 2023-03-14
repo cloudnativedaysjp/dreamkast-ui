@@ -5,10 +5,12 @@ import { createHash } from 'crypto'
 interface PrivateCtxType {
   // TODO add other env vars if needed
   getPointEventId: (eventNum: number) => string
+  env: typeof ENV
 }
 
 export const PrivateCtx = createContext<PrivateCtxType>({
   getPointEventId: () => '',
+  env: {} as typeof ENV,
 })
 
 type Props = {
@@ -24,7 +26,22 @@ export const PrivateCtxProvider = (props: PropsWithChildren<Props>) => {
 
   const ctx: PrivateCtxType = {
     getPointEventId,
+    env: props.env,
   }
 
   return <PrivateCtx.Provider value={ctx}>{props.children}</PrivateCtx.Provider>
+}
+
+export const TestPrivateCtxProvider = (
+  props: PropsWithChildren<{
+    getPointEventId: () => ''
+  }>,
+) => {
+  return (
+    <PrivateCtx.Provider
+      value={{ getPointEventId: props.getPointEventId, env: ENV }}
+    >
+      {props.children}
+    </PrivateCtx.Provider>
+  )
 }

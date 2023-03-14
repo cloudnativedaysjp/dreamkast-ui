@@ -1,7 +1,6 @@
 import React from 'react'
 import * as Styled from '../styled'
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -10,30 +9,46 @@ import {
   TableRow,
 } from '@material-ui/core'
 import { ProfilePointsResponse } from '../../../generated/dreamkast-api.generated'
+import { createStyles, withStyles } from '@material-ui/styles'
 
 type Props = {
   pointData: ProfilePointsResponse
 }
 
+const StyledTableCell = withStyles(() =>
+  createStyles({
+    head: {
+      backgroundColor: '#efebe9',
+    },
+    body: {
+      backgroundColor: '#efebe9',
+    },
+  }),
+)(TableCell)
+
 export const TrailMapPointHistory = ({ pointData }: Props) => {
+  if (pointData.points.length === 0) {
+    return <div></div>
+  }
+
   return (
     <Styled.PointHistoryTable>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table aria-label="event-history" size="small">
           <TableHead>
             <TableRow>
-              <TableCell>獲得ポイント</TableCell>
-              <TableCell>達成条件</TableCell>
+              <StyledTableCell>獲得ポイント</StyledTableCell>
+              <StyledTableCell>達成条件</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {pointData.points.map((p) => {
               return (
                 <TableRow key={p.pointEventId}>
-                  <TableCell component="th" scope="row">
+                  <StyledTableCell component="th" scope="row">
                     {p.point}pt
-                  </TableCell>
-                  <TableCell>{p.desc}</TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell>{p.desc}</StyledTableCell>
                 </TableRow>
               )
             })}

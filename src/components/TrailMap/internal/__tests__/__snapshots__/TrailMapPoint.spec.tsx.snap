@@ -3,6 +3,31 @@
 exports[`TrailMapPoint should render loading skeleton 1`] = `
 <DocumentFragment>
   <div
+    class="styled__TrailMapPointContainer-sc-1t1auio-5 eZNYKX"
+  >
+    <div
+      class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
+    >
+      <div
+        class="suspend"
+      >
+        <span
+          class="MuiSkeleton-root MuiSkeleton-rect skeleton MuiSkeleton-wave"
+        />
+      </div>
+    </div>
+    <div
+      class="point"
+    >
+      20pt
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TrailMapPoint should render loading skeleton 2`] = `
+<DocumentFragment>
+  <div
     class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
   >
     <div
@@ -16,19 +41,17 @@ exports[`TrailMapPoint should render loading skeleton 1`] = `
 </DocumentFragment>
 `;
 
-exports[`TrailMapPoint should render without crash 1`] = `
+exports[`TrailMapPoint should render loading skeleton when loading pointData 1`] = `
 <DocumentFragment>
   <div
-    class="styled__TrailMapPointContainer-sc-1t1auio-5 eZNYKX"
+    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
   >
-    <img
-      alt="Trail Mapの3合目"
-      src="/cndt2022/ui/trailmap_25.jpg"
-    />
     <div
-      class="point"
+      class="suspend"
     >
-      20pt
+      <span
+        class="MuiSkeleton-root MuiSkeleton-rect skeleton MuiSkeleton-wave"
+      />
     </div>
   </div>
 </DocumentFragment>

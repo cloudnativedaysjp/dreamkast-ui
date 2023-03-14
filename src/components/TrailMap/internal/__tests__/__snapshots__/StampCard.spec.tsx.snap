@@ -3,106 +3,58 @@
 exports[`PStampCard should render when all stamped 1`] = `
 <DocumentFragment>
   <div
-    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+    class="styled__StampCardContainer-sc-1t1auio-6 VGgex"
   >
     <img
       class="styled__StampCard-sc-1t1auio-7 jeBhwm"
-      src="/cndt2022/ui/stamp_bg.jpg"
+      src="/cicd2023/ui/stamp_bg.jpg"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+      class="styled__StampFrame-sc-1t1auio-8 htipaU"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+      class="styled__StampFrame-sc-1t1auio-8 bATKRm"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+      class="styled__StampFrame-sc-1t1auio-8 cgNZFZ"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+      class="styled__StampFrame-sc-1t1auio-8 caRSaT"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+      class="styled__StampFrame-sc-1t1auio-8 jbvwfG"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
+      class="styled__StampFrame-sc-1t1auio-8 kdXKwo"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 howXrK"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
   </div>
@@ -112,47 +64,29 @@ exports[`PStampCard should render when all stamped 1`] = `
 exports[`PStampCard should render when not stamped at all 1`] = `
 <DocumentFragment>
   <div
-    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+    class="styled__StampCardContainer-sc-1t1auio-6 VGgex"
   >
     <img
       class="styled__StampCard-sc-1t1auio-7 jeBhwm"
-      src="/cndt2022/ui/stamp_bg.jpg"
+      src="/cicd2023/ui/stamp_bg.jpg"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+      class="styled__StampFrame-sc-1t1auio-8 htipaU"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+      class="styled__StampFrame-sc-1t1auio-8 bATKRm"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+      class="styled__StampFrame-sc-1t1auio-8 cgNZFZ"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+      class="styled__StampFrame-sc-1t1auio-8 caRSaT"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+      class="styled__StampFrame-sc-1t1auio-8 jbvwfG"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 howXrK"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
+      class="styled__StampFrame-sc-1t1auio-8 kdXKwo"
     />
   </div>
 </DocumentFragment>
@@ -161,82 +95,44 @@ exports[`PStampCard should render when not stamped at all 1`] = `
 exports[`PStampCard should render without crash 1`] = `
 <DocumentFragment>
   <div
-    class="styled__StampCardContainer-sc-1t1auio-6 dckGCQ"
+    class="styled__StampCardContainer-sc-1t1auio-6 VGgex"
   >
     <img
       class="styled__StampCard-sc-1t1auio-7 jeBhwm"
-      src="/cndt2022/ui/stamp_bg.jpg"
+      src="/cicd2023/ui/stamp_bg.jpg"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 bBcLey"
+      class="styled__StampFrame-sc-1t1auio-8 htipaU"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 fFnIhJ"
+      class="styled__StampFrame-sc-1t1auio-8 bATKRm"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 eTcpQt"
+      class="styled__StampFrame-sc-1t1auio-8 cgNZFZ"
     >
       <img
         class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
+        src="/cicd2023/ui/cicd2023_stamp.png"
       />
     </div>
     <div
-      class="styled__StampFrame-sc-1t1auio-8 keEwTe"
+      class="styled__StampFrame-sc-1t1auio-8 caRSaT"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 hMXbzk"
+      class="styled__StampFrame-sc-1t1auio-8 jbvwfG"
     />
     <div
-      class="styled__StampFrame-sc-1t1auio-8 cUaiGL"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bizPhc"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 kiJtkX"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hOsQfP"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 hokQkM"
-    >
-      <img
-        class="styled__Stamp-sc-1t1auio-9 hKSnww showAnimation"
-        src="/cndt2022/ui/cndt2022_stamp.png"
-      />
-    </div>
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 howXrK"
-    />
-    <div
-      class="styled__StampFrame-sc-1t1auio-8 bFrRyt"
+      class="styled__StampFrame-sc-1t1auio-8 kdXKwo"
     />
   </div>
 </DocumentFragment>

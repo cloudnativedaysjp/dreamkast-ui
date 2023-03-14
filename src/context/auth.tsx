@@ -1,15 +1,22 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react'
-import { ENV } from '../config'
+import React, {
+  PropsWithChildren,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUser } from '../store/auth'
 import { authSelector } from '../store/auth'
+import { PrivateCtx } from './private'
 
-type Props = {
-  env: typeof ENV
+export const withAuthProvider = (content: ReactNode) => {
+  return <AuthProvider>{content}</AuthProvider>
 }
 
-export const AuthProvider = ({ env, children }: PropsWithChildren<Props>) => {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
+  const { env } = useContext(PrivateCtx)
   const [baseUrl, setBaseUrl] = useState('')
 
   useEffect(() => {
@@ -33,13 +40,22 @@ export const AuthProvider = ({ env, children }: PropsWithChildren<Props>) => {
         redirectUri={baseUrl}
         audience={env.NEXT_PUBLIC_AUTH0_AUDIENCE}
       >
-        {children}
+        <AccessTokenResolver>{children}</AccessTokenResolver>
       </Auth0Provider>
     </>
   )
 }
 
-export const useAccessToken = () => {
+const AccessTokenResolver = ({ children }: PropsWithChildren) => {
+  const token = useAccessToken()
+  if (!token || !children) {
+    return <></>
+  }
+  console.warn('token:', token)
+  return <>{children}</>
+}
+
+const useAccessToken = () => {
   const [_, setError] = useState()
   const dispatch = useDispatch()
 

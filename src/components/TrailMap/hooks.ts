@@ -3,16 +3,18 @@ import {
   settingsInitializedSelector,
   settingsSelector,
 } from '../../store/settings'
-import { useStamps } from '../../store/appData'
+import {
+  setStampAddedByQRCode,
+  stampAddedByQRCodeSelector,
+  useStamps,
+} from '../../store/appData'
 import {
   usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
 } from '../../generated/dreamkast-api.generated'
 import {
-  clearQRCodeStampResult,
   getAllStampCollected,
   getAllStampCompEventNum,
-  getQRCodeStampResult,
   getSessionEventNum,
   setAllStampCollected,
 } from '../../util/sessionstorage/trailMap'
@@ -47,7 +49,7 @@ export const useStampCompleteBonus = () => {
       .catch((err) => {
         console.error(err)
       })
-  }, [])
+  }, [stamps.length])
 
   return
 }
@@ -56,6 +58,7 @@ export const useAddStampIfSatisfied = () => {
   const { getPointEventId } = useContext(PrivateCtx)
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
+  const isStampAddedByQRCode = useSelector(stampAddedByQRCodeSelector)
   const { canGetNewStamp, slotIdToBeStamped } = useStamps()
 
   const [addedByQRCode, setAddedByQRCode] = useState<boolean>(false)
@@ -66,18 +69,12 @@ export const useAddStampIfSatisfied = () => {
 
   // get stamp by offline user via QR code
   useEffect(() => {
-    const res = getQRCodeStampResult()
-    if (!res) {
-      return
-    } else if (res === 'ok') {
+    if (isStampAddedByQRCode) {
       setAddedNew(true)
       setAddedByQRCode(true)
-    } else {
-      // TODO show error info
-      console.error(`unexpected result: ${res}`)
     }
-    clearQRCodeStampResult()
-  }, [])
+    setStampAddedByQRCode(false)
+  }, [isStampAddedByQRCode])
 
   // get stamp by online user
   useEffect(() => {
