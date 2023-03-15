@@ -45,7 +45,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   useKarteTracking()
   useTrailMapTracking()
   useLiveTalkUpdate(event.abbr, () => {
-    refetch() // onAirの切り替わった新しいTalk一覧を取得
+    // refetch() // onAirの切り替わった新しいTalk一覧を取得
   })
   const isSmallerThanMd = useSizeChecker()
 

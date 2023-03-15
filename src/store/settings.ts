@@ -23,6 +23,11 @@ type ConfDay = {
   internal?: boolean | undefined
 }
 
+type OnAirTalk = {
+  talk_id: number
+  [k: string]: any
+}
+
 type SettingsState = {
   // カンファレンスイベント
   eventAbbr: string
@@ -138,7 +143,40 @@ const settingsSlice = createSlice({
         state.isLiveMode = false
       }
     },
-    liveTalkUpdate: (s, action: PayloadAction<{ [trackId: number]: Talk }>) => {
+    patchTalksOnAir: (
+      s,
+      action: PayloadAction<{ [trackId: number]: Talk }>,
+    ) => {
+      const nextTalks = action.payload
+
+      s.tracks.forEach((t) => {
+        const nextTalk = nextTalks[t.id]
+        if (!nextTalk) {
+          return
+        }
+        // Track.onAirTalk内のtalk_id以外の値は使っていない（openapiにも型定義がなく、極力依存すべきでない）
+        // このため、talk_id以外は更新対象外とし、live talk一覧を描画するのに必要なtalk_idのみ更新する
+        t.onAirTalk = {
+          talk_id: nextTalk.id,
+        } as OnAirTalk
+      })
+
+      s.talks.forEach((t) => {
+        t.onAir = false
+
+        const nextTalk = nextTalks[t.trackId]
+        if (nextTalk?.id !== t.id) {
+          return
+        }
+        if (nextTalk?.onAir) {
+          t.onAir = nextTalk.onAir
+        }
+      })
+    },
+    liveTalkUpdate: (
+      s,
+      action: PayloadAction<{ [trackId: number]: Talk }>,
+    ) => {
       const nextTalks = action.payload
       if (!s.isLiveMode) {
         return
@@ -147,7 +185,11 @@ const settingsSlice = createSlice({
         return
       }
       const nextTalk = nextTalks[s.viewTrackId]
-      if (nextTalk?.trackId !== s.viewTrackId) {
+      if (!nextTalk) {
+        // no live talk
+        return
+      }
+      if (nextTalk.trackId !== s.viewTrackId) {
         console.warn('trackId mismatched: something wrong with backend')
         return
       }
@@ -224,6 +266,7 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
+  patchTalksOnAir,
   liveTalkUpdate,
 } = settingsSlice.actions
 
@@ -300,8 +343,8 @@ export const useTracks = () => {
     if (!tr.onAirTalk) {
       return res
     }
-    const talkId = (tr.onAirTalk as { talk_id: string }).talk_id
-    const talk = talks.find((t) => t.id === parseInt(talkId))
+    const talkId = (tr.onAirTalk as OnAirTalk).talk_id
+    const talk = talks.find((t) => t.id === talkId)
     if (talk) {
       res.talk = talk
     }
