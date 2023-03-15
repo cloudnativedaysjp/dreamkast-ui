@@ -23,7 +23,7 @@ type ConfDay = {
   internal?: boolean | undefined
 }
 
-type OnAirTalk = {
+export type OnAirTalk = {
   talk_id: number
   [k: string]: any
 }
@@ -152,6 +152,7 @@ const settingsSlice = createSlice({
       s.tracks.forEach((t) => {
         const nextTalk = nextTalks[t.id]
         if (!nextTalk) {
+          t.onAirTalk = null
           return
         }
         // Track.onAirTalk内のtalk_id以外の値は使っていない（openapiにも型定義がなく、極力依存すべきでない）

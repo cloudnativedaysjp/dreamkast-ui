@@ -12,6 +12,8 @@ import {
   useSelectedTrack,
   useTracks,
   videoIdSelector,
+  patchTalksOnAir,
+  OnAirTalk,
 } from '../settings'
 import {
   MockTalkA1,
@@ -535,5 +537,69 @@ describe('action:updateViewTalkWithLiveOne', () => {
       viewTalkId: 0,
     }
     expect(got).toStrictEqual(want)
+  })
+})
+
+describe('action:patchTalksOnAir', () => {
+  it('should update onAir status of talks and tracks', () => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+
+    const onAir = (t: Talk) => {
+      t.onAir = true
+      return t
+    }
+
+    const nextTalks = {
+      [MockTrackA().id]: onAir(MockTalkA2()),
+      [MockTrackB().id]: onAir(MockTalkB1()),
+    }
+    store.dispatch(patchTalksOnAir(nextTalks))
+
+    const { settings } = store.getState()
+    const got = {
+      talkPrevOnAirA: settings.talks.find((t) => t.id === MockTalkA1().id),
+      talkNowOnAirA: settings.talks.find((t) => t.id === MockTalkA2().id),
+      talkNowOnAirB: settings.talks.find((t) => t.id === MockTalkB1().id),
+      onAirTalkOnTrackA: settings.tracks.find((t) => t.id === MockTrackA().id)!
+        .onAirTalk as OnAirTalk | null,
+      onAirTalkOnTrackB: settings.tracks.find((t) => t.id === MockTrackB().id)!
+        .onAirTalk as OnAirTalk | null,
+      onAirTalkOnTrackC: settings.tracks.find((t) => t.id === MockTrackC().id)!
+        .onAirTalk as OnAirTalk | null,
+    }
+
+    expect(got.talkPrevOnAirA!.onAir).toBeFalsy()
+    expect(got.talkNowOnAirA!.onAir).toBeTruthy()
+    expect(got.talkNowOnAirB!.onAir).toBeTruthy()
+    expect(got.onAirTalkOnTrackA!.talk_id).toBe(MockTalkA2().id)
+    expect(got.onAirTalkOnTrackB!.talk_id).toBe(MockTalkB1().id)
+    expect(got.onAirTalkOnTrackC).toBeNull()
+  })
+
+  it('should update onAir all statuses of talks and tracks to false when no next talks given', () => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+
+    const nextTalks = {}
+    store.dispatch(patchTalksOnAir(nextTalks))
+
+    const { settings } = store.getState()
+    const got = {
+      talkPrevOnAirA: settings.talks.find((t) => t.id === MockTalkA1().id),
+      onAirTalkOnTrackA: settings.tracks.find((t) => t.id === MockTrackA().id)!
+        .onAirTalk as OnAirTalk | null,
+      onAirTalkOnTrackB: settings.tracks.find((t) => t.id === MockTrackB().id)!
+        .onAirTalk as OnAirTalk | null,
+      onAirTalkOnTrackC: settings.tracks.find((t) => t.id === MockTrackC().id)!
+        .onAirTalk as OnAirTalk | null,
+    }
+
+    expect(got.talkPrevOnAirA!.onAir).toBeFalsy()
+    expect(got.onAirTalkOnTrackA).toBeNull()
+    expect(got.onAirTalkOnTrackB).toBeNull()
+    expect(got.onAirTalkOnTrackC).toBeNull()
   })
 })
