@@ -24,6 +24,7 @@ import {
   useSizeChecker,
   useTrailMapTracking,
 } from '../TrackSelector/hooks'
+import { useRunAfter } from '../hooks/useRunAfter'
 
 type Props = {
   event: Event
@@ -36,6 +37,14 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const dispatch = useDispatch()
   const { track: selectedTrack, talks } = useSelectedTrack()
   const { talk: selectedTalk } = useSelectedTalk()
+  const { run: lazyRefetch } = useRunAfter(
+    refetch,
+    // 1つ目のtalkの切り替わりが発生してから、270s~330s経過してからtrackとtalkをまとめて最新化する。
+    // - live talkの切り替わりはactioncableのeventで行われるが、time offsetの更新などは反映されないため、talkとtrackを取り直すことで最新化する
+    // - 各trackのlive talk更新タイミングにばらつきがあるため、5分程度待ち全てのtrackのlive talkの更新が完了してからfetchする
+    // - 全クライアントが一斉にrequestするのを避けるために、ランダムオフセットを与えてタイミングをばらつかせる
+    (270 + 60 * Math.random()) * 1000,
+  )
 
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
@@ -45,7 +54,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   useKarteTracking()
   useTrailMapTracking()
   useLiveTalkUpdate(event.abbr, () => {
-    // refetch() // onAirの切り替わった新しいTalk一覧を取得
+    lazyRefetch()
   })
   const isSmallerThanMd = useSizeChecker()
 
