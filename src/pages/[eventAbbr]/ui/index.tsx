@@ -23,6 +23,8 @@ const IndexMain = () => {
   const { eventAbbr } = useRouterQuery()
   const { event } = useInitSetup(eventAbbr)
   const { refetch } = useGetTalksAndTracks()
+
+  // NOTE: TrailMapが不要になったら、以下の3つとpointEventSavingのガードをコメントアウトすればよい
   usePostPointEvent()
   usePostSessionPointEvent()
   useAppDataSetup()

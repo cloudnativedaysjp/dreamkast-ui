@@ -5,8 +5,9 @@ import {
   useSelectedTrack,
   settingsInitializedSelector,
   settingsSelector,
-  liveTalkUpdate,
+  updateViewTalkWithLiveOne,
   isLiveModeSelector,
+  patchTalksOnAir,
 } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
@@ -116,9 +117,10 @@ export const useLiveTalkUpdate = (eventAbbr: string, fn: () => void) => {
     cable.subscriptions.create(
       { channel: 'OnAirChannel', eventAbbr: eventAbbr },
       {
-        received: (nextTalk: { [trackId: number]: Talk }) => {
+        received: (nextTalks: { [trackId: number]: Talk }) => {
           fn()
-          dispatch(liveTalkUpdate(nextTalk))
+          dispatch(updateViewTalkWithLiveOne(nextTalks))
+          dispatch(patchTalksOnAir(nextTalks))
         },
       },
     )
