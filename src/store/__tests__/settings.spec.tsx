@@ -1,7 +1,7 @@
 import React from 'react'
 import { renderWithProviders, setupStore } from '../../testhelper/store'
 import {
-  liveTalkUpdate,
+  updateViewTalkWithLiveOne,
   setInitialViewTalk,
   setIsLiveMode,
   setTalks,
@@ -471,7 +471,7 @@ describe('action:setInitialViewTalk', () => {
   })
 })
 
-describe('action:liveTalkUpdate', () => {
+describe('action:updateViewTalkWithLiveOne', () => {
   it('should set next talkId', () => {
     const store = setupStore()
     store.dispatch(setTalks(MockTalks()))
@@ -483,7 +483,7 @@ describe('action:liveTalkUpdate', () => {
     const nextTalks = {
       [MockTrackA().id]: MockTalkA2(),
     }
-    store.dispatch(liveTalkUpdate(nextTalks))
+    store.dispatch(updateViewTalkWithLiveOne(nextTalks))
 
     const got = {
       viewTalkId: store.getState().settings.viewTalkId,
@@ -505,7 +505,7 @@ describe('action:liveTalkUpdate', () => {
     const nextTalks = {
       [MockTrackA().id]: MockTalkA2(),
     }
-    store.dispatch(liveTalkUpdate(nextTalks))
+    store.dispatch(updateViewTalkWithLiveOne(nextTalks))
 
     const got = {
       viewTalkId: store.getState().settings.viewTalkId,
@@ -526,7 +526,7 @@ describe('action:liveTalkUpdate', () => {
     const nextTalks = {
       [MockTrackA().id]: MockTalkA2(),
     }
-    store.dispatch(liveTalkUpdate(nextTalks))
+    store.dispatch(updateViewTalkWithLiveOne(nextTalks))
 
     const got = {
       viewTalkId: store.getState().settings.viewTalkId,

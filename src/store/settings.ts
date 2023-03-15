@@ -173,7 +173,7 @@ const settingsSlice = createSlice({
         }
       })
     },
-    liveTalkUpdate: (
+    updateViewTalkWithLiveOne: (
       s,
       action: PayloadAction<{ [trackId: number]: Talk }>,
     ) => {
@@ -267,7 +267,7 @@ export const {
   setInitialViewTalk,
   setIsLiveMode,
   patchTalksOnAir,
-  liveTalkUpdate,
+  updateViewTalkWithLiveOne,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings

@@ -5,7 +5,7 @@ import {
   useSelectedTrack,
   settingsInitializedSelector,
   settingsSelector,
-  liveTalkUpdate,
+  updateViewTalkWithLiveOne,
   isLiveModeSelector,
   patchTalksOnAir,
 } from '../../store/settings'
@@ -119,7 +119,7 @@ export const useLiveTalkUpdate = (eventAbbr: string, fn: () => void) => {
       {
         received: (nextTalks: { [trackId: number]: Talk }) => {
           fn()
-          dispatch(liveTalkUpdate(nextTalks))
+          dispatch(updateViewTalkWithLiveOne(nextTalks))
           dispatch(patchTalksOnAir(nextTalks))
         },
       },
