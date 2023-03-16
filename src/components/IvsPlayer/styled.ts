@@ -54,8 +54,9 @@ export const PlayerButton = styled.button`
 
 export const TextContainer = styled.div`
   width: 80%;
-  padding-bottom: 28px;
   max-width: 36em;
+  font-size: 1.3em;
+  font-weight: bold;
 `
 
 export const NextTitle = styled.div`

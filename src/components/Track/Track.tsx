@@ -87,7 +87,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
       >
         <Grid item xs={12} md={8}>
           <IvsPlayer
-            playBackUrl={videoCommand.playBackUrl}
+            videoCommand={videoCommand}
             showVideoToggle={
               isSmallerThanMd && settings.profile.isAttendOffline
             }

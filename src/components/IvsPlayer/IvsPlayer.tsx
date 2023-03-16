@@ -5,24 +5,58 @@ import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { VideoToggleButton } from '../common/VideoToggleButton'
 import { IvsPlayerVideo } from './IvsPlayerVideo'
+import { VideoCommand } from '../../store/settings'
 
 type Props = {
-  playBackUrl?: string | null
+  videoCommand: VideoCommand
   showVideoToggle?: boolean
 }
 
 export const IvsPlayer: React.FC<Props> = ({
-  playBackUrl,
+  videoCommand,
   showVideoToggle = false,
 }) => {
-  return (
-    <CommonStyled.Container>
-      <Styled.IvsPlayerContainer>
+  const videoComponent = (() => {
+    if (videoCommand.status === 'onAir' || videoCommand.status === 'archived') {
+      return (
         <IvsPlayerVideo
-          playBackUrl={playBackUrl}
+          playBackUrl={videoCommand.playBackUrl}
           autoplay={true}
         ></IvsPlayerVideo>
-      </Styled.IvsPlayerContainer>
+      )
+    }
+    if (videoCommand.status === 'preparing') {
+      return (
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>配信準備中です。</p>
+            <p>しばらくお待ちください。</p>
+          </Styled.TextContainer>
+        </Styled.OverLayContainer>
+      )
+    }
+    if (videoCommand.status === 'archiving') {
+      return (
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>アーカイブ中です。</p>
+            <p>完了までお待ちください。</p>
+          </Styled.TextContainer>
+        </Styled.OverLayContainer>
+      )
+    }
+    return (
+      <Styled.OverLayContainer>
+        <Styled.TextContainer>
+          <p>セッションが選択されていません。</p>
+        </Styled.TextContainer>
+      </Styled.OverLayContainer>
+    )
+  })()
+
+  return (
+    <CommonStyled.Container>
+      <Styled.IvsPlayerContainer>{videoComponent}</Styled.IvsPlayerContainer>
       {showVideoToggle && <VideoToggleButton />}
     </CommonStyled.Container>
   )
