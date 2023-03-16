@@ -51,7 +51,6 @@ const AccessTokenResolver = ({ children }: PropsWithChildren) => {
   if (!token || !children) {
     return <></>
   }
-  console.warn('token:', token)
   return <>{children}</>
 }
 
