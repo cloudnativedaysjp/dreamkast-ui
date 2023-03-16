@@ -53,7 +53,12 @@ type SettingsState = {
   // 視聴track&talk
   viewTrackId: number
   viewTalkId: number
+
+  // 同じトラックのライブセッションに自動遷移するモード
   isLiveMode: boolean
+
+  // 事前登録セッションに自動遷移するモード
+  isAutoSwitchMode: boolean
 }
 
 const initialState: SettingsState = {
@@ -72,6 +77,7 @@ const initialState: SettingsState = {
   viewTrackId: 0,
   viewTalkId: 0,
   isLiveMode: true,
+  isAutoSwitchMode: false,
 }
 
 const settingsSlice = createSlice({
@@ -216,6 +222,9 @@ const settingsSlice = createSlice({
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
     },
+    setIsAutoSwitchMode: (state, action: PayloadAction<boolean>) => {
+      state.isAutoSwitchMode = action.payload
+    },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
       if (action.payload.length === 0) {
         return
@@ -267,6 +276,7 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
+  setIsAutoSwitchMode,
   patchTalksOnAir,
   updateViewTalkWithLiveOne,
 } = settingsSlice.actions
@@ -286,7 +296,7 @@ export const viewTrackIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTrackId,
 )
-export const setShowVideoSelector = createSelector(
+export const showVideoSelector = createSelector(
   settingsSelector,
   (s) => s.showVideo,
 )
@@ -294,6 +304,11 @@ export const setShowVideoSelector = createSelector(
 export const isLiveModeSelector = createSelector(
   settingsSelector,
   (s) => s.isLiveMode,
+)
+
+export const isAutoSwitchModeSelector = createSelector(
+  settingsSelector,
+  (s) => s.isAutoSwitchMode,
 )
 
 export const settingsInitializedSelector = createSelector(
