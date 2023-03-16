@@ -14,7 +14,7 @@ import {
   settingsInitializedSelector,
   settingsSelector,
   setViewTalkId,
-  videoIdSelector,
+  videoCommandSelector,
   isLiveModeSelector,
   setIsLiveMode,
 } from '../../store/settings'
@@ -48,7 +48,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const videoId = useSelector(videoIdSelector)
+  const videoId = useSelector(videoCommandSelector)
   const isLiveMode = useSelector(isLiveModeSelector)
 
   useKarteTracking()
