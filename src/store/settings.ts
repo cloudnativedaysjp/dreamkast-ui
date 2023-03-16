@@ -304,14 +304,14 @@ export const settingsInitializedSelector = createSelector(
 )
 
 export type VideoCommand = {
-  playBackUrl: string
   status: 'preparing' | 'onAir' | 'archiving' | 'archived' | 'notSelected'
+  playBackUrl?: string
 }
 
 export const newVideoCommand = (
-  playBackUrl: string,
   status: VideoCommand['status'],
-) => ({ playBackUrl, status })
+  playBackUrl?: string,
+) => ({ status, playBackUrl })
 
 export const videoCommandSelector = createSelector(
   tracksSelector,
@@ -320,29 +320,29 @@ export const videoCommandSelector = createSelector(
   viewTalkIdSelector,
   (tracks, talks, viewTrackId, viewTalkId): VideoCommand => {
     if (tracks.length === 0) {
-      return newVideoCommand('', 'notSelected')
+      return newVideoCommand('notSelected')
     }
     if (talks.length === 0) {
-      return newVideoCommand('', 'notSelected')
+      return newVideoCommand('notSelected')
     }
     const selectedTrack = tracks.find((t) => t.id === viewTrackId)
     if (!selectedTrack) {
-      return newVideoCommand('', 'notSelected')
+      return newVideoCommand('notSelected')
     }
     const selectedTalk = talks.find((t) => t.id === viewTalkId)
     if (!selectedTalk) {
-      return newVideoCommand('', 'notSelected')
+      return newVideoCommand('notSelected')
     }
     if (selectedTalk.onAir) {
       if (!selectedTrack.videoId) {
-        return newVideoCommand('', 'preparing')
+        return newVideoCommand('preparing')
       }
-      return newVideoCommand(selectedTrack.videoId, 'onAir')
+      return newVideoCommand('onAir', selectedTrack.videoId)
     } else {
       if (!selectedTalk.videoId) {
-        return newVideoCommand('', 'archiving')
+        return newVideoCommand('archiving')
       }
-      return newVideoCommand(selectedTalk.videoId, 'archived')
+      return newVideoCommand('archived', selectedTalk.videoId)
     }
   },
 )

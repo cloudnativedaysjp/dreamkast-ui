@@ -267,7 +267,7 @@ describe('useSelectedTalk', () => {
 describe('selector:videoCommandSelector', () => {
   it('should provide the videoId of the track when selected talk is live', () => {
     let got = {} as unknown
-    const want = newVideoCommand(MockTrackA().videoId!, 'onAir')
+    const want = newVideoCommand('onAir', MockTrackA().videoId!)
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -286,7 +286,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide the videoId of the talk when selected talk is not live', () => {
     let got = {} as unknown
-    const want = newVideoCommand(MockTalkA3().videoId, 'archived')
+    const want = newVideoCommand('archived', MockTalkA3().videoId)
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -305,7 +305,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide empty string when no talks', () => {
     let got = {} as unknown
-    const want = newVideoCommand('', 'notSelected')
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -322,7 +322,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide empty string when no tracks', () => {
     let got = {} as unknown
-    const want = newVideoCommand('', 'notSelected')
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -339,7 +339,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide empty string when no track selected', () => {
     let got = {} as unknown
-    const want = newVideoCommand('', 'notSelected')
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -357,7 +357,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide empty string when no talk selected', () => {
     let got = {} as unknown
-    const want = newVideoCommand('', 'notSelected')
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
