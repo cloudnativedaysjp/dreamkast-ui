@@ -62,4 +62,6 @@ export const Footer = styled.div`
   align-items: center;
 `
 
-export const label = styled.div``
+export const label = styled.div`
+  margin-right: 5px;
+`

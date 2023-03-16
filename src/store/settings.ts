@@ -221,9 +221,15 @@ const settingsSlice = createSlice({
     },
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
+      if (!action.payload) {
+        state.isAutoSwitchMode = false
+      }
     },
     setIsAutoSwitchMode: (state, action: PayloadAction<boolean>) => {
       state.isAutoSwitchMode = action.payload
+      if (action.payload) {
+        state.isLiveMode = true
+      }
     },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
       if (action.payload.length === 0) {
