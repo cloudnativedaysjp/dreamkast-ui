@@ -63,6 +63,7 @@ export const useAddStampIfSatisfied = () => {
 
   const [addedByQRCode, setAddedByQRCode] = useState<boolean>(false)
   const [addedNew, setAddedNew] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [mutateAppData] =
     usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation()
   const [postPointEvent] = usePostApiV1ProfileByProfileIdPointMutation()
@@ -90,6 +91,7 @@ export const useAddStampIfSatisfied = () => {
       }
       const eventNum = getSessionEventNum(slotIdToBeStamped)
       const pointEventId = getPointEventId(eventNum)
+      setLoading(true)
       try {
         await postPointEvent({
           profileId: `${settings.profile.id}`,
@@ -111,11 +113,14 @@ export const useAddStampIfSatisfied = () => {
         setAddedNew(true)
       } catch (err) {
         console.error('stampFromUI Action', err)
+      } finally {
+        setLoading(false)
       }
     })()
   }, [initialized, canGetNewStamp])
 
   return {
+    loading,
     addedNew,
     addedByQRCode,
   }

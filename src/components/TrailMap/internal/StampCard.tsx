@@ -14,7 +14,7 @@ const imgStamp = `/cicd2023/ui/cicd2023_stamp.png`
 export const StampCard = () => {
   const { appDataInitialized } = useSelector(appDataSelector)
   const { stamps } = useStamps()
-  const { addedNew, addedByQRCode } = useAddStampIfSatisfied()
+  const { loading, addedNew, addedByQRCode } = useAddStampIfSatisfied()
 
   const [pinnedStamps, setPinnedStamps] = useState<
     DkUiData['stampChallenges'] | null
@@ -33,7 +33,7 @@ export const StampCard = () => {
   useImgPreload(imgStampBg)
   useImgPreload(imgStamp)
 
-  if (!pinnedStamps) {
+  if (!pinnedStamps || loading) {
     return (
       <Styled.StampCardContainer>
         <div className={'suspend'}>
