@@ -244,7 +244,9 @@ const settingsSlice = createSlice({
 
       const updatedTrack = updatedTracks[0]
       const updatedTalk = nextTalks[updatedTrack.id]
-      if (updatedTrack.id === s.viewTrackId) {
+      // 同一トラックを試聴中、かつライブセッション試聴モードの場合のみskipする。
+      // ライブモードでない場合はskipしない
+      if (updatedTrack.id === s.viewTrackId && s.isLiveMode) {
         return
       }
 
