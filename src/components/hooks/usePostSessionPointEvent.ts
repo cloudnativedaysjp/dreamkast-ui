@@ -79,6 +79,8 @@ export const usePostSessionPointEvent = () => {
 
     if (!track?.onAirTalk) {
       console.warn('no onAir talk')
+      clearSessionPointEventId()
+      dispatch(setPointEventSaving(false))
       return
     }
     setTrackId(track.id)
