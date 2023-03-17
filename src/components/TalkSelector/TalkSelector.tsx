@@ -32,7 +32,7 @@ export const TalkSelector: React.FC<Props> = (props) => {
       <LiveModeCheckbox />
       <Styled.label>ライブセッションに自動遷移</Styled.label>
       <NotifyRegisteredTalkStartedCheckbox />
-      <Styled.label>事前登録したセッションに自動遷移</Styled.label>
+      <Styled.label>事前登録セッションの開始を通知</Styled.label>
     </>
   )
 

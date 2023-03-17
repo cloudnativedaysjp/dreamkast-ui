@@ -59,7 +59,7 @@ type SettingsState = {
 
   // 事前登録セッションが開始したら通知するモード
   notifyRegisteredTalkStarted: boolean
-  nextRegisteredTalk: Talk | null
+  nextRegisteredTalk: { talk: Talk | null; track: Track | null }
 }
 
 const initialState: SettingsState = {
@@ -78,8 +78,8 @@ const initialState: SettingsState = {
   viewTrackId: 0,
   viewTalkId: 0,
   isLiveMode: true,
-  notifyRegisteredTalkStarted: false,
-  nextRegisteredTalk: null,
+  notifyRegisteredTalkStarted: true,
+  nextRegisteredTalk: { talk: null, track: null },
 }
 
 const settingsSlice = createSlice({
@@ -244,6 +244,9 @@ const settingsSlice = createSlice({
 
       const updatedTrack = updatedTracks[0]
       const updatedTalk = nextTalks[updatedTrack.id]
+      if (updatedTrack.id === s.viewTrackId) {
+        return
+      }
 
       const isUpdatedTalkRegistered = (s.profile.registeredTalks || []).find(
         (t) => t.talkId === updatedTalk.id && t.trackName === updatedTrack.name,
@@ -251,7 +254,16 @@ const settingsSlice = createSlice({
       if (!isUpdatedTalkRegistered) {
         return
       }
-      s.nextRegisteredTalk = updatedTalk
+      const nextTalk = s.talks.find((t) => {
+        return t.id === updatedTalk.id
+      })
+      if (!nextTalk) {
+        return
+      }
+      s.nextRegisteredTalk = {
+        talk: nextTalk,
+        track: updatedTrack,
+      }
     },
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
