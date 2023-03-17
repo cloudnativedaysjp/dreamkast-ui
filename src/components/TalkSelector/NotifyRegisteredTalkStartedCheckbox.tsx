@@ -1,20 +1,16 @@
 import React from 'react'
 import {
-  isAutoSwitchModeSelector,
-  setIsAutoSwitchMode,
-  setIsLiveMode,
+  notifyRegisteredTalkStartedSelector,
+  setNotifyRegisteredTalkStarted,
 } from '../../store/settings'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox } from '@material-ui/core'
 
-export const AutoSwitchModeCheckbox = () => {
+export const NotifyRegisteredTalkStartedCheckbox = () => {
   const dispatch = useDispatch()
-  const isAutoSwitchMode = useSelector(isAutoSwitchModeSelector)
+  const isAutoSwitchMode = useSelector(notifyRegisteredTalkStartedSelector)
   const changeAutoSwitchMode = (checked: boolean) => {
-    if (checked) {
-      dispatch(setIsLiveMode(true))
-    }
-    dispatch(setIsAutoSwitchMode(checked))
+    dispatch(setNotifyRegisteredTalkStarted(checked))
   }
 
   return (

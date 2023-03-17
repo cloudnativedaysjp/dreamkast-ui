@@ -7,7 +7,8 @@ import {
   settingsSelector,
   updateViewTalkWithLiveOne,
   isLiveModeSelector,
-  patchTalksOnAir, updateViewTalkWithRegisteredOne,
+  patchTalksOnAir,
+  updateNextRegisteredTalk,
 } from '../../store/settings'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 import { getSlotId } from '../../util/sessionstorage/trailMap'
@@ -120,7 +121,7 @@ export const useLiveTalkUpdate = (eventAbbr: string, fn: () => void) => {
         received: (nextTalks: { [trackId: number]: Talk }) => {
           fn()
           dispatch(updateViewTalkWithLiveOne(nextTalks))
-          dispatch(updateViewTalkWithRegisteredOne(nextTalks))
+          dispatch(updateNextRegisteredTalk(nextTalks))
           dispatch(patchTalksOnAir(nextTalks))
         },
       },

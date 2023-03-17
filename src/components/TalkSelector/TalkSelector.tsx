@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { Talk } from '../../generated/dreamkast-api.generated'
 import { setupDayjs } from '../../util/setupDayjs'
 import { LiveModeCheckbox } from './LiveModeCheckbox'
-import { AutoSwitchModeCheckbox } from './AutoSwitchModeCheckbox'
+import { NotifyRegisteredTalkStartedCheckbox } from './NotifyRegisteredTalkStartedCheckbox'
 
 setupDayjs()
 
@@ -31,7 +31,7 @@ export const TalkSelector: React.FC<Props> = (props) => {
     <>
       <LiveModeCheckbox />
       <Styled.label>ライブセッションに自動遷移</Styled.label>
-      <AutoSwitchModeCheckbox />
+      <NotifyRegisteredTalkStartedCheckbox />
       <Styled.label>事前登録したセッションに自動遷移</Styled.label>
     </>
   )

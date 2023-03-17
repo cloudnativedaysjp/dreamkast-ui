@@ -16,6 +16,7 @@ import {
   setViewTalkId,
   videoCommandSelector,
   isLiveModeSelector,
+  nextRegisteredTalkSelector,
 } from '../../store/settings'
 import {
   useKarteTracking,
@@ -49,6 +50,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const initialized = useSelector(settingsInitializedSelector)
   const videoCommand = useSelector(videoCommandSelector)
   const isLiveMode = useSelector(isLiveModeSelector)
+  const nextRegisteredTalk = useSelector(nextRegisteredTalkSelector)
 
   useKarteTracking()
   useTrailMapTracking()
@@ -62,6 +64,12 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
       refetch()
     }
   }, [isLiveMode])
+
+  useEffect(() => {
+    if (nextRegisteredTalk) {
+      console.warn(nextRegisteredTalk)
+    }
+  }, [nextRegisteredTalk])
 
   const selectTalk = (talkId: number) => {
     dispatch(setViewTalkId(talkId))

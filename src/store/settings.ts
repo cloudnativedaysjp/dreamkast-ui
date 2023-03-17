@@ -57,8 +57,9 @@ type SettingsState = {
   // 同じトラックのライブセッションに自動遷移するモード
   isLiveMode: boolean
 
-  // 事前登録セッションに自動遷移するモード
-  isAutoSwitchMode: boolean
+  // 事前登録セッションが開始したら通知するモード
+  notifyRegisteredTalkStarted: boolean
+  nextRegisteredTalk: Talk | null
 }
 
 const initialState: SettingsState = {
@@ -77,7 +78,8 @@ const initialState: SettingsState = {
   viewTrackId: 0,
   viewTalkId: 0,
   isLiveMode: true,
-  isAutoSwitchMode: false,
+  notifyRegisteredTalkStarted: false,
+  nextRegisteredTalk: null,
 }
 
 const settingsSlice = createSlice({
@@ -147,7 +149,6 @@ const settingsSlice = createSlice({
       state.viewTalkId = action.payload
       if (!selectedTalk.onAir) {
         state.isLiveMode = false
-        state.isAutoSwitchMode = false
       }
     },
     patchTalksOnAir: (
@@ -220,15 +221,12 @@ const settingsSlice = createSlice({
 
       s.viewTalkId = nextTalk.id
     },
-    updateViewTalkWithRegisteredOne: (
+    updateNextRegisteredTalk: (
       s,
       action: PayloadAction<{ [trackId: number]: Talk }>,
     ) => {
       const nextTalks = action.payload
-      if (!s.isLiveMode) {
-        return
-      }
-      if (!s.isAutoSwitchMode) {
+      if (!s.notifyRegisteredTalkStarted) {
         return
       }
 
@@ -253,39 +251,13 @@ const settingsSlice = createSlice({
       if (!isUpdatedTalkRegistered) {
         return
       }
-
-      // TODO karteやtrackId変更の処理を抽出して共通化する
-
-      // Karte
-      const selectedTrack = s.tracks.find((t) => t.id === s.viewTrackId)
-      const selectedTalk = s.talks.find((t) => t.id === s.viewTalkId)
-      if (selectedTalk && selectedTrack) {
-        window.location.href =
-          window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-        window.tracker?.track('trigger_survey', {
-          track_name: selectedTrack?.name,
-          talk_id: selectedTalk?.id,
-          talk_name: selectedTalk?.title,
-        })
-      }
-
-      s.viewTalkId = updatedTalk.id
-      s.viewTrackId = updatedTrack.id
-      setViewTrackIdToSessionStorage(updatedTrack.id)
-      window.location.href =
-        window.location.href.split('#')[0] + '#' + updatedTrack.name
+      s.nextRegisteredTalk = updatedTalk
     },
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
-      if (!action.payload) {
-        state.isAutoSwitchMode = false
-      }
     },
-    setIsAutoSwitchMode: (state, action: PayloadAction<boolean>) => {
-      state.isAutoSwitchMode = action.payload
-      if (action.payload) {
-        state.isLiveMode = true
-      }
+    setNotifyRegisteredTalkStarted: (state, action: PayloadAction<boolean>) => {
+      state.notifyRegisteredTalkStarted = action.payload
     },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
       if (action.payload.length === 0) {
@@ -338,10 +310,10 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
-  setIsAutoSwitchMode,
+  setNotifyRegisteredTalkStarted,
   patchTalksOnAir,
   updateViewTalkWithLiveOne,
-  updateViewTalkWithRegisteredOne,
+  updateNextRegisteredTalk,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
@@ -369,9 +341,14 @@ export const isLiveModeSelector = createSelector(
   (s) => s.isLiveMode,
 )
 
-export const isAutoSwitchModeSelector = createSelector(
+export const notifyRegisteredTalkStartedSelector = createSelector(
   settingsSelector,
-  (s) => s.isAutoSwitchMode,
+  (s) => s.notifyRegisteredTalkStarted,
+)
+
+export const nextRegisteredTalkSelector = createSelector(
+  settingsSelector,
+  (s) => s.nextRegisteredTalk,
 )
 
 export const settingsInitializedSelector = createSelector(
