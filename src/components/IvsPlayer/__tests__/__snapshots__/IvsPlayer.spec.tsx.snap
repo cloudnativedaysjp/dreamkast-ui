@@ -8,20 +8,28 @@ exports[`IvsPlayer should render archiving page 1`] = `
     <div
       class="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
     >
-      <div
-        class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
-      >
+      <div>
         <div
-          class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
         >
-          <p>
-            アーカイブ中です。
-          </p>
-          <p>
-            完了までお待ちください。
-          </p>
+          <div
+            class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          >
+            <p>
+              アーカイブ中です。
+            </p>
+            <p>
+              完了までお待ちください。
+            </p>
+          </div>
         </div>
       </div>
+      <video
+        autoplay=""
+        class="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
+        controls=""
+        playsinline=""
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -35,17 +43,25 @@ exports[`IvsPlayer should render not selected page 1`] = `
     <div
       class="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
     >
-      <div
-        class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
-      >
+      <div>
         <div
-          class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
         >
-          <p>
-            セッションが選択されていません。
-          </p>
+          <div
+            class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          >
+            <p>
+              セッションが選択されていません。
+            </p>
+          </div>
         </div>
       </div>
+      <video
+        autoplay=""
+        class="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
+        controls=""
+        playsinline=""
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -59,20 +75,28 @@ exports[`IvsPlayer should render preparing page 1`] = `
     <div
       class="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
     >
-      <div
-        class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
-      >
+      <div>
         <div
-          class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
         >
-          <p>
-            配信準備中です。
-          </p>
-          <p>
-            しばらくお待ちください。
-          </p>
+          <div
+            class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
+          >
+            <p>
+              配信準備中です。
+            </p>
+            <p>
+              しばらくお待ちください。
+            </p>
+          </div>
         </div>
       </div>
+      <video
+        autoplay=""
+        class="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
+        controls=""
+        playsinline=""
+      />
     </div>
   </div>
 </DocumentFragment>
@@ -86,6 +110,7 @@ exports[`IvsPlayer should render video player when archived 1`] = `
     <div
       class="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
     >
+      <div />
       <video
         autoplay=""
         class="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
@@ -105,6 +130,7 @@ exports[`IvsPlayer should render video player when onAir 1`] = `
     <div
       class="styled__IvsPlayerContainer-sc-1l56t7n-0 htNCDq"
     >
+      <div />
       <video
         autoplay=""
         class="styled__IvsPlayerVideo-sc-1l56t7n-1 fgKZHq video-js vjs-16-9 vjs-big-play-centered"
