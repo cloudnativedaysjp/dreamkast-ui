@@ -49,10 +49,6 @@ export const IvsPlayer: React.FC<Props> = ({
     return <></>
   })()
 
-  const paused = ['notSelected', 'preparing', 'archiving'].includes(
-    videoCommand.status,
-  )
-
   return (
     <CommonStyled.Container>
       <Styled.IvsPlayerContainer>
@@ -60,7 +56,6 @@ export const IvsPlayer: React.FC<Props> = ({
         <IvsPlayerVideo
           playBackUrl={videoCommand.playBackUrl}
           autoplay={true}
-          paused={paused}
         ></IvsPlayerVideo>
       </Styled.IvsPlayerContainer>
       {showVideoToggle && <VideoToggleButton />}
