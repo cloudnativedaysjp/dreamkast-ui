@@ -7,6 +7,7 @@ import * as Styled from './styled'
 type Props = {
   playBackUrl?: string | null
   autoplay: boolean
+  paused?: boolean
 }
 
 declare function registerIVSTech(
@@ -14,7 +15,11 @@ declare function registerIVSTech(
   config?: { wasmWorker: string; wasmBinary: string },
 ): void
 
-export const IvsPlayerVideo: React.FC<Props> = ({ playBackUrl, autoplay }) => {
+export const IvsPlayerVideo: React.FC<Props> = ({
+  playBackUrl,
+  autoplay,
+  paused,
+}) => {
   const playerRef = useRef<VideoJsPlayer>()
   const videoElement = useRef<HTMLVideoElement>(null)
 
@@ -48,13 +53,7 @@ export const IvsPlayerVideo: React.FC<Props> = ({ playBackUrl, autoplay }) => {
   }, [])
 
   useEffect(() => {
-    if (!playerRef.current) {
-      return
-    }
-    if (!playBackUrl) {
-      if (playerRef.current?.currentSource().src) {
-        playerRef.current?.reset()
-      }
+    if (!playBackUrl || !playerRef.current) {
       return
     }
     if (playBackUrl === playerRef.current?.currentSource().src) {
@@ -63,6 +62,14 @@ export const IvsPlayerVideo: React.FC<Props> = ({ playBackUrl, autoplay }) => {
     playerRef.current.src(playBackUrl)
     console.log(playerRef.current.currentSource())
   }, [playBackUrl])
+
+  useEffect(() => {
+    if (paused) {
+      playerRef.current?.pause()
+    } else {
+      playerRef.current?.play()
+    }
+  }, [paused])
 
   return (
     <Styled.IvsPlayerVideo
