@@ -13,6 +13,7 @@ import {
 } from 'notistack'
 import dayjs from 'dayjs'
 import { Button } from '@material-ui/core'
+import styled from 'styled-components'
 
 export const NextTalkNotifier = ({ children }: PropsWithChildren) => {
   const dispatch = useDispatch()
@@ -45,18 +46,31 @@ export const NextTalkNotifier = ({ children }: PropsWithChildren) => {
     )
 
     const action = (snackbarId: SnackbarKey) => (
-      <>
-        <Button
-          style={{ marginRight: '5px' }}
-          variant="contained"
-          onClick={() => {
-            handleTrackChange(track.id)
-            closeSnackbar(snackbarId)
-          }}
-        >
-          視聴する
-        </Button>
-      </>
+      <div>
+        <div>
+          <ActionButton
+            variant="contained"
+            size="small"
+            onClick={() => {
+              handleTrackChange(track.id)
+              closeSnackbar(snackbarId)
+            }}
+          >
+            視聴する
+          </ActionButton>
+        </div>
+        <div>
+          <ActionButton
+            variant="contained"
+            size="small"
+            onClick={() => {
+              closeSnackbar(snackbarId)
+            }}
+          >
+            閉じる
+          </ActionButton>
+        </div>
+      </div>
     )
 
     enqueueSnackbar(component, { action })
@@ -68,3 +82,10 @@ export const NextTalkNotifier = ({ children }: PropsWithChildren) => {
     </SnackbarProvider>
   )
 }
+
+const ActionButton = styled(Button)`
+  width: 90px;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`
