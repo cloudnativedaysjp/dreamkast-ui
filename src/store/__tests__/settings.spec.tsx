@@ -11,9 +11,10 @@ import {
   useSelectedTalk,
   useSelectedTrack,
   useTracks,
-  videoIdSelector,
+  videoCommandSelector,
   patchTalksOnAir,
   OnAirTalk,
+  newVideoCommand,
 } from '../settings'
 import {
   MockTalkA1,
@@ -263,13 +264,13 @@ describe('useSelectedTalk', () => {
   })
 })
 
-describe('selector:videoIdSelector', () => {
+describe('selector:videoCommandSelector', () => {
   it('should provide the videoId of the track when selected talk is live', () => {
-    let got = ''
-    const want = MockTrackA().videoId
+    let got = {} as unknown
+    const want = newVideoCommand('onAir', MockTrackA().videoId!)
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 
@@ -284,11 +285,11 @@ describe('selector:videoIdSelector', () => {
   })
 
   it('should provide the videoId of the talk when selected talk is not live', () => {
-    let got = ''
-    const want = MockTalkA3().videoId
+    let got = {} as unknown
+    const want = newVideoCommand('archived', MockTalkA3().videoId)
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 
@@ -303,11 +304,11 @@ describe('selector:videoIdSelector', () => {
   })
 
   it('should provide empty string when no talks', () => {
-    let got = ''
-    const want = ''
+    let got = {} as unknown
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 
@@ -320,11 +321,11 @@ describe('selector:videoIdSelector', () => {
   })
 
   it('should provide empty string when no tracks', () => {
-    let got = ''
-    const want = ''
+    let got = {} as unknown
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 
@@ -337,11 +338,11 @@ describe('selector:videoIdSelector', () => {
   })
 
   it('should provide empty string when no track selected', () => {
-    let got = ''
-    const want = ''
+    let got = {} as unknown
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 
@@ -355,11 +356,11 @@ describe('selector:videoIdSelector', () => {
   })
 
   it('should provide empty string when no talk selected', () => {
-    let got = ''
-    const want = ''
+    let got = {} as unknown
+    const want = newVideoCommand('notSelected')
 
     const Test = () => {
-      got = useSelector(videoIdSelector)
+      got = useSelector(videoCommandSelector)
       return <div />
     }
 

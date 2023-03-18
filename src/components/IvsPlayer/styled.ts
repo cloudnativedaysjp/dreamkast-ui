@@ -17,7 +17,7 @@ export const IvsPlayerVideo = styled.video`
 `
 
 export const OverLayContainer = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(70, 70, 70);
   position: absolute;
   top: 0;
   left: 0;
@@ -54,8 +54,9 @@ export const PlayerButton = styled.button`
 
 export const TextContainer = styled.div`
   width: 80%;
-  padding-bottom: 28px;
   max-width: 36em;
+  font-size: 1.3em;
+  font-weight: bold;
 `
 
 export const NextTitle = styled.div`

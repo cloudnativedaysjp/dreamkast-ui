@@ -303,30 +303,46 @@ export const settingsInitializedSelector = createSelector(
   },
 )
 
-export const videoIdSelector = createSelector(
+export type VideoCommand = {
+  status: 'preparing' | 'onAir' | 'archiving' | 'archived' | 'notSelected'
+  playBackUrl?: string
+}
+
+export const newVideoCommand = (
+  status: VideoCommand['status'],
+  playBackUrl?: string,
+) => ({ status, playBackUrl })
+
+export const videoCommandSelector = createSelector(
   tracksSelector,
   talksSelector,
   viewTrackIdSelector,
   viewTalkIdSelector,
-  (tracks, talks, viewTrackId, viewTalkId) => {
+  (tracks, talks, viewTrackId, viewTalkId): VideoCommand => {
     if (tracks.length === 0) {
-      return ''
+      return newVideoCommand('notSelected')
     }
     if (talks.length === 0) {
-      return ''
+      return newVideoCommand('notSelected')
     }
     const selectedTrack = tracks.find((t) => t.id === viewTrackId)
     if (!selectedTrack) {
-      return ''
+      return newVideoCommand('notSelected')
     }
     const selectedTalk = talks.find((t) => t.id === viewTalkId)
     if (!selectedTalk) {
-      return ''
+      return newVideoCommand('notSelected')
     }
     if (selectedTalk.onAir) {
-      return selectedTrack.videoId || '' // TODO 配信はありません、の画面を出す
+      if (!selectedTrack.videoId) {
+        return newVideoCommand('preparing')
+      }
+      return newVideoCommand('onAir', selectedTrack.videoId)
     } else {
-      return selectedTalk.videoId || '' // TODO アーカイブ中です、の画面を出す
+      if (!selectedTalk.videoId) {
+        return newVideoCommand('archiving')
+      }
+      return newVideoCommand('archived', selectedTalk.videoId)
     }
   },
 )

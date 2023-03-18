@@ -14,7 +14,7 @@ import {
   settingsInitializedSelector,
   settingsSelector,
   setViewTalkId,
-  videoIdSelector,
+  videoCommandSelector,
   isLiveModeSelector,
   setIsLiveMode,
 } from '../../store/settings'
@@ -48,7 +48,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
 
   const settings = useSelector(settingsSelector)
   const initialized = useSelector(settingsInitializedSelector)
-  const videoId = useSelector(videoIdSelector)
+  const videoCommand = useSelector(videoCommandSelector)
   const isLiveMode = useSelector(isLiveModeSelector)
 
   useKarteTracking()
@@ -87,8 +87,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
       >
         <Grid item xs={12} md={8}>
           <IvsPlayer
-            playBackUrl={videoId}
-            autoplay={true}
+            videoCommand={videoCommand}
             showVideoToggle={
               isSmallerThanMd && settings.profile.isAttendOffline
             }
