@@ -16,7 +16,6 @@ import {
   setViewTalkId,
   videoCommandSelector,
   isLiveModeSelector,
-  setIsLiveMode,
 } from '../../store/settings'
 import {
   useKarteTracking,
@@ -64,10 +63,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
     }
   }, [isLiveMode])
 
-  const changeLiveMode = (checked: boolean) => {
-    dispatch(setIsLiveMode(checked))
-  }
-
   const selectTalk = (talkId: number) => {
     dispatch(setViewTalkId(talkId))
   }
@@ -110,8 +105,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
             selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
-            isLiveMode={isLiveMode}
-            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
             small
           />
@@ -137,8 +130,6 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
             selectedTalkId={selectedTalk?.id}
             selectedTrackId={selectedTrack?.id}
             talks={talks}
-            isLiveMode={isLiveMode}
-            changeLiveMode={changeLiveMode}
             selectTalk={selectTalk}
           />
         </Grid>

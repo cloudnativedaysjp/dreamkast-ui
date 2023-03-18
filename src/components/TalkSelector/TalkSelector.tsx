@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { ReactElement, useEffect, useMemo, useState } from 'react'
 import * as Styled from './styled'
-import { Checkbox } from '@material-ui/core'
 import dayjs from 'dayjs'
 import { Talk } from '../../generated/dreamkast-api.generated'
 import { setupDayjs } from '../../util/setupDayjs'
+import { LiveModeCheckbox } from './LiveModeCheckbox'
+import { NotifyRegisteredTalkStartedCheckbox } from './NotifyRegisteredTalkStartedCheckbox'
 
 setupDayjs()
 
@@ -11,9 +12,7 @@ type Props = {
   selectedTrackId?: number
   selectedTalkId?: number
   talks: Talk[]
-  isLiveMode?: boolean
   selectTalk: (talkId: number) => void
-  changeLiveMode: (mode: boolean) => void
   small?: boolean
 }
 
@@ -28,18 +27,31 @@ export const TalkSelector: React.FC<Props> = (props) => {
     return window.clearInterval(id)
   }, [])
 
-  return <PTalkSelector {...props} now={now}></PTalkSelector>
+  const footer = (
+    <>
+      <LiveModeCheckbox />
+      <Styled.label>ライブセッションに自動遷移</Styled.label>
+      <NotifyRegisteredTalkStartedCheckbox />
+      <Styled.label>事前登録セッションの開始を通知</Styled.label>
+    </>
+  )
+
+  return <PTalkSelector {...props} now={now} footer={footer}></PTalkSelector>
 }
 
-export const PTalkSelector: React.FC<Props & { now: number }> = ({
+type PProps = Props & {
+  now: number
+  footer?: ReactElement
+}
+
+export const PTalkSelector: React.FC<PProps> = ({
   selectedTrackId,
   selectedTalkId,
   talks,
-  isLiveMode,
   selectTalk,
-  changeLiveMode,
   small = false,
   now,
+  footer,
 }) => {
   const availableTalks = useMemo(
     () => extractAvailableTalks(talks, now),
@@ -72,14 +84,7 @@ export const PTalkSelector: React.FC<Props & { now: number }> = ({
           }
         })}
       </Styled.List>
-      <Styled.Footer>
-        <Checkbox
-          size="small"
-          checked={isLiveMode}
-          onChange={(_, checked) => changeLiveMode(checked)}
-        />
-        <Styled.label>ライブ中のセッションに自動遷移する</Styled.label>
-      </Styled.Footer>
+      <Styled.Footer>{footer}</Styled.Footer>
     </Styled.Container>
   )
 }

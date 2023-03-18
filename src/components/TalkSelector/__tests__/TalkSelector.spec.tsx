@@ -44,8 +44,6 @@ describe('PTalkSelector', () => {
         selectedTalkId={MockTalks()[0].id}
         selectedTrackId={32}
         talks={MockTalks()}
-        isLiveMode={true}
-        changeLiveMode={() => null}
         selectTalk={() => null}
         now={now}
       />,
@@ -55,12 +53,7 @@ describe('PTalkSelector', () => {
   it('should render when props undefined', () => {
     const now = dayjs('2023-02-24T10:30:00.000+09:00').unix()
     const screen = render(
-      <PTalkSelector
-        talks={[]}
-        changeLiveMode={() => null}
-        selectTalk={() => null}
-        now={now}
-      />,
+      <PTalkSelector talks={[]} selectTalk={() => null} now={now} />,
     )
     expect(screen.asFragment()).toMatchSnapshot()
   })

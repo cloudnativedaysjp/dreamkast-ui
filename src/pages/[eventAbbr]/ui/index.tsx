@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import { pointEventSavingSelector } from '../../../store/appData'
 import { CircularProgress } from '@material-ui/core'
 import * as CommonStyled from '../../../styles/styled'
+import { NextTalkNotifier } from '../../../components/Layout/NextTalkNotifier'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -45,10 +46,12 @@ const IndexMain = () => {
   }
 
   return (
-    <Layout title={event.name} event={event}>
-      <TrackSelector />
-      <TrackView event={event} refetch={refetch} />
-    </Layout>
+    <NextTalkNotifier>
+      <Layout title={event.name} event={event}>
+        <TrackSelector />
+        <TrackView event={event} refetch={refetch} />
+      </Layout>
+    </NextTalkNotifier>
   )
 }
 

@@ -53,7 +53,13 @@ type SettingsState = {
   // 視聴track&talk
   viewTrackId: number
   viewTalkId: number
+
+  // 同じトラックのライブセッションに自動遷移するモード
   isLiveMode: boolean
+
+  // 事前登録セッションが開始したら通知するモード
+  notifyRegisteredTalkStarted: boolean
+  nextRegisteredTalk: { talk: Talk | null; track: Track | null }
 }
 
 const initialState: SettingsState = {
@@ -72,6 +78,8 @@ const initialState: SettingsState = {
   viewTrackId: 0,
   viewTalkId: 0,
   isLiveMode: true,
+  notifyRegisteredTalkStarted: true,
+  nextRegisteredTalk: { talk: null, track: null },
 }
 
 const settingsSlice = createSlice({
@@ -197,24 +205,73 @@ const settingsSlice = createSlice({
       if (nextTalk.id === s.viewTalkId) {
         return
       }
+
+      // Karte
       const selectedTrack = s.tracks.find((t) => t.id === s.viewTrackId)
       const selectedTalk = s.talks.find((t) => t.id === s.viewTalkId)
-      if (!selectedTalk || !selectedTrack) {
+      if (selectedTalk && selectedTrack) {
+        window.location.href =
+          window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
+        window.tracker?.track('trigger_survey', {
+          track_name: selectedTrack?.name,
+          talk_id: selectedTalk?.id,
+          talk_name: selectedTalk?.title,
+        })
+      }
+
+      s.viewTalkId = nextTalk.id
+    },
+    updateNextRegisteredTalk: (
+      s,
+      action: PayloadAction<{ [trackId: number]: Talk }>,
+    ) => {
+      const nextTalks = action.payload
+      if (!s.notifyRegisteredTalkStarted) {
         return
       }
 
-      // Karte
-      window.location.href =
-        window.location.href.split('#')[0] + '#' + s.viewTalkId // Karteの仕様でページ内リンクを更新しないと同一PV扱いになりアンケートが出ない
-      window.tracker?.track('trigger_survey', {
-        track_name: selectedTrack?.name,
-        talk_id: selectedTalk?.id,
-        talk_name: selectedTalk?.title,
+      const updatedTracks = s.tracks.filter((t) => {
+        const nextTalk = nextTalks[t.id]
+        if (!nextTalk) {
+          return false
+        }
+        return (t.onAirTalk as OnAirTalk)?.talk_id !== nextTalk.id
       })
-      s.viewTalkId = nextTalk.id
+      console.warn('length:', updatedTracks.length)
+      if (updatedTracks.length === 0) {
+        return
+      }
+
+      const updatedTrack = updatedTracks[0]
+      const updatedTalk = nextTalks[updatedTrack.id]
+      // 同一トラックを試聴中、かつライブセッション試聴モードの場合のみskipする。
+      // ライブモードでない場合はskipしない
+      if (updatedTrack.id === s.viewTrackId && s.isLiveMode) {
+        return
+      }
+
+      const isUpdatedTalkRegistered = (s.profile.registeredTalks || []).find(
+        (t) => t.talkId === updatedTalk.id && t.trackName === updatedTrack.name,
+      )
+      if (!isUpdatedTalkRegistered) {
+        return
+      }
+      const nextTalk = s.talks.find((t) => {
+        return t.id === updatedTalk.id
+      })
+      if (!nextTalk) {
+        return
+      }
+      s.nextRegisteredTalk = {
+        talk: nextTalk,
+        track: updatedTrack,
+      }
     },
     setIsLiveMode: (state, action: PayloadAction<boolean>) => {
       state.isLiveMode = action.payload
+    },
+    setNotifyRegisteredTalkStarted: (state, action: PayloadAction<boolean>) => {
+      state.notifyRegisteredTalkStarted = action.payload
     },
     setTalks: (state, action: PayloadAction<Talk[]>) => {
       if (action.payload.length === 0) {
@@ -267,8 +324,10 @@ export const {
   setViewTalkId,
   setInitialViewTalk,
   setIsLiveMode,
+  setNotifyRegisteredTalkStarted,
   patchTalksOnAir,
   updateViewTalkWithLiveOne,
+  updateNextRegisteredTalk,
 } = settingsSlice.actions
 
 export const settingsSelector = (s: RootState) => s.settings
@@ -286,7 +345,7 @@ export const viewTrackIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTrackId,
 )
-export const setShowVideoSelector = createSelector(
+export const showVideoSelector = createSelector(
   settingsSelector,
   (s) => s.showVideo,
 )
@@ -294,6 +353,16 @@ export const setShowVideoSelector = createSelector(
 export const isLiveModeSelector = createSelector(
   settingsSelector,
   (s) => s.isLiveMode,
+)
+
+export const notifyRegisteredTalkStartedSelector = createSelector(
+  settingsSelector,
+  (s) => s.notifyRegisteredTalkStarted,
+)
+
+export const nextRegisteredTalkSelector = createSelector(
+  settingsSelector,
+  (s) => s.nextRegisteredTalk,
 )
 
 export const settingsInitializedSelector = createSelector(
