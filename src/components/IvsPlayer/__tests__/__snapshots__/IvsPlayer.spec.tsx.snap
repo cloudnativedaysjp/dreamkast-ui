@@ -10,7 +10,7 @@ exports[`IvsPlayer should render archiving page 1`] = `
     >
       <div>
         <div
-          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
+          class="styled__OverLayContainer-sc-1l56t7n-2 epEMVS"
         >
           <div
             class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
@@ -45,7 +45,7 @@ exports[`IvsPlayer should render not selected page 1`] = `
     >
       <div>
         <div
-          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
+          class="styled__OverLayContainer-sc-1l56t7n-2 epEMVS"
         >
           <div
             class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
@@ -77,7 +77,7 @@ exports[`IvsPlayer should render preparing page 1`] = `
     >
       <div>
         <div
-          class="styled__OverLayContainer-sc-1l56t7n-2 eqoiDe"
+          class="styled__OverLayContainer-sc-1l56t7n-2 epEMVS"
         >
           <div
             class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
