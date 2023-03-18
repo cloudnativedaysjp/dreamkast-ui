@@ -17,12 +17,13 @@ export const IvsPlayer: React.FC<Props> = ({
   showVideoToggle = false,
 }) => {
   const videoComponent = (() => {
-    if (videoCommand.status === 'onAir' || videoCommand.status === 'archived') {
+    if (videoCommand.status === 'notSelected') {
       return (
-        <IvsPlayerVideo
-          playBackUrl={videoCommand.playBackUrl}
-          autoplay={true}
-        ></IvsPlayerVideo>
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>セッションが選択されていません。</p>
+          </Styled.TextContainer>
+        </Styled.OverLayContainer>
       )
     }
     if (videoCommand.status === 'preparing') {
@@ -45,18 +46,23 @@ export const IvsPlayer: React.FC<Props> = ({
         </Styled.OverLayContainer>
       )
     }
-    return (
-      <Styled.OverLayContainer>
-        <Styled.TextContainer>
-          <p>セッションが選択されていません。</p>
-        </Styled.TextContainer>
-      </Styled.OverLayContainer>
-    )
+    return <></>
   })()
+
+  const paused = ['notSelected', 'preparing', 'archiving'].includes(
+    videoCommand.status,
+  )
 
   return (
     <CommonStyled.Container>
-      <Styled.IvsPlayerContainer>{videoComponent}</Styled.IvsPlayerContainer>
+      <Styled.IvsPlayerContainer>
+        <div>{videoComponent}</div>
+        <IvsPlayerVideo
+          playBackUrl={videoCommand.playBackUrl}
+          autoplay={true}
+          paused={paused}
+        ></IvsPlayerVideo>
+      </Styled.IvsPlayerContainer>
       {showVideoToggle && <VideoToggleButton />}
     </CommonStyled.Container>
   )
