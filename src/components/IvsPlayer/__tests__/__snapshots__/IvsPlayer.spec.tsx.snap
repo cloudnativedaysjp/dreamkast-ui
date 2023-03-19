@@ -16,10 +16,10 @@ exports[`IvsPlayer should render archiving page 1`] = `
             class="styled__TextContainer-sc-1l56t7n-5 ctYScI"
           >
             <p>
-              アーカイブ中です。
+              セッションは終了しました。
             </p>
             <p>
-              完了までお待ちください。
+              アーカイブ完了までお待ちください。
             </p>
           </div>
         </div>
