@@ -26,6 +26,24 @@ export const IvsPlayer: React.FC<Props> = ({
         </Styled.OverLayContainer>
       )
     }
+    if (videoCommand.status === 'notStarted') {
+      return (
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>セッションの開始まで、しばらくお待ち下さい。</p>
+          </Styled.TextContainer>
+        </Styled.OverLayContainer>
+      )
+    }
+    if (videoCommand.status === 'done') {
+      return (
+        <Styled.OverLayContainer>
+          <Styled.TextContainer>
+            <p>セッションは終了しました。</p>
+          </Styled.TextContainer>
+        </Styled.OverLayContainer>
+      )
+    }
     if (videoCommand.status === 'preparing') {
       return (
         <Styled.OverLayContainer>
@@ -40,8 +58,8 @@ export const IvsPlayer: React.FC<Props> = ({
       return (
         <Styled.OverLayContainer>
           <Styled.TextContainer>
-            <p>アーカイブ中です。</p>
-            <p>完了までお待ちください。</p>
+            <p>セッションは終了しました。</p>
+            <p>アーカイブ完了までお待ちください。</p>
           </Styled.TextContainer>
         </Styled.OverLayContainer>
       )

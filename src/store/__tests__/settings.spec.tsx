@@ -31,6 +31,16 @@ import {
 import { useSelector } from 'react-redux'
 import { Talk } from '../../generated/dreamkast-api.generated'
 
+const archive = (t: Talk) => {
+  t.onAir = false
+  return t
+}
+
+const onAir = (t: Talk) => {
+  t.onAir = true
+  return t
+}
+
 describe('useTracks', () => {
   it('should provide tracks along with corresponding live talk', () => {
     let got: any = null
@@ -286,7 +296,27 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide the videoId of the talk when selected talk is not live', () => {
     let got = {} as unknown
-    const want = newVideoCommand('archived', MockTalkA3().videoId)
+    const want = newVideoCommand('notStarted')
+
+    const Test = () => {
+      got = useSelector(videoCommandSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    const mockTalks = [archive(MockTalkA1()), MockTalkA2(), onAir(MockTalkA3())]
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(mockTalks))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide empty string when selected talk is placed after the onAir talk', () => {
+    let got = {} as unknown
+    const want = newVideoCommand('notStarted')
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -375,16 +405,6 @@ describe('selector:videoCommandSelector', () => {
 })
 
 describe('action:setInitialViewTalk', () => {
-  const archive = (t: Talk) => {
-    t.onAir = false
-    return t
-  }
-
-  const onAir = (t: Talk) => {
-    t.onAir = true
-    return t
-  }
-
   it('should set the first track as viewing Track', () => {
     const store = setupStore()
     store.dispatch(setTracks(MockTracks()))
@@ -546,11 +566,6 @@ describe('action:patchTalksOnAir', () => {
     const store = setupStore()
     store.dispatch(setTalks(MockTalks()))
     store.dispatch(setTracks(MockTracks()))
-
-    const onAir = (t: Talk) => {
-      t.onAir = true
-      return t
-    }
 
     const nextTalks = {
       [MockTrackA().id]: onAir(MockTalkA2()),

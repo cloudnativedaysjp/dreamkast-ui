@@ -373,7 +373,14 @@ export const settingsInitializedSelector = createSelector(
 )
 
 export type VideoCommand = {
-  status: 'preparing' | 'onAir' | 'archiving' | 'archived' | 'notSelected'
+  status:
+    | 'preparing'
+    | 'onAir'
+    | 'archiving'
+    | 'archived'
+    | 'notSelected'
+    | 'notStarted'
+    | 'done'
   playBackUrl?: string
 }
 
@@ -407,12 +414,23 @@ export const videoCommandSelector = createSelector(
         return newVideoCommand('preparing')
       }
       return newVideoCommand('onAir', selectedTrack.videoId)
-    } else {
-      if (!selectedTalk.videoId) {
-        return newVideoCommand('archiving')
-      }
-      return newVideoCommand('archived', selectedTalk.videoId)
     }
+
+    const onAirTalk = talks.find((t) => t.trackId === viewTrackId && t.onAir)
+    if (onAirTalk && onAirTalk.slotNum! <= selectedTalk.slotNum!) {
+      return newVideoCommand('notStarted')
+    }
+    // okui:
+    // TODO showOnTimeTableの方が適切なので、そっちに変更する。
+    // CICD2023では、リハーサルでshowOnTimeTableが正しく入っておらず検証ができなかったので、暫定でpresentationMethodを使う
+    if (!selectedTalk.presentationMethod) {
+      // intersection
+      return newVideoCommand('done')
+    }
+    if (!selectedTalk.videoId) {
+      return newVideoCommand('archiving')
+    }
+    return newVideoCommand('archived', selectedTalk.videoId)
   },
 )
 
