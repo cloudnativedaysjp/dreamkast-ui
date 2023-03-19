@@ -15,8 +15,12 @@ import {
   patchTalksOnAir,
   OnAirTalk,
   newVideoCommand,
+  setNotifyRegisteredTalkStarted,
+  updateNextRegisteredTalk,
+  setProfile,
 } from '../settings'
 import {
+  MockProfile,
   MockTalkA1,
   MockTalkA2,
   MockTalkA3,
@@ -29,7 +33,11 @@ import {
   MockTracks,
 } from '../../testhelper/fixture'
 import { useSelector } from 'react-redux'
-import { Talk } from '../../generated/dreamkast-api.generated'
+import {
+  RegisteredTalk,
+  Talk,
+  Track,
+} from '../../generated/dreamkast-api.generated'
 
 const archive = (t: Talk) => {
   t.onAir = false
@@ -576,6 +584,162 @@ describe('action:updateViewTalkWithLiveOne', () => {
     }
     const want = {
       viewTalkId: 0,
+    }
+    expect(got).toStrictEqual(want)
+  })
+})
+
+const convertToRegisteredTalk = (t: Talk, tr: Track): RegisteredTalk => {
+  return {
+    talkId: t.id,
+    talkTitle: t.title,
+    talkSpeakers: t.speakers.map((speaker) => ({
+      name: speaker.name,
+    })),
+    trackName: tr.name,
+    talkStartTime: t.startTime,
+    talkEndTime: t.endTime,
+  }
+}
+
+describe('action:updateNextRegisteredTalk', () => {
+  // helper
+  const populateStore = (registeredTalks: RegisteredTalk[]) => {
+    const store = setupStore()
+    store.dispatch(setTalks(MockTalks()))
+    store.dispatch(setTracks(MockTracks()))
+    const profile = MockProfile()
+    profile.registeredTalks = registeredTalks
+    store.dispatch(setProfile(profile))
+    return store
+  }
+
+  it('should set next talk and track when nextTalk is booked', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkA2(), MockTrackA()),
+    ])
+    store.dispatch(setNotifyRegisteredTalkStarted(true))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: MockTalkA2(),
+      track: MockTrackA(),
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should not set next talk and track when nextTalk is not booked', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkB1(), MockTrackB()),
+    ])
+    store.dispatch(setNotifyRegisteredTalkStarted(true))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: null,
+      track: null,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should not set next talk when notifiation disabled', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkA2(), MockTrackA()),
+    ])
+    store.dispatch(setNotifyRegisteredTalkStarted(false))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: null,
+      track: null,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should not set next talk when no talks given', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkA2(), MockTrackA()),
+    ])
+    store.dispatch(setNotifyRegisteredTalkStarted(true))
+
+    const nextTalks = {}
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: null,
+      track: null,
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should set next talk when on the same track but not in the live mode', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkA2(), MockTrackA()),
+    ])
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    store.dispatch(setNotifyRegisteredTalkStarted(true))
+    store.dispatch(setIsLiveMode(false))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: MockTalkA2(),
+      track: MockTrackA(),
+    }
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should not set next talk when on the same track and in the live mode', () => {
+    const store = populateStore([
+      convertToRegisteredTalk(MockTalkA2(), MockTrackA()),
+    ])
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA1().id))
+    store.dispatch(setNotifyRegisteredTalkStarted(true))
+    store.dispatch(setIsLiveMode(true))
+
+    const nextTalks = {
+      [MockTrackA().id]: MockTalkA2(),
+    }
+    store.dispatch(updateNextRegisteredTalk(nextTalks))
+
+    const got = {
+      ...store.getState().settings.nextRegisteredTalk,
+    }
+    const want = {
+      talk: null,
+      track: null,
     }
     expect(got).toStrictEqual(want)
   })
