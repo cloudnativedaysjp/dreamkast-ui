@@ -296,7 +296,7 @@ describe('selector:videoCommandSelector', () => {
 
   it('should provide the videoId of the talk when selected talk is not live', () => {
     let got = {} as unknown
-    const want = newVideoCommand('notStarted')
+    const want = newVideoCommand('archived', MockTalkA1().videoId)
 
     const Test = () => {
       got = useSelector(videoCommandSelector)
@@ -314,7 +314,27 @@ describe('selector:videoCommandSelector', () => {
     expect(got).toStrictEqual(want)
   })
 
-  it('should provide empty string when selected talk is placed after the onAir talk', () => {
+  it('should provide archiving status when selected talk is placed before the onAir talk but no videoId provided', () => {
+    let got = {} as unknown
+    const want = newVideoCommand('archiving')
+
+    const Test = () => {
+      got = useSelector(videoCommandSelector)
+      return <div />
+    }
+
+    const store = setupStore()
+    const mockTalks = [archive(MockTalkA1()), MockTalkA2(), onAir(MockTalkA3())]
+    store.dispatch(setTracks(MockTracks()))
+    store.dispatch(setTalks(mockTalks))
+    store.dispatch(setViewTrackId(MockTrackA().id))
+    store.dispatch(setViewTalkId(MockTalkA2().id))
+    renderWithProviders(<Test />, { store })
+
+    expect(got).toStrictEqual(want)
+  })
+
+  it('should provide notStarted status when selected talk is placed after the onAir talk', () => {
     let got = {} as unknown
     const want = newVideoCommand('notStarted')
 
