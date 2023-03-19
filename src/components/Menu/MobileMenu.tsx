@@ -53,9 +53,7 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
           </Link>
         </ListItem>
 
-        {isPreEvent ? (
-          ''
-        ) : (
+        {!isPreEvent && (
           <>
             <ListItem button key="guide">
               <ListItemIcon>
