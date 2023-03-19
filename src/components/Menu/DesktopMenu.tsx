@@ -21,9 +21,7 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
 
   return (
     <Styled.DesktopMenu>
-      {isPreEvent ? (
-        ''
-      ) : (
+      {!isPreEvent && (
         <>
           <CommonStyled.MenuLink
             href={guideUrl()}
@@ -39,20 +37,7 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         <Button style={{ color: '#423A57' }}>Your Plan</Button>
       </Link>
 
-      {isPreEvent ? (
-        ''
-      ) : (
-        <>
-          <TrailMapButton />
-          <CommonStyled.MenuLink
-            href="https://miro.com/app/board/uXjVPWsauOI=/"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <Button style={{ color: '#423A57' }}>Whiteboard</Button>
-          </CommonStyled.MenuLink>
-        </>
-      )}
+      {!isPreEvent && <TrailMapButton />}
 
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/o11y`}
