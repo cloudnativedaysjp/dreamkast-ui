@@ -28,7 +28,6 @@ export const NextTalkNotifier = ({ children }: PropsWithChildren) => {
     if (!talk || !track) {
       return
     }
-    console.warn(talk)
 
     const component = (
       <div>

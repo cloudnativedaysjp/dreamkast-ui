@@ -101,7 +101,6 @@ export const usePostSessionPointEvent = () => {
 
     ;(async () => {
       const eventNum = getSessionEventNum(slotId)
-      console.warn(eventNum)
       const pointEventId = getPointEventId(eventNum)
       try {
         await postPointEvent({
@@ -126,7 +125,6 @@ export const usePostSessionPointEvent = () => {
         dispatch(setStampAddedByQRCode(true))
         dispatch(setTrailMapOpen(true))
         if (res.status !== 'ok') {
-          console.warn(res)
           return
         }
       } catch (err) {

@@ -237,7 +237,6 @@ const settingsSlice = createSlice({
         }
         return (t.onAirTalk as OnAirTalk)?.talk_id !== nextTalk.id
       })
-      console.warn('length:', updatedTracks.length)
       if (updatedTracks.length === 0) {
         return
       }

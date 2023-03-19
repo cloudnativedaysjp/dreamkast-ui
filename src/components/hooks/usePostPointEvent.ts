@@ -52,7 +52,6 @@ export const usePostPointEvent = () => {
       .then((res) => {
         dispatch(setTrailMapOpen(true))
         if (res.status !== 'ok') {
-          console.warn(res)
           return
         }
       })
