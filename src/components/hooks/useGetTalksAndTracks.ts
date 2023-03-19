@@ -18,6 +18,9 @@ export const useGetTalksAndTracks = () => {
   const [isDoneFirstQuery, setDoneFirstQuery] = useState<boolean>(false)
 
   const refetch = useCallback(() => {
+    if (!isDoneFirstQuery) {
+      return
+    }
     talksQuery.refetch()
     tracksQuery.refetch()
   }, [talksQuery.refetch, tracksQuery.refetch])
