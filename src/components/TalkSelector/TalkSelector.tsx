@@ -24,7 +24,7 @@ export const TalkSelector: React.FC<Props> = (props) => {
     const id = window.setInterval(() => {
       setNow(dayjs().unix())
     }, 1000)
-    return window.clearInterval(id)
+    return () => window.clearInterval(id)
   }, [])
 
   const footer = (
