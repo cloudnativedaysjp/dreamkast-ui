@@ -8,11 +8,13 @@ RUN --mount=type=cache,target=/tmp/yarn_cache \
   yarn install
 
 FROM node:18.16.0-alpine
+RUN apk add --no-cache tini
 WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
 ARG SENTRY_AUTH_TOKEN
 RUN SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} yarn build
 
-CMD [ "yarn", "start", "-p", "3001" ]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD [ "/usr/local/bin/yarn", "start", "-p", "3001" ]
 EXPOSE 3001
