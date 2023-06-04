@@ -62,7 +62,6 @@ describe('useInitSetup', () => {
   })
 
   it('should not fetch event and profile when eventAbbr not provided', async () => {
-    const eventAbbr = 'cicd2023'
     const eventFn = jest.fn()
     const profileFn = jest.fn()
     server.use(
@@ -81,7 +80,7 @@ describe('useInitSetup', () => {
     )
 
     const Test = () => {
-      useInitSetup(eventAbbr)
+      useInitSetup('')
       return <div data-testid={'tgt'} />
     }
     const store = setupStore()
