@@ -63,5 +63,5 @@ export const baseApi = createApi({
 })
 
 export type DreamkastEndpointBuilder = Parameters<
-  Parameters<typeof baseApi['injectEndpoints']>[0]['endpoints']
+  Parameters<(typeof baseApi)['injectEndpoints']>[0]['endpoints']
 >[0]
