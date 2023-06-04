@@ -37,8 +37,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       <Auth0Provider
         domain={env.NEXT_PUBLIC_AUTH0_DOMAIN}
         clientId={env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
-        redirectUri={baseUrl}
-        audience={env.NEXT_PUBLIC_AUTH0_AUDIENCE}
+        authorizationParams={{
+          redirect_uri: baseUrl,
+          audience: env.NEXT_PUBLIC_AUTH0_AUDIENCE,
+        }}
       >
         <AccessTokenResolver>{children}</AccessTokenResolver>
       </Auth0Provider>
