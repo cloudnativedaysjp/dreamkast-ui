@@ -8,7 +8,7 @@
         "export": "next build && next export",
         "type-check": "tsc",
         "lint": "prettier --write '**/*.{js,jsx,ts,tsx}' && eslint --fix './**/*.{js,jsx,ts,tsx}' && eslint '*/**/*.{js,ts}' --quiet --fix",
-        "test": "jest",
+        "test": "yarn install --frozen-lockfile && jest",
         "test:update": "jest -u",
         "test:coverage": "jest --collect-coverage",
         "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts"
