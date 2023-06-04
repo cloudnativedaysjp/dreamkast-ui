@@ -87,7 +87,13 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
           </ListItemIcon>
           <Button
             style={{ color: '#423A57' }}
-            onClick={() => logout({ returnTo: dkUrl })}
+            onClick={() =>
+              logout({
+                logoutParams: {
+                  returnTo: dkUrl,
+                },
+              })
+            }
           >
             Logout
           </Button>

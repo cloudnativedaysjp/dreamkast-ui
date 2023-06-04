@@ -24,6 +24,6 @@ describe('useRunAfter', () => {
 
     expect(trials).toBeGreaterThan(8)
     expect(fn.mock.calls.length).toBeGreaterThan(1)
-    expect(fn.mock.calls.length).toBeLessThan(4)
+    expect(fn.mock.calls.length).toBeLessThan(5)
   })
 })

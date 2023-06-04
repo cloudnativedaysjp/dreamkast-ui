@@ -54,7 +54,13 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
       </CommonStyled.MenuLink>
       <Button
         style={{ color: '#423A57' }}
-        onClick={() => logout({ returnTo: dkUrl })}
+        onClick={() =>
+          logout({
+            logoutParams: {
+              returnTo: dkUrl,
+            },
+          })
+        }
       >
         Logout
       </Button>
