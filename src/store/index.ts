@@ -34,7 +34,7 @@ export const wrapper = createWrapper(makeStore, {
   // debug: true,
 })
 
-export const getInitialPageProps: typeof wrapper['getInitialPageProps'] = (
+export const getInitialPageProps: (typeof wrapper)['getInitialPageProps'] = (
   f,
 ) => {
   const _getInitialPageProps = wrapper.getInitialPageProps(f)

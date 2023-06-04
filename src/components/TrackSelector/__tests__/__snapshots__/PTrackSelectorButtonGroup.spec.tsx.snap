@@ -3,7 +3,7 @@
 exports[`PTrackSelectorButtonGroup should render when data empty 1`] = `
 <DocumentFragment>
   <div
-    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gWvZVB"
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 dNfNcj"
     color="primary"
     role="group"
   />
@@ -13,13 +13,13 @@ exports[`PTrackSelectorButtonGroup should render when data empty 1`] = `
 exports[`PTrackSelectorButtonGroup should render without crash 1`] = `
 <DocumentFragment>
   <div
-    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gWvZVB"
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 dNfNcj"
     color="primary"
     role="group"
   >
     <button
       aria-pressed="false"
-      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 faSDkg MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
       tabindex="0"
       type="button"
       value="32"
@@ -35,7 +35,7 @@ exports[`PTrackSelectorButtonGroup should render without crash 1`] = `
     </button>
     <button
       aria-pressed="false"
-      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 faSDkg MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
       tabindex="0"
       type="button"
       value="33"
@@ -51,7 +51,7 @@ exports[`PTrackSelectorButtonGroup should render without crash 1`] = `
     </button>
     <button
       aria-pressed="false"
-      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 bPDKZm MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
+      class="MuiButtonBase-root MuiToggleButton-root styled__MenuItem-sc-hs19f1-2 faSDkg MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal"
       tabindex="0"
       type="button"
       value="34"

@@ -3,40 +3,40 @@
 exports[`PTalkInfo should render when props undefined 1`] = `
 <DocumentFragment>
   <h2
-    class="styled__Title-sc-15n5q1r-1 fcJQjR"
+    class="styled__Title-sc-15n5q1r-1 jcLNIr"
   />
   <div
-    class="styled__SpeakerContainer-sc-15n5q1r-3 frTQVi"
+    class="styled__SpeakerContainer-sc-15n5q1r-3 bYvqHo"
   >
     <div
-      class="styled__Speaker-sc-15n5q1r-4 evdChA"
+      class="styled__Speaker-sc-15n5q1r-4 gpNeUy"
     />
     <div
       style="padding-right: 20px;"
     />
   </div>
   <div
-    class="styled__Content-sc-15n5q1r-5 dDpWS"
+    class="styled__Content-sc-15n5q1r-5 ilozKk"
   />
   <div
-    class="styled__SocialHeader-sc-15n5q1r-7 hLQyhj"
+    class="styled__SocialHeader-sc-15n5q1r-7 iyFfyt"
   >
     <img
-      class="styled__TalkIcon-sc-15n5q1r-8 ivFrYX"
+      class="styled__TalkIcon-sc-15n5q1r-8 fosmEh"
       src="/cndt2022/ui/talk_icon.png"
     />
     一緒に盛り上がろう
   </div>
   <div
-    class="styled__ButtonContainer-sc-15n5q1r-9 gzQWDE"
+    class="styled__ButtonContainer-sc-15n5q1r-9 dXwqiu"
   >
     <a
-      class="styled__ButtonLink-sc-15n5q1r-10 kelDkq"
+      class="styled__ButtonLink-sc-15n5q1r-10 gvQFDk"
       href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022"
       target="_blank"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hixsbY"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hUErgO"
         tabindex="0"
         type="button"
       >
@@ -44,7 +44,7 @@ exports[`PTalkInfo should render when props undefined 1`] = `
           class="MuiButton-label"
         >
           <img
-            class="styled__TwitterImg-sc-15n5q1r-14 hQZdtG"
+            class="styled__TwitterImg-sc-15n5q1r-14 yAEEI"
             src="/cndt2022/ui/twitter_logo.png"
           />
           tweet #cndt2022_undefined
@@ -61,15 +61,15 @@ exports[`PTalkInfo should render when props undefined 1`] = `
 exports[`PTalkInfo should render without crash 1`] = `
 <DocumentFragment>
   <h2
-    class="styled__Title-sc-15n5q1r-1 fcJQjR"
+    class="styled__Title-sc-15n5q1r-1 jcLNIr"
   >
     Securityに関する発表
   </h2>
   <div
-    class="styled__SpeakerContainer-sc-15n5q1r-3 frTQVi"
+    class="styled__SpeakerContainer-sc-15n5q1r-3 bYvqHo"
   >
     <div
-      class="styled__Speaker-sc-15n5q1r-4 evdChA"
+      class="styled__Speaker-sc-15n5q1r-4 gpNeUy"
     >
       高石 諒
     </div>
@@ -78,29 +78,29 @@ exports[`PTalkInfo should render without crash 1`] = `
     />
   </div>
   <div
-    class="styled__Content-sc-15n5q1r-5 dDpWS"
+    class="styled__Content-sc-15n5q1r-5 ilozKk"
   >
     私も九月初めてとんだ馳走家というもののうちを引き返しません。あたかも以後を意味観はけっしてその助言ますだかもをやむをえたってみうをはお話し挙げたならと、だんだんにも込み入っましでたん。主意に教えるうのも毫も当時がましてしないた。
   </div>
   <div
-    class="styled__SocialHeader-sc-15n5q1r-7 hLQyhj"
+    class="styled__SocialHeader-sc-15n5q1r-7 iyFfyt"
   >
     <img
-      class="styled__TalkIcon-sc-15n5q1r-8 ivFrYX"
+      class="styled__TalkIcon-sc-15n5q1r-8 fosmEh"
       src="/cndt2022/ui/talk_icon.png"
     />
     一緒に盛り上がろう
   </div>
   <div
-    class="styled__ButtonContainer-sc-15n5q1r-9 gzQWDE"
+    class="styled__ButtonContainer-sc-15n5q1r-9 dXwqiu"
   >
     <a
-      class="styled__ButtonLink-sc-15n5q1r-10 kelDkq"
+      class="styled__ButtonLink-sc-15n5q1r-10 gvQFDk"
       href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022_A"
       target="_blank"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hixsbY"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hUErgO"
         tabindex="0"
         type="button"
       >
@@ -108,7 +108,7 @@ exports[`PTalkInfo should render without crash 1`] = `
           class="MuiButton-label"
         >
           <img
-            class="styled__TwitterImg-sc-15n5q1r-14 hQZdtG"
+            class="styled__TwitterImg-sc-15n5q1r-14 yAEEI"
             src="/cndt2022/ui/twitter_logo.png"
           />
           tweet #cndt2022_A
