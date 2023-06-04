@@ -1,13 +1,13 @@
 # syntax = docker/dockerfile:1.4
 
-FROM node:18.16.0-alpine AS base
+FROM node:20.2.0-alpine AS base
 WORKDIR /base
 COPY --link package.json yarn.lock ./
 RUN --mount=type=cache,target=/tmp/yarn_cache \
   YARN_CACHE_FOLDER=/tmp/yarn_cache \
   yarn install
 
-FROM node:18.16.0-alpine
+FROM node:20.2.0-alpine
 RUN apk add --no-cache tini
 WORKDIR /base
 COPY --link --from=base /base ./
