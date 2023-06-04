@@ -3,7 +3,7 @@
 exports[`TrailMapPointHistory should render without crash 1`] = `
 <DocumentFragment>
   <div
-    class="styled__PointHistoryTable-sc-1t1auio-12 PhTTt"
+    class="styled__PointHistoryTable-sc-1t1auio-12 gDdnXT"
   >
     <div
       class="MuiTableContainer-root"

@@ -3,10 +3,10 @@
 exports[`Chat should fetch chat data and render without crash 1`] = `
 <DocumentFragment>
   <div
-    class="styled__Container-sc-1llqfms-0 lbZauL"
+    class="styled__Container-sc-1llqfms-0 bBAkaJ"
   >
     <div
-      class="MuiTabs-root styled__TabContainer-sc-1llqfms-1 cDIVIW"
+      class="MuiTabs-root styled__TabContainer-sc-1llqfms-1 dJrtFc"
     >
       <div
         class="MuiTabs-scroller MuiTabs-fixed"
@@ -21,7 +21,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             aria-controls="simple-tabpanel-0"
             aria-labelledby="simple-tabpanel-0"
             aria-selected="true"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki Mui-selected"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 BXQwU Mui-selected"
             id="simple-tab-0"
             role="tab"
             tabindex="0"
@@ -40,7 +40,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             aria-controls="simple-tabpanel-1"
             aria-labelledby="simple-tabpanel-1"
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 BXQwU"
             id="simple-tab-1"
             role="tab"
             tabindex="-1"
@@ -65,17 +65,17 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
     <div
       aria-controls="simple-tabpanel-0"
       aria-labelledby="simple-tabpanel-0"
-      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 ljDeDA"
       id="simple-tab-0"
       role="tabpanel"
     >
       <div
-        class="MuiBox-root MuiBox-root-5 styled__Box-sc-7eb3vm-0 ldgwby"
+        class="MuiBox-root MuiBox-root-5 styled__Box-sc-7eb3vm-0 kkjyek"
         id="message-box"
       >
         <div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 cCTQBk MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
               class="MuiGrid-root MuiGrid-container"
@@ -89,13 +89,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  class="styled__MenuButton-sc-h0bng9-3 RvpXS"
                   data-messageid="286"
                   data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 ieQDrx MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -109,7 +109,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
               >
                 <div
-                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                  class="styled__MessageBody-sc-h0bng9-1 mlXih"
                 >
                   わいわい
                 </div>
@@ -118,13 +118,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  class="styled__ReplyButton-sc-h0bng9-5 ilnbPt"
                   data-messageid="286"
                   data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 hpRTLe MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -139,7 +139,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
         </div>
         <div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 cCTQBk MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
               class="MuiGrid-root MuiGrid-container"
@@ -153,13 +153,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  class="styled__MenuButton-sc-h0bng9-3 RvpXS"
                   data-messageid="288"
                   data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 ieQDrx MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -173,7 +173,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
               >
                 <div
-                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                  class="styled__MessageBody-sc-h0bng9-1 mlXih"
                 >
                   わいわい
                 </div>
@@ -182,13 +182,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  class="styled__ReplyButton-sc-h0bng9-5 ilnbPt"
                   data-messageid="288"
                   data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 hpRTLe MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -201,15 +201,15 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             </div>
           </div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 cCTQBk loaNci MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+              class="styled__MessageBody-sc-h0bng9-1 mlXih"
             >
               がやがや
             </div>
             <div
-              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              class="styled__MenuButton-sc-h0bng9-3 RvpXS"
               data-messageid="343"
               data-replyto="288"
             >
@@ -226,15 +226,15 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             </div>
           </div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 cCTQBk loaNci MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+              class="styled__MessageBody-sc-h0bng9-1 mlXih"
             >
               👍
             </div>
             <div
-              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              class="styled__MenuButton-sc-h0bng9-3 RvpXS"
               data-messageid="344"
               data-replyto="288"
             >
@@ -251,15 +251,15 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             </div>
           </div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 gDXxBK ikunRk MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 styled__ChatReplyMessage-sc-h0bng9-2 cCTQBk loaNci MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+              class="styled__MessageBody-sc-h0bng9-1 mlXih"
             >
               このメッセージは削除されました
             </div>
             <div
-              class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+              class="styled__MenuButton-sc-h0bng9-3 RvpXS"
               data-messageid="345"
               data-replyto="288"
             >
@@ -278,7 +278,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
         </div>
         <div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 dEmyVI MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 ccGrOO MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
               class="MuiGrid-root MuiGrid-container"
@@ -292,13 +292,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  class="styled__MenuButton-sc-h0bng9-3 RvpXS"
                   data-messageid="289"
                   data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 ieQDrx MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -312,7 +312,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
               >
                 <div
-                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                  class="styled__MessageBody-sc-h0bng9-1 mlXih"
                 >
                   このメッセージは削除されました
                 </div>
@@ -325,7 +325,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
         </div>
         <div>
           <div
-            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 gDXxBK MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root styled__ChatMessage-sc-h0bng9-0 cCTQBk MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
               class="MuiGrid-root MuiGrid-container"
@@ -339,13 +339,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__MenuButton-sc-h0bng9-3 ifTVFQ"
+                  class="styled__MenuButton-sc-h0bng9-3 RvpXS"
                   data-messageid="346"
                   data-testid="message-menu-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 dFzrgL MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__MenuIcon-sc-h0bng9-4 ieQDrx MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -359,7 +359,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
               >
                 <div
-                  class="styled__MessageBody-sc-h0bng9-1 hZoGWb"
+                  class="styled__MessageBody-sc-h0bng9-1 mlXih"
                 >
                   🎉
                 </div>
@@ -368,13 +368,13 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
               >
                 <div
-                  class="styled__ReplyButton-sc-h0bng9-5 kfXLPD"
+                  class="styled__ReplyButton-sc-h0bng9-5 ilnbPt"
                   data-messageid="346"
                   data-testid="message-reply-btn"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 iuDtwg MuiSvgIcon-fontSizeSmall"
+                    class="MuiSvgIcon-root styled__ReplyIcon-sc-h0bng9-6 hpRTLe MuiSvgIcon-fontSizeSmall"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -392,19 +392,19 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
     <div
       aria-controls="simple-tabpanel-1"
       aria-labelledby="simple-tabpanel-1"
-      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 ljDeDA"
       hidden=""
       id="simple-tab-1"
       role="tabpanel"
     />
     <div
-      class="styled__Container-sc-nbl6ba-0 isgeOe"
+      class="styled__Container-sc-nbl6ba-0 cZiACc"
     >
       <form
         class="styled__ChatMessageForm-sc-nbl6ba-5"
       >
         <div
-          class="styled__CheckBoxContainer-sc-nbl6ba-9 eLVoYy"
+          class="styled__CheckBoxContainer-sc-nbl6ba-9 khgagE"
         >
           <span
             aria-disabled="false"
@@ -442,7 +442,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
           </div>
         </div>
         <div
-          class="MuiFormControl-root MuiTextField-root styled__TextField-sc-nbl6ba-7 eNztZv"
+          class="MuiFormControl-root MuiTextField-root styled__TextField-sc-nbl6ba-7 kRBvPZ"
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorSecondary MuiInput-colorSecondary MuiInputBase-formControl MuiInput-formControl MuiInputBase-marginDense MuiInput-marginDense"
@@ -468,7 +468,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
           />
         </div>
         <div
-          class="styled__ButtonContainer-sc-nbl6ba-6 cfAxmx"
+          class="styled__ButtonContainer-sc-nbl6ba-6 eVOFBv"
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline"
@@ -481,7 +481,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
             />
           </div>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
             tabindex="0"
             type="submit"
           >
@@ -508,7 +508,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
               />
             </div>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
               tabindex="0"
               type="submit"
             >
@@ -536,7 +536,7 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
               />
             </div>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
               tabindex="0"
               type="submit"
             >
@@ -586,10 +586,10 @@ exports[`Chat should fetch chat data and render without crash 1`] = `
 exports[`Chat should render without crash when no data provided 1`] = `
 <DocumentFragment>
   <div
-    class="styled__Container-sc-1llqfms-0 lbZauL"
+    class="styled__Container-sc-1llqfms-0 bBAkaJ"
   >
     <div
-      class="MuiTabs-root styled__TabContainer-sc-1llqfms-1 cDIVIW"
+      class="MuiTabs-root styled__TabContainer-sc-1llqfms-1 dJrtFc"
     >
       <div
         class="MuiTabs-scroller MuiTabs-fixed"
@@ -604,7 +604,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
             aria-controls="simple-tabpanel-0"
             aria-labelledby="simple-tabpanel-0"
             aria-selected="true"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki Mui-selected"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 BXQwU Mui-selected"
             id="simple-tab-0"
             role="tab"
             tabindex="0"
@@ -623,7 +623,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
             aria-controls="simple-tabpanel-1"
             aria-labelledby="simple-tabpanel-1"
             aria-selected="false"
-            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 dLiYki"
+            class="MuiButtonBase-root MuiTab-root MuiTab-textColorSecondary styled__Tab-sc-1llqfms-3 BXQwU"
             id="simple-tab-1"
             role="tab"
             tabindex="-1"
@@ -648,31 +648,31 @@ exports[`Chat should render without crash when no data provided 1`] = `
     <div
       aria-controls="simple-tabpanel-0"
       aria-labelledby="simple-tabpanel-0"
-      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 ljDeDA"
       id="simple-tab-0"
       role="tabpanel"
     >
       <div
-        class="MuiBox-root MuiBox-root-14 styled__Box-sc-7eb3vm-0 ldgwby"
+        class="MuiBox-root MuiBox-root-14 styled__Box-sc-7eb3vm-0 kkjyek"
         id="message-box"
       />
     </div>
     <div
       aria-controls="simple-tabpanel-1"
       aria-labelledby="simple-tabpanel-1"
-      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 fuRTEG"
+      class="MuiTabPanel-root styled__TabPanel-sc-1llqfms-2 ljDeDA"
       hidden=""
       id="simple-tab-1"
       role="tabpanel"
     />
     <div
-      class="styled__Container-sc-nbl6ba-0 isgeOe"
+      class="styled__Container-sc-nbl6ba-0 cZiACc"
     >
       <form
         class="styled__ChatMessageForm-sc-nbl6ba-5"
       >
         <div
-          class="styled__CheckBoxContainer-sc-nbl6ba-9 eLVoYy"
+          class="styled__CheckBoxContainer-sc-nbl6ba-9 khgagE"
         >
           <span
             aria-disabled="false"
@@ -710,7 +710,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
           </div>
         </div>
         <div
-          class="MuiFormControl-root MuiTextField-root styled__TextField-sc-nbl6ba-7 eNztZv"
+          class="MuiFormControl-root MuiTextField-root styled__TextField-sc-nbl6ba-7 kRBvPZ"
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorSecondary MuiInput-colorSecondary MuiInputBase-formControl MuiInput-formControl MuiInputBase-marginDense MuiInput-marginDense"
@@ -736,7 +736,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
           />
         </div>
         <div
-          class="styled__ButtonContainer-sc-nbl6ba-6 cfAxmx"
+          class="styled__ButtonContainer-sc-nbl6ba-6 eVOFBv"
         >
           <div
             class="MuiInputBase-root MuiInput-root MuiInput-underline"
@@ -749,7 +749,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
             />
           </div>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
             tabindex="0"
             type="submit"
           >
@@ -776,7 +776,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
               />
             </div>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
               tabindex="0"
               type="submit"
             >
@@ -804,7 +804,7 @@ exports[`Chat should render without crash when no data provided 1`] = `
               />
             </div>
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 dFxPOP"
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained styled__ReactButton-sc-158ay7x-1 fhKoAh"
               tabindex="0"
               type="submit"
             >

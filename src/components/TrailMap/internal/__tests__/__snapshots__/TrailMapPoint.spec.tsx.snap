@@ -3,10 +3,10 @@
 exports[`TrailMapPoint should render loading skeleton 1`] = `
 <DocumentFragment>
   <div
-    class="styled__TrailMapPointContainer-sc-1t1auio-5 eZNYKX"
+    class="styled__TrailMapPointContainer-sc-1t1auio-5 biTbvd"
   >
     <div
-      class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
+      class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 iPLrbd"
     >
       <div
         class="suspend"
@@ -28,7 +28,7 @@ exports[`TrailMapPoint should render loading skeleton 1`] = `
 exports[`TrailMapPoint should render loading skeleton 2`] = `
 <DocumentFragment>
   <div
-    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
+    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 iPLrbd"
   >
     <div
       class="suspend"
@@ -44,7 +44,7 @@ exports[`TrailMapPoint should render loading skeleton 2`] = `
 exports[`TrailMapPoint should render loading skeleton when loading pointData 1`] = `
 <DocumentFragment>
   <div
-    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 fhJyZv"
+    class="styled__TrailMapPointSuspendContainer-sc-1t1auio-4 iPLrbd"
   >
     <div
       class="suspend"
