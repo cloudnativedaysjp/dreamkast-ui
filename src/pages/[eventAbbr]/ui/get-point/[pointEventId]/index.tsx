@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NextPage } from 'next'
 
 // TODO: TrailMapを使わない判断がされたら、このページごと消す

@@ -51,14 +51,13 @@ export function renderWithApolloClient(
 ) {
   function Wrapper({ children }: PropsWithChildren): JSX.Element {
     const client = new ApolloClient({
-      uri: "http://localhost:3001",
+      uri: 'http://localhost:3001',
       cache: new InMemoryCache(),
     })
     return <ApolloProvider client={client}>{children}</ApolloProvider>
   }
-  return render(ui, {wrapper: Wrapper, ...renderOptions} )
+  return render(ui, { wrapper: Wrapper, ...renderOptions })
 }
-
 
 const rootReducer = combineReducers({
   [dreamkastApi.reducerPath]: dreamkastApi.reducer,

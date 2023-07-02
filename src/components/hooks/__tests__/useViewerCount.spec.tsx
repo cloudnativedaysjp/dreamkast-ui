@@ -28,19 +28,19 @@ describe.only('useViewerCount', () => {
           ctx.data({
             viewerCount: [
               {
-                "trackID": 41,
-                "trackName": "A",
-                "count": 10
+                trackID: 41,
+                trackName: 'A',
+                count: 10,
               },
               {
-                "trackID": given.trackId,
-                "trackName": "B",
-                "count": given.count
-              }
-            ]
-          })
+                trackID: given.trackId,
+                trackName: 'B',
+                count: given.count,
+              },
+            ],
+          }),
         )
-      })
+      }),
     )
 
     const Test = () => {
