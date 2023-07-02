@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { NextPage } from 'next'
 
+// TODO: TrailMapを使わない判断がされたら、このページごと消す
 const IndexPage: NextPage = () => {
   // const { isReady, eventAbbr, pointEventId } = useRouterQuery()
 
