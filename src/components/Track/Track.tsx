@@ -21,7 +21,6 @@ import {
   useKarteTracking,
   useLiveTalkUpdate,
   useSizeChecker,
-  useTrailMapTracking,
 } from '../TrackSelector/hooks'
 import { useRunAfter } from '../hooks/useRunAfter'
 
@@ -51,7 +50,8 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const isLiveMode = useSelector(isLiveModeSelector)
 
   useKarteTracking()
-  useTrailMapTracking()
+  // TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す
+  // useTrailMapTracking()
   useLiveTalkUpdate(event.abbr, () => {
     lazyRefetch()
   })
