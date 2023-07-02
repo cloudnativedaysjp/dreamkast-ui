@@ -14,6 +14,7 @@
         "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.15",
         "@auth0/auth0-react": "^2.0.0",
         "@material-ui/core": "^4.12.4",
         "@material-ui/icons": "^4.11.3",
@@ -27,6 +28,7 @@
         "actioncable": "^5.2.8-1",
         "axios": "^1.0.0",
         "dayjs": "^1.11.5",
+        "graphql": "^16.6.0",
         "linkify-react": "^4.0.0",
         "linkifyjs": "^4.0.0",
         "next": "13.4.4",
