@@ -7,6 +7,7 @@
         "start": "next start",
         "export": "next build && next export",
         "type-check": "tsc",
+        "gql": "graphql-codegen",
         "lint": "prettier --write '**/*.{js,jsx,ts,tsx}' && eslint --fix './**/*.{js,jsx,ts,tsx}' && eslint '*/**/*.{js,ts}' --quiet --fix",
         "test": "yarn install --frozen-lockfile && jest",
         "test:update": "jest -u",
@@ -46,6 +47,8 @@
         "video.js": "^7.20.2"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "^4.0.1",
+        "@graphql-codegen/client-preset": "^4.0.1",
         "@rtk-query/codegen-openapi": "^1.0.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
