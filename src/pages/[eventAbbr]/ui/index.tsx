@@ -24,7 +24,6 @@ const IndexMain = () => {
   // usePostSessionPointEvent()
   // useAppDataSetup()
 
-
   if (!event) {
     return <></>
   }
