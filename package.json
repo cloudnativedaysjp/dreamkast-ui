@@ -7,6 +7,7 @@
         "start": "next start",
         "export": "next build && next export",
         "type-check": "tsc",
+        "gql": "graphql-codegen",
         "lint": "prettier --write '**/*.{js,jsx,ts,tsx}' && eslint --fix './**/*.{js,jsx,ts,tsx}' && eslint '*/**/*.{js,ts}' --quiet --fix",
         "test": "yarn install --frozen-lockfile && jest",
         "test:update": "jest -u",
@@ -14,6 +15,7 @@
         "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.15",
         "@auth0/auth0-react": "^2.0.0",
         "@material-ui/core": "^4.12.4",
         "@material-ui/icons": "^4.11.3",
@@ -27,6 +29,7 @@
         "actioncable": "^5.2.8-1",
         "axios": "^1.0.0",
         "dayjs": "^1.11.5",
+        "graphql": "^16.6.0",
         "linkify-react": "^4.0.0",
         "linkifyjs": "^4.0.0",
         "next": "13.4.4",
@@ -44,6 +47,8 @@
         "video.js": "^7.20.2"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "^4.0.1",
+        "@graphql-codegen/client-preset": "^4.0.1",
         "@rtk-query/codegen-openapi": "^1.0.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",

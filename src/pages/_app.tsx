@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -73,11 +74,18 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
     dispatch(setDkUrl(env.NEXT_PUBLIC_DK_URL))
   }, [])
 
+  const client = new ApolloClient({
+    uri: env.NEXT_PUBLIC_WEAVER_URL + 'query',
+    cache: new InMemoryCache(),
+  })
+
   return (
     <>
       <PrivateCtxProvider env={env}>
         <AppComponent>
-          <Component {...pageProps} />
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
         </AppComponent>
       </PrivateCtxProvider>
     </>

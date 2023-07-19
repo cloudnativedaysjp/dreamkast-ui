@@ -11,6 +11,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { render, RenderOptions } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { RootState } from '../store'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   const store = configureStore({
@@ -42,6 +43,20 @@ export function renderWithProviders(
     return <Provider store={store}>{children}</Provider>
   }
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
+}
+
+export function renderWithApolloClient(
+  ui: React.ReactElement,
+  renderOptions?: RenderOptions,
+) {
+  function Wrapper({ children }: PropsWithChildren): JSX.Element {
+    const client = new ApolloClient({
+      uri: 'http://localhost:3001',
+      cache: new InMemoryCache(),
+    })
+    return <ApolloProvider client={client}>{children}</ApolloProvider>
+  }
+  return render(ui, { wrapper: Wrapper, ...renderOptions })
 }
 
 const rootReducer = combineReducers({

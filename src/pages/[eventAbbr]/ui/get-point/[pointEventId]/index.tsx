@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NextPage } from 'next'
-import { useRouterQuery } from '../../../../../components/hooks/useRouterQuery'
-import { setPointEventId } from '../../../../../util/sessionstorage/trailMap'
 
+// TODO: TrailMapを使わない判断がされたら、このページごと消す
 const IndexPage: NextPage = () => {
-  const { isReady, eventAbbr, pointEventId } = useRouterQuery()
+  // const { isReady, eventAbbr, pointEventId } = useRouterQuery()
 
-  useEffect(() => {
-    if (!isReady) {
-      return
-    }
-    setPointEventId(pointEventId!)
-    window.location.href = `/${eventAbbr}/ui`
-  }, [isReady])
+  // useEffect(() => {
+  //   if (!isReady) {
+  //     return
+  //   }
+  //   setPointEventId(pointEventId!)
+  //   window.location.href = `/${eventAbbr}/ui`
+  // }, [isReady])
 
   return <></>
 }

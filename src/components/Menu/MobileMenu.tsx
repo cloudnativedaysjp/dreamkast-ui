@@ -7,7 +7,6 @@ import InfoIcon from '@material-ui/icons/Info'
 import MapIcon from '@material-ui/icons/Map'
 import TableChartIcon from '@material-ui/icons/TableChart'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import { TrailMapButton } from '../TrailMap/TrailMapButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
@@ -110,7 +109,8 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
       <Drawer open={state} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
-      {isPreEvent ? '' : <TrailMapButton />}
+      {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}
+      {/* {isPreEvent ? '' : <TrailMapButton />} */}
       <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Grafana</Button>
       </CommonStyled.MenuLink>

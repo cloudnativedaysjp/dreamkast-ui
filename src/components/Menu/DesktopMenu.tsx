@@ -4,7 +4,6 @@ import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { Event } from '../../generated/dreamkast-api.generated'
 import Link from 'next/link'
-import { TrailMapButton } from '../TrailMap/TrailMapButton'
 import { useMenuContents } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useSelector } from 'react-redux'
@@ -37,7 +36,8 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         <Button style={{ color: '#423A57' }}>Your Plan</Button>
       </Link>
 
-      {!isPreEvent && <TrailMapButton />}
+      {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}
+      {/* {!isPreEvent && <TrailMapButton />} */}
 
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/o11y`}

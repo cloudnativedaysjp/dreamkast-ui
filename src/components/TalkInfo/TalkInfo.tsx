@@ -17,7 +17,7 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrack,
   showVideoToggle,
 }) => {
-  const viewerCount = useViewerCount(selectedTrack?.id)
+  const viewerCount = useViewerCount(eventAbbr, selectedTrack?.id)
 
   return (
     <Styled.Container>
