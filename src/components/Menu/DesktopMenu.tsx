@@ -16,7 +16,7 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event }) => {
   const { logout } = useAuth0()
   const { dkUrl } = useSelector(authSelector)
-  const { guideUrl, isPreEvent } = useMenuContents()
+  const { guideUrl, isPreEvent } = useMenuContents(event?.abbr)
 
   return (
     <Styled.DesktopMenu>
@@ -48,7 +48,8 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
       </CommonStyled.MenuLink>
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/timetables`}
-        rel="noreferrer"
+        target="_blank"
+        rel="noreferrer noopener"
       >
         <Button style={{ color: '#423A57' }}>Timetable</Button>
       </CommonStyled.MenuLink>
