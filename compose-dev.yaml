@@ -1,0 +1,11 @@
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+    ports:
+    - 3001:3001
+    env_file:
+      - .env.staging
