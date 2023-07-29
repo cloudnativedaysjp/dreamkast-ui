@@ -8,6 +8,7 @@ import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTr
 import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
 import { withAuthProvider } from '../../../context/auth'
 import { NextTalkNotifier } from '../../../components/Layout/NextTalkNotifier'
+import { ENV } from '../../../config'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -46,6 +47,15 @@ const IndexMain = () => {
       </Layout>
     </NextTalkNotifier>
   )
+}
+
+// TODO move to RootApp component
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      env: { ...ENV },
+    },
+  }
 }
 
 export default IndexPage
