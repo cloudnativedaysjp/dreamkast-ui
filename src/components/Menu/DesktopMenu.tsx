@@ -16,7 +16,7 @@ type Props = {
 export const DesktopMenu: React.FC<Props> = ({ event }) => {
   const { logout } = useAuth0()
   const { dkUrl } = useSelector(authSelector)
-  const { guideUrl, isPreEvent } = useMenuContents(event?.abbr)
+  const { guideUrl, isPreEvent } = useMenuContents()
 
   return (
     <Styled.DesktopMenu>
