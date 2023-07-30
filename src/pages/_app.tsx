@@ -75,7 +75,7 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
   }, [])
 
   const client = new ApolloClient({
-    uri: env.NEXT_PUBLIC_WEAVER_URL + 'query',
+    uri: new URL('query', env.NEXT_PUBLIC_WEAVER_URL).href,
     cache: new InMemoryCache(),
   })
 

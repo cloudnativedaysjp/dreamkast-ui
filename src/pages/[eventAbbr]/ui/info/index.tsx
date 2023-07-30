@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import { Layout } from '../../../../components/Layout'
 import { RegisteredTalks } from '../../../../components/RegisteredTalks'
 import { Typography } from '@material-ui/core'
+import { ENV } from '../../../../config'
 
 const IndexPage: NextPage = () => {
   const router = useRouter()
@@ -45,6 +46,15 @@ const IndexPage: NextPage = () => {
     )
   } else {
     return <div></div>
+  }
+}
+
+// TODO move to RootApp component
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      env: { ...ENV },
+    },
   }
 }
 

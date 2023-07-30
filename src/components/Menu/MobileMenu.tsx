@@ -22,7 +22,7 @@ type Props = {
 export const MobileMenu: React.FC<Props> = ({ event }) => {
   const { logout } = useAuth0()
   const { dkUrl } = useSelector(authSelector)
-  const { guideUrl, isPreEvent } = useMenuContents()
+  const { guideUrl, isPreEvent } = useMenuContents(event?.abbr)
   const [state, setState] = React.useState(false)
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
