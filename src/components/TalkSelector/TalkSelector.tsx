@@ -98,7 +98,7 @@ type TalkWithAvailable = Talk & {
 export const extractAvailableTalks = (
   talks: Talk[],
   now: number,
-  isRehearsal: boolean = false,
+  isRehearsal = false,
 ): TalkWithAvailable[] => {
   return [...talks]
     .sort((n1, n2) => dayjs(n1.startTime).unix() - dayjs(n2.startTime).unix())
@@ -106,7 +106,9 @@ export const extractAvailableTalks = (
     .map((talk) => {
       return {
         ...talk,
-        available: isRehearsal ? true : isAvailable(now, talk.startTime, talk.conferenceDayDate),
+        available: isRehearsal
+          ? true
+          : isAvailable(now, talk.startTime, talk.conferenceDayDate),
       }
     })
 }
