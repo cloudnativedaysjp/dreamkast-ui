@@ -50,6 +50,20 @@ describe('PTalkSelector', () => {
     )
     expect(screen.asFragment()).toMatchSnapshot()
   })
+  it('should render without crash when rehearsal mode', () => {
+    const now = dayjs('2023-02-24T10:30:00.000+09:00').unix()
+    const screen = render(
+      <PTalkSelector
+        selectedTalkId={MockTalks()[0].id}
+        selectedTrackId={32}
+        talks={MockTalks()}
+        selectTalk={() => null}
+        now={now}
+        isRehearsal={true}
+      />,
+    )
+    expect(screen.asFragment()).toMatchSnapshot()
+  })
   it('should render when props undefined', () => {
     const now = dayjs('2023-02-24T10:30:00.000+09:00').unix()
     const screen = render(

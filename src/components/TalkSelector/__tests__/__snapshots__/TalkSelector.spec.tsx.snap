@@ -95,3 +95,81 @@ exports[`PTalkSelector should render without crash 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`PTalkSelector should render without crash when rehearsal mode 1`] = `
+<DocumentFragment>
+  <div
+    class="styled__Container-sc-1piihja-0"
+  >
+    <div
+      class="styled__Title-sc-1piihja-1 dCJJhl"
+    >
+      このトラックのセッション
+    </div>
+    <ul
+      class="MuiList-root styled__List-sc-1piihja-2 ekPnFm MuiList-padding"
+      height="497"
+    >
+      <div
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiListItem-root styled__Item-sc-1piihja-3 dLdJEz MuiListItem-gutters MuiListItem-button Mui-selected"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="styled__Text-sc-1piihja-4 bBebjD"
+        >
+          <span
+            class="styled__Live-sc-1piihja-5 cUVkFS"
+          >
+            LIVE
+          </span>
+           10:00-10:20
+          <br />
+          Securityに関する発表
+        </div>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </div>
+      <div
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiListItem-root styled__Item-sc-1piihja-3 gUnfTx MuiListItem-gutters MuiListItem-button"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="styled__Text-sc-1piihja-4 bBebjD"
+        >
+           10:25-10:45
+          <br />
+          IoT/Edgeに関する10の知見
+        </div>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </div>
+      <div
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiListItem-root styled__Item-sc-1piihja-3 gUnfTx MuiListItem-gutters MuiListItem-button"
+        role="button"
+        tabindex="0"
+      >
+        <div
+          class="styled__Text-sc-1piihja-4 bBebjD"
+        >
+           10:50-11:10
+          <br />
+          CloudNative Networking
+        </div>
+        <span
+          class="MuiTouchRipple-root"
+        />
+      </div>
+    </ul>
+    <div
+      class="styled__Footer-sc-1piihja-6 hlpNiv"
+    />
+  </div>
+</DocumentFragment>
+`;
