@@ -30,7 +30,7 @@ export const Layout: React.FC<Props> = ({
       </Head>
       <header>
         <AppBar position="static">
-          <Styled.Header>
+          <Styled.Header isRehearsal={event?.rehearsalMode}>
             <Link href={`/${event?.abbr}/ui`} rel="noopener noreferrer">
               <Styled.HeaderImg
                 src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
