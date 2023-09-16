@@ -14,6 +14,7 @@ type Props = {
   talks: Talk[]
   selectTalk: (talkId: number) => void
   small?: boolean
+  isRehearsal?: boolean
 }
 
 export const TalkSelector: React.FC<Props> = (props) => {
@@ -50,11 +51,12 @@ export const PTalkSelector: React.FC<PProps> = ({
   talks,
   selectTalk,
   small = false,
+  isRehearsal = false,
   now,
   footer,
 }) => {
   const availableTalks = useMemo(
-    () => extractAvailableTalks(talks, now),
+    () => extractAvailableTalks(talks, now, isRehearsal),
     [talks, now],
   )
 
@@ -96,6 +98,7 @@ type TalkWithAvailable = Talk & {
 export const extractAvailableTalks = (
   talks: Talk[],
   now: number,
+  isRehearsal: boolean = false,
 ): TalkWithAvailable[] => {
   return [...talks]
     .sort((n1, n2) => dayjs(n1.startTime).unix() - dayjs(n2.startTime).unix())
@@ -103,7 +106,7 @@ export const extractAvailableTalks = (
     .map((talk) => {
       return {
         ...talk,
-        available: isAvailable(now, talk.startTime, talk.conferenceDayDate),
+        available: isRehearsal ? true : isAvailable(now, talk.startTime, talk.conferenceDayDate),
       }
     })
 }

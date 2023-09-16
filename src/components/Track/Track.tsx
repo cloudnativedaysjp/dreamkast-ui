@@ -107,6 +107,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
             talks={talks}
             selectTalk={selectTalk}
             small
+            isRehearsal={event.rehearsalMode}
           />
         </Grid>
       </Grid>
