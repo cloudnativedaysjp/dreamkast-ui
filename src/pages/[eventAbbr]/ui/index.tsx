@@ -9,6 +9,9 @@ import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
 import { withAuthProvider } from '../../../context/auth'
 import { NextTalkNotifier } from '../../../components/Layout/NextTalkNotifier'
 import { ENV } from '../../../config'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
+import { authSelector } from '../../../store/auth'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -18,6 +21,8 @@ const IndexMain = () => {
   const { eventAbbr } = useRouterQuery()
   const { event } = useInitSetup(eventAbbr)
   const { refetch } = useGetTalksAndTracks()
+  const { roles, dkUrl } = useSelector(authSelector)
+  const router = useRouter()
 
   // NOTE: TrailMapが必要になったら、以下の3つとpointEventSavingのガードのコメントアウトを解除する
   // TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す
@@ -28,6 +33,14 @@ const IndexMain = () => {
   if (!event) {
     return <></>
   }
+  if (event.status !== 'opened' && roles.length === 0) {
+    console.warn(
+      'Conference has not opened yet. Please access after the conference started.',
+    )
+    router.replace(dkUrl)
+    return
+  }
+
   // const isPointEventSaving = useSelector(pointEventSavingSelector)
   // if (isPointEventSaving) {
   //   return (

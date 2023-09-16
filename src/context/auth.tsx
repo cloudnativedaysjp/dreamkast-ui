@@ -7,9 +7,21 @@ import React, {
 } from 'react'
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setToken, setUser } from '../store/auth'
+import jwtDecode from 'jwt-decode'
+import { setRoles, setToken, setUser } from '../store/auth'
 import { authSelector } from '../store/auth'
 import { PrivateCtx } from './private'
+
+export interface JwtPayload {
+  iss?: string
+  sub?: string
+  aud?: string[] | string
+  exp?: number
+  nbf?: number
+  iat?: number
+  jti?: string
+  'https://cloudnativedays.jp/roles'?: string[]
+}
 
 export const withAuthProvider = (content: ReactNode) => {
   return <AuthProvider>{content}</AuthProvider>
@@ -86,6 +98,11 @@ const useAccessToken = () => {
     }
     getAccessTokenSilently()
       .then((token) => {
+        const decoded = jwtDecode<JwtPayload>(token)
+        const roles = decoded['https://cloudnativedays.jp/roles']
+        if (roles) {
+          dispatch(setRoles(roles))
+        }
         dispatch(setToken(token))
       })
       .catch((err) => {
