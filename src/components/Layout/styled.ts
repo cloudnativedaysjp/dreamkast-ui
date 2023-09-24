@@ -11,10 +11,10 @@ export const Container = styled.div<{ eventAbbr?: string }>`
   min-height: 100vh;
 `
 
-export const Header = styled(Toolbar)`
+export const Header = styled(Toolbar)<{ isRehearsal?: boolean }>`
   display: flex;
   justify-content: flex-start;
-  background-color: #ffffff;
+  background-color: ${(props) => (props.isRehearsal ? '#ffeb3b' : '#ffffff')};
   color: #282828;
 `
 

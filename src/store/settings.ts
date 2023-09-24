@@ -95,9 +95,17 @@ const settingsSlice = createSlice({
     setEvent: (state, action: PayloadAction<Event>) => {
       state.event = action.payload
       const today = dayjs(new Date()).tz().format('YYYY-MM-DD')
-      const confDay = action.payload?.conferenceDays?.find(
+      let confDay = action.payload?.conferenceDays?.find(
         (day) => day.date === today,
       )
+      if (!confDay && state.event.rehearsalMode) {
+        console.warn(
+          '### rehearsal mode: fallback to the non-internal confence day',
+        )
+        confDay = (action.payload?.conferenceDays || [])?.find(
+          (conf) => !conf.internal,
+        )
+      }
       if (confDay) {
         state.conferenceDay = {
           id: String(confDay.id),

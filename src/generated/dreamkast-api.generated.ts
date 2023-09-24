@@ -451,6 +451,7 @@ export type Event = {
   name: string
   abbr: string
   status: string
+  rehearsalMode?: boolean | undefined
   theme: string
   about: string
   privacy_policy: string
