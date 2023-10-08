@@ -5,6 +5,7 @@ import { RootState } from './index'
 type AuthState = {
   user: User | null
   token: string
+  roles: string[]
 
   // TODO move to appropriate redux store
   apiBaseUrl: string
@@ -15,6 +16,7 @@ type AuthState = {
 const initialState: AuthState = {
   user: null,
   token: '',
+  roles: [],
   apiBaseUrl: '',
   wsBaseUrl: '',
   dkUrl: '',
@@ -30,6 +32,9 @@ const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload
     },
+    setRoles: (state, action: PayloadAction<string[]>) => {
+      state.roles = action.payload
+    },
     setApiBaseUrl: (state, action: PayloadAction<string>) => {
       state.apiBaseUrl = action.payload
     },
@@ -42,8 +47,14 @@ const authSlice = createSlice({
   },
 })
 
-export const { setUser, setToken, setApiBaseUrl, setWsBaseUrl, setDkUrl } =
-  authSlice.actions
+export const {
+  setUser,
+  setToken,
+  setRoles,
+  setApiBaseUrl,
+  setWsBaseUrl,
+  setDkUrl,
+} = authSlice.actions
 export default authSlice
 
 export const authSelector = (state: RootState) => state.auth
