@@ -45,7 +45,7 @@
         "react-slick": "^0.29.0",
         "slick-carousel": "^1.8.1",
         "use-interval": "^1.4.0",
-        "video.js": "^7.20.2"
+        "video.js": "^8.0.0"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^4.0.1",
