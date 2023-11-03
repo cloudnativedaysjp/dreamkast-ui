@@ -38,8 +38,8 @@ export const PTalkInfo: React.FC<Props> = ({
   selectedTalk,
   selectedTrack,
 }) => {
-  const twitterURL = (trackName?: string) => {
-    const base = `http://twitter.com/share?url=https://event.cloudnativedays.jp/${eventAbbr}&related=@cloudnativedays&hashtags=${eventAbbr}`
+  const xURL = (trackName?: string) => {
+    const base = `http://x.com/share?url=https://event.cloudnativedays.jp/${eventAbbr}&related=@cloudnativedays&hashtags=${eventAbbr}`
     if (!trackName) return base
     return base + '_' + trackName
   }
@@ -69,13 +69,13 @@ export const PTalkInfo: React.FC<Props> = ({
       </Styled.SocialHeader>
       <Styled.ButtonContainer>
         <Styled.ButtonLink
-          href={twitterURL(selectedTrack?.name)}
+          href={xURL(selectedTrack?.name)}
           target="_blank"
         >
-          <Styled.TweetButton>
-            <Styled.TwitterImg src={`/${eventAbbr}/ui/twitter_logo.png`} />
-            {`tweet #${eventAbbr}_${selectedTrack?.name}`}
-          </Styled.TweetButton>
+          <Styled.XPostButton>
+            <Styled.XImg src={`/${eventAbbr}/ui/x_logo.png`} />
+            {`ポスト #${eventAbbr}_${selectedTrack?.name}`}
+          </Styled.XPostButton>
         </Styled.ButtonLink>
       </Styled.ButtonContainer>
     </>
