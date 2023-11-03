@@ -68,10 +68,7 @@ export const PTalkInfo: React.FC<Props> = ({
         一緒に盛り上がろう
       </Styled.SocialHeader>
       <Styled.ButtonContainer>
-        <Styled.ButtonLink
-          href={xURL(selectedTrack?.name)}
-          target="_blank"
-        >
+        <Styled.ButtonLink href={xURL(selectedTrack?.name)} target="_blank">
           <Styled.XPostButton>
             <Styled.XImg src={`/${eventAbbr}/ui/x_logo.png`} />
             {`ポスト #${eventAbbr}_${selectedTrack?.name}`}
