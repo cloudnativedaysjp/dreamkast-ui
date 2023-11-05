@@ -101,19 +101,19 @@ export const OViceImg = styled.img`
   padding-right: 5px;
 `
 
-export const TweetButton = styled(Button)`
+export const XPostButton = styled(Button)`
   display: flex;
   align-items: center;
   font-size: 16px;
   padding-right: 10px;
   color: #ffffff;
-  background-color: #1da1f2;
+  background-color: #000000;
   &:hover {
-    background-color: #4cb7f4;
+    background-color: #808080;
   }
 `
 
-export const TwitterImg = styled.img`
+export const XImg = styled.img`
   height: 1.4em;
   padding: 1.5px;
   vertical-align: middle;

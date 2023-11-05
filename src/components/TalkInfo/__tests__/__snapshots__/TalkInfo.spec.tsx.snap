@@ -32,11 +32,11 @@ exports[`PTalkInfo should render when props undefined 1`] = `
   >
     <a
       class="styled__ButtonLink-sc-15n5q1r-10 gvQFDk"
-      href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022"
+      href="http://x.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022"
       target="_blank"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hUErgO"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__XPostButton-sc-15n5q1r-13 jgXyFc"
         tabindex="0"
         type="button"
       >
@@ -44,10 +44,10 @@ exports[`PTalkInfo should render when props undefined 1`] = `
           class="MuiButton-label"
         >
           <img
-            class="styled__TwitterImg-sc-15n5q1r-14 yAEEI"
-            src="/cndt2022/ui/twitter_logo.png"
+            class="styled__XImg-sc-15n5q1r-14 bFvaWF"
+            src="/cndt2022/ui/x_logo.png"
           />
-          tweet #cndt2022_undefined
+          ポスト #cndt2022_undefined
         </span>
         <span
           class="MuiTouchRipple-root"
@@ -96,11 +96,11 @@ exports[`PTalkInfo should render without crash 1`] = `
   >
     <a
       class="styled__ButtonLink-sc-15n5q1r-10 gvQFDk"
-      href="http://twitter.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022_A"
+      href="http://x.com/share?url=https://event.cloudnativedays.jp/cndt2022&related=@cloudnativedays&hashtags=cndt2022_A"
       target="_blank"
     >
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__TweetButton-sc-15n5q1r-13 hUErgO"
+        class="MuiButtonBase-root MuiButton-root MuiButton-text styled__XPostButton-sc-15n5q1r-13 jgXyFc"
         tabindex="0"
         type="button"
       >
@@ -108,10 +108,10 @@ exports[`PTalkInfo should render without crash 1`] = `
           class="MuiButton-label"
         >
           <img
-            class="styled__TwitterImg-sc-15n5q1r-14 yAEEI"
-            src="/cndt2022/ui/twitter_logo.png"
+            class="styled__XImg-sc-15n5q1r-14 bFvaWF"
+            src="/cndt2022/ui/x_logo.png"
           />
-          tweet #cndt2022_A
+          ポスト #cndt2022_A
         </span>
         <span
           class="MuiTouchRipple-root"
