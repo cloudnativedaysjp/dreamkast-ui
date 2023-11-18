@@ -11,7 +11,7 @@ describe.only('useViewerCount', () => {
   it('should fetch viewer count', async () => {
     const given = {
       confName: 'cndf2023',
-      trackId: 42,
+      trackName: 'B',
       count: 5,
     }
     const got = {
@@ -33,8 +33,7 @@ describe.only('useViewerCount', () => {
                 count: 10,
               },
               {
-                trackID: given.trackId,
-                trackName: 'B',
+                trackName: given.trackName,
                 count: given.count,
               },
             ],
@@ -44,7 +43,7 @@ describe.only('useViewerCount', () => {
     )
 
     const Test = () => {
-      got.count = useViewerCount(given.confName, given.trackId)
+      got.count = useViewerCount(given.confName, given.trackName)
       return !!got.count ? <div data-testid={'tgt'} /> : <div />
     }
 
