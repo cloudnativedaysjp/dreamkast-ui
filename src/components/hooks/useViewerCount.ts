@@ -5,14 +5,13 @@ import { ConfName } from '../../../src/__generated__/graphql'
 
 export const useViewerCount = (
   eventAbbr: string,
-  selectedTrackId: number | undefined,
+  selectedTrackName: String | undefined,
 ) => {
   const [viewerCount, setViewerCount] = useState<number>(0)
 
   const getViewCount = gql(`
     query GetViewerCount($confName: ConfName!) {
       viewerCount(confName: $confName) {
-        trackID
         trackName
         count
       }
@@ -21,7 +20,7 @@ export const useViewerCount = (
 
   const { data, loading, error } = useQuery(getViewCount, {
     variables: { confName: eventAbbr as ConfName },
-    skip: !selectedTrackId,
+    skip: !selectedTrackName,
     pollInterval: 60 * 1000,
   })
 
@@ -36,13 +35,13 @@ export const useViewerCount = (
     }
     if (data) {
       const count = data.viewerCount.find(
-        (v) => v.trackID === selectedTrackId,
+        (v) => v.trackName === selectedTrackName,
       )?.count
       if (typeof count === 'number') {
         setViewerCount(count)
       }
     }
-  }, [data, loading, error, selectedTrackId])
+  }, [data, loading, error, selectedTrackName])
 
   return viewerCount
 }
