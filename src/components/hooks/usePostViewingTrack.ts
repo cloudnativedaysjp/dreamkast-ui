@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useMutation, gql as cgql} from '@apollo/client'
+import { useMutation, gql as cgql } from '@apollo/client'
 import { useSelector } from 'react-redux'
-import {
-  profileSelector,
-  useSelectedTrack,
-} from '../../store/settings'
+import { profileSelector, useSelectedTrack } from '../../store/settings'
 
 export const usePostViewingTrack = () => {
   const profile = useSelector(profileSelector)
@@ -18,7 +15,7 @@ export const usePostViewingTrack = () => {
     }
   `)
 
-  const [ pvt ] = useMutation(postViewingTrack)
+  const [pvt] = useMutation(postViewingTrack)
 
   useEffect(() => {
     if (!selectedTrack) {
@@ -33,7 +30,7 @@ export const usePostViewingTrack = () => {
               profileID: profile.id,
               trackName: selectedTrack.name,
             },
-          }
+          },
         })
       }, 30 * 1000),
     )

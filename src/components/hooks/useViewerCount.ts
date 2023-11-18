@@ -5,7 +5,7 @@ import { ConfName } from '../../../src/__generated__/graphql'
 
 export const useViewerCount = (
   eventAbbr: string,
-  selectedTrackName: String | undefined,
+  selectedTrackName: string | undefined,
 ) => {
   const [viewerCount, setViewerCount] = useState<number>(0)
 
