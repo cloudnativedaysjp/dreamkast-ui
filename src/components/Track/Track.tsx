@@ -95,6 +95,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <TalkInfo
             eventAbbr={event.abbr}
+            profileId={settings.profile.id}
             selectedTalk={selectedTalk}
             selectedTrack={selectedTrack}
             showVideoToggle={settings.profile.isAttendOffline}
@@ -118,6 +119,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
         <Grid item xs={12} md={4}>
           <TalkInfo
             eventAbbr={event.abbr}
+            profileId={settings.profile.id}
             selectedTalk={selectedTalk}
             selectedTrack={selectedTrack}
             showVideoToggle={settings.profile.isAttendOffline}

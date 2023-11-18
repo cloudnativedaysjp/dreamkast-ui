@@ -11,7 +11,8 @@ describe.only('useViewerCount', () => {
   it('should fetch viewer count', async () => {
     const given = {
       confName: 'cndf2023',
-      trackId: 42,
+      profileId: 42,
+      trackName: 'B',
       count: 5,
     }
     const got = {
@@ -20,6 +21,7 @@ describe.only('useViewerCount', () => {
     }
 
     const fn = jest.fn()
+    const mutateFn = jest.fn()
     server.use(
       graphql.query('GetViewerCount', (req, res, ctx) => {
         fn()
@@ -28,12 +30,10 @@ describe.only('useViewerCount', () => {
           ctx.data({
             viewerCount: [
               {
-                trackID: 41,
                 trackName: 'A',
                 count: 10,
               },
               {
-                trackID: given.trackId,
                 trackName: 'B',
                 count: given.count,
               },
@@ -41,10 +41,15 @@ describe.only('useViewerCount', () => {
           }),
         )
       }),
+      graphql.mutation('ViewTrack', (req) => {
+        mutateFn()
+        expect(req.variables.profileID).toBe(given.profileId)
+        expect(req.variables.trackName).toBe(given.trackName)
+      })
     )
 
     const Test = () => {
-      got.count = useViewerCount(given.confName, given.trackId)
+      got.count = useViewerCount(given.confName, given.profileId, given.trackName)
       return !!got.count ? <div data-testid={'tgt'} /> : <div />
     }
 
@@ -54,5 +59,6 @@ describe.only('useViewerCount', () => {
     expect(fn).toHaveBeenCalled()
     expect(got.confName).toBe(given.confName)
     expect(got.count).toBe(given.count)
+    expect(mutateFn).toHaveBeenCalled()
   })
 })

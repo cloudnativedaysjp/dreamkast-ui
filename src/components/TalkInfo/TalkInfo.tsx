@@ -6,21 +6,24 @@ import { useViewerCount } from '../hooks/useViewerCount'
 
 type Props = {
   eventAbbr: string
+  profileId?: number
   selectedTalk?: Talk
   selectedTrack?: Track
   showVideoToggle?: boolean
 }
 
 export const TalkInfo: React.FC<Props> = ({
+  profileId,
   eventAbbr,
   selectedTalk,
   selectedTrack,
   showVideoToggle,
 }) => {
-  const viewerCount = useViewerCount(eventAbbr, selectedTrack?.id)
+  const viewerCount = useViewerCount(eventAbbr, profileId, selectedTrack?.name)
 
   return (
     <Styled.Container>
+      <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>
       {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
       {showVideoToggle && <VideoToggleButton />}
       <PTalkInfo
