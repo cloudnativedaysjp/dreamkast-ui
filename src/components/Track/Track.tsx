@@ -23,6 +23,7 @@ import {
   useSizeChecker,
 } from '../TrackSelector/hooks'
 import { useRunAfter } from '../hooks/useRunAfter'
+import { usePostViewingTrack } from '../hooks/usePostViewingTrack'
 
 type Props = {
   event: Event
@@ -50,6 +51,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
   const isLiveMode = useSelector(isLiveModeSelector)
 
   useKarteTracking()
+  usePostViewingTrack()
   // TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す
   // useTrailMapTracking()
   useLiveTalkUpdate(event.abbr, () => {
