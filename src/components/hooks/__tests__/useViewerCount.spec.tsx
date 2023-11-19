@@ -45,9 +45,11 @@ describe.only('useViewerCount', () => {
         mutateFn()
         expect(req.variables.profileID).toBe(given.profileId)
         expect(req.variables.trackName).toBe(given.trackName)
-        return res(ctx.data({
-          viewTrack: null
-        }))
+        return res(
+          ctx.data({
+            viewTrack: null,
+          }),
+        )
       }),
     )
 
