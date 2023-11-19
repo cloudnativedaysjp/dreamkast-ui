@@ -7,9 +7,10 @@ export const useViewerCount = (
   eventAbbr: string,
   profileId: number | undefined,
   selectedTrackName: string | undefined,
-) => {
-  const [viewerCount, setViewerCount] = useState<number>(0)
+): [number, NodeJS.Timeout | null] => {
+  const [viewerCounts, setViewerCounts] = useState<Record<string, number>>({})
   const [curTrack, setCurTrack] = useState<string>('')
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   const getViewCount = gql(`
     query GetViewerCount($confName: ConfName!) {
@@ -20,7 +21,7 @@ export const useViewerCount = (
     }
   `)
 
-  const { data, loading, error, refetch } = useQuery(getViewCount, {
+  const { data, loading, error } = useQuery(getViewCount, {
     variables: { confName: eventAbbr as ConfName },
     skip: !selectedTrackName,
     pollInterval: 60 * 1000,
@@ -44,12 +45,12 @@ export const useViewerCount = (
       return
     }
     if (data) {
-      const count = data.viewerCount.find(
-        (v) => v.trackName === selectedTrackName,
-      )?.count
-      if (typeof count === 'number') {
-        setViewerCount(count)
-      }
+      setViewerCounts(
+        data.viewerCount.reduce((acc, cur) => {
+          acc[cur.trackName] = cur.count
+          return acc
+        }, {} as Record<string, number>),
+      )
     }
   }, [data, loading, error, selectedTrackName])
 
@@ -60,15 +61,23 @@ export const useViewerCount = (
     if (selectedTrackName === curTrack) {
       return
     }
-    setViewTrack({
-      variables: {
-        profileID: profileId,
-        trackName: selectedTrackName,
-      },
-    })
-    refetch()
+    if (timer) {
+      clearInterval(timer)
+      setTimer(null)
+    }
+    setTimer(
+      setInterval(() => {
+        setViewTrack({
+          variables: {
+            profileID: profileId,
+            trackName: selectedTrackName,
+          },
+        })
+      }, 30 * 1000),
+    )
+
     setCurTrack(selectedTrackName)
-  }, [selectedTrackName, profileId])
+  }, [selectedTrackName, profileId, timer, curTrack])
 
   useEffect(() => {
     if (viewTrackError) {
@@ -78,5 +87,5 @@ export const useViewerCount = (
     }
   }, [viewTrackError])
 
-  return viewerCount
+  return [selectedTrackName ? viewerCounts[selectedTrackName] : 0, timer]
 }

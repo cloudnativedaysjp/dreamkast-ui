@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Styled from './styled'
 import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { VideoToggleButton } from '../common/VideoToggleButton'
@@ -19,11 +19,17 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrack,
   showVideoToggle,
 }) => {
-  const viewerCount = useViewerCount(eventAbbr, profileId, selectedTrack?.name)
+  const [viewerCount, timer] = useViewerCount(eventAbbr, profileId, selectedTrack?.name)
+  useEffect(() => {
+    return () => {
+      if(timer) {
+        clearInterval(timer)
+      }
+    }
+  }, [timer])
 
   return (
     <Styled.Container>
-      <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>
       {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
       {showVideoToggle && <VideoToggleButton />}
       <PTalkInfo
