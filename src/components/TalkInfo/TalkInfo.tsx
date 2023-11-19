@@ -19,10 +19,14 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrack,
   showVideoToggle,
 }) => {
-  const [viewerCount, timer] = useViewerCount(eventAbbr, profileId, selectedTrack?.name)
+  const [viewerCount, timer] = useViewerCount(
+    eventAbbr,
+    profileId,
+    selectedTrack?.name,
+  )
   useEffect(() => {
     return () => {
-      if(timer) {
+      if (timer) {
         clearInterval(timer)
       }
     }

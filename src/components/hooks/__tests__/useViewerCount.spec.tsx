@@ -45,11 +45,15 @@ describe.only('useViewerCount', () => {
         mutateFn()
         expect(req.variables.profileID).toBe(given.profileId)
         expect(req.variables.trackName).toBe(given.trackName)
-      })
+      }),
     )
 
     const Test = () => {
-      got.count = useViewerCount(given.confName, given.profileId, given.trackName)
+      got.count = useViewerCount(
+        given.confName,
+        given.profileId,
+        given.trackName,
+      )
       return !!got.count ? <div data-testid={'tgt'} /> : <div />
     }
 
