@@ -41,20 +41,28 @@ describe.only('useViewerCount', () => {
           }),
         )
       }),
-      graphql.mutation('ViewTrack', (req) => {
+      graphql.mutation('ViewTrack', (req, res, ctx) => {
         mutateFn()
         expect(req.variables.profileID).toBe(given.profileId)
         expect(req.variables.trackName).toBe(given.trackName)
+        return res(ctx.data({
+          viewTrack: null
+        }))
       }),
     )
 
     const Test = () => {
-      got.count = useViewerCount(
+      const [count, timer] = useViewerCount(
         given.confName,
         given.profileId,
         given.trackName,
       )
-      return !!got.count ? <div data-testid={'tgt'} /> : <div />
+      got.count = count
+      if (!!timer && !!count) {
+        return <div data-testid={'tgt'} />
+      } else {
+        return <div />
+      }
     }
 
     const screen = renderWithApolloClient(<Test />)

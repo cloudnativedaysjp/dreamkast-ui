@@ -12,6 +12,7 @@ export const useViewerCount = (
   const [curTrack, setCurTrack] = useState<string>('')
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
+  // fetch viewer count
   const getViewCount = gql(`
     query GetViewerCount($confName: ConfName!) {
       viewerCount(confName: $confName) {
@@ -32,9 +33,6 @@ export const useViewerCount = (
       viewTrack(input: { profileID: $profileID, trackName: $trackName })
     }
   `)
-
-  const [setViewTrack, { error: viewTrackError }] = useMutation(viewTrack)
-
   useEffect(() => {
     if (loading) {
       return
@@ -54,6 +52,9 @@ export const useViewerCount = (
     }
   }, [data, loading, error, selectedTrackName])
 
+  // mutate viewer count
+  const [setViewTrack, { error: viewTrackError }] = useMutation(viewTrack)
+
   useEffect(() => {
     if (!profileId || !selectedTrackName) {
       return
@@ -65,16 +66,16 @@ export const useViewerCount = (
       clearInterval(timer)
       setTimer(null)
     }
-    setTimer(
-      setInterval(() => {
-        setViewTrack({
-          variables: {
-            profileID: profileId,
-            trackName: selectedTrackName,
-          },
-        })
-      }, 30 * 1000),
-    )
+    const mutate = () => {
+      setViewTrack({
+        variables: {
+          profileID: profileId,
+          trackName: selectedTrackName,
+        },
+      })
+    }
+    mutate()
+    setTimer(setInterval(mutate, 30 * 1000))
 
     setCurTrack(selectedTrackName)
   }, [selectedTrackName, profileId, timer, curTrack])
