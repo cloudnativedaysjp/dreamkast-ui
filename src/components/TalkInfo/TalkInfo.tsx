@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Styled from './styled'
 import { Talk, Track } from '../../generated/dreamkast-api.generated'
 import { VideoToggleButton } from '../common/VideoToggleButton'
@@ -6,18 +6,31 @@ import { useViewerCount } from '../hooks/useViewerCount'
 
 type Props = {
   eventAbbr: string
+  profileId?: number
   selectedTalk?: Talk
   selectedTrack?: Track
   showVideoToggle?: boolean
 }
 
 export const TalkInfo: React.FC<Props> = ({
+  profileId,
   eventAbbr,
   selectedTalk,
   selectedTrack,
   showVideoToggle,
 }) => {
-  const viewerCount = useViewerCount(eventAbbr, selectedTrack?.id)
+  const [viewerCount, timer] = useViewerCount(
+    eventAbbr,
+    profileId,
+    selectedTrack?.name,
+  )
+  useEffect(() => {
+    return () => {
+      if (timer) {
+        clearInterval(timer)
+      }
+    }
+  }, [timer])
 
   return (
     <Styled.Container>

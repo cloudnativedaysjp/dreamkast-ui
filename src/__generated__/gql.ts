@@ -13,8 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  '\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackID\n        trackName\n        count\n      }\n    }\n  ':
+  '\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackName\n        count\n      }\n    }\n  ':
     types.GetViewerCountDocument,
+  '\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ':
+    types.ViewTrackDocument,
 }
 
 /**
@@ -35,8 +37,14 @@ export function gql(source: string): unknown
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: '\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackID\n        trackName\n        count\n      }\n    }\n  ',
-): (typeof documents)['\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackID\n        trackName\n        count\n      }\n    }\n  ']
+  source: '\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackName\n        count\n      }\n    }\n  ',
+): (typeof documents)['\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackName\n        count\n      }\n    }\n  ']
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(
+  source: '\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ',
+): (typeof documents)['\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}

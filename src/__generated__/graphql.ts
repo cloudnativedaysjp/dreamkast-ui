@@ -27,6 +27,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  DateTime: { input: any; output: any }
 }
 
 export enum ChallengeCondition {
@@ -52,18 +53,14 @@ export type CreateViewEventInput = {
 export type Mutation = {
   __typename?: 'Mutation'
   createViewEvent?: Maybe<Scalars['Boolean']['output']>
-  saveViewerCount?: Maybe<Scalars['Boolean']['output']>
   stampOnSite?: Maybe<Scalars['Boolean']['output']>
   stampOnline?: Maybe<Scalars['Boolean']['output']>
+  viewTrack?: Maybe<Scalars['Boolean']['output']>
   vote?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type MutationCreateViewEventArgs = {
   input: CreateViewEventInput
-}
-
-export type MutationSaveViewerCountArgs = {
-  input: SaveViewerCount
 }
 
 export type MutationStampOnSiteArgs = {
@@ -72,6 +69,10 @@ export type MutationStampOnSiteArgs = {
 
 export type MutationStampOnlineArgs = {
   input: StampOnlineInput
+}
+
+export type MutationViewTrackArgs = {
+  input: ViewTrackInput
 }
 
 export type MutationVoteArgs = {
@@ -92,7 +93,7 @@ export type QueryStampChallengesArgs = {
 }
 
 export type QueryViewerCountArgs = {
-  confName: ConfName
+  confName?: InputMaybe<ConfName>
 }
 
 export type QueryViewingSlotsArgs = {
@@ -102,10 +103,8 @@ export type QueryViewingSlotsArgs = {
 
 export type QueryVoteCountsArgs = {
   confName: ConfName
-}
-
-export type SaveViewerCount = {
-  confName: ConfName
+  spanSeconds?: InputMaybe<Scalars['Int']['input']>
+  votingTerm?: InputMaybe<VotingTerm>
 }
 
 export type StampChallenge = {
@@ -129,13 +128,15 @@ export type StampOnlineInput = {
   slotID: Scalars['Int']['input']
 }
 
+export type ViewTrackInput = {
+  profileID: Scalars['Int']['input']
+  trackName: Scalars['String']['input']
+}
+
 export type ViewerCount = {
   __typename?: 'ViewerCount'
-  channelArn: Scalars['String']['output']
   count: Scalars['Int']['output']
-  trackID: Scalars['Int']['output']
   trackName: Scalars['String']['output']
-  updateAt: Scalars['Int']['output']
 }
 
 export type ViewingSlot = {
@@ -155,6 +156,11 @@ export type VoteInput = {
   talkId: Scalars['Int']['input']
 }
 
+export type VotingTerm = {
+  end?: InputMaybe<Scalars['DateTime']['input']>
+  start?: InputMaybe<Scalars['DateTime']['input']>
+}
+
 export type GetViewerCountQueryVariables = Exact<{
   confName: ConfName
 }>
@@ -163,10 +169,19 @@ export type GetViewerCountQuery = {
   __typename?: 'Query'
   viewerCount: Array<{
     __typename?: 'ViewerCount'
-    trackID: number
     trackName: string
     count: number
   }>
+}
+
+export type ViewTrackMutationVariables = Exact<{
+  profileID: Scalars['Int']['input']
+  trackName: Scalars['String']['input']
+}>
+
+export type ViewTrackMutation = {
+  __typename?: 'Mutation'
+  viewTrack?: boolean | null
 }
 
 export const GetViewerCountDocument = {
@@ -211,7 +226,6 @@ export const GetViewerCountDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'trackID' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'trackName' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'count' } },
               ],
@@ -222,3 +236,76 @@ export const GetViewerCountDocument = {
     },
   ],
 } as unknown as DocumentNode<GetViewerCountQuery, GetViewerCountQueryVariables>
+export const ViewTrackDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'ViewTrack' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'profileID' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'trackName' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'viewTrack' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'profileID' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'profileID' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'trackName' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'trackName' },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ViewTrackMutation, ViewTrackMutationVariables>
