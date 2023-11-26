@@ -4,8 +4,8 @@ import 'video.js/dist/video-js.css'
 import * as Styled from './styled'
 import * as CommonStyled from '../../styles/styled'
 import { VideoToggleButton } from '../common/VideoToggleButton'
-import { IvsPlayerVideo } from './IvsPlayerVideo'
 import { VideoCommand } from '../../store/settings'
+import { VideoPlayer } from './VideoPlayer'
 
 type Props = {
   videoCommand: VideoCommand
@@ -71,15 +71,25 @@ export const IvsPlayer: React.FC<Props> = ({
     videoCommand.status,
   )
 
+  const videoOptions = {
+    autoplay: true,
+    controls: true,
+    playsInline: true,
+    muted: false,
+    sources: [
+      {
+        src: videoCommand.playBackUrl || '',
+        type: 'application/x-mpegURL',
+      },
+    ],
+    paused: { paused },
+  }
+
   return (
     <CommonStyled.Container>
       <Styled.IvsPlayerContainer>
         <div>{videoComponent}</div>
-        <IvsPlayerVideo
-          playBackUrl={videoCommand.playBackUrl}
-          autoplay={true}
-          paused={paused}
-        ></IvsPlayerVideo>
+        <VideoPlayer options={videoOptions} />
       </Styled.IvsPlayerContainer>
       {showVideoToggle && <VideoToggleButton />}
     </CommonStyled.Container>

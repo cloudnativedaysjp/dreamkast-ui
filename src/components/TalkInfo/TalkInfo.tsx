@@ -19,22 +19,22 @@ export const TalkInfo: React.FC<Props> = ({
   selectedTrack,
   showVideoToggle,
 }) => {
-  const [viewerCount, timer] = useViewerCount(
-    eventAbbr,
-    profileId,
-    selectedTrack?.name,
-  )
-  useEffect(() => {
-    return () => {
-      if (timer) {
-        clearInterval(timer)
-      }
-    }
-  }, [timer])
+  // const [viewerCount, timer] = useViewerCount(
+  //   eventAbbr,
+  //   profileId,
+  //   selectedTrack?.name,
+  // )
+  // useEffect(() => {
+  //   return () => {
+  //     if (timer) {
+  //       clearInterval(timer)
+  //     }
+  //   }
+  // }, [timer])
 
   return (
     <Styled.Container>
-      {selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}
+      {/*{selectedTalk?.onAir && <Styled.Live>LIVE 👥 {viewerCount}</Styled.Live>}*/}
       {showVideoToggle && <VideoToggleButton />}
       <PTalkInfo
         eventAbbr={eventAbbr}
