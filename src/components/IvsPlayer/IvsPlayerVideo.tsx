@@ -26,7 +26,7 @@ export const IvsPlayerVideo: React.FC<Props> = ({
   useEffect(() => {
     const script = document.createElement('script')
     script.src =
-      'https://player.live-video.net/1.4.1/amazon-ivs-videojs-tech.min.js'
+      'https://player.live-video.net/1.23.0/amazon-ivs-videojs-tech.min.js'
     document.body.appendChild(script)
 
     script.addEventListener('load', () => {
