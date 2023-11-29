@@ -79,6 +79,8 @@ export const IvsPlayer: React.FC<Props> = ({
     sources: [
       {
         src: videoCommand.playBackUrl || '',
+        // src: 'https://test-streams.mux.dev/dai-discontinuity-deltatre/manifest.m3u8' ||
+        //   '',
         type: 'application/x-mpegURL',
       },
     ],
@@ -88,7 +90,6 @@ export const IvsPlayer: React.FC<Props> = ({
   return (
     <CommonStyled.Container>
       <Styled.IvsPlayerContainer>
-        <div>{videoComponent}</div>
         <VideoPlayer options={videoOptions} />
       </Styled.IvsPlayerContainer>
       {showVideoToggle && <VideoToggleButton />}
