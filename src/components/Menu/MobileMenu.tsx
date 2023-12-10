@@ -7,7 +7,10 @@ import InfoIcon from '@material-ui/icons/Info'
 import MapIcon from '@material-ui/icons/Map'
 import TableChartIcon from '@material-ui/icons/TableChart'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import InsertChartIcon from '@material-ui/icons/InsertChart'
 import MenuIcon from '@material-ui/icons/Menu'
+import ScheduleIcon from '@material-ui/icons/Schedule'
+import ViewStreamIcon from '@material-ui/icons/ViewStream'
 import SendIcon from '@material-ui/icons/Send'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
@@ -46,10 +49,28 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
       <List>
         <ListItem button key="info">
           <ListItemIcon>
+            <ViewStreamIcon />
+          </ListItemIcon>
+          <Link href={`/${event?.abbr}/ui`} rel="noreferrer">
+            <Button style={{ color: '#423A57' }}>Show Streaming</Button>
+          </Link>
+        </ListItem>
+
+        <ListItem button key="info">
+          <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
+          <Link href={`/${event?.abbr}/dashboard`} rel="noreferrer">
+            <Button style={{ color: '#423A57' }}>Dashboard</Button>
+          </Link>
+        </ListItem>
+
+        <ListItem button key="info">
+          <ListItemIcon>
+            <ScheduleIcon />
+          </ListItemIcon>
           <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
-            <Button style={{ color: '#423A57' }}>Your Plan</Button>
+            <Button style={{ color: '#423A57' }}>Your Schedule</Button>
           </Link>
         </ListItem>
 
@@ -79,6 +100,15 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
             rel="noreferrer"
           >
             <Button style={{ color: '#423A57' }}>Timetable</Button>
+          </CommonStyled.MenuLink>
+        </ListItem>
+
+        <ListItem>
+          <ListItemIcon>
+            <InsertChartIcon />
+          </ListItemIcon>
+          <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
+            <Button style={{ color: '#423A57' }}>Grafana</Button>
           </CommonStyled.MenuLink>
         </ListItem>
 
@@ -128,9 +158,6 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
       </Drawer>
       {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}
       {/* {isPreEvent ? '' : <TrailMapButton />} */}
-      <CommonStyled.MenuLink href={`/${event?.abbr}/o11y`} rel="noreferrer">
-        <Button style={{ color: '#423A57' }}>Grafana</Button>
-      </CommonStyled.MenuLink>
     </Styled.MobileMenu>
   )
 }

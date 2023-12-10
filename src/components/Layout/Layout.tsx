@@ -36,9 +36,9 @@ export const Layout: React.FC<Props> = ({
                 src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
               />
             </Link>
+            <MobileMenu event={event} />
             <DesktopMenu event={event} />
           </Styled.Header>
-          <MobileMenu event={event} />
         </AppBar>
       </header>
       {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}

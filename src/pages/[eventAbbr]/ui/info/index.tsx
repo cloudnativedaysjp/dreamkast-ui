@@ -11,8 +11,13 @@ import { Layout } from '../../../../components/Layout'
 import { RegisteredTalks } from '../../../../components/RegisteredTalks'
 import { Typography } from '@material-ui/core'
 import { ENV } from '../../../../config'
+import { withAuthProvider } from '../../../../context/auth'
 
 const IndexPage: NextPage = () => {
+  return withAuthProvider(<IndexMain />)
+}
+
+const IndexMain: NextPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const eventAbbr = useMemo<string>(() => {
