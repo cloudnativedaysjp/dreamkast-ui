@@ -58,6 +58,18 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
 
         <ListItem button key="info">
           <ListItemIcon>
+            <ViewStreamIcon />
+          </ListItemIcon>
+          <Link
+            href={'https://www.youtube.com/watch?v=hM35w_6etSU'}
+            rel="noreferrer"
+          >
+            <Button style={{ color: '#423A57' }}>Public Live</Button>
+          </Link>
+        </ListItem>
+
+        <ListItem button key="info">
+          <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
           <Link href={`/${event?.abbr}/dashboard`} rel="noreferrer">
