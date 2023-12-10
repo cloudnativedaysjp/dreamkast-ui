@@ -32,12 +32,24 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         </>
       )}
 
+      <Link href={`/${event?.abbr}/dashboard`} rel="noreferrer">
+        <Button style={{ color: '#423A57' }}>Dashboard</Button>
+      </Link>
+
       <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
-        <Button style={{ color: '#423A57' }}>Your Plan</Button>
+        <Button style={{ color: '#423A57' }}>Your Schedule</Button>
       </Link>
 
       {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}
       {/* {!isPreEvent && <TrailMapButton />} */}
+
+      <CommonStyled.MenuLink
+        href={`/${event?.abbr}/timetables`}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <Button style={{ color: '#423A57' }}>Timetable</Button>
+      </CommonStyled.MenuLink>
 
       <CommonStyled.MenuLink
         href={`/${event?.abbr}/o11y`}
@@ -45,13 +57,6 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         target="_blank"
       >
         <Button style={{ color: '#423A57' }}>Grafana</Button>
-      </CommonStyled.MenuLink>
-      <CommonStyled.MenuLink
-        href={`/${event?.abbr}/timetables`}
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <Button style={{ color: '#423A57' }}>Timetable</Button>
       </CommonStyled.MenuLink>
 
       <CommonStyled.MenuLink
