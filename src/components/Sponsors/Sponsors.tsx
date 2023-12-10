@@ -56,7 +56,9 @@ export const Sponsors: React.FC<Props> = ({ event }) => {
         {data.map((sponsor) => (
           <Styled.Sponsor key={sponsor.id}>
             <a href={sponsor.url} target="_blank">
-              <Styled.SponsorImg src={sponsor.logo_url} />
+              <Styled.SponsorImgContainer>
+                <Styled.SponsorImg src={sponsor.logo_url} />
+              </Styled.SponsorImgContainer>
             </a>
           </Styled.Sponsor>
         ))}
