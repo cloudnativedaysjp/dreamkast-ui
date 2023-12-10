@@ -8,6 +8,7 @@ import MapIcon from '@material-ui/icons/Map'
 import TableChartIcon from '@material-ui/icons/TableChart'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import MenuIcon from '@material-ui/icons/Menu'
+import SendIcon from '@material-ui/icons/Send'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
 import { useMenuContents } from './hooks'
@@ -80,6 +81,22 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
             <Button style={{ color: '#423A57' }}>Timetable</Button>
           </CommonStyled.MenuLink>
         </ListItem>
+
+        <ListItem button key="contact">
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <CommonStyled.MenuLink
+            href={
+              'https://docs.google.com/forms/d/e/1FAIpQLSebjgStNdgMe8XJHnyn_gF4xv8t4jGB8hw8Jrcr04DYLZis0Q/viewform?usp=sf_link'
+            }
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <Button style={{ color: '#423A57' }}>Contact</Button>
+          </CommonStyled.MenuLink>
+        </ListItem>
+
         <ListItem button key="logout">
           <ListItemIcon>
             <ExitToAppIcon />
