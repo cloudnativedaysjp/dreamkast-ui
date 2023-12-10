@@ -3,7 +3,9 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-export const CNDOSlider = styled(Slider)``
+export const CNDOSlider = styled(Slider)`
+  max-height: 54px;
+`
 
 export const Sponsor = styled.div`
   position: relative;
