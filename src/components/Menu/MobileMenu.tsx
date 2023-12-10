@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import ViewStreamIcon from '@material-ui/icons/ViewStream'
 import SendIcon from '@material-ui/icons/Send'
+import ChatIcon from '@material-ui/icons/Chat'
 import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
 import { useMenuContents } from './hooks'
@@ -71,6 +72,15 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
           </ListItemIcon>
           <Link href={`/${event?.abbr}/ui/info`} rel="noreferrer">
             <Button style={{ color: '#423A57' }}>Your Schedule</Button>
+          </Link>
+        </ListItem>
+
+        <ListItem button key="qa">
+          <ListItemIcon>
+            <ChatIcon />
+          </ListItemIcon>
+          <Link href={`/${event?.abbr}/ui/qa`} rel="noreferrer">
+            <Button style={{ color: '#423A57' }}>Your QA</Button>
           </Link>
         </ListItem>
 

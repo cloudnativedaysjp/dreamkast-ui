@@ -40,6 +40,10 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         <Button style={{ color: '#423A57' }}>Your Schedule</Button>
       </Link>
 
+      <Link href={`/${event?.abbr}/ui/qa`} rel="noreferrer">
+        <Button style={{ color: '#423A57' }}>Your QA</Button>
+      </Link>
+
       {/* TODO: TrailMapを使わない判断がされたら、TrailMap関連の処理を消す  */}
       {/* {!isPreEvent && <TrailMapButton />} */}
 

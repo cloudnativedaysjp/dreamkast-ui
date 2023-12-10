@@ -33,6 +33,7 @@ setupDayjs()
 type Props = {
   event: Event
   talk?: Talk
+  defaultTab: string
 }
 
 type MessageType = Exclude<ChatMessageProperties['messageType'], undefined>
@@ -101,14 +102,14 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
   overrideExisting: true,
 })
 
-export const Chat: React.FC<Props> = ({ event, talk }) => {
+export const Chat: React.FC<Props> = ({ event, talk, defaultTab }) => {
   const initialChatMessage = {
     eventAbbr: event.abbr,
     body: '',
     roomId: !!talk ? talk.id : 0,
     messageType: 'chat' as MessageType,
   }
-  const [selectedTab, setSelectedTab] = useState('0')
+  const [selectedTab, setSelectedTab] = useState(defaultTab)
   const [messages, setMessages] = useState<ChatMessageMap>(
     () => new ChatMessageMap(),
   )
