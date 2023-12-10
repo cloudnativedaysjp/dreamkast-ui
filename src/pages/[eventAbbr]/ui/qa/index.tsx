@@ -59,8 +59,10 @@ const IndexMain: NextPage = () => {
   if (event) {
     return (
       <Layout title={event.name} event={event}>
-        <Typography variant="h5">質問一覧</Typography>
-        <Typography>タップして回答を確認</Typography>
+        <Typography variant="h5">質問・回答一覧</Typography>
+        <Typography>
+          あなたが質問もしくは質問に回答したセッション一覧が表示されます。詳細は各セッションのパネルをクリックして閲覧できます。
+        </Typography>
         <QaList event={event} talks={settings.talks}></QaList>
       </Layout>
     )

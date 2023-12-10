@@ -50,9 +50,6 @@ export const QaList: React.FC<Props> = ({ event, talks }) => {
     if (!data) {
       return
     }
-    data.forEach((receivedMsg) => {
-      console.log(receivedMsg)
-    })
   }, [data, isLoading, isError])
 
   if (isLoading || !data) {
@@ -78,34 +75,37 @@ export const QaList: React.FC<Props> = ({ event, talks }) => {
     return `${day?.date} ${start}-${end} ${talk.title} (${speakers})`
   }
 
+  const numberOfQuestions = (talkId: number): number => {
+    return data.filter(
+      (msg) => msg.roomId === talkId && msg.messageType === 'qa',
+    ).length
+  }
+
+  const numberOfAnswers = (talkId: number): number => {
+    return data.filter(
+      (msg) =>
+        msg.roomId === talkId &&
+        msg.replyTo !== undefined &&
+        data.filter((d) => msg.replyTo === d.id).length > 0,
+    ).length
+  }
+
   return (
     <Styled.Container>
       <Grid container spacing={1} justifyContent="center" alignItems="stretch">
         <Grid item xs={12} md={4}>
           {talks.map((talk) => {
-            if (
-              data.filter(
-                (msg) =>
-                  msg.profileId === settings.profile.id &&
-                  msg.roomId === talk.id,
-              ).length > 0
-            ) {
+            if (data.filter((msg) => msg.roomId === talk.id).length > 0) {
               return (
                 <Styled.TalkContainer>
                   <CardContent onClick={onSelectTalk} data-talkId={talk.id}>
                     <Styled.TalkInfo color="textSecondary" gutterBottom>
                       {talkInfo(talk)}
                     </Styled.TalkInfo>
-                    {data
-                      .filter(
-                        (msg) =>
-                          msg.profileId === settings.profile.id &&
-                          msg.roomId === talk.id &&
-                          msg.messageType === 'qa',
-                      )
-                      .map((msg) => (
-                        <p>- {msg.body}</p>
-                      ))}
+                    <p>
+                      質問数: {numberOfQuestions(talk.id)}, 回答数:{' '}
+                      {numberOfAnswers(talk.id)}
+                    </p>
                   </CardContent>
                 </Styled.TalkContainer>
               )
