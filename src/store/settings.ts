@@ -425,7 +425,12 @@ export const videoCommandSelector = createSelector(
 
     const onAirTalk = talks.find((t) => t.trackId === viewTrackId && t.onAir)
     if (onAirTalk && onAirTalk.slotNum! <= selectedTalk.slotNum!) {
-      return newVideoCommand('notStarted')
+      // キーノートはslotNumが同じなので、startTimeで判定する
+      if (
+        dayjs(onAirTalk.startTime).unix() < dayjs(selectedTalk.startTime).unix()
+      ) {
+        return newVideoCommand('notStarted')
+      }
     }
     // okui:
     // TODO showOnTimeTableの方が適切なので、そっちに変更する。
