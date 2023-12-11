@@ -23,11 +23,14 @@ type Props = {
 export const QaList: React.FC<Props> = ({ event, talks }) => {
   const settings = useSelector(settingsSelector)
   const [talk, setTalk] = useState<Talk | undefined>(undefined)
-  const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery({
-    eventAbbr: event.abbr,
-    roomType: 'talk',
-    profileId: `${settings.profile.id}`,
-  })
+  const { data, isLoading, isError, error } = useGetApiV1ChatMessagesQuery(
+    {
+      eventAbbr: event.abbr,
+      roomType: 'talk',
+      profileId: `${settings.profile.id}`,
+    },
+    { skip: settings.profile.id === 0 },
+  )
   const findTalkById = (
     talks: Talk[],
     id: number | undefined,
