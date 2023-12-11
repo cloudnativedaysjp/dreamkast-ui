@@ -65,6 +65,7 @@ const { useGetApiV1ChatMessagesQuery } = dreamkastApi.injectEndpoints({
           roomId: queryArg.roomId,
           roomType: queryArg.roomType,
           createdFrom: queryArg.createdFrom,
+          profileId: queryArg.profileId,
         },
       }),
       async onCacheEntryAdded(
