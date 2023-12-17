@@ -55,6 +55,7 @@ describe('Chat', () => {
     const mockProps = {
       event: MockEvent(),
       talk: MockTalkA1(),
+      defaultTab: '0',
     }
 
     const store = setupStore()
@@ -90,6 +91,7 @@ describe('Chat', () => {
 
     const mockProps = {
       event: MockEvent(),
+      defaultTab: '0',
     }
 
     const store = setupStore()
@@ -124,6 +126,7 @@ describe('Chat', () => {
     const mockProps = {
       event: MockEvent(),
       talk: MockTalkA1(),
+      defaultTab: '0',
     }
 
     const store = setupStore()
@@ -163,6 +166,7 @@ describe('Chat', () => {
     const mockProps = {
       event: MockEvent(),
       talk: MockTalkA1(),
+      defaultTab: '0',
     }
 
     const store = setupStore()
@@ -199,6 +203,7 @@ describe('Chat', () => {
     const mockProps = {
       event: MockEvent(),
       talk: MockTalkA1(),
+      defaultTab: '0',
     }
 
     const store = setupStore()
@@ -237,6 +242,7 @@ describe('Chat', () => {
     const mockProps = {
       event: MockEvent(),
       talk: MockTalkA1(),
+      defaultTab: '0',
     }
 
     const store = setupStore()

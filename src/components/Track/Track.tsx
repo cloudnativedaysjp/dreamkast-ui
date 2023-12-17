@@ -90,7 +90,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           <Sponsors event={event} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} talk={selectedTalk} />
+          <Chat event={event} talk={selectedTalk} defaultTab={'0'} />
         </Grid>
         <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <TalkInfo
@@ -126,7 +126,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} talk={selectedTalk} />
+          <Chat event={event} talk={selectedTalk} defaultTab={'0'} />
         </Grid>
         <Grid item xs={12} md={4}>
           <TalkSelector
