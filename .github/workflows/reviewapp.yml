@@ -8,17 +8,17 @@ jobs:
     name: grant 'reviewapps' label
     if: ${{ ! startsWith(github.head_ref, 'renovate/') }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           architecture: 'x64'
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v36
+        uses: tj-actions/changed-files@v44
         with:
           use_fork_point: true
 
@@ -46,7 +46,7 @@ jobs:
           echo "::set-output name=FLAG::${FLAG}"
 
       - name: Labeling 'reviewapps' to PR
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         id: set-result
         if: ${{ steps.check-paths-ignore.outputs.FLAG == 'false' }}
         with:
