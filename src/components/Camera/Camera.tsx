@@ -29,7 +29,6 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
     let stream: MediaStream | null = null
     const video = videoRef.current
 
-    // 取得したstreamをvideo要素に流す
     const setVideo = async () => {
       stream = await getStream()
       if (video === null || !stream) {
@@ -42,7 +41,6 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
 
     setVideo()
 
-    // streamを停止させる
     const cleanupVideo = () => {
       if (!stream) {
         return
@@ -75,13 +73,29 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
           const profilesSet = new Set(profiles)
           profilesSet.add(qrCodeData.data)
           console.log(Array.from(profilesSet))
-          localStorage.setItem('profiles', JSON.stringify(Array.from(profilesSet)))
+          localStorage.setItem(
+            'profiles',
+            JSON.stringify(Array.from(profilesSet)),
+          )
           setTimeout(scanQrCode, 100)
         }
         setTimeout(scanQrCode, 100)
       }
     }
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('This will run every 10 seconds!')
+      const rawItem = localStorage.getItem('profiles')
+      const profiles = JSON.parse(rawItem || '[]')
+
+      for (const profile of profiles) {
+        console.log(profile)
+      }
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div>
