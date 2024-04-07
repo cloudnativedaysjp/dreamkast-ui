@@ -10,12 +10,14 @@ type Props = {
   children?: ReactNode
   title?: string
   event?: Event
+  isAdminRole?: boolean
 }
 
 export const Layout: React.FC<Props> = ({
   children,
   title = 'This is the default title',
   event,
+  isAdminRole,
 }) => {
   return (
     <Styled.Container eventAbbr={event?.abbr}>
@@ -36,7 +38,7 @@ export const Layout: React.FC<Props> = ({
                 src={`/${event?.abbr}/ui/${event?.abbr}_header_logo.png`}
               />
             </Link>
-            <MobileMenu event={event} />
+            <MobileMenu event={event} isAdminRole={isAdminRole} />
             <DesktopMenu event={event} />
           </Styled.Header>
         </AppBar>

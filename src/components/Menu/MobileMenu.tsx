@@ -12,18 +12,20 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ScheduleIcon from '@material-ui/icons/Schedule'
 import ViewStreamIcon from '@material-ui/icons/ViewStream'
 import SendIcon from '@material-ui/icons/Send'
-import { Drawer, List, ListItem, ListItemIcon } from '@material-ui/core'
+import { Drawer, ListItem, ListItemIcon } from '@material-ui/core'
 import Link from 'next/link'
 import { useMenuContents } from './hooks'
 import { useAuth0 } from '@auth0/auth0-react'
 import { authSelector } from '../../store/auth'
 import { useSelector } from 'react-redux'
+import { AdminMobileMenu } from './internal/AdminMobileMenu/AdminMobileMenu'
 
 type Props = {
   event?: Event
+  isAdminRole?: boolean
 }
 
-export const MobileMenu: React.FC<Props> = ({ event }) => {
+export const MobileMenu: React.FC<Props> = ({ event, isAdminRole }) => {
   const { logout } = useAuth0()
   const { dkUrl } = useSelector(authSelector)
   const { guideUrl, isPreEvent } = useMenuContents()
@@ -46,7 +48,7 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
+      <Styled.RootList>
         <ListItem button key="info">
           <ListItemIcon>
             <ViewStreamIcon />
@@ -139,6 +141,8 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
           </CommonStyled.MenuLink>
         </ListItem>
 
+        {isAdminRole && <AdminMobileMenu event={event} />}
+
         <ListItem button key="logout">
           <ListItemIcon>
             <ExitToAppIcon />
@@ -156,7 +160,7 @@ export const MobileMenu: React.FC<Props> = ({ event }) => {
             Logout
           </Button>
         </ListItem>
-      </List>
+      </Styled.RootList>
     </div>
   )
 
