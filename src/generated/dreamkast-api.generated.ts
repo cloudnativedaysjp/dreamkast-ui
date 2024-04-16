@@ -3,6 +3,8 @@ export const addTagTypes = [
   'Profile',
   'Event',
   'Track',
+  'Speaker',
+  'Proposal',
   'Talk',
   'VideoRegistration',
   'ChatMessage',
@@ -58,6 +60,35 @@ const injectedRtkApi = api
       >({
         query: (queryArg) => ({ url: `/api/v1/tracks/${queryArg.trackId}` }),
         providesTags: ['Track'],
+      }),
+      getApiV1Streamings: build.query<
+        GetApiV1StreamingsApiResponse,
+        GetApiV1StreamingsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/streamings`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+      }),
+      getApiV1Speakers: build.query<
+        GetApiV1SpeakersApiResponse,
+        GetApiV1SpeakersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/speakers`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['Speaker'],
+      }),
+      getApiV1Proposals: build.query<
+        GetApiV1ProposalsApiResponse,
+        GetApiV1ProposalsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/proposals`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['Proposal'],
       }),
       getApiV1Talks: build.query<GetApiV1TalksApiResponse, GetApiV1TalksApiArg>(
         {
@@ -121,6 +152,7 @@ const injectedRtkApi = api
             roomId: queryArg.roomId,
             roomType: queryArg.roomType,
             createdFrom: queryArg.createdFrom,
+            profileId: queryArg.profileId,
           },
         }),
         providesTags: ['ChatMessage'],
@@ -297,6 +329,21 @@ export type GetApiV1TracksByTrackIdApiArg = {
   /** ID of track */
   trackId: string
 }
+export type GetApiV1StreamingsApiResponse = /** status 200 OK */ Streaming[]
+export type GetApiV1StreamingsApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
+export type GetApiV1SpeakersApiResponse = /** status 200 OK */ Speaker[]
+export type GetApiV1SpeakersApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
+export type GetApiV1ProposalsApiResponse = /** status 200 OK */ Proposal[]
+export type GetApiV1ProposalsApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
 export type GetApiV1TalksApiResponse = /** status 200 OK */ Talk[]
 export type GetApiV1TalksApiArg = {
   /** abbr of event (e.g. cndt2020) */
@@ -337,11 +384,13 @@ export type GetApiV1ChatMessagesApiArg = {
   /** abbr of event (e.g. cndt2020) */
   eventAbbr: string
   /** ID of chat room */
-  roomId: string
+  roomId?: string
   /** Type of chat room */
   roomType: string
   /** YYYY-MM-DDThh:mm:ss+TZD (use UTC) */
   createdFrom?: string
+  /** ID of profile */
+  profileId?: string
 }
 export type PostApiV1ChatMessagesApiResponse = unknown
 export type PostApiV1ChatMessagesApiArg = {
@@ -474,6 +523,39 @@ export type Track = {
   channelArn?: (string | null) | undefined
   onAirTalk?: (object | null) | undefined
 }
+export type Streaming = {
+  id?: string | undefined
+  status?: string | undefined
+  trackId?: number | undefined
+  destinationUrl?: string | undefined
+  playbackUrl?: string | undefined
+  mediaLiveChannelStatus?: string | undefined
+}
+export type Speaker = {
+  id: number
+  name: string
+  company?: (string | null) | undefined
+  jobTitle?: string | undefined
+  profile?: string | undefined
+  githubId?: (string | null) | undefined
+  twitterId?: (string | null) | undefined
+  avatarUrl?: (string | null) | undefined
+}
+export type Proposal = {
+  id: number
+  status: string
+  conferenceId: number
+  talkId: number
+  title?: string | undefined
+  abstract?: string | undefined
+  speakers?:
+    | {
+        name?: string | undefined
+        id?: number | undefined
+      }[]
+    | undefined
+  params?: object | undefined
+}
 export type Talk = {
   id: number
   conferenceId?: number | undefined
@@ -503,6 +585,9 @@ export type Talk = {
   actualEndTime?: string | undefined
   presentationMethod?: (string | null) | undefined
   slotNum?: number | undefined
+  allowShowingVideo?: boolean | undefined
+  offlineParticipationCount: number
+  onlineParticipationCount: number
 }
 export type VideoRegistration = {
   url?: string | undefined
@@ -616,6 +701,9 @@ export const {
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1TracksQuery,
   useGetApiV1TracksByTrackIdQuery,
+  useGetApiV1StreamingsQuery,
+  useGetApiV1SpeakersQuery,
+  useGetApiV1ProposalsQuery,
   useGetApiV1TalksQuery,
   useGetApiV1TalksByTalkIdQuery,
   usePutApiV1TalksByTalkIdMutation,
