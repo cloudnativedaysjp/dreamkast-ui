@@ -27,6 +27,7 @@ export const ConfirmDialog: React.FC<Props> = ({ open, handleClose }) => {
         <IconButton
           aria-label="close"
           onClick={handleClose}
+          autoFocus={false}
           style={{ position: 'absolute', right: '8px', top: '8px' }}
         >
           <CloseIcon />
@@ -38,7 +39,7 @@ export const ConfirmDialog: React.FC<Props> = ({ open, handleClose }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary" autoFocus>
+        <Button onClick={handleClose} color="primary" autoFocus={false}>
           確認
         </Button>
       </DialogActions>

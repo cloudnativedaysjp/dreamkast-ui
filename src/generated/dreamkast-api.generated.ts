@@ -1,17 +1,16 @@
 import { baseApi as api } from '../store/baseApi'
 export const addTagTypes = [
   'Profile',
+  'CheckIn',
   'Event',
   'Track',
+  'Speaker',
+  'Proposal',
   'Talk',
   'VideoRegistration',
   'ChatMessage',
   'Sponsor',
   'Booth',
-  'Point',
-  'Vote',
-  'DkUiData',
-  'ViewerCount',
 ] as const
 const injectedRtkApi = api
   .enhanceEndpoints({
@@ -27,6 +26,28 @@ const injectedRtkApi = api
           url: `/api/v1/${queryArg.eventAbbr}/my_profile`,
         }),
         providesTags: ['Profile'],
+      }),
+      postApiV1CheckInEvents: build.mutation<
+        PostApiV1CheckInEventsApiResponse,
+        PostApiV1CheckInEventsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/check_in_events`,
+          method: 'POST',
+          body: queryArg.checkInEvent,
+        }),
+        invalidatesTags: ['CheckIn'],
+      }),
+      postApiV1CheckInTalks: build.mutation<
+        PostApiV1CheckInTalksApiResponse,
+        PostApiV1CheckInTalksApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/check_in_talks`,
+          method: 'POST',
+          body: queryArg.checkInTalk,
+        }),
+        invalidatesTags: ['CheckIn'],
       }),
       getApiV1Events: build.query<
         GetApiV1EventsApiResponse,
@@ -58,6 +79,35 @@ const injectedRtkApi = api
       >({
         query: (queryArg) => ({ url: `/api/v1/tracks/${queryArg.trackId}` }),
         providesTags: ['Track'],
+      }),
+      getApiV1Streamings: build.query<
+        GetApiV1StreamingsApiResponse,
+        GetApiV1StreamingsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/streamings`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+      }),
+      getApiV1Speakers: build.query<
+        GetApiV1SpeakersApiResponse,
+        GetApiV1SpeakersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/speakers`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['Speaker'],
+      }),
+      getApiV1Proposals: build.query<
+        GetApiV1ProposalsApiResponse,
+        GetApiV1ProposalsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/proposals`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['Proposal'],
       }),
       getApiV1Talks: build.query<GetApiV1TalksApiResponse, GetApiV1TalksApiArg>(
         {
@@ -164,112 +214,6 @@ const injectedRtkApi = api
         query: (queryArg) => ({ url: `/api/v1/booths/${queryArg.boothId}` }),
         providesTags: ['Booth'],
       }),
-      getApiV1ProfileByProfileIdPoints: build.query<
-        GetApiV1ProfileByProfileIdPointsApiResponse,
-        GetApiV1ProfileByProfileIdPointsApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/profile/${queryArg.profileId}/points`,
-          params: { conference: queryArg.conference },
-        }),
-        providesTags: ['Point'],
-      }),
-      optionsApiV1ProfileByProfileIdPoints: build.mutation<
-        OptionsApiV1ProfileByProfileIdPointsApiResponse,
-        OptionsApiV1ProfileByProfileIdPointsApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/profile/${queryArg.profileId}/points`,
-          method: 'OPTIONS',
-        }),
-      }),
-      postApiV1TalksByTalkIdVote: build.mutation<
-        PostApiV1TalksByTalkIdVoteApiResponse,
-        PostApiV1TalksByTalkIdVoteApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/talks/${queryArg.talkId}/vote`,
-          method: 'POST',
-          body: queryArg.vote,
-        }),
-        invalidatesTags: ['Vote'],
-      }),
-      optionsApiV1TalksByTalkIdVote: build.mutation<
-        OptionsApiV1TalksByTalkIdVoteApiResponse,
-        OptionsApiV1TalksByTalkIdVoteApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/talks/${queryArg.talkId}/vote`,
-          method: 'OPTIONS',
-        }),
-      }),
-      postApiV1ProfileByProfileIdPoint: build.mutation<
-        PostApiV1ProfileByProfileIdPointApiResponse,
-        PostApiV1ProfileByProfileIdPointApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/profile/${queryArg.profileId}/point`,
-          method: 'POST',
-          body: queryArg.profilePoint,
-        }),
-        invalidatesTags: ['Point'],
-      }),
-      optionsApiV1ProfileByProfileIdPoint: build.mutation<
-        OptionsApiV1ProfileByProfileIdPointApiResponse,
-        OptionsApiV1ProfileByProfileIdPointApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/profile/${queryArg.profileId}/point`,
-          method: 'OPTIONS',
-        }),
-      }),
-      getApiV1AppDataByProfileIdConferenceAndConference: build.query<
-        GetApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
-        GetApiV1AppDataByProfileIdConferenceAndConferenceApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
-        }),
-        providesTags: ['DkUiData'],
-      }),
-      postApiV1AppDataByProfileIdConferenceAndConference: build.mutation<
-        PostApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
-        PostApiV1AppDataByProfileIdConferenceAndConferenceApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
-          method: 'POST',
-          body: queryArg.dkUiDataMutation,
-        }),
-        invalidatesTags: ['DkUiData'],
-      }),
-      optionsApiV1AppDataByProfileIdConferenceAndConference: build.mutation<
-        OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiResponse,
-        OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/app-data/${queryArg.profileId}/conference/${queryArg.conference}`,
-          method: 'OPTIONS',
-        }),
-      }),
-      getApiV1TracksByTrackIdViewerCount: build.query<
-        GetApiV1TracksByTrackIdViewerCountApiResponse,
-        GetApiV1TracksByTrackIdViewerCountApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
-        }),
-        providesTags: ['ViewerCount'],
-      }),
-      optionsApiV1TracksByTrackIdViewerCount: build.mutation<
-        OptionsApiV1TracksByTrackIdViewerCountApiResponse,
-        OptionsApiV1TracksByTrackIdViewerCountApiArg
-      >({
-        query: (queryArg) => ({
-          url: `/api/v1/tracks/${queryArg.trackId}/viewer_count`,
-          method: 'OPTIONS',
-        }),
-      }),
     }),
     overrideExisting: false,
   })
@@ -279,6 +223,14 @@ export type GetApiV1ByEventAbbrMyProfileApiResponse =
 export type GetApiV1ByEventAbbrMyProfileApiArg = {
   /** ID of event */
   eventAbbr: string
+}
+export type PostApiV1CheckInEventsApiResponse = unknown
+export type PostApiV1CheckInEventsApiArg = {
+  checkInEvent: CheckInEvent
+}
+export type PostApiV1CheckInTalksApiResponse = unknown
+export type PostApiV1CheckInTalksApiArg = {
+  checkInTalk: CheckInTalk
 }
 export type GetApiV1EventsApiResponse = /** status 200 OK */ Event[]
 export type GetApiV1EventsApiArg = void
@@ -296,6 +248,21 @@ export type GetApiV1TracksByTrackIdApiResponse = /** status 200 OK */ Track
 export type GetApiV1TracksByTrackIdApiArg = {
   /** ID of track */
   trackId: string
+}
+export type GetApiV1StreamingsApiResponse = /** status 200 OK */ Streaming[]
+export type GetApiV1StreamingsApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
+export type GetApiV1SpeakersApiResponse = /** status 200 OK */ Speaker[]
+export type GetApiV1SpeakersApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
+export type GetApiV1ProposalsApiResponse = /** status 200 OK */ Proposal[]
+export type GetApiV1ProposalsApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
 }
 export type GetApiV1TalksApiResponse = /** status 200 OK */ Talk[]
 export type GetApiV1TalksApiArg = {
@@ -366,64 +333,6 @@ export type GetApiV1BoothsByBoothIdApiArg = {
   /** ID of booth */
   boothId: string
 }
-export type GetApiV1ProfileByProfileIdPointsApiResponse =
-  /** status 200 200 response */ ProfilePointsResponse
-export type GetApiV1ProfileByProfileIdPointsApiArg = {
-  conference: string
-  profileId: string
-}
-export type OptionsApiV1ProfileByProfileIdPointsApiResponse = unknown
-export type OptionsApiV1ProfileByProfileIdPointsApiArg = {
-  profileId: string
-}
-export type PostApiV1TalksByTalkIdVoteApiResponse =
-  /** status 200 200 response */ CommonResponse
-export type PostApiV1TalksByTalkIdVoteApiArg = {
-  talkId: string
-  vote: VoteResponse
-}
-export type OptionsApiV1TalksByTalkIdVoteApiResponse = unknown
-export type OptionsApiV1TalksByTalkIdVoteApiArg = {
-  talkId: string
-}
-export type PostApiV1ProfileByProfileIdPointApiResponse =
-  /** status 200 200 response */ CommonResponse
-export type PostApiV1ProfileByProfileIdPointApiArg = {
-  profileId: string
-  profilePoint: ProfilePointRequest
-}
-export type OptionsApiV1ProfileByProfileIdPointApiResponse = unknown
-export type OptionsApiV1ProfileByProfileIdPointApiArg = {
-  profileId: string
-}
-export type GetApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
-  /** status 200 200 response */ DkUiData
-export type GetApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
-  profileId: string
-  conference: string
-}
-export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
-  /** status 200 200 response */ CommonResponse
-export type PostApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
-  profileId: string
-  conference: string
-  dkUiDataMutation: DkUiDataMutation
-}
-export type OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiResponse =
-  unknown
-export type OptionsApiV1AppDataByProfileIdConferenceAndConferenceApiArg = {
-  profileId: string
-  conference: string
-}
-export type GetApiV1TracksByTrackIdViewerCountApiResponse =
-  /** status 200 200 response */ ViewerCountResponse
-export type GetApiV1TracksByTrackIdViewerCountApiArg = {
-  trackId: string
-}
-export type OptionsApiV1TracksByTrackIdViewerCountApiResponse = unknown
-export type OptionsApiV1TracksByTrackIdViewerCountApiArg = {
-  trackId: string
-}
 export type RegisteredTalk = {
   talkId?: number | undefined
   talkTitle?: string | undefined
@@ -445,6 +354,17 @@ export type Profile = {
   email: string
   isAttendOffline: boolean
   registeredTalks?: RegisteredTalk[] | undefined
+}
+export type CheckInEvent = {
+  profileId: string
+  eventAbbr: string
+  checkInTimestamp: number
+}
+export type CheckInTalk = {
+  profileId: string
+  eventAbbr: string
+  talkId: string
+  checkInTimestamp: number
 }
 export type Event = {
   id: number
@@ -474,8 +394,44 @@ export type Track = {
   channelArn?: (string | null) | undefined
   onAirTalk?: (object | null) | undefined
 }
+export type Streaming = {
+  id?: string | undefined
+  status?: string | undefined
+  trackId?: number | undefined
+  destinationUrl?: string | undefined
+  playbackUrl?: string | undefined
+  mediaLiveChannelStatus?: string | undefined
+}
+export type Speaker = {
+  id: number
+  name: string
+  company?: (string | null) | undefined
+  jobTitle?: string | undefined
+  profile?: string | undefined
+  githubId?: (string | null) | undefined
+  twitterId?: (string | null) | undefined
+  avatarUrl?: (string | null) | undefined
+}
+export type Proposal = {
+  id: number
+  status: string
+  conferenceId: number
+  talkId: number
+  title?: string | undefined
+  abstract?: string | undefined
+  speakers?:
+    | {
+        name?: string | undefined
+        id?: number | undefined
+      }[]
+    | undefined
+  params?: object | undefined
+}
 export type Talk = {
   id: number
+  type?:
+    | ('Session' | 'SponsorSession' | 'KeynoteSession' | 'Intermission')
+    | undefined
   conferenceId?: number | undefined
   trackId: number
   videoPlatform?: string | undefined
@@ -503,6 +459,9 @@ export type Talk = {
   actualEndTime?: string | undefined
   presentationMethod?: (string | null) | undefined
   slotNum?: number | undefined
+  allowShowingVideo?: boolean | undefined
+  offlineParticipationCount: number
+  onlineParticipationCount: number
 }
 export type VideoRegistration = {
   url?: string | undefined
@@ -558,64 +517,17 @@ export type Booth = {
   }[]
   keyImageUrls: string[]
 }
-export type ProfilePointsResponse = {
-  total: number
-  points: {
-    conference: string
-    pointEventId: string
-    point?: number | undefined
-    timestamp?: number | undefined
-    desc?: string | undefined
-  }[]
-}
-export type ErrorSchema = {
-  message?: string | undefined
-}
-export type CommonResponse = {
-  message?: string | undefined
-  status?: string | undefined
-  [key: string]: any
-}
-export type VoteResponse = {
-  eventAbbr: string
-}
-export type ProfilePointRequest = {
-  conference: string
-  pointEventId: string
-}
-export type DkUiData = {
-  watchedTalksOnline: {
-    watchingTime?:
-      | {
-          [key: string]: any
-        }
-      | undefined
-    prevTimestamp?: number | undefined
-  }
-  stampChallenges: {
-    condition?: string | undefined
-    waiting: boolean
-    slotId: number
-    timestamp?: number | undefined
-  }[]
-  [key: string]: any
-}
-export type DkUiDataMutation = {
-  payload: {
-    [key: string]: any
-  }
-  action: string
-}
-export type ViewerCountResponse = {
-  trackId: number
-  viewerCount: number
-}
 export const {
   useGetApiV1ByEventAbbrMyProfileQuery,
+  usePostApiV1CheckInEventsMutation,
+  usePostApiV1CheckInTalksMutation,
   useGetApiV1EventsQuery,
   useGetApiV1EventsByEventAbbrQuery,
   useGetApiV1TracksQuery,
   useGetApiV1TracksByTrackIdQuery,
+  useGetApiV1StreamingsQuery,
+  useGetApiV1SpeakersQuery,
+  useGetApiV1ProposalsQuery,
   useGetApiV1TalksQuery,
   useGetApiV1TalksByTalkIdQuery,
   usePutApiV1TalksByTalkIdMutation,
@@ -626,15 +538,4 @@ export const {
   usePutApiV1ChatMessagesByMessageIdMutation,
   useGetApiV1SponsorsQuery,
   useGetApiV1BoothsByBoothIdQuery,
-  useGetApiV1ProfileByProfileIdPointsQuery,
-  useOptionsApiV1ProfileByProfileIdPointsMutation,
-  usePostApiV1TalksByTalkIdVoteMutation,
-  useOptionsApiV1TalksByTalkIdVoteMutation,
-  usePostApiV1ProfileByProfileIdPointMutation,
-  useOptionsApiV1ProfileByProfileIdPointMutation,
-  useGetApiV1AppDataByProfileIdConferenceAndConferenceQuery,
-  usePostApiV1AppDataByProfileIdConferenceAndConferenceMutation,
-  useOptionsApiV1AppDataByProfileIdConferenceAndConferenceMutation,
-  useGetApiV1TracksByTrackIdViewerCountQuery,
-  useOptionsApiV1TracksByTrackIdViewerCountMutation,
 } = injectedRtkApi

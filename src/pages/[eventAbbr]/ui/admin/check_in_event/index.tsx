@@ -30,14 +30,16 @@ const IndexMain = () => {
     { skip },
   )
 
-  const includeAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
+  const isAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
 
   if (event) {
-    if (includeAdminRole) {
+    if (isAdminRole) {
       return (
-        <Layout title={event.name} event={event} isAdminRole={includeAdminRole}>
-          <Typography variant="h5">イベント受付</Typography>
-          <CheckIn checkInType={'event'} />
+        <Layout title={event.name} event={event} isAdminRole={isAdminRole}>
+          <Typography variant="h5">
+            イベント受付 ({event.abbr.toUpperCase()})
+          </Typography>
+          <CheckIn checkInType={'event'} eventAbbr={event.abbr} />
         </Layout>
       )
     } else {

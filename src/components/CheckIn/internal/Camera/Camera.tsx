@@ -5,9 +5,16 @@ import jsQR from 'jsqr'
 type Props = {
   height: number
   width: number
+  setCheckInDataToLocalStorage: (profileId: string) => void
+  enableScan: boolean
 }
 
-export const Camera: React.FC<Props> = ({ height, width }) => {
+export const Camera: React.FC<Props> = ({
+  height,
+  width,
+  setCheckInDataToLocalStorage,
+  enableScan,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -24,6 +31,10 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
       audio: false,
     })
   }, [width, height])
+
+  useEffect(() => {
+    console.log('enableScan:', enableScan)
+  }, [enableScan])
 
   useEffect(() => {
     let stream: MediaStream | null = null
@@ -57,6 +68,9 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
   const scanQrCode = () => {
     const canvas = canvasRef.current
     const video = videoRef.current
+    if (!enableScan) {
+      console.log(`enableScan: ${enableScan}`)
+    }
     if (canvas && video) {
       const ctx = canvas.getContext('2d')
       if (ctx) {
@@ -67,19 +81,16 @@ export const Camera: React.FC<Props> = ({ height, width }) => {
           imageData.width,
           imageData.height,
         )
-        if (qrCodeData) {
-          const rawItem = localStorage.getItem('profiles')
-          const profiles = JSON.parse(rawItem || '[]')
-          const profilesSet = new Set(profiles)
-          profilesSet.add(qrCodeData.data)
-          console.log(Array.from(profilesSet))
-          localStorage.setItem(
-            'profiles',
-            JSON.stringify(Array.from(profilesSet)),
-          )
+        if (qrCodeData != null) {
+          console.log(qrCodeData)
+        }
+        if (qrCodeData && enableScan) {
+          const profileId = JSON.parse(qrCodeData.data)['profile_id']
+          setCheckInDataToLocalStorage(profileId)
+          setTimeout(scanQrCode, 3000)
+        } else {
           setTimeout(scanQrCode, 100)
         }
-        setTimeout(scanQrCode, 100)
       }
     }
   }
