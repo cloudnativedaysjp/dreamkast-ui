@@ -1,11 +1,12 @@
-name: build container image
+name: build container image when tags are pushed
 
-on: push
+on:
+  push:
+    tags: ["*"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pusher.name != 'dreamkast-cloudnativedays'
     steps:
       - uses: actions/checkout@v3
 
@@ -14,7 +15,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -31,13 +32,11 @@ jobs:
           images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ui
           tags: |
             type=sha,prefix=,format=long
-            type=ref,event=branch
             type=ref,event=tag
-            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build
         id: docker_build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
           context: ./
           file: ./Dockerfile
@@ -47,4 +46,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
