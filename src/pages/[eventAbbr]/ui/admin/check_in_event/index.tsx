@@ -30,9 +30,7 @@ const IndexMain = () => {
     { skip },
   )
 
-  const includeAdminRole = roles.some((role) =>
-    [`${eventAbbr.toUpperCase()}-Admin`].includes(role),
-  )
+  const includeAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
 
   if (event) {
     if (includeAdminRole) {
