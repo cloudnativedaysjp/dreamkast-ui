@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void
 }
 
-export const DummyCheckInButton: React.FC<Props> = ({onClick}) => {
+export const DummyCheckInButton: React.FC<Props> = ({ onClick }) => {
   return (
     <Button type="submit" onClick={onClick} variant="contained">
       イベントチェックイン用のダミーボタン

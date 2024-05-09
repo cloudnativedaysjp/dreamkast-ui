@@ -67,4 +67,4 @@ export const RootList = styled(List)`
   width: 100%;
   max-width: 360px;
   background-color: ${(props) => props.theme.palette.background.paper};
-`;
+`
