@@ -14,11 +14,7 @@ type Props = {
 
 export const CheckIn: React.FC<Props> = ({ checkInType }) => {
   const [storedKeys, setStoredKeys] = React.useState<string[]>([])
-  const storedKeysRef = React.useRef(storedKeys)
   const [open, setOpen] = useState(false)
-  useEffect(() => {
-    storedKeysRef.current = storedKeys
-  }, [storedKeys])
   useEffect(() => {
     for (const key in localStorage) {
       if (key.startsWith('check_in_')) {
@@ -30,7 +26,7 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
       console.log('Send check-in logs to dreamkast api:')
       console.log(storedKeys)
 
-      for (const key of storedKeysRef.current) {
+      for (const key of storedKeys) {
         console.log(
           `Success to send check-in log: key:L ${key}, value: ${JSON.stringify(
             localStorage.getItem(key),
@@ -40,7 +36,7 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
       }
     }, 10000)
     return () => clearInterval(interval)
-  }, [])
+  }, [storedKeys])
 
   const checkInConference = () => {
     const uuid = uuid4()
