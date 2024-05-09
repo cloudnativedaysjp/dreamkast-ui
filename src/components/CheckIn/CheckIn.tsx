@@ -43,17 +43,15 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
   }, [])
 
   const checkInConference = () => {
-    ;(async () => {
-      const uuid = uuid4()
-      const key = `check_in_${uuid}`
-      const value = {
-        checkInType: checkInType,
-        profileId: 2,
-        checkInTimestamp: Math.floor(Date.now() / 1000),
-      }
-      localStorage.setItem(key, JSON.stringify(value))
-      setStoredKeys((prev) => [...prev, key])
-    })()
+    const uuid = uuid4()
+    const key = `check_in_${uuid}`
+    const value = {
+      checkInType: checkInType,
+      profileId: 2,
+      checkInTimestamp: Math.floor(Date.now() / 1000),
+    }
+    localStorage.setItem(key, JSON.stringify(value))
+    setStoredKeys((prev) => [...prev, key])
     setOpen(true)
   }
 
