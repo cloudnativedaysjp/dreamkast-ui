@@ -15,13 +15,16 @@ type Props = {
 export const CheckIn: React.FC<Props> = ({ checkInType }) => {
   const [storedKeys, setStoredKeys] = React.useState<string[]>([])
   const [open, setOpen] = useState(false)
+
   useEffect(() => {
     for (const key in localStorage) {
       if (key.startsWith('check_in_')) {
         setStoredKeys((prev) => (prev.includes(key) ? prev : [...prev, key]))
       }
     }
+  }, [])
 
+  useEffect(() => {
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
       console.log(storedKeys)
