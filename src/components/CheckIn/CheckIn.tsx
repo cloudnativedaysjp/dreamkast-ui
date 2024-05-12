@@ -17,11 +17,10 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    for (const key in localStorage) {
-      if (key.startsWith('check_in_')) {
-        setStoredKeys((prev) => (prev.includes(key) ? prev : [...prev, key]))
-      }
-    }
+    const keys = Object.keys(localStorage).filter((key) =>
+      key.startsWith('check_in_'),
+    )
+    setStoredKeys(keys)
   }, [])
 
   useEffect(() => {
