@@ -40,12 +40,17 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
     return () => clearInterval(interval)
   }, [storedKeys])
 
+  const randomInt = (): number => {
+    const minCeil = Math.ceil(0)
+    const maxFloor = Math.floor(100)
+    return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil
+  }
   const checkInConference = () => {
     const uuid = uuid4()
     const key = `check_in_${uuid}`
     const value = {
       checkInType: checkInType,
-      profileId: 2,
+      profileId: randomInt(),
       checkInTimestamp: Math.floor(Date.now() / 1000),
     }
     localStorage.setItem(key, JSON.stringify(value))
