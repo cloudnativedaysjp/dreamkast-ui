@@ -11,10 +11,10 @@ import React from 'react'
 
 type Props = {
   storedKeys: string[]
-  deleteItem: (key: string) => void
+  deleteItems: (keys: string[]) => void
 }
 
-export const Debug: React.FC<Props> = ({ storedKeys, deleteItem }) => {
+export const Debug: React.FC<Props> = ({ storedKeys, deleteItems }) => {
   return (
     <TableContainer>
       <Table>
@@ -37,7 +37,7 @@ export const Debug: React.FC<Props> = ({ storedKeys, deleteItem }) => {
                   <TableCell>
                     <Button
                       type="submit"
-                      onClick={() => deleteItem(key)}
+                      onClick={() => deleteItems([key])}
                       variant="contained"
                     >
                       Delete

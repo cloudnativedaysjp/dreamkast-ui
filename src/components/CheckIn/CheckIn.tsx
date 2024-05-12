@@ -26,16 +26,7 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
-      console.log(storedKeys)
-
-      for (const key of storedKeys) {
-        console.log(
-          `Success to send check-in log: key:L ${key}, value: ${JSON.stringify(
-            localStorage.getItem(key),
-          )}`,
-        )
-        deleteItem(key)
-      }
+      deleteItems(storedKeys)
     }, 10000)
     return () => clearInterval(interval)
   }, [storedKeys])
@@ -62,9 +53,17 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
     setOpen(false)
   }
 
-  const deleteItem = (key: string) => {
-    localStorage.removeItem(key)
-    setStoredKeys(storedKeys.filter((k) => k !== key))
+  const deleteItems = (keys: string[]) => {
+    console.log(keys)
+    for (const key of keys) {
+      console.log(
+        `Success to send check-in log: key:L ${key}, value: ${JSON.stringify(
+          localStorage.getItem(key),
+        )}`,
+      )
+      localStorage.removeItem(key)
+    }
+    setStoredKeys(storedKeys.filter((k) => !keys.includes(k)))
   }
 
   return (
@@ -74,7 +73,7 @@ export const CheckIn: React.FC<Props> = ({ checkInType }) => {
       <DummyCheckInButton onClick={checkInConference} />
       <ConfirmDialog open={open} handleClose={handleClose} />
       <Typography variant="h5">↓Debug↓</Typography>
-      <Debug storedKeys={storedKeys} deleteItem={deleteItem} />
+      <Debug storedKeys={storedKeys} deleteItems={deleteItems} />
     </div>
   )
 }
