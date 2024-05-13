@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Toolbar from '@material-ui/core/Toolbar'
+import { List } from '@material-ui/core'
 
 export const Container = styled.div`
   background: rgba(255, 255, 255, 0.6);
@@ -60,4 +61,10 @@ export const MobileMenu = styled.div`
     display: flex;
     background-color: #fff;
   }
+`
+
+export const RootList = styled(List)`
+  width: 100%;
+  max-width: 360px;
+  background-color: ${(props) => props.theme.palette.background.paper};
 `
