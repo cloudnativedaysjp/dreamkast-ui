@@ -54,6 +54,8 @@ export const MockTalkA1 = () =>
     actualEndTime: '2000-01-01T10:20:00.000+09:00',
     presentationMethod: '現地登壇',
     slotNum: 1101,
+    offlineParticipationCount: 1,
+    onlineParticipationCount: 1,
   })
 
 export const MockTalkA2 = () =>
@@ -84,6 +86,8 @@ export const MockTalkA2 = () =>
     actualEndTime: '2000-01-01T10:45:00.000+09:00',
     presentationMethod: 'オンライン登壇',
     slotNum: 1102,
+    offlineParticipationCount: 1,
+    onlineParticipationCount: 1,
   })
 
 export const MockTalkA3 = () =>
@@ -114,6 +118,8 @@ export const MockTalkA3 = () =>
     actualEndTime: '2000-01-01T11:10:00.000+09:00',
     presentationMethod: '事前収録',
     slotNum: 1103,
+    offlineParticipationCount: 1,
+    onlineParticipationCount: 1,
   })
 
 export const MockTalkB1 = () =>
@@ -147,6 +153,8 @@ export const MockTalkB1 = () =>
     actualEndTime: '2000-01-01T14:00:00.000+09:00',
     presentationMethod: null,
     slotNum: 1101,
+    offlineParticipationCount: 1,
+    onlineParticipationCount: 1,
   })
 
 export const MockTalkC1 = () =>
@@ -183,6 +191,8 @@ export const MockTalkC1 = () =>
     actualEndTime: '2000-01-01T14:00:00.000+09:00',
     presentationMethod: null,
     slotNum: 1101,
+    offlineParticipationCount: 1,
+    onlineParticipationCount: 1,
   })
 
 export const MockTrackA = () =>
