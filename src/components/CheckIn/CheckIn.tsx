@@ -111,9 +111,9 @@ export const CheckIn: React.FC<Props> = ({
     })()
   }
 
-  const dummyCheckInConference = () => {
-    setCheckInDataToLocalStorage('2')
-  }
+  // const dummyCheckInConference = () => {
+  //   setCheckInDataToLocalStorage('2')
+  // }
 
   const handleClose = () => {
     setOpen(false)
@@ -133,7 +133,6 @@ export const CheckIn: React.FC<Props> = ({
         setCheckInDataToLocalStorage={setCheckInDataToLocalStorage}
         enableScan={enableScan}
       />
-      <DummyCheckInButton onClick={dummyCheckInConference} />
       <ConfirmDialog open={open} handleClose={handleClose} />
       <Debug storedKeys={storedKeys} deleteItem={deleteItem} />
     </div>
