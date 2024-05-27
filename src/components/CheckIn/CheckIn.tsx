@@ -56,28 +56,26 @@ export const CheckIn: React.FC<Props> = ({
   const setCheckInDataToLocalStorage = (profileId: string) => {
     setEnableScan(false)
     setOpen(true)
-    ;(async () => {
-      for (const key of storedKeys) {
-        const item = JSON.parse(localStorage.getItem(key))
-        if (item['profileId'] == profileId) {
-          console.log('Already checked in')
-          return // already checked in
-        }
+    for (const key of storedKeys) {
+      const item = JSON.parse(localStorage.getItem(key))
+      if (item['profileId'] == profileId) {
+        console.log('Already checked in')
+        return // already checked in
       }
-      const uuid = uuid4()
-      const key = `check_in_${uuid}`
-      const value: CheckInData = {
-        checkInType: checkInType,
-        eventAbbr: eventAbbr,
-        profileId: profileId,
-        checkInTimestamp: Math.floor(Date.now() / 1000),
-      }
-      if (checkInType === 'session') {
-        value.talkId = talk?.id.toString()
-      }
-      localStorage.setItem(key, JSON.stringify(value))
-      setStoredKeys((prev) => [...prev, key])
-    })()
+    }
+    const uuid = uuid4()
+    const key = `check_in_${uuid}`
+    const value: CheckInData = {
+      checkInType: checkInType,
+      eventAbbr: eventAbbr,
+      profileId: profileId,
+      checkInTimestamp: Math.floor(Date.now() / 1000),
+    }
+    if (checkInType === 'session') {
+      value.talkId = talk?.id.toString()
+    }
+    localStorage.setItem(key, JSON.stringify(value))
+    setStoredKeys((prev) => [...prev, key])
   }
 
   // const dummyCheckInConference = () => {
