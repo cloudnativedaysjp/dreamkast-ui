@@ -7,12 +7,12 @@ import {
   useGetApiV1TalksQuery,
 } from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import { authSelector } from '../../../../../store/auth'
 import { withAuthProvider } from '../../../../../context/auth'
 import Error404 from '../../../../404'
 import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
 import { MenuItem, Select, Typography } from '@material-ui/core'
+import { authSelector } from '../../../../../store/auth'
+import { useSelector } from 'react-redux'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -28,6 +28,7 @@ const IndexMain = () => {
     return ''
   }, [router])
   const { roles } = useSelector(authSelector)
+  const isAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
   const skip = eventAbbr === null
   const { data: event } = useGetApiV1EventsByEventAbbrQuery(
     { eventAbbr },
@@ -50,7 +51,6 @@ const IndexMain = () => {
     }
   }, [data, isLoading, isError])
 
-  const isAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
 
   const [talks, setTalks] = useState<Talk[]>([])
   const [selectedTalk, setSelectedTalk] = useState<Talk | null>(null)
@@ -63,7 +63,7 @@ const IndexMain = () => {
   if (event) {
     if (isAdminRole) {
       return (
-        <Layout title={event.name} event={event} isAdminRole={isAdminRole}>
+        <Layout title={event.name} event={event}>
           <Typography variant="h5">
             セッション受付 (
             <Select
