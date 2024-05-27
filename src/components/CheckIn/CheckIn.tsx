@@ -47,7 +47,6 @@ export const CheckIn: React.FC<Props> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
-      console.log(storedKeys)
       deleteItems(storedKeys)
 
       for (const key of storedKeysRef.current) {
