@@ -21,6 +21,7 @@ type Props = {
 
 type CheckInData = {
   checkInType: CheckInType
+  eventAbbr: string
   profileId: string
   checkInTimestamp: number
   talkId?: string
@@ -97,12 +98,12 @@ export const CheckIn: React.FC<Props> = ({
       }
       const uuid = uuid4()
       const key = `check_in_${uuid}`
-      const value = {
+      const value: CheckInData = {
         checkInType: checkInType,
         eventAbbr: eventAbbr,
         profileId: profileId,
         checkInTimestamp: Math.floor(Date.now() / 1000),
-      } as CheckInData
+      }
       if (checkInType === 'session') {
         value.talkId = talk?.id.toString()
       }
