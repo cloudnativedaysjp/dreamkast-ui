@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { uuid4 } from '@sentry/utils'
 import { ConfirmDialog } from './internal/ConfirmDialog'
-import { DummyCheckInButton } from './internal/DummyCheckInButton/DummyCheckInButton'
 import { Debug } from './internal/Debug/Debug'
 import { Camera } from './internal/Camera'
 import {
@@ -35,50 +34,21 @@ export const CheckIn: React.FC<Props> = ({
 }) => {
   const [storedKeys, setStoredKeys] = React.useState<string[]>([])
   const [open, setOpen] = useState(false)
-  const storedKeysRef = React.useRef(storedKeys)
   const [enableScan, setEnableScan] = useState(true)
   const [checkInEvent] = usePostApiV1CheckInEventsMutation()
   const [checkInSession] = usePostApiV1CheckInTalksMutation()
 
   useEffect(() => {
-    storedKeysRef.current = storedKeys
-  }, [storedKeys])
+    const keys = Object.keys(localStorage).filter((key) =>
+      key.startsWith('check_in_'),
+    )
+    setStoredKeys(keys)
+  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
       deleteItems(storedKeys)
-
-      for (const key of storedKeysRef.current) {
-        console.log(
-          `Success to send check-in log: key:L ${key}, value: ${JSON.stringify(
-            localStorage.getItem(key),
-          )}`,
-        )
-        const item = JSON.parse(localStorage.getItem(key))
-        if (!debug) {
-          if (item['checkInType'] === 'event') {
-            checkInEvent({
-              checkInEvent: {
-                profileId: item['profileId'],
-                eventAbbr: item['eventAbbr'],
-                checkInTimestamp: item['checkInTimestamp'],
-              },
-            }).unwrap()
-          } else if (item['checkInType'] === 'session') {
-            checkInSession({
-              checkInTalk: {
-                profileId: item['profileId'],
-                eventAbbr: item['eventAbbr'],
-                talkId: item['talkId'],
-                checkInTimestamp: item['checkInTimestamp'],
-              },
-            }).unwrap()
-          } else {
-            console.error(`Invalid check-in type: ${item['checkInType']}`)
-          }
-        }
-      }
     }, 10000)
     return () => clearInterval(interval)
   }, [storedKeys])
@@ -87,7 +57,7 @@ export const CheckIn: React.FC<Props> = ({
     setEnableScan(false)
     setOpen(true)
     ;(async () => {
-      for (const key of storedKeysRef.current) {
+      for (const key of storedKeys) {
         const item = JSON.parse(localStorage.getItem(key))
         if (item['profileId'] == profileId) {
           console.log('Already checked in')
@@ -127,6 +97,29 @@ export const CheckIn: React.FC<Props> = ({
           localStorage.getItem(key),
         )}`,
       )
+      const item = JSON.parse(localStorage.getItem(key))
+      if (!debug) {
+        if (item['checkInType'] === 'event') {
+          checkInEvent({
+            checkInEvent: {
+              profileId: item['profileId'],
+              eventAbbr: item['eventAbbr'],
+              checkInTimestamp: item['checkInTimestamp'],
+            },
+          }).unwrap()
+        } else if (item['checkInType'] === 'session') {
+          checkInSession({
+            checkInTalk: {
+              profileId: item['profileId'],
+              eventAbbr: item['eventAbbr'],
+              talkId: item['talkId'],
+              checkInTimestamp: item['checkInTimestamp'],
+            },
+          }).unwrap()
+        } else {
+          console.error(`Invalid check-in type: ${item['checkInType']}`)
+        }
+      }
       localStorage.removeItem(key)
     }
     setStoredKeys(storedKeys.filter((k) => !keys.includes(k)))
