@@ -46,10 +46,10 @@ export const Camera: React.FC<Props> = ({
       }
       video.srcObject = stream
       video.play()
-      scanQrCode()
     }
 
     setVideo()
+    const intervalScan = setInterval(scanQrCode, 3000)
 
     const cleanupVideo = () => {
       if (!stream) {
@@ -61,7 +61,11 @@ export const Camera: React.FC<Props> = ({
       }
       video.srcObject = null
     }
-    return cleanupVideo
+
+    return () => {
+      clearInterval(intervalScan)
+      cleanupVideo()
+    }
   }, [getStream])
 
   const scanQrCode = () => {
@@ -86,11 +90,10 @@ export const Camera: React.FC<Props> = ({
         if (qrCodeData && enableScan) {
           const profileId = JSON.parse(qrCodeData.data)['profile_id']
           setCheckInDataToLocalStorage(profileId)
-          setTimeout(scanQrCode, 3000)
-        } else {
-          setTimeout(scanQrCode, 100)
         }
       }
+    } else {
+      console.log('canvas or video is null')
     }
   }
 
