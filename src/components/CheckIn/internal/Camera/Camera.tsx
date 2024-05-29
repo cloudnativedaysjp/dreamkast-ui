@@ -1,4 +1,3 @@
-'use client'
 import React, { useCallback, useEffect, useRef } from 'react'
 import jsQR from 'jsqr'
 
