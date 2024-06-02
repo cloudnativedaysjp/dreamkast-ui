@@ -5,6 +5,7 @@ import { PLiveTalkList } from './PLiveTalkList'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setInitialViewTalk,
+  hideLT,
   setViewTrackId,
   useTracks,
   viewTrackIdSelector,
@@ -12,6 +13,7 @@ import {
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 import { LiveTalkModalButton } from './LiveTalkModalButton'
 import { ContainerComponent } from '../../util/types'
+import { ShowLTButton } from './ShowLTButton'
 
 export const TrackSelector: React.FC = () => {
   return (
@@ -29,6 +31,7 @@ export const CTrackSelector: ContainerComponent<PProps> = ({ content }) => {
   const handleChange = (selectItem: number | null) => {
     dispatch(setViewTrackId(selectItem))
     dispatch(setInitialViewTalk())
+    dispatch(hideLT())
   }
 
   return content({ viewTrackId, tracksWithLiveTalk, handleChange })
@@ -54,18 +57,21 @@ const PTrackSelector: React.FC<PProps> = ({
           selectedTrack={viewTrackId}
           onChange={handleChange}
         ></PTrackSelectorButtonGroup>
-        <LiveTalkModalButton
-          content={(closeModal) => (
-            <PLiveTalkList
-              data={tracksWithLiveTalk}
-              selectedTrack={viewTrackId}
-              onChange={(i) => {
-                closeModal()
-                handleChange(i)
-              }}
-            />
-          )}
-        ></LiveTalkModalButton>
+        <Styled.OptionButtonGroup>
+          <LiveTalkModalButton
+            content={(closeModal) => (
+              <PLiveTalkList
+                data={tracksWithLiveTalk}
+                selectedTrack={viewTrackId}
+                onChange={(i) => {
+                  closeModal()
+                  handleChange(i)
+                }}
+              />
+            )}
+          ></LiveTalkModalButton>
+          <ShowLTButton />
+        </Styled.OptionButtonGroup>
       </Styled.TrackMenuContainer>
     </>
   )

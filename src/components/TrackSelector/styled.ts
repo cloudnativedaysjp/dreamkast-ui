@@ -10,7 +10,7 @@ export const TrackMenuContainer = styled.div`
 `
 
 export const TrackSelectorButtonGroup = styled(ToggleButtonGroup)`
-  width: calc(100% - 55px);
+  width: calc(100% - 105px);
 `
 
 export const MenuItem = styled(ToggleButton)`
@@ -33,12 +33,23 @@ export const MenuItem = styled(ToggleButton)`
   }
 `
 
-export const LiveTalkModalButton = styled(IconButton)`
+export const OptionButtonGroup = styled.div`
   float: right;
+`
+
+export const LiveTalkModalButton = styled(IconButton)`
   width: 49.2px;
   height: 49.2px;
-  margin-left: 5px;
   border-radius: 5px;
+  border: 1.5px solid rgba(66, 58, 87, 0.5);
+  background-color: #ffffff;
+`
+
+export const ShowLTButton = styled(IconButton)`
+  width: 49.2px;
+  height: 49.2px;
+  border-radius: 5px;
+  margin-left: -1px;
   border: 1.5px solid rgba(66, 58, 87, 0.5);
   background-color: #ffffff;
 `
