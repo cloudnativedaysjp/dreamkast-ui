@@ -12,6 +12,8 @@ import { ENV } from '../../../config'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../store/auth'
+import { TrackLTView } from '../../../components/TrackLT'
+import { showLTSelector } from '../../../store/settings'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -22,6 +24,7 @@ const IndexMain = () => {
   const { event } = useInitSetup(eventAbbr)
   const { refetch } = useGetTalksAndTracks()
   const { roles, dkUrl } = useSelector(authSelector)
+  const showLT = useSelector(showLTSelector)
   const router = useRouter()
 
   // NOTE: TrailMapが必要になったら、以下の3つとpointEventSavingのガードのコメントアウトを解除する
@@ -56,7 +59,16 @@ const IndexMain = () => {
     <NextTalkNotifier>
       <Layout title={event.name} event={event}>
         <TrackSelector />
-        <TrackView event={event} refetch={refetch} />
+        {showLT ? (
+          <TrackLTView
+            event={event}
+            youtubeEmbedLink="https://www.youtube.com/embed/BFRflMJn2lA?si=ArEMJybGrQZ0TG7p"
+            title="コミュニティLT"
+            content="コミュニティLTほげほげ"
+          />
+        ) : (
+          <TrackView event={event} refetch={refetch} />
+        )}
       </Layout>
     </NextTalkNotifier>
   )
