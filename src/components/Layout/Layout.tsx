@@ -5,20 +5,23 @@ import { DesktopMenu, MobileMenu } from '../Menu'
 import AppBar from '@material-ui/core/AppBar'
 import { Event } from '../../generated/dreamkast-api.generated'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
+import { authSelector } from '../../store/auth'
 
 type Props = {
   children?: ReactNode
   title?: string
   event?: Event
-  isAdminRole?: boolean
 }
 
 export const Layout: React.FC<Props> = ({
   children,
   title = 'This is the default title',
   event,
-  isAdminRole,
 }) => {
+  const { roles } = useSelector(authSelector)
+  const isAdminRole = roles.includes(`${event?.abbr.toUpperCase()}-Admin`)
+
   return (
     <Styled.Container eventAbbr={event?.abbr}>
       <Head>

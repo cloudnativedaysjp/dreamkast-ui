@@ -1,14 +1,18 @@
 import { NextPage } from 'next'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Layout } from '../../../../../components/Layout'
-import { useGetApiV1EventsByEventAbbrQuery } from '../../../../../generated/dreamkast-api.generated'
+import {
+  Talk,
+  useGetApiV1EventsByEventAbbrQuery,
+  useGetApiV1TalksQuery,
+} from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import { authSelector } from '../../../../../store/auth'
 import { withAuthProvider } from '../../../../../context/auth'
 import Error404 from '../../../../404'
 import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
-import { Typography } from '@material-ui/core'
+import { MenuItem, Select, Typography } from '@material-ui/core'
+import { authSelector } from '../../../../../store/auth'
+import { useSelector } from 'react-redux'
 
 const IndexPage: NextPage = () => {
   return withAuthProvider(<IndexMain />)
@@ -24,20 +28,62 @@ const IndexMain = () => {
     return ''
   }, [router])
   const { roles } = useSelector(authSelector)
+  const isAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
   const skip = eventAbbr === null
   const { data: event } = useGetApiV1EventsByEventAbbrQuery(
     { eventAbbr },
     { skip },
   )
+  const { data, isLoading, isError, error } = useGetApiV1TalksQuery(
+    { eventAbbr },
+    { skip: !eventAbbr },
+  )
 
-  const includeAdminRole = roles.includes(`${eventAbbr.toUpperCase()}-Admin`)
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (isError) {
+      throw error
+    }
+    if (data) {
+      setTalks(data.filter((talk) => talk.type === 'SponsorSession'))
+    }
+  }, [data, isLoading, isError])
+
+
+  const [talks, setTalks] = useState<Talk[]>([])
+  const [selectedTalk, setSelectedTalk] = useState<Talk | null>(null)
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedTalk(
+      talks.find((talk) => talk.id === event.target.value) || null,
+    )
+  }
 
   if (event) {
-    if (includeAdminRole) {
+    if (isAdminRole) {
       return (
-        <Layout title={event.name} event={event} isAdminRole={includeAdminRole}>
-          <Typography variant="h5">セッション受付</Typography>
-          <CheckIn checkInType={'session'} />
+        <Layout title={event.name} event={event}>
+          <Typography variant="h5">
+            セッション受付 (
+            <Select
+              value={selectedTalk ? selectedTalk.id : 'default'}
+              onChange={handleSelectChange}
+            >
+              <MenuItem value="default">セッションを選択</MenuItem>
+              {talks.map((talk) => {
+                return <MenuItem value={talk.id}>{talk.title}</MenuItem>
+              })}
+            </Select>
+            )
+          </Typography>
+          {selectedTalk != null && (
+            <CheckIn
+              checkInType={'session'}
+              eventAbbr={event.abbr}
+              talk={selectedTalk}
+            />
+          )}
         </Layout>
       )
     } else {
