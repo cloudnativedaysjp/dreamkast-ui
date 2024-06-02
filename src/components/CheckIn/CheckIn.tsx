@@ -48,7 +48,7 @@ export const CheckIn: React.FC<Props> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
-      deleteItems(storedKeys)
+      sendItems(storedKeys)
     }, 10000)
     return () => clearInterval(interval)
   }, [storedKeys])
@@ -87,14 +87,9 @@ export const CheckIn: React.FC<Props> = ({
     setEnableScan(true)
   }
 
-  const deleteItems = (keys: string[]) => {
+  const sendItems = (keys: string[]) => {
     console.log(keys)
     for (const key of keys) {
-      console.log(
-        `Success to send check-in log: key:L ${key}, value: ${JSON.stringify(
-          localStorage.getItem(key),
-        )}`,
-      )
       const item = JSON.parse(localStorage.getItem(key))
       if (!debug) {
         if (item['checkInType'] === 'event') {
@@ -114,6 +109,9 @@ export const CheckIn: React.FC<Props> = ({
               checkInTimestamp: item['checkInTimestamp'],
             },
           }).unwrap()
+          console.log(
+            `Success to send check-in log: key:L ${key}, value: ${item}`,
+          )
         } else {
           console.error(`Invalid check-in type: ${item['checkInType']}`)
         }
@@ -132,7 +130,7 @@ export const CheckIn: React.FC<Props> = ({
         enableScan={enableScan}
       />
       <ConfirmDialog open={open} handleClose={handleClose} />
-      <Debug storedKeys={storedKeys} deleteItems={deleteItems} />
+      <Debug storedKeys={storedKeys} deleteItems={sendItems} />
     </div>
   )
 }
