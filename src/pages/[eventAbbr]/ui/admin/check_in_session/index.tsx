@@ -51,7 +51,6 @@ const IndexMain = () => {
     }
   }, [data, isLoading, isError])
 
-
   const [talks, setTalks] = useState<Talk[]>([])
   const [selectedTalk, setSelectedTalk] = useState<Talk | null>(null)
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {

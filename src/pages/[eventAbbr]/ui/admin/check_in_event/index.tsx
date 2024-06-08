@@ -38,7 +38,7 @@ const IndexMain = () => {
           <Typography variant="h5">
             イベント受付 ({event.abbr.toUpperCase()})
           </Typography>
-          <CheckIn checkInType={'event'} eventAbbr={event.abbr}/>
+          <CheckIn checkInType={'event'} eventAbbr={event.abbr} />
         </Layout>
       )
     } else {
