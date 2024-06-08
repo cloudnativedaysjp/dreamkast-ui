@@ -32,13 +32,6 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
         </>
       )}
 
-      <Link
-        href={'https://www.youtube.com/watch?v=6J6JPsPNy6Y'}
-        rel="noreferrer"
-      >
-        <Button style={{ color: '#423A57' }}>Public Live</Button>
-      </Link>
-
       <Link href={`/${event?.abbr}/dashboard`} rel="noreferrer">
         <Button style={{ color: '#423A57' }}>Dashboard</Button>
       </Link>
