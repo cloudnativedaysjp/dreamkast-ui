@@ -10,7 +10,7 @@ export const TrackMenuContainer = styled.div`
 `
 
 export const TrackSelectorButtonGroup = styled(ToggleButtonGroup)`
-  width: calc(100% - 105px);
+  width: calc(100% - 175px);
 `
 
 export const MenuItem = styled(ToggleButton)`
@@ -46,8 +46,8 @@ export const LiveTalkModalButton = styled(IconButton)`
 `
 
 export const ShowLTButton = styled(IconButton)`
-  width: 49.2px;
   height: 49.2px;
+  font-size: 15px;
   border-radius: 5px;
   margin-left: -1px;
   border: 1.5px solid rgba(66, 58, 87, 0.5);
