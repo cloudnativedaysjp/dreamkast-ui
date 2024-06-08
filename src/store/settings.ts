@@ -60,6 +60,9 @@ type SettingsState = {
   // 事前登録セッションが開始したら通知するモード
   notifyRegisteredTalkStarted: boolean
   nextRegisteredTalk: { talk: Talk | null; track: Track | null }
+
+  // LT画面表示
+  showLT: boolean
 }
 
 const initialState: SettingsState = {
@@ -80,6 +83,7 @@ const initialState: SettingsState = {
   isLiveMode: true,
   notifyRegisteredTalkStarted: true,
   nextRegisteredTalk: { talk: null, track: null },
+  showLT: false,
 }
 
 const settingsSlice = createSlice({
@@ -315,6 +319,15 @@ const settingsSlice = createSlice({
         s.isLiveMode = false
       }
     },
+    showLT: (s) => {
+      s.viewTrackId = 0
+      s.viewTalkId = 0
+      s.isLiveMode = false
+      s.showLT = true
+    },
+    hideLT: (s) => {
+      s.showLT = false
+    },
   },
 })
 
@@ -332,6 +345,8 @@ export const {
   setInitialViewTalk,
   setIsLiveMode,
   setNotifyRegisteredTalkStarted,
+  showLT,
+  hideLT,
   patchTalksOnAir,
   updateViewTalkWithLiveOne,
   updateNextRegisteredTalk,
@@ -344,6 +359,7 @@ export const profileSelector = createSelector(
 )
 export const tracksSelector = createSelector(settingsSelector, (s) => s.tracks)
 export const talksSelector = createSelector(settingsSelector, (s) => s.talks)
+export const showLTSelector = createSelector(settingsSelector, (s) => s.showLT)
 export const viewTalkIdSelector = createSelector(
   settingsSelector,
   (s) => s.viewTalkId,
