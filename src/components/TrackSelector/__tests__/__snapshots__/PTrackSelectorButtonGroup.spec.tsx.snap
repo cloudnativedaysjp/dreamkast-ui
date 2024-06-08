@@ -3,7 +3,7 @@
 exports[`PTrackSelectorButtonGroup should render when data empty 1`] = `
 <DocumentFragment>
   <div
-    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 bqZiMD"
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gKFsYQ"
     color="primary"
     role="group"
   />
@@ -13,7 +13,7 @@ exports[`PTrackSelectorButtonGroup should render when data empty 1`] = `
 exports[`PTrackSelectorButtonGroup should render without crash 1`] = `
 <DocumentFragment>
   <div
-    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 bqZiMD"
+    class="MuiToggleButtonGroup-root styled__TrackSelectorButtonGroup-sc-hs19f1-1 gKFsYQ"
     color="primary"
     role="group"
   >
