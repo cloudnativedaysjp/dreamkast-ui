@@ -43,11 +43,7 @@ export const AuthProvider = ({ children, basePath }: PropsWithChildren) => {
       return
     }
     if (basePath) {
-      console.log(`window.location.origin: ${window.location.origin}`)
-      console.log(`basePath: ${basePath}`)
       const url = new URL(basePath, window.location.origin)
-      console.log(`url: ${url}`)
-      console.log(`url.href: ${url.href}`)
       setBaseUrl(url.href)
     } else {
       const url = new URL(env.NEXT_PUBLIC_BASE_PATH, window.location.origin)
@@ -59,7 +55,6 @@ export const AuthProvider = ({ children, basePath }: PropsWithChildren) => {
   if (!baseUrl || !env.NEXT_PUBLIC_BASE_PATH) {
     return <></>
   }
-  console.log(`baseUrl: ${baseUrl}`)
   return (
     <>
       <Auth0Provider
