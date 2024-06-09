@@ -19,6 +19,7 @@ import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { AuthProvider } from 'src/context/auth'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -84,7 +85,9 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
       <PrivateCtxProvider env={env}>
         <AppComponent>
           <ApolloProvider client={client}>
-            <Component {...pageProps} />
+            <AuthProvider>
+              <Component {...pageProps} />
+            </AuthProvider>
           </ApolloProvider>
         </AppComponent>
       </PrivateCtxProvider>

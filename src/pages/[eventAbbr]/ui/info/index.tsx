@@ -11,10 +11,9 @@ import { Layout } from '../../../../components/Layout'
 import { RegisteredTalks } from '../../../../components/RegisteredTalks'
 import { Typography } from '@material-ui/core'
 import { ENV } from '../../../../config'
-import { withAuthProvider } from '../../../../context/auth'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  return <IndexMain />
 }
 
 const IndexMain: NextPage = () => {

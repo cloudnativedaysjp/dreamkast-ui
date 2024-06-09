@@ -7,7 +7,6 @@ import {
   useGetApiV1TalksQuery,
 } from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
-import { withAuthProvider } from '../../../../../context/auth'
 import Error404 from '../../../../404'
 import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
 import { MenuItem, Select, Typography } from '@material-ui/core'
@@ -15,7 +14,7 @@ import { authSelector } from '../../../../../store/auth'
 import { useSelector } from 'react-redux'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  return <IndexMain />
 }
 
 const IndexMain = () => {

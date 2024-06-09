@@ -6,7 +6,6 @@ import { NextPage } from 'next'
 import { useInitSetup } from '../../../components/hooks/useInitSetup'
 import { useGetTalksAndTracks } from '../../../components/hooks/useGetTalksAndTracks'
 import { useRouterQuery } from '../../../components/hooks/useRouterQuery'
-import { withAuthProvider } from '../../../context/auth'
 import { NextTalkNotifier } from '../../../components/Layout/NextTalkNotifier'
 import { ENV } from '../../../config'
 import { useRouter } from 'next/router'
@@ -16,7 +15,7 @@ import { TrackLTView } from '../../../components/TrackLT'
 import { showLTSelector } from '../../../store/settings'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  return <IndexMain />
 }
 
 const IndexMain = () => {
@@ -90,7 +89,7 @@ const IndexMain = () => {
   )
 }
 
-// TODO move to RootApp component
+// TODO remove this ( seems not needed )
 export const getServerSideProps = async () => {
   return {
     props: {
