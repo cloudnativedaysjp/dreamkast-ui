@@ -3,7 +3,6 @@ import { Button, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import CheckIcon from '@material-ui/icons/Check'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import * as Styled from './styled'
-import * as CommonStyled from '../../../../styles/styled'
 import Link from 'next/link'
 import { Event } from '../../../../generated/dreamkast-api.generated'
 
