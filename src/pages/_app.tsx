@@ -19,7 +19,7 @@ import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
-import { AuthProvider } from 'src/context/auth'
+import { AuthProvider } from '../context/auth'
 
 const GlobalStyle = createGlobalStyle`
   html, body {
