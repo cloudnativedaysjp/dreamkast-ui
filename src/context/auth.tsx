@@ -23,27 +23,43 @@ export interface JwtPayload {
   'https://cloudnativedays.jp/roles'?: string[]
 }
 
-export const withAuthProvider = (content: ReactNode) => {
-  return <AuthProvider>{content}</AuthProvider>
+export const withAuthProvider = (content: ReactNode, basePath?: string) => {
+  return <AuthProvider basePath={basePath}>{content}</AuthProvider>
 }
 
-export const AuthProvider = ({ children }: PropsWithChildren) => {
+interface PropsWithChildren {
+  children: React.ReactNode;
+  basePath?: string | null;
+}
+
+export const AuthProvider = ({ children, basePath }: PropsWithChildren) => {
   const { env } = useContext(PrivateCtx)
   const [baseUrl, setBaseUrl] = useState('')
+
 
   useEffect(() => {
     if (!env.NEXT_PUBLIC_BASE_PATH) {
       console.error('Environment variables are not provided as app props.')
       return
     }
-    const url = new URL(env.NEXT_PUBLIC_BASE_PATH, window.location.origin)
-    setBaseUrl(url.href)
-  }, [env])
+    if (basePath) {
+      console.log(`window.location.origin: ${window.location.origin}`)
+      console.log(`basePath: ${basePath}`)
+      const url = new URL(basePath, window.location.origin)
+      console.log(`url: ${url}`)
+      console.log(`url.href: ${url.href}`)
+      setBaseUrl(url.href)
+    } else {
+      const url = new URL(env.NEXT_PUBLIC_BASE_PATH, window.location.origin)
+      setBaseUrl(url.href)
+    }
+  }, [env, basePath])
 
   // Only CSR is supported since dynamic host origin resolution cannot be performed in SSR.
   if (!baseUrl || !env.NEXT_PUBLIC_BASE_PATH) {
     return <></>
   }
+  console.log(`baseUrl: ${baseUrl}`)
   return (
     <>
       <Auth0Provider

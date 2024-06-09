@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import {
   useGetApiV1EventsByEventAbbrQuery,
@@ -12,9 +12,14 @@ import { RegisteredTalks } from '../../../../components/RegisteredTalks'
 import { Typography } from '@material-ui/core'
 import { ENV } from '../../../../config'
 import { withAuthProvider } from '../../../../context/auth'
+import { PrivateCtx } from '../../../../context/private'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  const { env } = useContext(PrivateCtx)
+  return withAuthProvider(
+    <IndexMain />,
+    `/${env.NEXT_PUBLIC_BASE_PATH}/info`,
+  )
 }
 
 const IndexMain: NextPage = () => {

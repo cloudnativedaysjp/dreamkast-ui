@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Layout } from '../../../../../components/Layout'
 import {
   Talk,
@@ -13,9 +13,14 @@ import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
 import { MenuItem, Select, Typography } from '@material-ui/core'
 import { authSelector } from '../../../../../store/auth'
 import { useSelector } from 'react-redux'
+import { PrivateCtx } from '../../../../../context/private'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  const { env } = useContext(PrivateCtx)
+  return withAuthProvider(
+    <IndexMain />,
+    `/${env.NEXT_PUBLIC_BASE_PATH}/admin/check_in_session`,
+  )
 }
 
 const IndexMain = () => {

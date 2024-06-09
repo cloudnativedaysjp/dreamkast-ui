@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Layout } from '../../../../../components/Layout'
 import { useGetApiV1EventsByEventAbbrQuery } from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
@@ -9,9 +9,14 @@ import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
 import { Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../../../store/auth'
+import { PrivateCtx } from '../../../../../context/private'
 
 const IndexPage: NextPage = () => {
-  return withAuthProvider(<IndexMain />)
+  const { env } = useContext(PrivateCtx)
+  return withAuthProvider(
+    <IndexMain />,
+    `${env.NEXT_PUBLIC_BASE_PATH}/admin/check_in_event`,
+  )
 }
 
 const IndexMain = () => {
