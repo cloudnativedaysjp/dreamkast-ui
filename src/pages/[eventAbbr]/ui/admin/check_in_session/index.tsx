@@ -12,6 +12,7 @@ import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
 import { MenuItem, Select, Typography } from '@material-ui/core'
 import { authSelector } from '../../../../../store/auth'
 import { useSelector } from 'react-redux'
+import { ENV } from '../../../../../config'
 
 const IndexPage: NextPage = () => {
   return <IndexMain />
@@ -93,6 +94,15 @@ const IndexMain = () => {
     }
   } else {
     return <div></div>
+  }
+}
+
+// TODO move to RootApp component
+export const getServerSideProps = async () => {
+  return {
+    props: {
+      env: { ...ENV },
+    },
   }
 }
 
