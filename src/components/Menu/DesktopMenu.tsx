@@ -60,9 +60,7 @@ export const DesktopMenu: React.FC<Props> = ({ event }) => {
       </CommonStyled.MenuLink>
 
       <CommonStyled.MenuLink
-        href={
-          'https://docs.google.com/forms/d/e/1FAIpQLSebjgStNdgMe8XJHnyn_gF4xv8t4jGB8hw8Jrcr04DYLZis0Q/viewform?usp=sf_link'
-        }
+        href={'https://bit.ly/cnds2024-contactstaff'}
         target="_blank"
         rel="noreferrer noopener"
       >
