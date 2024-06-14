@@ -62,6 +62,15 @@ export const MobileMenu: React.FC<Props> = ({ event, isAdminRole }) => {
           <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
+          <Link href={`/${event?.abbr}/profiles/view_qr`} rel="noreferrer">
+            <Button style={{ color: '#423A57' }}>受付用二次元バーコード</Button>
+          </Link>
+        </ListItem>
+
+        <ListItem button key="info">
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
           <Link href={`/${event?.abbr}/dashboard`} rel="noreferrer">
             <Button style={{ color: '#423A57' }}>Dashboard</Button>
           </Link>
