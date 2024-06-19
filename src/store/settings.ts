@@ -102,9 +102,9 @@ const settingsSlice = createSlice({
       let confDay = action.payload?.conferenceDays?.find(
         (day) => day.date === today,
       )
-      if (!confDay && state.event.rehearsalMode) {
+      if (state.event.rehearsalMode) {
         console.warn(
-          '### rehearsal mode: fallback to the non-internal confence day',
+          '### rehearsal mode: fallback to the non-internal conference day',
         )
         confDay = (action.payload?.conferenceDays || [])?.find(
           (conf) => !conf.internal,
