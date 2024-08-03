@@ -201,7 +201,6 @@ export const MockTrackA = () =>
     name: 'A',
     videoId: '453942665',
     videoPlatform: 'vimeo',
-    channelArn: null,
     onAirTalk: {
       id: 12,
       talk_id: 701,
@@ -222,7 +221,6 @@ export const MockTrackB = () =>
     name: 'B',
     videoId: '450845161',
     videoPlatform: 'vimeo',
-    channelArn: null,
     onAirTalk: null,
   })
 
@@ -232,7 +230,6 @@ export const MockTrackC = () =>
     name: 'C',
     videoId: '453963160',
     videoPlatform: 'vimeo',
-    channelArn: null,
     onAirTalk: null,
   })
 

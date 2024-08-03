@@ -559,7 +559,6 @@ export type Track = {
   name: string
   videoPlatform?: (string | null) | undefined
   videoId?: (string | null) | undefined
-  channelArn?: (string | null) | undefined
   onAirTalk?: (object | null) | undefined
 }
 export type Streaming = {
@@ -630,6 +629,12 @@ export type Talk = {
   allowShowingVideo?: boolean | undefined
   offlineParticipationCount: number
   onlineParticipationCount: number
+  sponsor?:
+    | ({
+        id?: number | undefined
+        name?: string | undefined
+      } | null)
+    | undefined
 }
 export type VideoRegistration = {
   url?: string | undefined
