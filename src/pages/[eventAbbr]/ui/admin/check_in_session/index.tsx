@@ -71,7 +71,7 @@ const IndexMain = () => {
             >
               <MenuItem value="default">セッションを選択</MenuItem>
               {talks.map((talk) => {
-                return <MenuItem value={talk.id}>{talk.title}</MenuItem>
+                return <MenuItem value={talk.id}>{talk.sponsor?.name}</MenuItem>
               })}
             </Select>
             )
