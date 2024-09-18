@@ -41,20 +41,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PREFIX: ui-
-        shell: bash -x {0}
+        shell: bash -xe {0}
         run: |
-          EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'$PREFIX'\1/g')"
+          EXPECTED="$(gh pr list --repo ${{ github.repository }} --label 'reviewapps' --json number --jq '.[].number' | sed 's/^\(.*\)$/'"$PREFIX"'\1/g')"
+          # shellcheck disable=SC2010,SC2086
           ACTUAL="$(ls | grep -E ^$PREFIX)"
+
           # If present only in ACTUAL, cleanup
           for act in $ACTUAL; do
             EXIST=false
             for exp in $EXPECTED; do
               [ "$act" = "$exp" ] && EXIST=true
             done
-            [ $EXIST = true ] && continue
-            bash -x $act/cleanup.sh
-            rm -rf $act
+            [ "$EXIST" = "true" ] && continue
+            bash -x "$act/cleanup.sh"
+            rm -rf "$act"
           done
+
       - name: Commit files
         id: commit_files
         continue-on-error: true
@@ -67,6 +70,12 @@ jobs:
           git commit -a -F- <<EOM
           cleanup ReviewApps by GHA in ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}
           EOM
+
+      - name: Set current unixtime as env variable
+        env:
+          TZ: 'Asia/Tokyo'
+        run: echo UNIXTIME="$(date +'+%s')" >> "$GITHUB_ENV"
+
       - name: Push changes
         if: steps.commit_files.outcome == 'success'
         uses: ad-m/github-push-action@master
@@ -74,7 +83,7 @@ jobs:
           github_token: ${{ steps.generate_token.outputs.token }}
           repository: cloudnativedaysjp/dreamkast-infra
           directory: dreamkast-infra
-          branch: staging/ui-main
+          branch: gitops/development/ui-main_${{ env.UNIXTIME }}
 
       - name: Create and Merge Pull Request
         if: steps.commit_files.outcome == 'success'
@@ -85,9 +94,9 @@ jobs:
             const pr = await github.rest.pulls.create({
               owner: "cloudnativedaysjp",
               repo: "dreamkast-infra",
-              title: "Automated PR (staging/ui-main)",
+              title: "Automated PR (gitops/development/ui-main)",
               body: "**this PR is automatically created & merged**",
-              head: "staging/ui-main",
+              head: "gitops/development/ui-main_${{ env.UNIXTIME }}",
               base: "main"
             });
             await github.rest.pulls.merge({
