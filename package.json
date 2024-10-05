@@ -30,7 +30,6 @@
         "axios": "^1.0.0",
         "dayjs": "^1.11.5",
         "graphql": "^16.6.0",
-        "heic-jpg-exif": "^0.3.5",
         "jsqr": "^1.4.0",
         "jwt-decode": "^3.1.2",
         "linkify-react": "^4.0.0",
