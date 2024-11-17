@@ -527,6 +527,7 @@ export type CheckInEvent = {
   profileId: string
   eventAbbr: string
   checkInTimestamp: number
+  printerId?: string | undefined
 }
 export type CheckInTalk = {
   profileId: string

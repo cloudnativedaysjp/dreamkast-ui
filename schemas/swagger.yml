@@ -1578,6 +1578,8 @@ components:
           type: string
         checkInTimestamp:
           type: number
+        printerId:
+          type: string
       required:
         - profileId
         - eventAbbr
