@@ -64,18 +64,23 @@ const IndexMain = () => {
         <Layout title={event.name} event={event}>
           <Typography variant="h5">
             イベント受付 ({event.abbr.toUpperCase()})
-            <Select
-              value={selectedPrinter ? selectedPrinter.id : 'default'}
-              onChange={handleSelectChange}
-            >
-              <MenuItem value="default">プリンターを選択</MenuItem>
-              {printers.map((printer) => {
-                return <MenuItem value={printer.id}>{printer.name}</MenuItem>
-              })}
-            </Select>
-            )
           </Typography>
-          <CheckIn checkInType={'event'} eventAbbr={event.abbr} printerId={selectedPrinter?.id} />
+          (
+          <Select
+            value={selectedPrinter ? selectedPrinter.id : 'default'}
+            onChange={handleSelectChange}
+          >
+            <MenuItem value="default">プリンターを選択</MenuItem>
+            {printers.map((printer) => {
+              return <MenuItem value={printer.id}>{printer.name}</MenuItem>
+            })}
+          </Select>
+          )
+          <CheckIn
+            checkInType={'event'}
+            eventAbbr={event.abbr}
+            printerId={selectedPrinter?.id}
+          />
         </Layout>
       )
     } else {
