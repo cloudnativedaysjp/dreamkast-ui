@@ -14,6 +14,7 @@ export type CheckInType = 'event' | 'session'
 type Props = {
   checkInType: CheckInType
   eventAbbr: string
+  printerId?: string
   talk?: Talk
   debug?: boolean
 }
@@ -23,12 +24,14 @@ type CheckInData = {
   eventAbbr: string
   profileId: string
   checkInTimestamp: number
+  printerId?: string
   talkId?: string
 }
 
 export const CheckIn: React.FC<Props> = ({
   checkInType,
   eventAbbr,
+  printerId,
   talk,
   debug,
 }) => {
@@ -73,6 +76,9 @@ export const CheckIn: React.FC<Props> = ({
     }
     if (checkInType === 'session') {
       value.talkId = talk?.id.toString()
+    }
+    if (checkInType == 'event') {
+      value.printerId = printerId
     }
     localStorage.setItem(key, JSON.stringify(value))
     setStoredKeys((prev) => [...prev, key])

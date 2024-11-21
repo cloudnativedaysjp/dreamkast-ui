@@ -1,11 +1,15 @@
 import { NextPage } from 'next'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Layout } from '../../../../../components/Layout'
-import { useGetApiV1EventsByEventAbbrQuery } from '../../../../../generated/dreamkast-api.generated'
+import {
+  PrintNodePrinter,
+  useGetApiV1EventsByEventAbbrQuery,
+  useGetApiV1PrintNodePrintersQuery,
+} from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
 import Error404 from '../../../../404'
 import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
-import { Typography } from '@material-ui/core'
+import { MenuItem, Select, Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { authSelector } from '../../../../../store/auth'
 import { ENV } from '../../../../../config'
@@ -30,7 +34,30 @@ const IndexMain = () => {
     { eventAbbr },
     { skip },
   )
+  const [printers, setPrinters] = useState<PrintNodePrinter[]>([])
+  const { data, isLoading, isError, error } = useGetApiV1PrintNodePrintersQuery(
+    { eventAbbr },
+  )
+  useEffect(() => {
+    if (isLoading) {
+      return
+    }
+    if (isError) {
+      throw error
+    }
+    if (data) {
+      console.log(data)
+      setPrinters(data)
+    }
+  }, [data, isLoading, isError])
 
+  const [selectedPrinter, setSelectedPrinter] =
+    useState<PrintNodePrinter | null>(null)
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedPrinter(
+      printers.find((printer) => printer.id === event.target.value) || null,
+    )
+  }
   if (event) {
     if (isAdminRole) {
       return (
@@ -38,7 +65,22 @@ const IndexMain = () => {
           <Typography variant="h5">
             イベント受付 ({event.abbr.toUpperCase()})
           </Typography>
-          <CheckIn checkInType={'event'} eventAbbr={event.abbr} />
+          (
+          <Select
+            value={selectedPrinter ? selectedPrinter.id : 'default'}
+            onChange={handleSelectChange}
+          >
+            <MenuItem value="default">プリンターを選択</MenuItem>
+            {printers.map((printer) => {
+              return <MenuItem value={printer.id}>{printer.name}</MenuItem>
+            })}
+          </Select>
+          )
+          <CheckIn
+            checkInType={'event'}
+            eventAbbr={event.abbr}
+            printerId={selectedPrinter?.id}
+          />
         </Layout>
       )
     } else {

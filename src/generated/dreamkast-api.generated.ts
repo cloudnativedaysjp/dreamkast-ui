@@ -10,6 +10,7 @@ export const addTagTypes = [
   'VideoRegistration',
   'ChatMessage',
   'Sponsor',
+  'PrintNodePrinter',
   'Booth',
   'Point',
   'Vote',
@@ -210,6 +211,16 @@ const injectedRtkApi = api
           params: { eventAbbr: queryArg.eventAbbr },
         }),
         providesTags: ['Sponsor'],
+      }),
+      getApiV1PrintNodePrinters: build.query<
+        GetApiV1PrintNodePrintersApiResponse,
+        GetApiV1PrintNodePrintersApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/print_node_printers`,
+          params: { eventAbbr: queryArg.eventAbbr },
+        }),
+        providesTags: ['PrintNodePrinter'],
       }),
       getApiV1BoothsByBoothId: build.query<
         GetApiV1BoothsByBoothIdApiResponse,
@@ -438,6 +449,12 @@ export type GetApiV1SponsorsApiArg = {
   /** abbr of event (e.g. cndt2020) */
   eventAbbr: string
 }
+export type GetApiV1PrintNodePrintersApiResponse =
+  /** status 200 OK */ PrintNodePrinter[]
+export type GetApiV1PrintNodePrintersApiArg = {
+  /** abbr of event (e.g. cndt2020) */
+  eventAbbr: string
+}
 export type GetApiV1BoothsByBoothIdApiResponse = /** status 200 OK */ Booth
 export type GetApiV1BoothsByBoothIdApiArg = {
   /** ID of booth */
@@ -527,6 +544,7 @@ export type CheckInEvent = {
   profileId: string
   eventAbbr: string
   checkInTimestamp: number
+  printerId?: string | undefined
 }
 export type CheckInTalk = {
   profileId: string
@@ -672,6 +690,10 @@ export type Sponsor = {
       }
     | undefined
 }
+export type PrintNodePrinter = {
+  id?: string | undefined
+  name?: string | undefined
+}
 export type Booth = {
   id: number
   sponsorId: number
@@ -762,6 +784,7 @@ export const {
   usePostApiV1ChatMessagesMutation,
   usePutApiV1ChatMessagesByMessageIdMutation,
   useGetApiV1SponsorsQuery,
+  useGetApiV1PrintNodePrintersQuery,
   useGetApiV1BoothsByBoothIdQuery,
   useGetApiV1ProfileByProfileIdPointsQuery,
   useOptionsApiV1ProfileByProfileIdPointsMutation,

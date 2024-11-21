@@ -459,6 +459,26 @@ paths:
                   $ref: '#/components/schemas/Sponsor'
         '400':
           description: Invalid params supplied
+  /api/v1/print_node_printers:
+    get:
+      tags:
+        - PrintNodePrinter
+      parameters:
+        - name: eventAbbr
+          in: query
+          description: abbr of event (e.g. cndt2020)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrintNodePrinter'
   /api/v1/booths/{boothId}:
     get:
       tags:
@@ -1578,6 +1598,8 @@ components:
           type: string
         checkInTimestamp:
           type: number
+        printerId:
+          type: string
       required:
         - profileId
         - eventAbbr
@@ -1598,7 +1620,13 @@ components:
         - profileId
         - talkId
         - checkInTimestamp
-
+    PrintNodePrinter:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
 
     # dreamkast-function
     Vote:
