@@ -76,11 +76,13 @@ const IndexMain = () => {
             })}
           </Select>
           )
-          <CheckIn
-            checkInType={'event'}
-            eventAbbr={event.abbr}
-            printerId={selectedPrinter?.id}
-          />
+          {selectedPrinter != null && (
+            <CheckIn
+              checkInType={'event'}
+              eventAbbr={event.abbr}
+              printerId={selectedPrinter?.id}
+            />
+          )}
         </Layout>
       )
     } else {
