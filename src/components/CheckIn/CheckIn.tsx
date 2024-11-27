@@ -104,6 +104,7 @@ export const CheckIn: React.FC<Props> = ({
               profileId: item['profileId'],
               eventAbbr: item['eventAbbr'],
               checkInTimestamp: item['checkInTimestamp'],
+              printerId: item['printerId'],
             },
           }).unwrap()
         } else if (item['checkInType'] === 'session') {
