@@ -5,9 +5,9 @@ export const useMenuContents = () => {
   const settings = useSelector(settingsSelector)
   const guideUrl = (): string => {
     if (settings.profile.isAttendOffline) {
-      return `https://pfem.notion.site/CNDS2024-bede2ebca0de4b5a8b62c0f136fdc647`
+      return `https://pfem.notion.site/CNDW2024-fe1c89735501496984e90793bf1ca697`
     } else {
-      return `https://pfem.notion.site/CNDS2024-ab12a060a67340629fdb007478fe2f84`
+      return `https://pfem.notion.site/CNDW2024-48b9f882622343ecbc7186834ba92612`
     }
   }
   const isPreEvent = settings.conferenceDay?.internal
