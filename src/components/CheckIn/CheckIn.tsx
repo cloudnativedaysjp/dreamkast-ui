@@ -52,7 +52,7 @@ export const CheckIn: React.FC<Props> = ({
     const interval = setInterval(() => {
       console.log('Send check-in logs to dreamkast api:')
       sendItems(storedKeys)
-    }, 5000)
+    }, 1000)
     return () => clearInterval(interval)
   }, [storedKeys])
 
