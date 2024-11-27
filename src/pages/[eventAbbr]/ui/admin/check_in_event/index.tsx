@@ -78,9 +78,10 @@ const IndexMain = () => {
           )
           {selectedPrinter != null && (
             <CheckIn
+              key={selectedPrinter.id}
               checkInType={'event'}
               eventAbbr={event.abbr}
-              printerId={selectedPrinter?.id}
+              printerId={selectedPrinter.id}
             />
           )}
         </Layout>

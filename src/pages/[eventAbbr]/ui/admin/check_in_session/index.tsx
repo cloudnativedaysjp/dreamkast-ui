@@ -78,6 +78,7 @@ const IndexMain = () => {
           </Typography>
           {selectedTalk != null && (
             <CheckIn
+              key={selectedTalk.id}
               checkInType={'session'}
               eventAbbr={event.abbr}
               talk={selectedTalk}
