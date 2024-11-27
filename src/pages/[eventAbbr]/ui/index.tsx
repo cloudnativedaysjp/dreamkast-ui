@@ -77,7 +77,7 @@ const IndexMain = () => {
         {showLT ? (
           <TrackLTView
             event={event}
-            youtubeEmbedLink="https://www.youtube.com/embed/BFRflMJn2lA?si=ArEMJybGrQZ0TG7p&autoplay=1"
+            youtubeEmbedLink="https://www.youtube.com/embed/SPYeFmCWHLQ?si=mgZQBkYreL-Sd3yx&autoplay=1"
             title="コミュニティLT"
             content={content}
           />
