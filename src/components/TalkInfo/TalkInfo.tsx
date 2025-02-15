@@ -23,6 +23,7 @@ export const TalkInfo: React.FC<Props> = ({
     eventAbbr,
     profileId,
     selectedTrack?.name,
+    selectedTalk?.id,
   )
   useEffect(() => {
     return () => {
