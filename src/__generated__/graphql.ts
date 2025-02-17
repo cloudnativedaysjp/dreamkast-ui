@@ -39,7 +39,10 @@ export enum ChallengeCondition {
 export enum ConfName {
   Cicd2023 = 'cicd2023',
   Cndf2023 = 'cndf2023',
+  Cnds2024 = 'cnds2024',
+  Cnds2025 = 'cnds2025',
   Cndt2023 = 'cndt2023',
+  Cndw2024 = 'cndw2024',
 }
 
 export type CreateViewEventInput = {
@@ -130,6 +133,7 @@ export type StampOnlineInput = {
 
 export type ViewTrackInput = {
   profileID: Scalars['Int']['input']
+  talkID: Scalars['Int']['input']
   trackName: Scalars['String']['input']
 }
 
@@ -177,6 +181,7 @@ export type GetViewerCountQuery = {
 export type ViewTrackMutationVariables = Exact<{
   profileID: Scalars['Int']['input']
   trackName: Scalars['String']['input']
+  talkID: Scalars['Int']['input']
 }>
 
 export type ViewTrackMutation = {
@@ -269,6 +274,17 @@ export const ViewTrackDocument = {
             },
           },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'talkID' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -297,6 +313,14 @@ export const ViewTrackDocument = {
                       value: {
                         kind: 'Variable',
                         name: { kind: 'Name', value: 'trackName' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'talkID' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'talkID' },
                       },
                     },
                   ],

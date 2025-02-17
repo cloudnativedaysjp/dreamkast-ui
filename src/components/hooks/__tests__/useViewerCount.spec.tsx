@@ -14,6 +14,7 @@ describe.only('useViewerCount', () => {
       profileId: 42,
       trackName: 'B',
       count: 5,
+      talkID: 10,
     }
     const got = {
       count: 0,
@@ -58,6 +59,7 @@ describe.only('useViewerCount', () => {
         given.confName,
         given.profileId,
         given.trackName,
+        given.talkID,
       )
       got.count = count
       if (!!timer && !!count) {

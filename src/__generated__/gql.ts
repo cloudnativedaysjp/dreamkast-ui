@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
   '\n    query GetViewerCount($confName: ConfName!) {\n      viewerCount(confName: $confName) {\n        trackName\n        count\n      }\n    }\n  ':
     types.GetViewerCountDocument,
-  '\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ':
+  '\n    mutation ViewTrack($profileID: Int!, $trackName: String!, $talkID: Int!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName, talkID: $talkID })\n    }\n  ':
     types.ViewTrackDocument,
 }
 
@@ -43,8 +43,8 @@ export function gql(
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(
-  source: '\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ',
-): (typeof documents)['\n    mutation ViewTrack($profileID: Int!, $trackName: String!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName })\n    }\n  ']
+  source: '\n    mutation ViewTrack($profileID: Int!, $trackName: String!, $talkID: Int!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName, talkID: $talkID })\n    }\n  ',
+): (typeof documents)['\n    mutation ViewTrack($profileID: Int!, $trackName: String!, $talkID: Int!) {\n      viewTrack(input: { profileID: $profileID, trackName: $trackName, talkID: $talkID })\n    }\n  ']
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {}

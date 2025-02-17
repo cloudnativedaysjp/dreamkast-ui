@@ -7,6 +7,7 @@ export const useViewerCount = (
   eventAbbr: string,
   profileId: number | undefined,
   selectedTrackName: string | undefined,
+  selectedTalkId: number | undefined,
 ): [number, NodeJS.Timeout | null] => {
   const [viewerCounts, setViewerCounts] = useState<Record<string, number>>({})
   const [curTrack, setCurTrack] = useState<string>('')
@@ -29,8 +30,8 @@ export const useViewerCount = (
   })
 
   const viewTrack = gql(`
-    mutation ViewTrack($profileID: Int!, $trackName: String!) {
-      viewTrack(input: { profileID: $profileID, trackName: $trackName })
+    mutation ViewTrack($profileID: Int!, $trackName: String!, $talkID: Int!) {
+      viewTrack(input: { profileID: $profileID, trackName: $trackName, talkID: $talkID })
     }
   `)
   useEffect(() => {
@@ -56,7 +57,7 @@ export const useViewerCount = (
   const [setViewTrack, { error: viewTrackError }] = useMutation(viewTrack)
 
   useEffect(() => {
-    if (!profileId || !selectedTrackName) {
+    if (!profileId || !selectedTrackName || !selectedTalkId) {
       return
     }
     if (selectedTrackName === curTrack) {
@@ -71,6 +72,7 @@ export const useViewerCount = (
         variables: {
           profileID: profileId,
           trackName: selectedTrackName,
+          talkID: selectedTalkId,
         },
       })
     }
@@ -78,7 +80,7 @@ export const useViewerCount = (
     setTimer(setInterval(mutate, 30 * 1000))
 
     setCurTrack(selectedTrackName)
-  }, [selectedTrackName, profileId, timer, curTrack])
+  }, [selectedTrackName, selectedTalkId, profileId, timer, curTrack])
 
   useEffect(() => {
     if (viewTrackError) {
