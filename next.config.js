@@ -34,7 +34,7 @@ const sentryWebpackPluginOptions = {
   //   release, url, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
-  org: 'cloudnative-days',
+  org: 'cloudnativedays',
   project: 'dreamkast-ui',
 
   silent: true, // Suppresses all logs
