@@ -9,7 +9,7 @@ const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN
 Sentry.init({
   dsn:
     SENTRY_DSN ||
-    'https://dbf0f30514094bed721121dc94ee19b2@sentry.cloudnativedays.jp/4',
+    'https://144c5d72cbf1da0931ff09532d25b11d@o414348.ingest.us.sentry.io/4509089547747328',
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 0.5,
   sampleRate: 0.5,
