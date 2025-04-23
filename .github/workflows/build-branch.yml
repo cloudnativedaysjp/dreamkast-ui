@@ -2,49 +2,17 @@ name: build container image when branches are pushed
 
 on:
   push:
-    branches:
+    branches: ["*"]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     if: github.event.pusher.name != 'dreamkast-cloudnativedays'
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ steps.login-ecr.outputs.registry }}/dreamkast-ui
-          tags: |
-            type=sha,prefix=,format=long
-            type=ref,event=branch
-
-      - name: Build
-        id: docker_build
-        uses: docker/build-push-action@v4
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+    uses: cloudnativedaysjp/reusable-workflows/.github/workflows/wc-build-image.yml@main
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      image_name: dreamkast-ui
+      platforms: amd64
+      aws_region: us-west-2
+      run-trivy: true
