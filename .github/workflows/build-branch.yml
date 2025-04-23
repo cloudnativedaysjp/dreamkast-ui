@@ -16,3 +16,4 @@ jobs:
       platforms: amd64
       aws_region: us-west-2
       run-trivy: true
+      build-args: SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
