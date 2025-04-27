@@ -8,15 +8,11 @@ RUN --mount=type=cache,target=/tmp/yarn_cache \
   yarn install
 
 FROM node:18.20-alpine
-RUN apk add --no-cache tini
 WORKDIR /base
 COPY --link --from=base /base ./
 COPY --link . .
-RUN yarn build
-
+# upload Source Maps to sentry
+ARG SENTRY_AUTH_TOKEN
 ARG SENTRY_RELEASE
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
-
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD [ "/usr/local/bin/yarn", "start", "-p", "3001" ]
-EXPOSE 3001
+ARG SENTRY_DIST
+RUN yarn build
