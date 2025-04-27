@@ -11,6 +11,7 @@ export const useViewerCount = (
 ): [number, NodeJS.Timeout | null] => {
   const [viewerCounts, setViewerCounts] = useState<Record<string, number>>({})
   const [curTrack, setCurTrack] = useState<string>('')
+  const [curTalkId, setCurTalkId] = useState<number | undefined>(undefined)
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   // fetch viewer count
@@ -60,7 +61,7 @@ export const useViewerCount = (
     if (!profileId || !selectedTrackName || !selectedTalkId) {
       return
     }
-    if (selectedTrackName === curTrack) {
+    if (selectedTrackName === curTrack && selectedTalkId === curTalkId) {
       return
     }
     if (timer) {
@@ -80,7 +81,8 @@ export const useViewerCount = (
     setTimer(setInterval(mutate, 30 * 1000))
 
     setCurTrack(selectedTrackName)
-  }, [selectedTrackName, selectedTalkId, profileId, timer, curTrack])
+    setCurTalkId(selectedTalkId)
+  }, [selectedTrackName, selectedTalkId, profileId, timer, curTrack, curTalkId])
 
   useEffect(() => {
     if (viewTrackError) {
