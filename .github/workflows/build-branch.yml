@@ -20,7 +20,7 @@ jobs:
         SENTRY_RELEASE=${{ github.sha }}
 
   upload-sourcemaps:
-    if: github.ref_name == 'main'
+    #if: github.ref_name == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
