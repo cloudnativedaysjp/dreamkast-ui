@@ -42,6 +42,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: false
           cache-from: type=gha
-          build-args:
+          build-args: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
             SENTRY_RELEASE=${{ github.ref_name }}
