@@ -53,15 +53,17 @@ export const Sponsors: React.FC<Props> = ({ event }) => {
   return (
     <CommonStyled.Container>
       <Styled.CNDOSlider {...settings}>
-        {data.filter((sponsor) => sponsor.logo_url != '').map((sponsor) => (
-          <Styled.Sponsor key={sponsor.id}>
-            <a href={sponsor.url} target="_blank">
-              <Styled.SponsorImgContainer>
-                <Styled.SponsorImg src={sponsor.logo_url} />
-              </Styled.SponsorImgContainer>
-            </a>
-          </Styled.Sponsor>
-        ))}
+        {data
+          .filter((sponsor) => sponsor.logo_url != '')
+          .map((sponsor) => (
+            <Styled.Sponsor key={sponsor.id}>
+              <a href={sponsor.url} target="_blank">
+                <Styled.SponsorImgContainer>
+                  <Styled.SponsorImg src={sponsor.logo_url} />
+                </Styled.SponsorImgContainer>
+              </a>
+            </Styled.Sponsor>
+          ))}
       </Styled.CNDOSlider>
     </CommonStyled.Container>
   )
