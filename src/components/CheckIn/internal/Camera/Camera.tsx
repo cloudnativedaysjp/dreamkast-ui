@@ -170,7 +170,21 @@ export const Camera: React.FC<Props> = ({
                 const qrResult = decodeQR(imageObject)
                 if (qrResult) {
                   console.log('QR code detected:', qrResult)
-                  handleQRCodeDetected(qrResult)
+                  
+                  // Parse QR result as JSON to extract profile_id
+                  try {
+                    const qrData = JSON.parse(qrResult)
+                    if (qrData.profile_id) {
+                      handleQRCodeDetected(qrData.profile_id.toString())
+                    } else {
+                      console.warn('QR code does not contain profile_id:', qrData)
+                    }
+                  } catch (parseError) {
+                    // If not JSON, use the raw result as profile ID
+                    console.log('QR result is not JSON, using as raw profile ID')
+                    handleQRCodeDetected(qrResult)
+                  }
+                  
                   if (frameLoopRef.current) {
                     clearInterval(frameLoopRef.current.intervalId)
                     frameLoopRef.current = null
