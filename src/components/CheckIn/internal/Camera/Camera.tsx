@@ -1,22 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { decodeQR } from '@paulmillr/qr/decode.js'
 import { frameLoop, frontalCamera, QRCanvas } from '@paulmillr/qr/dom'
-// import jsQR from 'jsqr'
 
 type Props = {
   height: number
   width: number
   setCheckInDataToLocalStorage: (profileId: string) => void
   enableScan: boolean
-}
-
-const pad = (n, z = 2) => ('' + n).padStart(z, '0')
-
-const time = () => {
-  const d = new Date()
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(
-    d.getSeconds(),
-  )}:${pad(d.getMilliseconds(), 3)}`
 }
 
 export const Camera: React.FC<Props> = ({
@@ -26,142 +15,141 @@ export const Camera: React.FC<Props> = ({
   enableScan,
 }) => {
   const [isStarted, setIsStarted] = useState(false)
-  const [camera, setCamera] = useState<any>(null)
+  const [camera, setCamera] = useState<Awaited<
+    ReturnType<typeof frontalCamera>
+  > | null>(null)
   const [canvasQr, setCanvasQr] = useState<QRCanvas | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const overlayRef = useRef<HTMLCanvasElement>(null)
-  const [cancelMainLoop, setCancelMainLoop] = useState<() => void | null>()
-  // const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  // const bitmapRef = useRef<HTMLCanvasElement | null>(null)
-  // const resultQr = useRef<HTMLCanvasElement | null>(null)
-  const mainLoop = (camera: any, canvasQr: QRCanvas) => {
-    console.log('mainLoop')
-    frameLoop(() => {
-      // console.log('newCanvasQr: ', newCanvasQr)
-      console.log('canvasQr:', canvasQr)
-      const result = camera.readFrame(canvasQr, false)
-      if (result !== undefined) {
-        console.log('Decoded:', result)
+  const cancelLoopRef = useRef<(() => void) | null>(null)
+  const [lastScannedCode, setLastScannedCode] = useState<string>('')
+  const [isProcessing, setIsProcessing] = useState(false)
+
+  const handleQRCodeDetected = useCallback(
+    (profileId: string) => {
+      if (isProcessing || profileId === lastScannedCode) {
+        return
       }
-    })
-  }
+
+      setIsProcessing(true)
+      setLastScannedCode(profileId)
+
+      console.log('QR Code detected:', profileId)
+      setCheckInDataToLocalStorage(profileId)
+
+      setTimeout(() => {
+        setIsProcessing(false)
+      }, 2000)
+    },
+    [isProcessing, lastScannedCode, setCheckInDataToLocalStorage],
+  )
+
+  const startScanning = useCallback(async () => {
+    if (!videoRef.current || !overlayRef.current) return
+
+    try {
+      const newCamera = await frontalCamera(videoRef.current)
+      setCamera(newCamera)
+
+      const newCanvasQr = new QRCanvas(
+        { overlay: overlayRef.current },
+        { cropToSquare: true },
+      )
+      setCanvasQr(newCanvasQr)
+
+      const cancel = frameLoop(() => {
+        if (!enableScan) return
+
+        const result = newCamera.readFrame(newCanvasQr, false)
+        if (result !== undefined && result !== null) {
+          handleQRCodeDetected(result)
+        }
+      })
+
+      cancelLoopRef.current = cancel
+      setIsStarted(true)
+    } catch (err) {
+      console.error('Error starting video capturing:', err)
+    }
+  }, [enableScan, handleQRCodeDetected])
+
+  const stopScanning = useCallback(() => {
+    if (cancelLoopRef.current) {
+      cancelLoopRef.current()
+      cancelLoopRef.current = null
+    }
+    if (camera) {
+      camera.stop()
+      setCamera(null)
+    }
+    if (canvasQr) {
+      canvasQr.clear()
+      setCanvasQr(null)
+    }
+    setIsStarted(false)
+    setLastScannedCode('')
+  }, [camera, canvasQr])
 
   const handleStartStop = async () => {
-    if (videoRef?.current && isStarted) {
-      console.log('Stopping video capturing...')
-      if (cancelMainLoop) cancelMainLoop()
-      if (camera) camera.stop()
-      if (canvasQr) canvasQr.clear()
-      setIsStarted(false)
+    if (isStarted) {
+      stopScanning()
     } else {
-      console.log('Starting video capturing...')
-      try {
-        if (videoRef.current && overlayRef.current) {
-          const newCamera = await frontalCamera(videoRef.current)
-          setCamera(newCamera)
-
-          const newCanvasQr = new QRCanvas(
-            { overlay: overlayRef.current },
-            { cropToSquare: true },
-          )
-          setCanvasQr(newCanvasQr)
-
-          setCancelMainLoop(mainLoop(newCamera, newCanvasQr))
-
-          setIsStarted(true)
-        }
-      } catch (err) {
-        console.error('Error starting video capturing:', err)
-      }
+      await startScanning()
     }
   }
 
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
+      if (cancelLoopRef.current) {
+        cancelLoopRef.current()
+      }
       if (camera) camera.stop()
       if (canvasQr) canvasQr.clear()
     }
   }, [camera, canvasQr])
 
-  // const setupCanvas = useCallback(() => {
-  //   if (canvasQr) canvasQr.clear()
-  //   const newCanvasQr = new QRCanvas(
-  //     {
-  //       overlay: canvasRef.current || undefined,
-  //       bitmap: bitmapRef.current || undefined,
-  //       resultQR: resultQr.current || undefined,
-  //     },
-  //     { cropToSquare: true },
-  //   )
-  //   console.log('newCanvasQr: ', newCanvasQr)
-  //   setCanvasQr(newCanvasQr)
-  // }, [])
-
-  // const mainLoop = useCallback(() => {
-  //   ;(async () => {
-  //     console.log('mainLoop~~~~~~~~~~~~~~~~~~~')
-  //     const video = videoRef.current
-  //     console.log('video: ', video)
-  //     console.log('canvasQr: ', canvasQr)
-  //     if (video && canvasQr) {
-  //       const cam = await frontalCamera(video)
-  //       console.log(cam)
-  //       const res = cam.readFrame(canvasQr, false)
-  //       console.log('res: ', res)
-  //       if (res !== undefined) {
-  //         console.log(`Decoded ${res}`)
-  //       }
-  //     }
-  //   })()
-  // }, [])
-  //
-  // useEffect(() => {
-  //   // setupCanvas()
-  //   console.log('canvasQr: ', canvasQr)
-  //   ;(async () => {
-  //     try {
-  //       const video = videoRef.current
-  //       if (video && canvasQr) {
-  //         const cam = await frontalCamera(video)
-  //         // const res = cam.readFrame(canvasQr, false)
-  //         // if (res !== undefined) {
-  //         //   console.log(`Decoded ${res}`)
-  //         // }
-  //         // setCamera(cam)
-  //         console.log(cam)
-  //         console.log('Started')
-  //         // mainLoop()
-  //         const intervalScan = setInterval(mainLoop, 5000)
-  //         return () => {
-  //           clearInterval(intervalScan)
-  //         }
-  //       }
-  //     } catch (e) {
-  //       console.error('Media loop', e)
-  //     }
-  //
-  //   })()
-  // }, [canvasQr])
-  //
-  // useEffect(() => {
-  //   const newCanvasQr = new QRCanvas(
-  //     {
-  //       overlay: canvasRef.current || undefined,
-  //       bitmap: bitmapRef.current || undefined,
-  //       resultQR: resultQr.current || undefined,
-  //     },
-  //     { cropToSquare: true },
-  //   )
-  //   console.log('newCanvasQr: ', newCanvasQr)
-  //   setCanvasQr(newCanvasQr)
-  // }, [])
-
   return (
-    <div>
-      <button onClick={handleStartStop}>
-        {isStarted ? 'Stop' : 'Start'} video capturing
+    <div style={{ position: 'relative', width, height }}>
+      <button
+        onClick={handleStartStop}
+        disabled={!enableScan && !isStarted}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          zIndex: 10,
+          padding: '8px 16px',
+          backgroundColor: isStarted ? '#f44336' : '#4caf50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: enableScan || isStarted ? 'pointer' : 'not-allowed',
+          opacity: enableScan || isStarted ? 1 : 0.5,
+        }}
+      >
+        {isStarted ? 'Stop' : 'Start'} Scanning
       </button>
+
+      {isProcessing && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'rgba(76, 175, 80, 0.9)',
+            color: 'white',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            zIndex: 20,
+            fontSize: '18px',
+            fontWeight: 'bold',
+          }}
+        >
+          QR Code Scanned!
+        </div>
+      )}
+
       <video
         ref={videoRef}
         style={{
@@ -172,14 +160,41 @@ export const Camera: React.FC<Props> = ({
           display: isStarted ? 'block' : 'none',
         }}
         autoPlay
+        playsInline
+        muted
       />
+
       <canvas
         ref={overlayRef}
-        style={{ display: isStarted ? 'block' : 'none', position: 'absolute' }}
+        style={{
+          display: isStarted ? 'block' : 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+        }}
       />
-      {/*<canvas id="bitmap" ref={bitmapRef} />*/}
-      {/*<canvas id="resultQr" ref={resultQr} />*/}
-      {/*<div id="results-container"></div>*/}
+
+      {!isStarted && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#f5f5f5',
+            color: '#666',
+            fontSize: '16px',
+          }}
+        >
+          {enableScan
+            ? 'Click "Start Scanning" to begin'
+            : 'Scanning is disabled'}
+        </div>
+      )}
     </div>
   )
 }
