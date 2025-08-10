@@ -28,6 +28,7 @@ export const Camera: React.FC<Props> = ({
   const [cameraPermission, setCameraPermission] = useState<
     'granted' | 'denied' | 'prompt'
   >('prompt')
+  const [isInitializing, setIsInitializing] = useState(false)
 
   const handleQRCodeDetected = useCallback(
     (profileId: string) => {
@@ -62,13 +63,25 @@ export const Camera: React.FC<Props> = ({
 
   const startScanning = useCallback(async () => {
     if (!videoRef.current || !overlayRef.current) return
+    if (isInitializing) {
+      console.log('Already initializing, skipping...')
+      return
+    }
 
+    setIsInitializing(true)
     setError('')
     console.log('Starting camera initialization...')
 
     try {
       console.log('Video element:', videoRef.current)
       console.log('Canvas element:', overlayRef.current)
+
+      // Stop any existing stream first
+      if (videoRef.current.srcObject) {
+        const existingStream = videoRef.current.srcObject as MediaStream
+        existingStream.getTracks().forEach((track) => track.stop())
+        videoRef.current.srcObject = null
+      }
 
       // First try direct getUserMedia approach
       console.log('Requesting camera access via getUserMedia...')
@@ -81,8 +94,33 @@ export const Camera: React.FC<Props> = ({
       })
 
       console.log('Got media stream:', stream)
+
+      // Set stream and wait for it to load
       videoRef.current.srcObject = stream
-      videoRef.current.play()
+
+      // Wait for loadedmetadata event to ensure video is ready
+      await new Promise<void>((resolve, reject) => {
+        const video = videoRef.current!
+        const onLoadedMetadata = () => {
+          console.log('Video metadata loaded')
+          video.removeEventListener('loadedmetadata', onLoadedMetadata)
+          resolve()
+        }
+        const onError = (_e: Event) => {
+          video.removeEventListener('error', onError)
+          reject(new Error('Video load error'))
+        }
+
+        if (video.readyState >= 1) {
+          resolve()
+        } else {
+          video.addEventListener('loadedmetadata', onLoadedMetadata)
+          video.addEventListener('error', onError)
+        }
+      })
+
+      // Now play the video
+      await videoRef.current.play()
 
       // Now use frontalCamera with the already-initialized video
       console.log('Calling frontalCamera...')
@@ -196,8 +234,17 @@ export const Camera: React.FC<Props> = ({
         err instanceof Error ? err.message : 'Unknown camera error'
       setError(`Camera access error: ${errorMessage}`)
       setCameraPermission('denied')
+
+      // Clean up on error
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream
+        stream.getTracks().forEach((track) => track.stop())
+        videoRef.current.srcObject = null
+      }
+    } finally {
+      setIsInitializing(false)
     }
-  }, [enableScan, handleQRCodeDetected, width, height])
+  }, [enableScan, handleQRCodeDetected, width, height, isInitializing])
 
   const stopScanning = useCallback(() => {
     if (cancelLoopRef.current) {
@@ -221,6 +268,7 @@ export const Camera: React.FC<Props> = ({
     setIsStarted(false)
     setLastScannedCode('')
     setError('')
+    setIsInitializing(false)
   }, [camera, canvasQr])
 
   const handleStartStop = async () => {
@@ -264,7 +312,7 @@ export const Camera: React.FC<Props> = ({
     >
       <button
         onClick={handleStartStop}
-        disabled={!enableScan && !isStarted}
+        disabled={(!enableScan && !isStarted) || isInitializing}
         style={{
           position: 'absolute',
           top: 10,
@@ -276,10 +324,11 @@ export const Camera: React.FC<Props> = ({
           border: 'none',
           borderRadius: '4px',
           cursor: enableScan || isStarted ? 'pointer' : 'not-allowed',
-          opacity: enableScan || isStarted ? 1 : 0.5,
+          opacity: (enableScan || isStarted) && !isInitializing ? 1 : 0.5,
         }}
       >
-        {isStarted ? 'Stop' : 'Start'} Scanning
+        {isInitializing ? 'Initializing...' : isStarted ? 'Stop' : 'Start'}{' '}
+        Scanning
       </button>
 
       {isProcessing && (
