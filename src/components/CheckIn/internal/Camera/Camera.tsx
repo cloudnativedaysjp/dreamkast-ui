@@ -15,6 +15,7 @@ export const Camera: React.FC<Props> = ({
   enableScan,
 }) => {
   const [isStarted, setIsStarted] = useState(false)
+  const hasAutoStarted = useRef(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const overlayRef = useRef<HTMLCanvasElement>(null)
   const [lastScannedCode, setLastScannedCode] = useState<string>('')
@@ -73,11 +74,11 @@ export const Camera: React.FC<Props> = ({
       console.log('Video element:', videoRef.current)
       console.log('Canvas element:', overlayRef.current)
 
-      // Stop any existing stream first
+      // Stop any existing stream first (but don't clear srcObject to avoid flicker)
       if (videoRef.current.srcObject) {
         const existingStream = videoRef.current.srcObject as MediaStream
         existingStream.getTracks().forEach((track) => track.stop())
-        videoRef.current.srcObject = null
+        // Don't set srcObject to null here to avoid flicker
       }
 
       // Show UI immediately before camera loads
@@ -234,7 +235,7 @@ export const Camera: React.FC<Props> = ({
   }, [enableScan, handleQRCodeDetected, width, height, isInitializing])
 
   const stopScanning = useCallback(() => {
-    // Stop frame loop
+    // Stop frame loop first
     if (frameLoopRef.current) {
       frameLoopRef.current.stop()
       frameLoopRef.current = null
@@ -246,18 +247,21 @@ export const Camera: React.FC<Props> = ({
       stream.getTracks().forEach((track) => track.stop())
       videoRef.current.srcObject = null
     }
+    
+    // Update UI state last
     setIsStarted(false)
     setLastScannedCode('')
     setError('')
     setIsInitializing(false)
+    
     console.log('Camera stopped')
   }, [])
 
-  const handleStartStop = async () => {
+  const handleStartStop = () => {
     if (isStarted) {
       stopScanning()
     } else {
-      await startScanning()
+      startScanning()
     }
   }
 
@@ -273,6 +277,15 @@ export const Camera: React.FC<Props> = ({
       setLastScannedCode('')  // Clear last scanned code when re-enabled
     }
   }, [enableScan])
+
+  // Auto-start scanning when component mounts if enableScan is true
+  useEffect(() => {
+    if (enableScan && !isStarted && !hasAutoStarted.current) {
+      hasAutoStarted.current = true
+      console.log('Auto-starting camera scan on mount')
+      startScanning()
+    }
+  }, [enableScan, isStarted, startScanning])
 
   useEffect(() => {
     return () => {
