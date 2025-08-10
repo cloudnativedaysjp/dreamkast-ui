@@ -24,6 +24,10 @@ export const Camera: React.FC<Props> = ({
   const cancelLoopRef = useRef<(() => void) | null>(null)
   const [lastScannedCode, setLastScannedCode] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
+  const [error, setError] = useState<string>('')
+  const [cameraPermission, setCameraPermission] = useState<
+    'granted' | 'denied' | 'prompt'
+  >('prompt')
 
   const handleQRCodeDetected = useCallback(
     (profileId: string) => {
@@ -44,12 +48,38 @@ export const Camera: React.FC<Props> = ({
     [isProcessing, lastScannedCode, setCheckInDataToLocalStorage],
   )
 
+  const checkCameraPermission = useCallback(async () => {
+    try {
+      const permission = await navigator.permissions.query({
+        name: 'camera' as PermissionName,
+      })
+      setCameraPermission(permission.state)
+      permission.onchange = () => setCameraPermission(permission.state)
+    } catch (err) {
+      console.warn('Permission API not supported')
+    }
+  }, [])
+
   const startScanning = useCallback(async () => {
     if (!videoRef.current || !overlayRef.current) return
 
+    setError('')
     try {
+      // Request camera permission first
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment',
+          width: { ideal: 640 },
+          height: { ideal: 640 },
+        },
+      })
+
+      videoRef.current.srcObject = stream
+      await videoRef.current.play()
+
       const newCamera = await frontalCamera(videoRef.current)
       setCamera(newCamera)
+      setCameraPermission('granted')
 
       // Wait for video to be ready
       await new Promise((resolve) => {
@@ -72,6 +102,7 @@ export const Camera: React.FC<Props> = ({
 
       if (videoWidth === 0 || videoHeight === 0) {
         console.error('Video dimensions are invalid')
+        setError('Video dimensions are invalid')
         return
       }
 
@@ -101,6 +132,10 @@ export const Camera: React.FC<Props> = ({
       setIsStarted(true)
     } catch (err) {
       console.error('Error starting video capturing:', err)
+      const errorMessage =
+        err instanceof Error ? err.message : 'Unknown camera error'
+      setError(`Camera access error: ${errorMessage}`)
+      setCameraPermission('denied')
     }
   }, [enableScan, handleQRCodeDetected])
 
@@ -117,8 +152,14 @@ export const Camera: React.FC<Props> = ({
       canvasQr.clear()
       setCanvasQr(null)
     }
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream
+      stream.getTracks().forEach((track) => track.stop())
+      videoRef.current.srcObject = null
+    }
     setIsStarted(false)
     setLastScannedCode('')
+    setError('')
   }, [camera, canvasQr])
 
   const handleStartStop = async () => {
@@ -130,12 +171,20 @@ export const Camera: React.FC<Props> = ({
   }
 
   useEffect(() => {
+    checkCameraPermission()
+  }, [checkCameraPermission])
+
+  useEffect(() => {
     return () => {
       if (cancelLoopRef.current) {
         cancelLoopRef.current()
       }
       if (camera) camera.stop()
       if (canvasQr) canvasQr.clear()
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream
+        stream.getTracks().forEach((track) => track.stop())
+      }
     }
   }, [camera, canvasQr])
 
@@ -208,22 +257,55 @@ export const Camera: React.FC<Props> = ({
         }}
       />
 
-      {!isStarted && (
+      {error && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'rgba(244, 67, 54, 0.9)',
+            color: 'white',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            zIndex: 20,
+            fontSize: '14px',
+            maxWidth: '90%',
+            textAlign: 'center',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      {!isStarted && !error && (
         <div
           style={{
             width: '100%',
             height: '100%',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#f5f5f5',
             color: '#666',
             fontSize: '16px',
+            textAlign: 'center',
+            padding: '20px',
           }}
         >
-          {enableScan
-            ? 'Click "Start Scanning" to begin'
-            : 'Scanning is disabled'}
+          {!enableScan ? (
+            'Scanning is disabled'
+          ) : cameraPermission === 'denied' ? (
+            <>
+              <div style={{ marginBottom: '16px' }}>Camera access denied</div>
+              <div style={{ fontSize: '14px', color: '#999' }}>
+                Please allow camera access and refresh the page
+              </div>
+            </>
+          ) : (
+            'Click "Start Scanning" to begin'
+          )}
         </div>
       )}
     </div>

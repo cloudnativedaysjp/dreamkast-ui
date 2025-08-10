@@ -129,10 +129,10 @@ export const CheckIn: React.FC<Props> = ({
   }
 
   return (
-    <div>
+    <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
       <Camera
-        height={100}
-        width={100}
+        height={400}
+        width={400}
         setCheckInDataToLocalStorage={setCheckInDataToLocalStorage}
         enableScan={enableScan}
       />
