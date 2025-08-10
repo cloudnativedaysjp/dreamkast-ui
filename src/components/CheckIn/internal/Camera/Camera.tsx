@@ -93,10 +93,10 @@ export const Camera: React.FC<Props> = ({
       setCameraPermission('granted')
 
       console.log('Waiting for video to be ready...')
-      // Wait for video to be ready
+      // Wait for video to be ready with proper dimensions
       await new Promise((resolve) => {
         let attempts = 0
-        const maxAttempts = 50 // 5 seconds max
+        const maxAttempts = 100 // 10 seconds max
         const checkVideoReady = () => {
           attempts++
           const video = videoRef.current
@@ -108,11 +108,12 @@ export const Camera: React.FC<Props> = ({
 
           if (
             video &&
-            video.readyState >= 2 &&
+            video.readyState >= 3 && // HAVE_FUTURE_DATA or higher
             video.videoWidth > 0 &&
-            video.videoHeight > 0
+            video.videoHeight > 0 &&
+            !video.paused
           ) {
-            console.log('Video is ready!')
+            console.log('Video is fully ready!')
             resolve(true)
           } else if (attempts >= maxAttempts) {
             console.warn('Video ready timeout, proceeding anyway')
@@ -124,13 +125,26 @@ export const Camera: React.FC<Props> = ({
         checkVideoReady()
       })
 
-      // Set canvas size to match container dimensions
-      const containerWidth = Math.min(width, window.innerWidth - 40)
-      const containerHeight = Math.min(height, containerWidth) // Square aspect ratio
+      // Set canvas size to match video dimensions for proper scaling
+      const video = videoRef.current
+      const videoWidth = Math.floor(video.videoWidth || 640)
+      const videoHeight = Math.floor(video.videoHeight || 640)
 
-      console.log(`Setting canvas size: ${containerWidth}x${containerHeight}`)
-      overlayRef.current.width = containerWidth
-      overlayRef.current.height = containerHeight
+      console.log(`Video dimensions: ${videoWidth}x${videoHeight}`)
+      console.log(`Container dimensions: ${width}x${height}`)
+
+      // Ensure canvas dimensions are positive integers
+      if (videoWidth <= 0 || videoHeight <= 0) {
+        throw new Error(
+          `Invalid video dimensions: ${videoWidth}x${videoHeight}`,
+        )
+      }
+
+      // Set canvas to match video dimensions exactly
+      overlayRef.current.width = videoWidth
+      overlayRef.current.height = videoHeight
+
+      console.log(`Setting canvas size: ${videoWidth}x${videoHeight}`)
 
       console.log('Creating QRCanvas...')
       const newCanvasQr = new QRCanvas(
@@ -145,6 +159,19 @@ export const Camera: React.FC<Props> = ({
         if (!enableScan) return
 
         try {
+          // Validate canvas dimensions before reading frame
+          const canvas = overlayRef.current
+          if (!canvas || canvas.width <= 0 || canvas.height <= 0) {
+            console.warn('Canvas dimensions invalid, skipping frame')
+            return
+          }
+
+          // Validate video dimensions before reading frame
+          if (!video || video.videoWidth <= 0 || video.videoHeight <= 0) {
+            console.warn('Video dimensions invalid, skipping frame')
+            return
+          }
+
           const result = newCamera.readFrame(newCanvasQr, false)
           if (result !== undefined && result !== null) {
             console.log('QR code detected:', result)
@@ -152,6 +179,11 @@ export const Camera: React.FC<Props> = ({
           }
         } catch (err) {
           console.error('Error reading frame:', err)
+          // Stop scanning on persistent errors
+          if (err instanceof Error && err.message.includes('getImageData')) {
+            console.error('Canvas getImageData error, stopping scan')
+            stopScanning()
+          }
         }
       })
 
