@@ -185,10 +185,8 @@ export const Camera: React.FC<Props> = ({
                     handleQRCodeDetected(qrResult)
                   }
                   
-                  if (frameLoopRef.current) {
-                    clearInterval(frameLoopRef.current.intervalId)
-                    frameLoopRef.current = null
-                  }
+                  // Don't stop the camera after QR detection
+                  // Let it continue scanning for more QR codes
                 }
               } catch (decodeError) {
                 // QR code not found or decode error - this is normal, continue scanning
