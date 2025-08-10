@@ -19,6 +19,7 @@ export const Camera: React.FC<Props> = ({
   const overlayRef = useRef<HTMLCanvasElement>(null)
   const [lastScannedCode, setLastScannedCode] = useState<string>('')
   const [isProcessing, setIsProcessing] = useState(false)
+  const isProcessingRef = useRef(false)
   const [error, setError] = useState<string>('')
   const [cameraPermission, setCameraPermission] = useState<
     'granted' | 'denied' | 'prompt'
@@ -33,14 +34,14 @@ export const Camera: React.FC<Props> = ({
       }
 
       setIsProcessing(true)
+      isProcessingRef.current = true
       setLastScannedCode(profileId)
 
       console.log('QR Code detected:', profileId)
       setCheckInDataToLocalStorage(profileId)
 
-      setTimeout(() => {
-        setIsProcessing(false)
-      }, 2000)
+      // Keep processing state true until enableScan becomes true again
+      // (when the dialog is closed by the parent component)
     },
     [isProcessing, lastScannedCode, setCheckInDataToLocalStorage],
   )
@@ -150,6 +151,9 @@ export const Camera: React.FC<Props> = ({
           const scanFrame = () => {
             try {
               if (!videoRef.current || !overlayRef.current) return
+              
+              // Skip scanning if processing (dialog is open)
+              if (isProcessingRef.current) return
               
               // Draw video frame to canvas for QR detection
               const context = overlayRef.current.getContext('2d')!
@@ -264,6 +268,15 @@ export const Camera: React.FC<Props> = ({
   useEffect(() => {
     checkCameraPermission()
   }, [checkCameraPermission])
+
+  // Reset processing state when enableScan changes to true (dialog closed)
+  useEffect(() => {
+    if (enableScan) {
+      setIsProcessing(false)
+      isProcessingRef.current = false
+      setLastScannedCode('')  // Clear last scanned code when re-enabled
+    }
+  }, [enableScan])
 
   useEffect(() => {
     return () => {
