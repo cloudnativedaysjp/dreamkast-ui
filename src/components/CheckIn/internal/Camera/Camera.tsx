@@ -80,8 +80,11 @@ export const Camera: React.FC<Props> = ({
         videoRef.current.srcObject = null
       }
 
-      // First try direct getUserMedia approach
-      console.log('Requesting camera access via getUserMedia...')
+      // Show UI immediately before camera loads
+      setIsStarted(true)
+      
+      // Request camera access
+      console.log('Requesting camera access...')
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: 'environment',
@@ -91,133 +94,126 @@ export const Camera: React.FC<Props> = ({
       })
 
       console.log('Got media stream:', stream)
-
-      // Set stream and wait for it to load
-      videoRef.current.srcObject = stream
-
-      // Wait for loadedmetadata event to ensure video is ready
-      await new Promise<void>((resolve, reject) => {
-        const video = videoRef.current!
-        const onLoadedMetadata = () => {
-          console.log('Video metadata loaded')
-          video.removeEventListener('loadedmetadata', onLoadedMetadata)
-          resolve()
-        }
-        const onError = (_e: Event) => {
-          video.removeEventListener('error', onError)
-          reject(new Error('Video load error'))
-        }
-
-        if (video.readyState >= 1) {
-          resolve()
-        } else {
-          video.addEventListener('loadedmetadata', onLoadedMetadata)
-          video.addEventListener('error', onError)
-        }
-      })
-
-      // Now play the video
-      await videoRef.current.play()
-      console.log('Video playing successfully')
-
       setCameraPermission('granted')
 
-      // Video should be ready after loadedmetadata and play()
-      console.log('Video is ready for QR scanning')
+      // Set stream and play without waiting
+      videoRef.current.srcObject = stream
+      
+      // Fire and forget - don't wait for play to complete
+      videoRef.current.play().catch(err => {
+        console.warn('Play failed, will retry:', err)
+        // Retry play after a brief delay if it fails
+        setTimeout(() => videoRef.current?.play(), 100)
+      })
+      
+      console.log('Video playing')
 
-      // Set canvas size to match actual video dimensions
-      const videoWidth = videoRef.current.videoWidth
-      const videoHeight = videoRef.current.videoHeight
-
-      console.log(`Video actual dimensions: ${videoWidth}x${videoHeight}`)
-
-      // Set canvas to match video dimensions
-      overlayRef.current.width = videoWidth
-      overlayRef.current.height = videoHeight
-
-      console.log(`Setting canvas size: ${videoWidth}x${videoHeight}`)
-
-      // Set up QR scanning with @paulmillr/qr
+      // Start QR scanning setup asynchronously
       if (enableScan) {
-        try {
-          console.log('Setting up QR scanning with @paulmillr/qr')
-          
-          // Stop any existing frame loop
-          if (frameLoopRef.current) {
-            frameLoopRef.current.stop()
-            frameLoopRef.current = null
-          }
-          
-          const scanFrame = () => {
-            try {
-              if (!videoRef.current || !overlayRef.current) return
+        // Use setTimeout to allow UI to update first
+        setTimeout(() => {
+          try {
+            console.log('Setting up QR scanning...')
+            
+            // Stop any existing frame loop
+            if (frameLoopRef.current) {
+              frameLoopRef.current.stop()
+              frameLoopRef.current = null
+            }
+            
+            // Wait a bit for video to be ready, then start scanning
+            const startScanLoop = () => {
+              // Get actual video dimensions
+              const videoWidth = videoRef.current?.videoWidth || 640
+              const videoHeight = videoRef.current?.videoHeight || 640
               
-              // Skip scanning if processing (dialog is open)
-              if (isProcessingRef.current) return
-              
-              // Draw video frame to canvas for QR detection
-              const context = overlayRef.current.getContext('2d')!
-              context.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight)
-              
-              // Get image data for QR detection
-              const imageData = context.getImageData(0, 0, videoWidth, videoHeight)
-              
-              // Convert ImageData to the format expected by @paulmillr/qr
-              const imageObject = {
-                width: videoWidth,
-                height: videoHeight,
-                data: imageData.data
+              // Set canvas size
+              if (overlayRef.current) {
+                overlayRef.current.width = videoWidth
+                overlayRef.current.height = videoHeight
               }
               
-              // Scan for QR codes using @paulmillr/qr decode function
-              try {
-                const qrResult = decodeQR(imageObject)
-                if (qrResult) {
-                  console.log('QR code detected:', qrResult)
+              const scanFrame = () => {
+                try {
+                  if (!videoRef.current || !overlayRef.current) return
                   
-                  // Parse QR result as JSON to extract profile_id
-                  try {
-                    const qrData = JSON.parse(qrResult)
-                    if (qrData.profile_id) {
-                      handleQRCodeDetected(qrData.profile_id.toString())
-                    } else {
-                      console.warn('QR code does not contain profile_id:', qrData)
-                    }
-                  } catch (parseError) {
-                    // If not JSON, use the raw result as profile ID
-                    console.log('QR result is not JSON, using as raw profile ID')
-                    handleQRCodeDetected(qrResult)
+                  // Skip scanning if processing (dialog is open)
+                  if (isProcessingRef.current) return
+                  
+                  // Get actual dimensions each frame (in case they change)
+                  const currentWidth = videoRef.current.videoWidth || videoWidth
+                  const currentHeight = videoRef.current.videoHeight || videoHeight
+                  
+                  // Update canvas size if needed
+                  if (overlayRef.current.width !== currentWidth) {
+                    overlayRef.current.width = currentWidth
+                    overlayRef.current.height = currentHeight
                   }
                   
-                  // Don't stop the camera after QR detection
-                  // Let it continue scanning for more QR codes
-                }
-              } catch (decodeError) {
-                // QR code not found or decode error - this is normal, continue scanning
-                // Only log if it's not the common "Finder: len(found) = 0" error
-                if (decodeError instanceof Error && !decodeError.message.includes('Finder: len(found) = 0')) {
-                  console.warn('QR decode error:', decodeError.message)
+                  // Draw video frame to canvas for QR detection
+                  const context = overlayRef.current.getContext('2d')!
+                  context.drawImage(videoRef.current, 0, 0, currentWidth, currentHeight)
+                  
+                  // Get image data for QR detection
+                  const imageData = context.getImageData(0, 0, currentWidth, currentHeight)
+                  
+                  // Convert ImageData to the format expected by @paulmillr/qr
+                  const imageObject = {
+                    width: currentWidth,
+                    height: currentHeight,
+                    data: imageData.data
+                  }
+                  
+                  // Scan for QR codes using @paulmillr/qr decode function
+                  try {
+                    const qrResult = decodeQR(imageObject)
+                    if (qrResult) {
+                      console.log('QR code detected:', qrResult)
+                      
+                      // Parse QR result as JSON to extract profile_id
+                      try {
+                        const qrData = JSON.parse(qrResult)
+                        if (qrData.profile_id) {
+                          handleQRCodeDetected(qrData.profile_id.toString())
+                        } else {
+                          console.warn('QR code does not contain profile_id:', qrData)
+                        }
+                      } catch (parseError) {
+                        // If not JSON, use the raw result as profile ID
+                        console.log('QR result is not JSON, using as raw profile ID')
+                        handleQRCodeDetected(qrResult)
+                      }
+                    }
+                  } catch (decodeError) {
+                    // QR code not found - this is normal, continue scanning silently
+                    if (decodeError instanceof Error && !decodeError.message.includes('Finder: len(found) = 0')) {
+                      console.warn('QR decode error:', decodeError.message)
+                    }
+                  }
+                } catch (err) {
+                  console.error('Error during QR scanning:', err)
                 }
               }
-            } catch (err) {
-              console.error('Error during QR scanning:', err)
+              
+              // Start scanning loop
+              const intervalId = setInterval(scanFrame, 100)
+              frameLoopRef.current = { 
+                stop: () => clearInterval(intervalId),
+                intervalId 
+              }
+              
+              console.log('QR scanning started')
             }
+            
+            // Start scan loop after a brief delay to ensure video is ready
+            setTimeout(startScanLoop, 500)
+            
+          } catch (err) {
+            console.error('Error setting up QR scanning:', err)
           }
-          
-          // Use setInterval for frame scanning
-          const intervalId = setInterval(scanFrame, 100) // Scan every 100ms
-          frameLoopRef.current = { 
-            stop: () => clearInterval(intervalId),
-            intervalId 
-          }
-          
-          console.log('QR scanning loop started')
-        } catch (err) {
-          console.error('Error setting up QR scanning:', err)
-        }
+        }, 0)
       }
 
-      setIsStarted(true)
       console.log('Camera initialization completed successfully')
     } catch (err) {
       console.error('Error starting video capturing:', err)
@@ -328,25 +324,6 @@ export const Camera: React.FC<Props> = ({
         Scanning
       </button>
 
-      {isProcessing && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: 'rgba(76, 175, 80, 0.9)',
-            color: 'white',
-            padding: '16px 24px',
-            borderRadius: '8px',
-            zIndex: 20,
-            fontSize: '18px',
-            fontWeight: 'bold',
-          }}
-        >
-          QR Code Scanned!
-        </div>
-      )}
 
       <video
         ref={videoRef}
