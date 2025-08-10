@@ -64,21 +64,58 @@ export const Camera: React.FC<Props> = ({
     if (!videoRef.current || !overlayRef.current) return
 
     setError('')
+    console.log('Starting camera initialization...')
+
     try {
-      // frontalCamera handles camera access internally
+      console.log('Video element:', videoRef.current)
+      console.log('Canvas element:', overlayRef.current)
+
+      // First try direct getUserMedia approach
+      console.log('Requesting camera access via getUserMedia...')
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment',
+          width: { ideal: 640, max: 1280 },
+          height: { ideal: 640, max: 1280 },
+        },
+      })
+
+      console.log('Got media stream:', stream)
+      videoRef.current.srcObject = stream
+      videoRef.current.play()
+
+      // Now use frontalCamera with the already-initialized video
+      console.log('Calling frontalCamera...')
       const newCamera = await frontalCamera(videoRef.current)
+      console.log('frontalCamera returned:', newCamera)
+
       setCamera(newCamera)
       setCameraPermission('granted')
 
+      console.log('Waiting for video to be ready...')
       // Wait for video to be ready
       await new Promise((resolve) => {
+        let attempts = 0
+        const maxAttempts = 50 // 5 seconds max
         const checkVideoReady = () => {
+          attempts++
+          const video = videoRef.current
+          if (video) {
+            console.log(
+              `Check ${attempts}: readyState=${video.readyState}, videoWidth=${video.videoWidth}, videoHeight=${video.videoHeight}`,
+            )
+          }
+
           if (
-            videoRef.current &&
-            videoRef.current.readyState >= 2 &&
-            videoRef.current.videoWidth > 0 &&
-            videoRef.current.videoHeight > 0
+            video &&
+            video.readyState >= 2 &&
+            video.videoWidth > 0 &&
+            video.videoHeight > 0
           ) {
+            console.log('Video is ready!')
+            resolve(true)
+          } else if (attempts >= maxAttempts) {
+            console.warn('Video ready timeout, proceeding anyway')
             resolve(true)
           } else {
             setTimeout(checkVideoReady, 100)
@@ -91,21 +128,26 @@ export const Camera: React.FC<Props> = ({
       const containerWidth = Math.min(width, window.innerWidth - 40)
       const containerHeight = Math.min(height, containerWidth) // Square aspect ratio
 
+      console.log(`Setting canvas size: ${containerWidth}x${containerHeight}`)
       overlayRef.current.width = containerWidth
       overlayRef.current.height = containerHeight
 
+      console.log('Creating QRCanvas...')
       const newCanvasQr = new QRCanvas(
         { overlay: overlayRef.current },
         { cropToSquare: true },
       )
+      console.log('QRCanvas created:', newCanvasQr)
       setCanvasQr(newCanvasQr)
 
+      console.log('Starting frame loop...')
       const cancel = frameLoop(() => {
         if (!enableScan) return
 
         try {
           const result = newCamera.readFrame(newCanvasQr, false)
           if (result !== undefined && result !== null) {
+            console.log('QR code detected:', result)
             handleQRCodeDetected(result)
           }
         } catch (err) {
@@ -115,6 +157,7 @@ export const Camera: React.FC<Props> = ({
 
       cancelLoopRef.current = cancel
       setIsStarted(true)
+      console.log('Camera initialization completed successfully')
     } catch (err) {
       console.error('Error starting video capturing:', err)
       const errorMessage =
@@ -136,6 +179,12 @@ export const Camera: React.FC<Props> = ({
     if (canvasQr) {
       canvasQr.clear()
       setCanvasQr(null)
+    }
+    // Stop media stream
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream
+      stream.getTracks().forEach((track) => track.stop())
+      videoRef.current.srcObject = null
     }
     setIsStarted(false)
     setLastScannedCode('')
