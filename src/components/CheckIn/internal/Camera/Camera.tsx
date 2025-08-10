@@ -65,49 +65,34 @@ export const Camera: React.FC<Props> = ({
 
     setError('')
     try {
-      // Request camera permission first
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: 'environment',
-          width: { ideal: 640 },
-          height: { ideal: 640 },
-        },
-      })
-
-      videoRef.current.srcObject = stream
-      await videoRef.current.play()
-
+      // frontalCamera handles camera access internally
       const newCamera = await frontalCamera(videoRef.current)
       setCamera(newCamera)
       setCameraPermission('granted')
 
       // Wait for video to be ready
       await new Promise((resolve) => {
-        if (videoRef.current!.readyState >= 2) {
-          resolve(true)
-        } else {
-          videoRef.current!.addEventListener(
-            'loadeddata',
-            () => resolve(true),
-            {
-              once: true,
-            },
-          )
+        const checkVideoReady = () => {
+          if (
+            videoRef.current &&
+            videoRef.current.readyState >= 2 &&
+            videoRef.current.videoWidth > 0 &&
+            videoRef.current.videoHeight > 0
+          ) {
+            resolve(true)
+          } else {
+            setTimeout(checkVideoReady, 100)
+          }
         }
+        checkVideoReady()
       })
 
-      // Set canvas size to match video dimensions
-      const videoWidth = videoRef.current!.videoWidth
-      const videoHeight = videoRef.current!.videoHeight
+      // Set canvas size to match container dimensions
+      const containerWidth = Math.min(width, window.innerWidth - 40)
+      const containerHeight = Math.min(height, containerWidth) // Square aspect ratio
 
-      if (videoWidth === 0 || videoHeight === 0) {
-        console.error('Video dimensions are invalid')
-        setError('Video dimensions are invalid')
-        return
-      }
-
-      overlayRef.current.width = videoWidth
-      overlayRef.current.height = videoHeight
+      overlayRef.current.width = containerWidth
+      overlayRef.current.height = containerHeight
 
       const newCanvasQr = new QRCanvas(
         { overlay: overlayRef.current },
@@ -137,7 +122,7 @@ export const Camera: React.FC<Props> = ({
       setError(`Camera access error: ${errorMessage}`)
       setCameraPermission('denied')
     }
-  }, [enableScan, handleQRCodeDetected])
+  }, [enableScan, handleQRCodeDetected, width, height])
 
   const stopScanning = useCallback(() => {
     if (cancelLoopRef.current) {
@@ -151,11 +136,6 @@ export const Camera: React.FC<Props> = ({
     if (canvasQr) {
       canvasQr.clear()
       setCanvasQr(null)
-    }
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream
-      stream.getTracks().forEach((track) => track.stop())
-      videoRef.current.srcObject = null
     }
     setIsStarted(false)
     setLastScannedCode('')
@@ -188,8 +168,19 @@ export const Camera: React.FC<Props> = ({
     }
   }, [camera, canvasQr])
 
+  const containerWidth = Math.min(width, window.innerWidth - 40)
+  const containerHeight = Math.min(height, containerWidth)
+
   return (
-    <div style={{ position: 'relative', width, height }}>
+    <div
+      style={{
+        position: 'relative',
+        width: containerWidth,
+        height: containerHeight,
+        maxWidth: '100%',
+        margin: '0 auto',
+      }}
+    >
       <button
         onClick={handleStartStop}
         disabled={!enableScan && !isStarted}
@@ -235,9 +226,9 @@ export const Camera: React.FC<Props> = ({
         style={{
           width: '100%',
           height: '100%',
-          aspectRatio: '1 / 1',
           objectFit: 'cover',
           display: isStarted ? 'block' : 'none',
+          borderRadius: '8px',
         }}
         autoPlay
         playsInline
@@ -251,9 +242,10 @@ export const Camera: React.FC<Props> = ({
           position: 'absolute',
           top: 0,
           left: 0,
-          maxWidth: '100%',
-          maxHeight: '100%',
+          width: '100%',
+          height: '100%',
           pointerEvents: 'none',
+          borderRadius: '8px',
         }}
       />
 
@@ -292,6 +284,8 @@ export const Camera: React.FC<Props> = ({
             fontSize: '16px',
             textAlign: 'center',
             padding: '20px',
+            borderRadius: '8px',
+            border: '2px dashed #ccc',
           }}
         >
           {!enableScan ? (
