@@ -51,6 +51,33 @@ export const Camera: React.FC<Props> = ({
       const newCamera = await frontalCamera(videoRef.current)
       setCamera(newCamera)
 
+      // Wait for video to be ready
+      await new Promise((resolve) => {
+        if (videoRef.current!.readyState >= 2) {
+          resolve(true)
+        } else {
+          videoRef.current!.addEventListener(
+            'loadeddata',
+            () => resolve(true),
+            {
+              once: true,
+            },
+          )
+        }
+      })
+
+      // Set canvas size to match video dimensions
+      const videoWidth = videoRef.current!.videoWidth
+      const videoHeight = videoRef.current!.videoHeight
+
+      if (videoWidth === 0 || videoHeight === 0) {
+        console.error('Video dimensions are invalid')
+        return
+      }
+
+      overlayRef.current.width = videoWidth
+      overlayRef.current.height = videoHeight
+
       const newCanvasQr = new QRCanvas(
         { overlay: overlayRef.current },
         { cropToSquare: true },
@@ -60,9 +87,13 @@ export const Camera: React.FC<Props> = ({
       const cancel = frameLoop(() => {
         if (!enableScan) return
 
-        const result = newCamera.readFrame(newCanvasQr, false)
-        if (result !== undefined && result !== null) {
-          handleQRCodeDetected(result)
+        try {
+          const result = newCamera.readFrame(newCanvasQr, false)
+          if (result !== undefined && result !== null) {
+            handleQRCodeDetected(result)
+          }
+        } catch (err) {
+          console.error('Error reading frame:', err)
         }
       })
 
@@ -171,8 +202,8 @@ export const Camera: React.FC<Props> = ({
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100%',
-          height: '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
           pointerEvents: 'none',
         }}
       />
