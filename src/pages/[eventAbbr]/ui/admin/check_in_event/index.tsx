@@ -1,9 +1,7 @@
 import { NextPage } from 'next'
 import React, { useMemo } from 'react'
 import { Layout } from '../../../../../components/Layout'
-import {
-  useGetApiV1EventsByEventAbbrQuery,
-} from '../../../../../generated/dreamkast-api.generated'
+import { useGetApiV1EventsByEventAbbrQuery } from '../../../../../generated/dreamkast-api.generated'
 import { useRouter } from 'next/router'
 import Error404 from '../../../../404'
 import { CheckIn } from '../../../../../components/CheckIn/CheckIn'
@@ -39,10 +37,7 @@ const IndexMain = () => {
           <Typography variant="h5">
             イベント受付 ({event.abbr.toUpperCase()})
           </Typography>
-          <CheckIn
-            checkInType={'event'}
-            eventAbbr={event.abbr}
-          />
+          <CheckIn checkInType={'event'} eventAbbr={event.abbr} />
         </Layout>
       )
     } else {
