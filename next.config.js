@@ -38,10 +38,16 @@ const sentryWebpackPluginOptions = {
   project: 'dreamkast-ui',
 
   silent: true, // Suppresses all logs
+  dryRun: true, // Disable uploading source maps to Sentry
 
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
 // Make sure adding Sentry options is the last code to run before exporting
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+// Disable Sentry in development/local builds
+if (process.env.NODE_ENV === 'development' || !process.env.SENTRY_AUTH_TOKEN) {
+  module.exports = nextConfig
+} else {
+  module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+}
