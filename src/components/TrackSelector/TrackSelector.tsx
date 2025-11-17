@@ -70,7 +70,6 @@ const PTrackSelector: React.FC<PProps> = ({
               />
             )}
           ></LiveTalkModalButton>
-          <ShowLTButton />
         </Styled.OptionButtonGroup>
       </Styled.TrackMenuContainer>
     </>
