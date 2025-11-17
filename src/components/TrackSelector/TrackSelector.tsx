@@ -13,7 +13,6 @@ import {
 import { PTrackSelectorButtonGroup } from './PTrackSelectorButtonGroup'
 import { LiveTalkModalButton } from './LiveTalkModalButton'
 import { ContainerComponent } from '../../util/types'
-import { ShowLTButton } from './ShowLTButton'
 
 export const TrackSelector: React.FC = () => {
   return (
