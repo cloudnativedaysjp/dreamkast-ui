@@ -35,7 +35,7 @@ export const useKarteTracking = () => {
     clearInterval(karteTimer)
     setKarteTimer(
       window.setInterval(() => {
-        window.tracker.track('watch_video', {
+        window.tracker?.track('watch_video', {
           track_name: selectedTrack.name,
           talk_id: selectedTalk.id,
           talk_name: selectedTalk.title,
