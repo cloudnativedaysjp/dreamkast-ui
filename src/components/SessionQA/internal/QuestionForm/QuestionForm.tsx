@@ -22,8 +22,7 @@ export const QuestionForm: React.FC<Props> = ({ isVisibleForm, onSubmit }) => {
 
   const bodyValue = watch('body', '')
   const bodyLength = bodyValue?.length || 0
-  const maxLength = 512
-  const btnDisabled = bodyLength === 0 || bodyLength > maxLength
+  const btnDisabled = bodyLength === 0
 
   const onFormSubmit = (data: FormData) => {
     if (!data.body || btnDisabled) {
@@ -44,12 +43,8 @@ export const QuestionForm: React.FC<Props> = ({ isVisibleForm, onSubmit }) => {
         <Styled.TextArea
           {...register('body', {
             required: '質問を入力してください',
-            maxLength: {
-              value: maxLength,
-              message: `最大${maxLength}文字まで入力できます`,
-            },
           })}
-          placeholder="質問を入力してください（最大512文字）"
+          placeholder="質問を入力してください"
           rows={3}
         />
         {errors.body && (
@@ -57,7 +52,7 @@ export const QuestionForm: React.FC<Props> = ({ isVisibleForm, onSubmit }) => {
         )}
         <Styled.Footer>
           <Styled.CharCount>
-            {bodyLength}/{maxLength}
+            {bodyLength}文字
           </Styled.CharCount>
           <Styled.SubmitButton type="submit" disabled={btnDisabled}>
             質問を投稿

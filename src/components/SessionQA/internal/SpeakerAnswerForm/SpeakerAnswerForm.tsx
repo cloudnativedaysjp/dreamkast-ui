@@ -22,8 +22,7 @@ export const SpeakerAnswerForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
 
   const bodyValue = watch('body', '')
   const bodyLength = bodyValue?.length || 0
-  const maxLength = 512
-  const btnDisabled = bodyLength === 0 || bodyLength > maxLength
+  const btnDisabled = bodyLength === 0
 
   const onFormSubmit = (data: FormData) => {
     if (!data.body || btnDisabled) {
@@ -40,12 +39,8 @@ export const SpeakerAnswerForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         <Styled.TextArea
           {...register('body', {
             required: '回答を入力してください',
-            maxLength: {
-              value: maxLength,
-              message: `最大${maxLength}文字まで入力できます`,
-            },
           })}
-          placeholder="回答を入力してください（最大512文字）"
+          placeholder="回答を入力してください"
           rows={2}
         />
         {errors.body && (
@@ -53,7 +48,7 @@ export const SpeakerAnswerForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         )}
         <Styled.Footer>
           <Styled.CharCount>
-            {bodyLength}/{maxLength}
+            {bodyLength}文字
           </Styled.CharCount>
           <Styled.ButtonGroup>
             <Styled.CancelButton type="button" onClick={onCancel}>
