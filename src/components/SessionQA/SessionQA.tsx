@@ -14,6 +14,7 @@ import { settingsSelector } from '../../store/settings'
 import { baseApi } from '../../store/baseApi'
 import dayjs from 'dayjs'
 import { setupDayjs } from '../../util/setupDayjs'
+import * as actionCable from 'actioncable'
 
 setupDayjs()
 
@@ -126,15 +127,13 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
             return b.votes_count - a.votes_count
           }
           return (
-            new Date(b.created_at).getTime() -
-            new Date(a.created_at).getTime()
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           )
         })
       } else {
         return [...qs].sort(
           (a, b) =>
-            new Date(b.created_at).getTime() -
-            new Date(a.created_at).getTime(),
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
         )
       }
     },
@@ -145,7 +144,6 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   useEffect(() => {
     if (!talk?.id || !wsBaseUrl) return
 
-    const actionCable = require('actioncable')
     const wsUrl = new URL('/cable', wsBaseUrl).toString()
     const cable = actionCable.createConsumer(wsUrl)
 

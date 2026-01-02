@@ -95,10 +95,16 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
     onError: ({ networkError, graphQLErrors }) => {
       // エラーをログに記録するが、アプリを停止しない
       if (networkError) {
-        console.warn('Apollo Client network error (non-critical, ignored):', networkError)
+        console.warn(
+          'Apollo Client network error (non-critical, ignored):',
+          networkError,
+        )
       }
       if (graphQLErrors) {
-        console.warn('Apollo Client GraphQL errors (non-critical, ignored):', graphQLErrors)
+        console.warn(
+          'Apollo Client GraphQL errors (non-critical, ignored):',
+          graphQLErrors,
+        )
       }
     },
   })

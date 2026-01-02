@@ -11,10 +11,7 @@ type Props = {
   onCancel: () => void
 }
 
-export const SpeakerAnswerForm: React.FC<Props> = ({
-  onSubmit,
-  onCancel,
-}) => {
+export const SpeakerAnswerForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   const {
     register,
     handleSubmit,

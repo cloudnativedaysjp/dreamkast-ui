@@ -50,9 +50,7 @@ export const QuestionItem: React.FC<Props> = ({
       {isSpeaker && (
         <Styled.AnswerSection>
           {!showAnswerForm ? (
-            <Styled.ShowAnswerButton
-              onClick={() => setShowAnswerForm(true)}
-            >
+            <Styled.ShowAnswerButton onClick={() => setShowAnswerForm(true)}>
               回答する
             </Styled.ShowAnswerButton>
           ) : (
