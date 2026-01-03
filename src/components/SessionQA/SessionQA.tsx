@@ -88,9 +88,15 @@ type Props = {
 export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   const [questions, setQuestions] = useState<SessionQuestion[]>([])
   const [sortBy, setSortBy] = useState<QuestionSortType>('time')
+  const sortByRef = React.useRef(sortBy)
   const [autoScroll, setAutoScroll] = useState(false)
   const { profile } = useSelector(settingsSelector)
   const { wsBaseUrl } = useSelector((state: RootState) => state.auth)
+
+  // sortByが変更されたらrefも更新
+  useEffect(() => {
+    sortByRef.current = sortBy
+  }, [sortBy])
 
   // RTK Query hooks
   const {
@@ -133,6 +139,7 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
     (qs: SessionQuestion[], sort: QuestionSortType): SessionQuestion[] => {
       if (sort === 'votes') {
         return [...qs].sort((a, b) => {
+          // 投票数でソート（降順）
           if (b.votes_count !== a.votes_count) {
             return b.votes_count - a.votes_count
           }
@@ -195,9 +202,9 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
         setQuestions((prev) => {
           const exists = prev.some((q) => q.id === message.question.id)
           if (exists) return prev
-          // 新しい質問を追加してソート（時間順の場合は最新が最上部に来る）
+          // 現在のsortByをrefから取得（最新の値を参照）
           const updated = [...prev, message.question]
-          return sortQuestions(updated, sortBy)
+          return sortQuestions(updated, sortByRef.current)
         })
       } else if (message.type === 'question_voted') {
         setQuestions((prev) => {
@@ -210,8 +217,8 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
                 }
               : q,
           )
-          // 投票数が変わった場合はソートを再適用
-          return sortQuestions(updated, sortBy)
+          // 投票数が変わった場合はソートを再適用（最新のsortByを使用）
+          return sortQuestions(updated, sortByRef.current)
         })
       } else if (message.type === 'answer_created') {
         setQuestions((prev) =>
@@ -226,7 +233,7 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
         )
       }
     },
-    [sortBy, sortQuestions],
+    [sortQuestions],
   )
 
   const handleQuestionSubmit = useCallback(
