@@ -1,10 +1,6 @@
 export type SessionQuestion = {
   id: number
   body: string
-  profile: {
-    id: number
-    name: string
-  }
   votes_count: number
   has_voted: boolean
   created_at: string
