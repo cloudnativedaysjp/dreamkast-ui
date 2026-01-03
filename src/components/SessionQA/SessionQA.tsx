@@ -136,15 +136,19 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
           if (b.votes_count !== a.votes_count) {
             return b.votes_count - a.votes_count
           }
-          return (
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          )
+          // 投票数が同じ場合は、新しい順（降順）
+          const timeA = new Date(a.created_at).getTime()
+          const timeB = new Date(b.created_at).getTime()
+          return timeB - timeA
         })
       } else {
-        return [...qs].sort(
-          (a, b) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-        )
+        // 時間順: 新しい順（降順）
+        return [...qs].sort((a, b) => {
+          const timeA = new Date(a.created_at).getTime()
+          const timeB = new Date(b.created_at).getTime()
+          // 新しい順（降順）: b - a
+          return timeB - timeA
+        })
       }
     },
     [],
