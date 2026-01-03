@@ -3,82 +3,36 @@ import * as Styled from './styled'
 import { QuestionForm } from './internal/QuestionForm'
 import { QuestionList } from './internal/QuestionList'
 import {
-  SessionQuestion,
   QuestionSortType,
   WebSocketMessage,
 } from '../../types/session-qa'
-import { Event, Talk } from '../../generated/dreamkast-api.generated'
+import {
+  Event,
+  Talk,
+  SessionQuestion,
+  SessionQuestionAnswer,
+  useGetApiV1TalksByTalkIdSessionQuestionsQuery,
+  usePostApiV1TalksByTalkIdSessionQuestionsMutation,
+  usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation,
+  usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation,
+  dreamkastApi,
+} from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { settingsSelector } from '../../store/settings'
-import { baseApi } from '../../store/baseApi'
 import dayjs from 'dayjs'
 import { setupDayjs } from '../../util/setupDayjs'
 
 setupDayjs()
 
-// RTK Queryエンドポイントを定義
-const sessionQAApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
-    getSessionQuestions: build.query<
-      { questions: SessionQuestion[] },
-      { talkId: number; sort?: 'votes' | 'time' }
-    >({
-      query: ({ talkId, sort = 'votes' }) => ({
-        url: `/api/v1/talks/${talkId}/session_questions`,
-        params: { sort },
-      }),
-      providesTags: (result, error, arg) => [
-        { type: 'SessionQuestion', id: `LIST-${arg.talkId}` },
-      ],
-    }),
-    createSessionQuestion: build.mutation<
-      SessionQuestion,
-      { talkId: number; body: string }
-    >({
-      query: ({ talkId, body }) => ({
-        url: `/api/v1/talks/${talkId}/session_questions`,
-        method: 'POST',
-        body: { body },
-      }),
-      // WebSocketで質問が追加されるため、invalidatesTagsは不要
-      // invalidatesTagsを削除することで、API再取得による並び順の崩れを防ぐ
-    }),
-    voteSessionQuestion: build.mutation<
-      { votes_count: number; has_voted: boolean },
-      { talkId: number; questionId: number }
-    >({
-      query: ({ talkId, questionId }) => ({
-        url: `/api/v1/talks/${talkId}/session_questions/${questionId}/vote`,
-        method: 'POST',
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'SessionQuestion', id: `LIST-${arg.talkId}` },
-      ],
-    }),
-    createSessionQuestionAnswer: build.mutation<
-      SessionQuestion['answers'][0],
-      { talkId: number; questionId: number; body: string }
-    >({
-      query: ({ talkId, questionId, body }) => ({
-        url: `/api/v1/talks/${talkId}/session_questions/${questionId}/session_question_answers`,
-        method: 'POST',
-        body: { body },
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'SessionQuestion', id: `LIST-${arg.talkId}` },
-      ],
-    }),
-  }),
-  overrideExisting: false,
+// WebSocket更新を優先するため、createSessionQuestionのinvalidatesTagsを削除
+dreamkastApi.enhanceEndpoints({
+  endpoints: {
+    postApiV1TalksByTalkIdSessionQuestions: {
+      invalidatesTags: [],
+    },
+  },
 })
-
-export const {
-  useGetSessionQuestionsQuery,
-  useCreateSessionQuestionMutation,
-  useVoteSessionQuestionMutation,
-  useCreateSessionQuestionAnswerMutation,
-} = sessionQAApi
 
 type Props = {
   event: Event
@@ -98,19 +52,18 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
     sortByRef.current = sortBy
   }, [sortBy])
 
-  // RTK Query hooks
+  // RTK Query hooks (生成されたAPIフックを使用)
   const {
     data: questionsData,
     isLoading,
-    refetch: refetchQuestions,
-  } = useGetSessionQuestionsQuery(
+  } = useGetApiV1TalksByTalkIdSessionQuestionsQuery(
     { talkId: talk?.id || 0, sort: sortBy },
     { skip: !talk?.id },
   )
 
-  const [createQuestion] = useCreateSessionQuestionMutation()
-  const [voteQuestion] = useVoteSessionQuestionMutation()
-  const [createAnswer] = useCreateSessionQuestionAnswerMutation()
+  const [createQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsMutation()
+  const [voteQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation()
+  const [createAnswer] = usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation()
 
   // 質問データを状態に反映（初回ロード時のみ）
   // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
@@ -243,7 +196,7 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
       try {
         await createQuestion({
           talkId: talk.id,
-          body: body.trim(),
+          sessionQuestionCreateRequest: { body: body.trim() },
         }).unwrap()
         // WebSocketで質問が追加されるため、refetchは不要
       } catch (error) {
@@ -276,8 +229,8 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
       try {
         await createAnswer({
           talkId: talk.id,
-          questionId,
-          body: body.trim(),
+          sessionQuestionId: questionId,
+          sessionQuestionAnswerCreateRequest: { body: body.trim() },
         }).unwrap()
       } catch (error) {
         console.error('Failed to create answer:', error)
