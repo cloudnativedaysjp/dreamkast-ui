@@ -12,15 +12,19 @@ setupDayjs()
 type Props = {
   question: SessionQuestion
   isSpeaker: boolean
+  isOwnQuestion: boolean
   onVote: (questionId: number) => void
   onAnswerSubmit: (questionId: number, body: string) => void
+  onDeleteQuestion: (questionId: number) => void
 }
 
 export const QuestionItem: React.FC<Props> = ({
   question,
   isSpeaker,
+  isOwnQuestion,
   onVote,
   onAnswerSubmit,
+  onDeleteQuestion,
 }) => {
   const [showAnswerForm, setShowAnswerForm] = useState(false)
 
@@ -32,11 +36,21 @@ export const QuestionItem: React.FC<Props> = ({
             {dayjs(question.created_at).tz().format('HH:mm')}
           </Styled.QuestionTime>
         </Styled.QuestionMeta>
-        <VoteButton
-          votesCount={question.votes_count}
-          hasVoted={question.has_voted}
-          onVote={() => onVote(question.id)}
-        />
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          {isOwnQuestion && (
+            <Styled.DeleteButton
+              onClick={() => onDeleteQuestion(question.id)}
+              title="削除"
+            >
+              ×
+            </Styled.DeleteButton>
+          )}
+          <VoteButton
+            votesCount={question.votes_count}
+            hasVoted={question.has_voted}
+            onVote={() => onVote(question.id)}
+          />
+        </div>
       </Styled.QuestionHeader>
       <Styled.QuestionBody>{question.body}</Styled.QuestionBody>
       {question.answers.length > 0 && (

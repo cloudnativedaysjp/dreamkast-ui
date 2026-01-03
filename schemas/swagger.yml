@@ -643,6 +643,30 @@ paths:
           description: Invalid params supplied
         '404':
           description: Talk not found
+  /api/v1/talks/{talkId}/session_questions/{id}:
+    delete:
+      tags:
+        - SessionQuestion
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: ID of session question
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden (You can only delete your own questions)
+        '404':
+          description: Question not found
   /api/v1/talks/{talkId}/session_questions/{id}/vote:
     post:
       tags:
@@ -1920,6 +1944,7 @@ components:
         - "votes_count"
         - "has_voted"
         - "created_at"
+        - "profile_id"
         - "answers"
       type: "object"
       properties:
@@ -1934,6 +1959,8 @@ components:
         created_at:
           type: "string"
           format: "date-time"
+        profile_id:
+          type: "integer"
         answers:
           type: "array"
           items:

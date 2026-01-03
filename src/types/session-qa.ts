@@ -24,3 +24,7 @@ export type WebSocketMessage =
       question_id: number
       answer: SessionQuestionAnswer
     }
+  | {
+      type: 'question_deleted'
+      question_id: number
+    }

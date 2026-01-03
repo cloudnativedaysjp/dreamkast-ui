@@ -271,6 +271,16 @@ const injectedRtkApi = api
         }),
         invalidatesTags: ['SessionQuestion'],
       }),
+      deleteApiV1TalksByTalkIdSessionQuestionsAndId: build.mutation<
+        DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiResponse,
+        DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/session_questions/${queryArg.id}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: ['SessionQuestion'],
+      }),
       postApiV1TalksByTalkIdSessionQuestionsAndIdVote: build.mutation<
         PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiResponse,
         PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiArg
@@ -539,6 +549,13 @@ export type PostApiV1TalksByTalkIdSessionQuestionsApiArg = {
   /** ID of talk */
   talkId: number
   sessionQuestionCreateRequest: SessionQuestionCreateRequest
+}
+export type DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiResponse = unknown
+export type DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiArg = {
+  /** ID of talk */
+  talkId: number
+  /** ID of session question */
+  id: number
 }
 export type PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiResponse =
   /** status 200 OK */ SessionQuestionVoteResponse
@@ -838,6 +855,7 @@ export type SessionQuestion = {
   votes_count: number
   has_voted: boolean
   created_at: string
+  profile_id: number
   answers: SessionQuestionAnswer[]
 }
 export type SessionQuestionsResponse = {
@@ -921,6 +939,7 @@ export const {
   useOptionsApiV1ProfileByProfileIdPointsMutation,
   useGetApiV1TalksByTalkIdSessionQuestionsQuery,
   usePostApiV1TalksByTalkIdSessionQuestionsMutation,
+  useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation,
   usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation,
   useGetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersQuery,
   usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation,

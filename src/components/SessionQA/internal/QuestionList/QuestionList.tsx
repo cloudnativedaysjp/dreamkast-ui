@@ -8,8 +8,10 @@ type Props = {
   isLoading: boolean
   autoScroll: boolean
   isSpeaker: boolean
+  currentProfileId?: number
   onVote: (questionId: number) => void
   onAnswerSubmit: (questionId: number, body: string) => void
+  onDeleteQuestion: (questionId: number) => void
 }
 
 export const QuestionList: React.FC<Props> = ({
@@ -17,8 +19,10 @@ export const QuestionList: React.FC<Props> = ({
   isLoading,
   autoScroll,
   isSpeaker,
+  currentProfileId,
   onVote,
   onAnswerSubmit,
+  onDeleteQuestion,
 }) => {
   const boxRef = useRef<HTMLDivElement>(null)
 
@@ -51,8 +55,10 @@ export const QuestionList: React.FC<Props> = ({
           key={question.id}
           question={question}
           isSpeaker={isSpeaker}
+          isOwnQuestion={question.profile_id === currentProfileId}
           onVote={onVote}
           onAnswerSubmit={onAnswerSubmit}
+          onDeleteQuestion={onDeleteQuestion}
         />
       ))}
     </Styled.Box>

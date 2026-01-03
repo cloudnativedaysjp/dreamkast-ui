@@ -15,6 +15,7 @@ import {
   usePostApiV1TalksByTalkIdSessionQuestionsMutation,
   usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation,
   usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation,
+  useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation,
   dreamkastApi,
 } from '../../generated/dreamkast-api.generated'
 import { useSelector } from 'react-redux'
@@ -64,6 +65,7 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   const [createQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsMutation()
   const [voteQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation()
   const [createAnswer] = usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation()
+  const [deleteQuestion] = useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation()
 
   // 質問データを状態に反映（初回ロード時のみ）
   // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
@@ -184,6 +186,10 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
               : q,
           ),
         )
+      } else if (message.type === 'question_deleted') {
+        setQuestions((prev) =>
+          prev.filter((q) => q.id !== message.question_id)
+        )
       }
     },
     [sortQuestions],
@@ -239,6 +245,28 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
     [talk?.id, createAnswer],
   )
 
+  const handleDeleteQuestion = useCallback(
+    async (questionId: number) => {
+      if (!talk?.id) return
+
+      if (!confirm('この質問を削除しますか？')) {
+        return
+      }
+
+      try {
+        await deleteQuestion({
+          talkId: talk.id,
+          id: questionId,
+        }).unwrap()
+        // WebSocketで質問が削除されるため、refetchは不要
+      } catch (error) {
+        console.error('Failed to delete question:', error)
+        alert('質問の削除に失敗しました')
+      }
+    },
+    [talk?.id, deleteQuestion],
+  )
+
   // スピーカー判定
   const isSpeaker = useMemo(() => {
     if (!talk || !profile) return false
@@ -286,8 +314,10 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
         isLoading={isLoading}
         autoScroll={autoScroll}
         isSpeaker={isSpeaker}
+        currentProfileId={profile?.id}
         onVote={handleVote}
         onAnswerSubmit={handleAnswerSubmit}
+        onDeleteQuestion={handleDeleteQuestion}
       />
     </Styled.Container>
   )
