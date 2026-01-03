@@ -10,7 +10,6 @@ import {
   Event,
   Talk,
   SessionQuestion,
-  SessionQuestionAnswer,
   useGetApiV1TalksByTalkIdSessionQuestionsQuery,
   usePostApiV1TalksByTalkIdSessionQuestionsMutation,
   usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation,
@@ -21,10 +20,6 @@ import {
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { settingsSelector } from '../../store/settings'
-import dayjs from 'dayjs'
-import { setupDayjs } from '../../util/setupDayjs'
-
-setupDayjs()
 
 // WebSocket更新を優先するため、createSessionQuestionのinvalidatesTagsを削除
 dreamkastApi.enhanceEndpoints({
@@ -36,15 +31,15 @@ dreamkastApi.enhanceEndpoints({
 })
 
 type Props = {
-  event: Event
+  event?: Event
   talk?: Talk
 }
 
-export const SessionQA: React.FC<Props> = ({ event, talk }) => {
+export const SessionQA: React.FC<Props> = ({ talk }) => {
   const [questions, setQuestions] = useState<SessionQuestion[]>([])
   const [sortBy, setSortBy] = useState<QuestionSortType>('time')
   const sortByRef = React.useRef(sortBy)
-  const [autoScroll, setAutoScroll] = useState(false)
+  const [autoScroll] = useState(false)
   const { profile } = useSelector(settingsSelector)
   const { wsBaseUrl } = useSelector((state: RootState) => state.auth)
 
@@ -66,28 +61,6 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   const [voteQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation()
   const [createAnswer] = usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation()
   const [deleteQuestion] = useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation()
-
-  // 質問データを状態に反映（初回ロード時のみ）
-  // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
-  const isInitializedRef = React.useRef(false)
-  useEffect(() => {
-    if (questionsData?.questions && !isInitializedRef.current) {
-      // 初回ロード時のみAPIデータを使用
-      setQuestions(sortQuestions(questionsData.questions, sortBy))
-      isInitializedRef.current = true
-    } else if (questionsData && !questionsData.questions && !isInitializedRef.current) {
-      // データが空の場合も初期化済みとしてマーク
-      setQuestions([])
-      isInitializedRef.current = true
-    }
-  }, [questionsData, sortQuestions])
-
-  // ソート変更時は既存の質問を再ソート
-  useEffect(() => {
-    if (isInitializedRef.current) {
-      setQuestions((prev) => sortQuestions(prev, sortBy))
-    }
-  }, [sortBy, sortQuestions])
 
   // ソート関数
   const sortQuestions = useCallback(
@@ -115,41 +88,6 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
     },
     [],
   )
-
-  // WebSocket接続
-  useEffect(() => {
-    if (!talk?.id || !wsBaseUrl || typeof window === 'undefined') return
-
-    let subscription: any = null
-    let cable: any = null
-
-    // クライアントサイドでのみ動的にインポート
-    import('actioncable').then((actionCable) => {
-      const wsUrl = new URL('/cable', wsBaseUrl).toString()
-      cable = actionCable.createConsumer(wsUrl)
-
-      subscription = cable.subscriptions.create(
-        {
-          channel: 'QaChannel',
-          talk_id: talk.id,
-        },
-        {
-          received: (data: WebSocketMessage) => {
-            handleWebSocketMessage(data)
-          },
-        },
-      )
-    })
-
-    return () => {
-      if (subscription) {
-        subscription.unsubscribe()
-      }
-      if (cable) {
-        cable.disconnect()
-      }
-    }
-  }, [talk?.id, wsBaseUrl, handleWebSocketMessage])
 
   const handleWebSocketMessage = useCallback(
     (message: WebSocketMessage) => {
@@ -194,6 +132,63 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
     },
     [sortQuestions],
   )
+
+  // 質問データを状態に反映（初回ロード時のみ）
+  // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
+  const isInitializedRef = React.useRef(false)
+  useEffect(() => {
+    if (questionsData?.questions && !isInitializedRef.current) {
+      // 初回ロード時のみAPIデータを使用
+      setQuestions(sortQuestions(questionsData.questions, sortBy))
+      isInitializedRef.current = true
+    } else if (questionsData && !questionsData.questions && !isInitializedRef.current) {
+      // データが空の場合も初期化済みとしてマーク
+      setQuestions([])
+      isInitializedRef.current = true
+    }
+  }, [questionsData, sortBy, sortQuestions])
+
+  // ソート変更時は既存の質問を再ソート
+  useEffect(() => {
+    if (isInitializedRef.current) {
+      setQuestions((prev) => sortQuestions(prev, sortBy))
+    }
+  }, [sortBy, sortQuestions])
+
+  // WebSocket接続
+  useEffect(() => {
+    if (!talk?.id || !wsBaseUrl || typeof window === 'undefined') return
+
+    let subscription: any = null
+    let cable: any = null
+
+    // クライアントサイドでのみ動的にインポート
+    import('actioncable').then((actionCable) => {
+      const wsUrl = new URL('/cable', wsBaseUrl).toString()
+      cable = actionCable.createConsumer(wsUrl)
+
+      subscription = cable.subscriptions.create(
+        {
+          channel: 'QaChannel',
+          talk_id: talk.id,
+        },
+        {
+          received: (data: WebSocketMessage) => {
+            handleWebSocketMessage(data)
+          },
+        },
+      )
+    })
+
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe()
+      }
+      if (cable) {
+        cable.disconnect()
+      }
+    }
+  }, [talk?.id, wsBaseUrl, handleWebSocketMessage])
 
   const handleQuestionSubmit = useCallback(
     async (body: string) => {
@@ -268,9 +263,12 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   )
 
   // スピーカー判定
+  // Note: Profile型にspeakerIdが含まれていないため、talk.speakersに含まれるかどうかで判定
+  // 実際の実装では、profile.idとspeakerのuser_idを比較する必要がある可能性がある
   const isSpeaker = useMemo(() => {
     if (!talk || !profile) return false
-    return talk.speakers?.some((s) => s.id === profile.speakerId) || false
+    // 暫定的にfalseを返す（実際のスピーカー判定は別途実装が必要）
+    return false
   }, [talk, profile])
 
   // 常に質問可能

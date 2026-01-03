@@ -18,10 +18,7 @@ const mockQuestions = {
     {
       id: 1,
       body: '質問1',
-      profile: {
-        id: 1,
-        name: 'ユーザー1',
-      },
+      profile_id: 1,
       votes_count: 5,
       has_voted: false,
       created_at: '2026-01-01T10:00:00Z',
@@ -30,10 +27,7 @@ const mockQuestions = {
     {
       id: 2,
       body: '質問2',
-      profile: {
-        id: 2,
-        name: 'ユーザー2',
-      },
+      profile_id: 2,
       votes_count: 3,
       has_voted: true,
       created_at: '2026-01-01T11:00:00Z',
@@ -53,7 +47,7 @@ const mockQuestions = {
 }
 
 const server = setupMockServer(
-  rest.get(`/api/v1/talks/:talkId/session_questions`, (req, res, ctx) => {
+  rest.get(`/api/v1/talks/:talkId/session_questions`, (_, res, ctx) => {
     return res(ctx.json(mockQuestions))
   }),
   rest.get('http://localhost:8080/cable', (_, res, ctx) => {
