@@ -111,12 +111,38 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   // 質問データを状態に反映
   useEffect(() => {
     if (questionsData?.questions) {
-      const sorted = sortQuestions(questionsData.questions, sortBy)
-      setQuestions(sorted)
-    } else {
-      setQuestions([])
+      setQuestions((prev) => {
+        // APIから取得した質問をベースにする
+        const apiQuestionIds = new Set(
+          questionsData.questions.map((q) => q.id),
+        )
+        // WebSocketで追加されたが、まだAPIに反映されていない質問を保持
+        const wsOnlyQuestions = prev.filter(
+          (q) => !apiQuestionIds.has(q.id),
+        )
+        // APIの質問とWebSocketのみの質問をマージしてソート
+        const merged = [...questionsData.questions, ...wsOnlyQuestions]
+        const sorted = sortQuestions(merged, sortBy)
+        // ソート後の順序が変わっていない場合は、既存の状態を返す（再レンダリングを防ぐ）
+        if (
+          prev.length === sorted.length &&
+          prev.every((q, i) => q.id === sorted[i].id)
+        ) {
+          return prev
+        }
+        return sorted
+      })
+    } else if (questionsData && !questionsData.questions) {
+      // データが空の場合は初期化（WebSocketで追加された質問は保持）
+      setQuestions((prev) => {
+        if (prev.length === 0) {
+          return []
+        }
+        // 既存の質問がある場合は保持
+        return prev
+      })
     }
-  }, [questionsData, sortBy])
+  }, [questionsData, sortBy, sortQuestions])
 
   // ソート関数
   const sortQuestions = useCallback(
