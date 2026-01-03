@@ -41,9 +41,8 @@ const sessionQAApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { body },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: 'SessionQuestion', id: `LIST-${arg.talkId}` },
-      ],
+      // WebSocketで質問が追加されるため、invalidatesTagsは不要
+      // invalidatesTagsを削除することで、API再取得による並び順の崩れを防ぐ
     }),
     voteSessionQuestion: build.mutation<
       { votes_count: number; has_voted: boolean },
@@ -107,41 +106,27 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   const [voteQuestion] = useVoteSessionQuestionMutation()
   const [createAnswer] = useCreateSessionQuestionAnswerMutation()
 
-  // 質問データを状態に反映
+  // 質問データを状態に反映（初回ロード時のみ）
+  // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
+  const isInitializedRef = React.useRef(false)
   useEffect(() => {
-    if (questionsData?.questions) {
-      setQuestions((prev) => {
-        // APIから取得した質問をベースにする
-        const apiQuestionIds = new Set(
-          questionsData.questions.map((q) => q.id),
-        )
-        // WebSocketで追加されたが、まだAPIに反映されていない質問を保持
-        const wsOnlyQuestions = prev.filter(
-          (q) => !apiQuestionIds.has(q.id),
-        )
-        // APIの質問とWebSocketのみの質問をマージしてソート
-        const merged = [...questionsData.questions, ...wsOnlyQuestions]
-        const sorted = sortQuestions(merged, sortBy)
-        // ソート後の順序が変わっていない場合は、既存の状態を返す（再レンダリングを防ぐ）
-        if (
-          prev.length === sorted.length &&
-          prev.every((q, i) => q.id === sorted[i].id)
-        ) {
-          return prev
-        }
-        return sorted
-      })
-    } else if (questionsData && !questionsData.questions) {
-      // データが空の場合は初期化（WebSocketで追加された質問は保持）
-      setQuestions((prev) => {
-        if (prev.length === 0) {
-          return []
-        }
-        // 既存の質問がある場合は保持
-        return prev
-      })
+    if (questionsData?.questions && !isInitializedRef.current) {
+      // 初回ロード時のみAPIデータを使用
+      setQuestions(sortQuestions(questionsData.questions, sortBy))
+      isInitializedRef.current = true
+    } else if (questionsData && !questionsData.questions && !isInitializedRef.current) {
+      // データが空の場合も初期化済みとしてマーク
+      setQuestions([])
+      isInitializedRef.current = true
     }
-  }, [questionsData, sortBy, sortQuestions])
+  }, [questionsData, sortQuestions])
+
+  // ソート変更時は既存の質問を再ソート
+  useEffect(() => {
+    if (isInitializedRef.current) {
+      setQuestions((prev) => sortQuestions(prev, sortBy))
+    }
+  }, [sortBy, sortQuestions])
 
   // ソート関数
   const sortQuestions = useCallback(
@@ -206,7 +191,9 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
         setQuestions((prev) => {
           const exists = prev.some((q) => q.id === message.question.id)
           if (exists) return prev
-          return sortQuestions([...prev, message.question], sortBy)
+          // 新しい質問を追加してソート（時間順の場合は最新が最上部に来る）
+          const updated = [...prev, message.question]
+          return sortQuestions(updated, sortBy)
         })
       } else if (message.type === 'question_voted') {
         setQuestions((prev) => {
