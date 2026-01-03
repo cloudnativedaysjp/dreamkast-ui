@@ -14,7 +14,6 @@ import { settingsSelector } from '../../store/settings'
 import { baseApi } from '../../store/baseApi'
 import dayjs from 'dayjs'
 import { setupDayjs } from '../../util/setupDayjs'
-import * as actionCable from 'actioncable'
 
 setupDayjs()
 
@@ -168,26 +167,36 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
 
   // WebSocket接続
   useEffect(() => {
-    if (!talk?.id || !wsBaseUrl) return
+    if (!talk?.id || !wsBaseUrl || typeof window === 'undefined') return
 
-    const wsUrl = new URL('/cable', wsBaseUrl).toString()
-    const cable = actionCable.createConsumer(wsUrl)
+    let subscription: any = null
+    let cable: any = null
 
-    const subscription = cable.subscriptions.create(
-      {
-        channel: 'QaChannel',
-        talk_id: talk.id,
-      },
-      {
-        received: (data: WebSocketMessage) => {
-          handleWebSocketMessage(data)
+    // クライアントサイドでのみ動的にインポート
+    import('actioncable').then((actionCable) => {
+      const wsUrl = new URL('/cable', wsBaseUrl).toString()
+      cable = actionCable.createConsumer(wsUrl)
+
+      subscription = cable.subscriptions.create(
+        {
+          channel: 'QaChannel',
+          talk_id: talk.id,
         },
-      },
-    )
+        {
+          received: (data: WebSocketMessage) => {
+            handleWebSocketMessage(data)
+          },
+        },
+      )
+    })
 
     return () => {
-      subscription?.unsubscribe()
-      cable?.disconnect()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
+      if (cable) {
+        cable.disconnect()
+      }
     }
   }, [talk?.id, wsBaseUrl, handleWebSocketMessage])
 
