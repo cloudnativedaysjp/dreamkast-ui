@@ -90,7 +90,7 @@ type Props = {
 export const SessionQA: React.FC<Props> = ({ event, talk }) => {
   const [questions, setQuestions] = useState<SessionQuestion[]>([])
   const [sortBy, setSortBy] = useState<QuestionSortType>('votes')
-  const [autoScroll, setAutoScroll] = useState(true)
+  const [autoScroll, setAutoScroll] = useState(false)
   const { profile } = useSelector(settingsSelector)
   const { wsBaseUrl } = useSelector((state: RootState) => state.auth)
 
