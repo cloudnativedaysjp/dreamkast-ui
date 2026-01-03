@@ -27,6 +27,7 @@ export const QuestionItem: React.FC<Props> = ({
   onDeleteQuestion,
 }) => {
   const [showAnswerForm, setShowAnswerForm] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
 
   return (
     <Styled.Container>
@@ -36,20 +37,37 @@ export const QuestionItem: React.FC<Props> = ({
             {dayjs(question.created_at).tz().format('HH:mm')}
           </Styled.QuestionTime>
         </Styled.QuestionMeta>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          {isOwnQuestion && (
-            <Styled.DeleteButton
-              onClick={() => onDeleteQuestion(question.id)}
-              title="削除"
-            >
-              ×
-            </Styled.DeleteButton>
-          )}
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', position: 'relative' }}>
           <VoteButton
             votesCount={question.votes_count}
             hasVoted={question.has_voted}
             onVote={() => onVote(question.id)}
           />
+          {isOwnQuestion && (
+            <>
+              <Styled.MenuButton
+                onClick={() => setShowMenu(!showMenu)}
+                title="メニュー"
+              >
+                ⋯
+              </Styled.MenuButton>
+              {showMenu && (
+                <>
+                  <Styled.MenuOverlay onClick={() => setShowMenu(false)} />
+                  <Styled.Menu>
+                    <Styled.MenuItem
+                      onClick={() => {
+                        onDeleteQuestion(question.id)
+                        setShowMenu(false)
+                      }}
+                    >
+                      削除
+                    </Styled.MenuItem>
+                  </Styled.Menu>
+                </>
+              )}
+            </>
+          )}
         </div>
       </Styled.QuestionHeader>
       <Styled.QuestionBody>{question.body}</Styled.QuestionBody>
