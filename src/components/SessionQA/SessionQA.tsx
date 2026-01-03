@@ -309,16 +309,16 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
         <Styled.Title>Q&A</Styled.Title>
         <Styled.SortButtons>
           <Styled.SortButton
-            active={sortBy === 'votes'}
-            onClick={() => setSortBy('votes')}
-          >
-            投票数順
-          </Styled.SortButton>
-          <Styled.SortButton
             active={sortBy === 'time'}
             onClick={() => setSortBy('time')}
           >
             時間順
+          </Styled.SortButton>
+          <Styled.SortButton
+            active={sortBy === 'votes'}
+            onClick={() => setSortBy('votes')}
+          >
+            投票数順
           </Styled.SortButton>
         </Styled.SortButtons>
       </Styled.Header>
