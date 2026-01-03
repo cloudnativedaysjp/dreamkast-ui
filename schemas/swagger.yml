@@ -587,6 +587,179 @@ paths:
               schema:
                 type: "string"
           content: {}
+  /api/v1/talks/{talkId}/session_questions:
+    get:
+      tags:
+        - SessionQuestion
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: Sort order (votes or time)
+          required: false
+          schema:
+            type: string
+            enum: [votes, time]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionQuestionsResponse'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Talk not found
+    post:
+      tags:
+        - SessionQuestion
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionQuestionCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionQuestion'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Talk not found
+  /api/v1/talks/{talkId}/session_questions/{id}:
+    delete:
+      tags:
+        - SessionQuestion
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: ID of session question
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden (You can only delete your own questions)
+        '404':
+          description: Question not found
+  /api/v1/talks/{talkId}/session_questions/{id}/vote:
+    post:
+      tags:
+        - SessionQuestion
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          description: ID of session question
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionQuestionVoteResponse'
+        '400':
+          description: Invalid params supplied
+        '403':
+          description: Forbidden
+        '404':
+          description: Question not found
+  /api/v1/talks/{talkId}/session_questions/{sessionQuestionId}/session_question_answers:
+    get:
+      tags:
+        - SessionQuestionAnswer
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: sessionQuestionId
+          in: path
+          description: ID of session question
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionQuestionAnswersResponse'
+        '400':
+          description: Invalid params supplied
+        '404':
+          description: Question not found
+    post:
+      tags:
+        - SessionQuestionAnswer
+      parameters:
+        - name: talkId
+          in: path
+          description: ID of talk
+          required: true
+          schema:
+            type: integer
+        - name: sessionQuestionId
+          in: path
+          description: ID of session question
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionQuestionAnswerCreateRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionQuestionAnswer'
+        '400':
+          description: Invalid params supplied
+        '403':
+          description: Forbidden (Only speakers can answer)
+        '404':
+          description: Question not found
   /api/v1/talks/{talkId}/vote:
     post:
       tags:
@@ -1750,5 +1923,118 @@ components:
         conference:
           type: "string"
         pointEventId:
+          type: "string"
+      additionalProperties: false
+    SessionQuestionsResponse:
+      title: "SessionQuestionsResponse"
+      required:
+        - "questions"
+      type: "object"
+      properties:
+        questions:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SessionQuestion"
+      additionalProperties: false
+    SessionQuestion:
+      title: "SessionQuestion"
+      required:
+        - "id"
+        - "body"
+        - "votes_count"
+        - "has_voted"
+        - "created_at"
+        - "profile_id"
+        - "answers"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        body:
+          type: "string"
+        votes_count:
+          type: "integer"
+        has_voted:
+          type: "boolean"
+        created_at:
+          type: "string"
+          format: "date-time"
+        profile_id:
+          type: "integer"
+        answers:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SessionQuestionAnswer"
+      additionalProperties: false
+    SessionQuestionCreateRequest:
+      title: "SessionQuestionCreateRequest"
+      required:
+        - "body"
+      type: "object"
+      properties:
+        body:
+          type: "string"
+      additionalProperties: false
+    SessionQuestionVoteResponse:
+      title: "SessionQuestionVoteResponse"
+      required:
+        - "votes_count"
+        - "has_voted"
+      type: "object"
+      properties:
+        votes_count:
+          type: "integer"
+        has_voted:
+          type: "boolean"
+      additionalProperties: false
+    SessionQuestionAnswersResponse:
+      title: "SessionQuestionAnswersResponse"
+      required:
+        - "answers"
+      type: "object"
+      properties:
+        answers:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/SessionQuestionAnswer"
+      additionalProperties: false
+    SessionQuestionAnswer:
+      title: "SessionQuestionAnswer"
+      required:
+        - "id"
+        - "body"
+        - "speaker"
+        - "created_at"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        body:
+          type: "string"
+        speaker:
+          $ref: "#/components/schemas/SpeakerInfo"
+        created_at:
+          type: "string"
+          format: "date-time"
+      additionalProperties: false
+    SessionQuestionAnswerCreateRequest:
+      title: "SessionQuestionAnswerCreateRequest"
+      required:
+        - "body"
+      type: "object"
+      properties:
+        body:
+          type: "string"
+      additionalProperties: false
+    SpeakerInfo:
+      title: "SpeakerInfo"
+      required:
+        - "id"
+        - "name"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
           type: "string"
       additionalProperties: false

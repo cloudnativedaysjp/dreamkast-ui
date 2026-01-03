@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { IvsPlayer } from '../IvsPlayer'
-import { Chat } from '../Chat'
+import { SessionQA } from '../SessionQA'
 import Grid from '@material-ui/core/Grid'
 import { TalkSelector } from '../TalkSelector'
 import { TalkInfo } from '../TalkInfo'
@@ -90,7 +90,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           <Sponsors event={event} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} talk={selectedTalk} />
+          <SessionQA event={event} talk={selectedTalk} />
         </Grid>
         <Grid item xs={12} md={8} style={{ height: '100%' }}>
           <TalkInfo
@@ -126,7 +126,7 @@ export const TrackView: React.FC<Props> = ({ event, refetch }) => {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <Chat event={event} talk={selectedTalk} />
+          <SessionQA event={event} talk={selectedTalk} />
         </Grid>
         <Grid item xs={12} md={4}>
           <TalkSelector

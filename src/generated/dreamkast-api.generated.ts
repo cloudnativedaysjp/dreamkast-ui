@@ -13,6 +13,8 @@ export const addTagTypes = [
   'PrintNodePrinter',
   'Booth',
   'Point',
+  'SessionQuestion',
+  'SessionQuestionAnswer',
   'Vote',
   'DkUiData',
   'ViewerCount',
@@ -248,6 +250,69 @@ const injectedRtkApi = api
           method: 'OPTIONS',
         }),
       }),
+      getApiV1TalksByTalkIdSessionQuestions: build.query<
+        GetApiV1TalksByTalkIdSessionQuestionsApiResponse,
+        GetApiV1TalksByTalkIdSessionQuestionsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/session_questions`,
+          params: { sort: queryArg.sort },
+        }),
+        providesTags: ['SessionQuestion'],
+      }),
+      postApiV1TalksByTalkIdSessionQuestions: build.mutation<
+        PostApiV1TalksByTalkIdSessionQuestionsApiResponse,
+        PostApiV1TalksByTalkIdSessionQuestionsApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/session_questions`,
+          method: 'POST',
+          body: queryArg.sessionQuestionCreateRequest,
+        }),
+        invalidatesTags: ['SessionQuestion'],
+      }),
+      deleteApiV1TalksByTalkIdSessionQuestionsAndId: build.mutation<
+        DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiResponse,
+        DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/session_questions/${queryArg.id}`,
+          method: 'DELETE',
+        }),
+        invalidatesTags: ['SessionQuestion'],
+      }),
+      postApiV1TalksByTalkIdSessionQuestionsAndIdVote: build.mutation<
+        PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiResponse,
+        PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiArg
+      >({
+        query: (queryArg) => ({
+          url: `/api/v1/talks/${queryArg.talkId}/session_questions/${queryArg.id}/vote`,
+          method: 'POST',
+        }),
+        invalidatesTags: ['SessionQuestion'],
+      }),
+      getApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswers:
+        build.query<
+          GetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiResponse,
+          GetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiArg
+        >({
+          query: (queryArg) => ({
+            url: `/api/v1/talks/${queryArg.talkId}/session_questions/${queryArg.sessionQuestionId}/session_question_answers`,
+          }),
+          providesTags: ['SessionQuestionAnswer'],
+        }),
+      postApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswers:
+        build.mutation<
+          PostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiResponse,
+          PostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiArg
+        >({
+          query: (queryArg) => ({
+            url: `/api/v1/talks/${queryArg.talkId}/session_questions/${queryArg.sessionQuestionId}/session_question_answers`,
+            method: 'POST',
+            body: queryArg.sessionQuestionAnswerCreateRequest,
+          }),
+          invalidatesTags: ['SessionQuestionAnswer'],
+        }),
       postApiV1TalksByTalkIdVote: build.mutation<
         PostApiV1TalksByTalkIdVoteApiResponse,
         PostApiV1TalksByTalkIdVoteApiArg
@@ -470,6 +535,55 @@ export type OptionsApiV1ProfileByProfileIdPointsApiResponse = unknown
 export type OptionsApiV1ProfileByProfileIdPointsApiArg = {
   profileId: string
 }
+export type GetApiV1TalksByTalkIdSessionQuestionsApiResponse =
+  /** status 200 OK */ SessionQuestionsResponse
+export type GetApiV1TalksByTalkIdSessionQuestionsApiArg = {
+  /** ID of talk */
+  talkId: number
+  /** Sort order (votes or time) */
+  sort?: 'votes' | 'time'
+}
+export type PostApiV1TalksByTalkIdSessionQuestionsApiResponse =
+  /** status 201 Created */ SessionQuestion
+export type PostApiV1TalksByTalkIdSessionQuestionsApiArg = {
+  /** ID of talk */
+  talkId: number
+  sessionQuestionCreateRequest: SessionQuestionCreateRequest
+}
+export type DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiResponse = unknown
+export type DeleteApiV1TalksByTalkIdSessionQuestionsAndIdApiArg = {
+  /** ID of talk */
+  talkId: number
+  /** ID of session question */
+  id: number
+}
+export type PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiResponse =
+  /** status 200 OK */ SessionQuestionVoteResponse
+export type PostApiV1TalksByTalkIdSessionQuestionsAndIdVoteApiArg = {
+  /** ID of talk */
+  talkId: number
+  /** ID of session question */
+  id: number
+}
+export type GetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiResponse =
+  /** status 200 OK */ SessionQuestionAnswersResponse
+export type GetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiArg =
+  {
+    /** ID of talk */
+    talkId: number
+    /** ID of session question */
+    sessionQuestionId: number
+  }
+export type PostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiResponse =
+  /** status 201 Created */ SessionQuestionAnswer
+export type PostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersApiArg =
+  {
+    /** ID of talk */
+    talkId: number
+    /** ID of session question */
+    sessionQuestionId: number
+    sessionQuestionAnswerCreateRequest: SessionQuestionAnswerCreateRequest
+  }
 export type PostApiV1TalksByTalkIdVoteApiResponse =
   /** status 200 200 response */ CommonResponse
 export type PostApiV1TalksByTalkIdVoteApiArg = {
@@ -725,6 +839,41 @@ export type ProfilePointsResponse = {
 export type ErrorSchema = {
   message?: string | undefined
 }
+export type SpeakerInfo = {
+  id: number
+  name: string
+}
+export type SessionQuestionAnswer = {
+  id: number
+  body: string
+  speaker: SpeakerInfo
+  created_at: string
+}
+export type SessionQuestion = {
+  id: number
+  body: string
+  votes_count: number
+  has_voted: boolean
+  created_at: string
+  profile_id: number
+  answers: SessionQuestionAnswer[]
+}
+export type SessionQuestionsResponse = {
+  questions: SessionQuestion[]
+}
+export type SessionQuestionCreateRequest = {
+  body: string
+}
+export type SessionQuestionVoteResponse = {
+  votes_count: number
+  has_voted: boolean
+}
+export type SessionQuestionAnswersResponse = {
+  answers: SessionQuestionAnswer[]
+}
+export type SessionQuestionAnswerCreateRequest = {
+  body: string
+}
 export type CommonResponse = {
   message?: string | undefined
   status?: string | undefined
@@ -788,6 +937,12 @@ export const {
   useGetApiV1BoothsByBoothIdQuery,
   useGetApiV1ProfileByProfileIdPointsQuery,
   useOptionsApiV1ProfileByProfileIdPointsMutation,
+  useGetApiV1TalksByTalkIdSessionQuestionsQuery,
+  usePostApiV1TalksByTalkIdSessionQuestionsMutation,
+  useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation,
+  usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation,
+  useGetApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersQuery,
+  usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation,
   usePostApiV1TalksByTalkIdVoteMutation,
   useOptionsApiV1TalksByTalkIdVoteMutation,
   usePostApiV1ProfileByProfileIdPointMutation,
