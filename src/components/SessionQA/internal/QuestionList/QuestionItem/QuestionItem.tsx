@@ -28,7 +28,6 @@ export const QuestionItem: React.FC<Props> = ({
     <Styled.Container>
       <Styled.QuestionHeader>
         <Styled.QuestionMeta>
-          <Styled.QuestionAuthor>{question.profile.name}</Styled.QuestionAuthor>
           <Styled.QuestionTime>
             {dayjs(question.created_at).tz().format('HH:mm')}
           </Styled.QuestionTime>
