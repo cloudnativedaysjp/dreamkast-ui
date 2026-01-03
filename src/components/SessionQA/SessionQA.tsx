@@ -213,7 +213,7 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
       try {
         await voteQuestion({
           talkId: talk.id,
-          questionId,
+          id: questionId,
         }).unwrap()
       } catch (error) {
         console.error('Failed to vote:', error)
