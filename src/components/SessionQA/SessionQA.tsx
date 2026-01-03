@@ -174,8 +174,8 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
           return sortQuestions([...prev, message.question], sortBy)
         })
       } else if (message.type === 'question_voted') {
-        setQuestions((prev) =>
-          prev.map((q) =>
+        setQuestions((prev) => {
+          const updated = prev.map((q) =>
             q.id === message.question_id
               ? {
                   ...q,
@@ -183,8 +183,10 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
                   has_voted: message.has_voted,
                 }
               : q,
-          ),
-        )
+          )
+          // 投票数が変わった場合はソートを再適用
+          return sortQuestions(updated, sortBy)
+        })
       } else if (message.type === 'answer_created') {
         setQuestions((prev) =>
           prev.map((q) =>
@@ -210,12 +212,12 @@ export const SessionQA: React.FC<Props> = ({ event, talk }) => {
           talkId: talk.id,
           body: body.trim(),
         }).unwrap()
-        refetchQuestions()
+        // WebSocketで質問が追加されるため、refetchは不要
       } catch (error) {
         console.error('Failed to create question:', error)
       }
     },
-    [talk?.id, createQuestion, refetchQuestions],
+    [talk?.id, createQuestion],
   )
 
   const handleVote = useCallback(
