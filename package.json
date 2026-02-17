@@ -52,7 +52,7 @@
         "@graphql-codegen/cli": "^4.0.1",
         "@graphql-codegen/client-preset": "^4.0.1",
         "@graphql-typed-document-node/core": "^3.2.0",
-        "@rtk-query/codegen-openapi": "^1.0.0",
+        "@rtk-query/codegen-openapi": "^2.0.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.3",
