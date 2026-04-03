@@ -2,15 +2,13 @@
 /* eslint-disable no-constant-condition */
 
 import {
-  BaseQueryEnhancer,
+  type BaseQueryApi,
+  type BaseQueryArg,
+  type BaseQueryEnhancer,
+  type BaseQueryExtraOptions,
+  type BaseQueryFn,
   FetchBaseQueryError,
-} from '@reduxjs/toolkit/dist/query'
-import {
-  BaseQueryApi,
-  BaseQueryArg,
-  BaseQueryExtraOptions,
-  BaseQueryFn,
-} from '@reduxjs/toolkit/dist/query/baseQueryTypes'
+} from '@reduxjs/toolkit/query'
 
 class HandledError {
   constructor(

@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignorePatterns: ['next-env.d.ts', '.next/**'],
   env: {
     es6: true,
     node: true,
@@ -12,6 +13,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   extends: [
+    'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],

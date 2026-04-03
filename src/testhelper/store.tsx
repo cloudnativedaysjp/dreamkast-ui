@@ -1,7 +1,7 @@
 // ref: https://redux.js.org/usage/writing-tests
 
 import React, { PropsWithChildren } from 'react'
-import { combineReducers, PreloadedState } from 'redux'
+import { combineReducers } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { dreamkastApi } from '../generated/dreamkast-api.generated'
 import auth from '../store/auth'
@@ -13,7 +13,9 @@ import { Provider } from 'react-redux'
 import { RootState } from '../store'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+type PreloadedState = Partial<RootState>
+
+export const setupStore = (preloadedState?: PreloadedState) => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
@@ -69,6 +71,6 @@ const rootReducer = combineReducers({
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
-  preloadedState?: PreloadedState<RootState>
+  preloadedState?: PreloadedState
   store?: ReturnType<typeof setupStore>
 }
