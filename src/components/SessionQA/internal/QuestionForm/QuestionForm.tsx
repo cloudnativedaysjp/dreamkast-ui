@@ -51,9 +51,7 @@ export const QuestionForm: React.FC<Props> = ({ isVisibleForm, onSubmit }) => {
           <Styled.ErrorText>{errors.body.message}</Styled.ErrorText>
         )}
         <Styled.Footer>
-          <Styled.CharCount>
-            {bodyLength}文字
-          </Styled.CharCount>
+          <Styled.CharCount>{bodyLength}文字</Styled.CharCount>
           <Styled.SubmitButton type="submit" disabled={btnDisabled}>
             質問を投稿
           </Styled.SubmitButton>

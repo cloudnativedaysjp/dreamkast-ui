@@ -2,10 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import * as Styled from './styled'
 import { QuestionForm } from './internal/QuestionForm'
 import { QuestionList } from './internal/QuestionList'
-import {
-  QuestionSortType,
-  WebSocketMessage,
-} from '../../types/session-qa'
+import { QuestionSortType, WebSocketMessage } from '../../types/session-qa'
 import {
   Event,
   Talk,
@@ -49,18 +46,19 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
   }, [sortBy])
 
   // RTK Query hooks (生成されたAPIフックを使用)
-  const {
-    data: questionsData,
-    isLoading,
-  } = useGetApiV1TalksByTalkIdSessionQuestionsQuery(
-    { talkId: talk?.id || 0, sort: sortBy },
-    { skip: !talk?.id },
-  )
+  const { data: questionsData, isLoading } =
+    useGetApiV1TalksByTalkIdSessionQuestionsQuery(
+      { talkId: talk?.id || 0, sort: sortBy },
+      { skip: !talk?.id },
+    )
 
   const [createQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsMutation()
-  const [voteQuestion] = usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation()
-  const [createAnswer] = usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation()
-  const [deleteQuestion] = useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation()
+  const [voteQuestion] =
+    usePostApiV1TalksByTalkIdSessionQuestionsAndIdVoteMutation()
+  const [createAnswer] =
+    usePostApiV1TalksByTalkIdSessionQuestionsAndSessionQuestionIdSessionQuestionAnswersMutation()
+  const [deleteQuestion] =
+    useDeleteApiV1TalksByTalkIdSessionQuestionsAndIdMutation()
 
   // ソート関数
   const sortQuestions = useCallback(
@@ -125,9 +123,7 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
           ),
         )
       } else if (message.type === 'question_deleted') {
-        setQuestions((prev) =>
-          prev.filter((q) => q.id !== message.question_id)
-        )
+        setQuestions((prev) => prev.filter((q) => q.id !== message.question_id))
       }
     },
     [sortQuestions],
@@ -141,7 +137,11 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
       // 初回ロード時のみAPIデータを使用
       setQuestions(sortQuestions(questionsData.questions, sortBy))
       isInitializedRef.current = true
-    } else if (questionsData && !questionsData.questions && !isInitializedRef.current) {
+    } else if (
+      questionsData &&
+      !questionsData.questions &&
+      !isInitializedRef.current
+    ) {
       // データが空の場合も初期化済みとしてマーク
       setQuestions([])
       isInitializedRef.current = true
