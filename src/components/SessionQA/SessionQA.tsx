@@ -131,6 +131,8 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
 
   // 質問データを状態に反映（初回ロード時のみ）
   // WebSocket更新を優先するため、questionsDataの更新は初回ロード時のみ
+  // talk切り替え時はTrack.tsxで`key={selectedTalk?.id}`によりリマウントされるため、
+  // ここでフラグをリセットする必要はない
   const isInitializedRef = React.useRef(false)
   useEffect(() => {
     if (questionsData?.questions && !isInitializedRef.current) {
