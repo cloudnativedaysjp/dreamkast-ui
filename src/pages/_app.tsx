@@ -81,7 +81,7 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
     defaultOptions: {
       query: {
         errorPolicy: 'ignore', // エラーを無視してアプリを続行
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'cache-first',
       },
       watchQuery: {
         errorPolicy: 'ignore', // エラーを無視してアプリを続行
@@ -90,22 +90,6 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
       mutate: {
         errorPolicy: 'ignore', // エラーを無視してアプリを続行
       },
-    },
-    // Apollo Clientのエラーを抑制（GraphQLクエリが失敗してもアプリ全体を停止しない）
-    onError: ({ networkError, graphQLErrors }) => {
-      // エラーをログに記録するが、アプリを停止しない
-      if (networkError) {
-        console.warn(
-          'Apollo Client network error (non-critical, ignored):',
-          networkError,
-        )
-      }
-      if (graphQLErrors) {
-        console.warn(
-          'Apollo Client GraphQL errors (non-critical, ignored):',
-          graphQLErrors,
-        )
-      }
     },
   })
 
