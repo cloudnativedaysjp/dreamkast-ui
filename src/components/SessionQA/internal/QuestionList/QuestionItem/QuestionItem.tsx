@@ -37,7 +37,14 @@ export const QuestionItem: React.FC<Props> = ({
             {dayjs(question.created_at).tz().format('HH:mm')}
           </Styled.QuestionTime>
         </Styled.QuestionMeta>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', position: 'relative' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '8px',
+            alignItems: 'center',
+            position: 'relative',
+          }}
+        >
           <VoteButton
             votesCount={question.votes_count}
             hasVoted={question.has_voted}

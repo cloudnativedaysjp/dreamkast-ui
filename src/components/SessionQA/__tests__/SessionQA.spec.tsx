@@ -3,11 +3,7 @@ import 'cross-fetch/polyfill'
 import { rest } from 'msw'
 import { SessionQA } from '../SessionQA'
 import { renderWithProviders, setupStore } from '../../../testhelper/store'
-import {
-  MockEvent,
-  MockProfile,
-  MockTalkA1,
-} from '../../../testhelper/fixture'
+import { MockEvent, MockProfile, MockTalkA1 } from '../../../testhelper/fixture'
 import { setupMockServer } from '../../../testhelper/msw'
 import { setProfile } from '../../../store/settings'
 import { setWsBaseUrl } from '../../../store/auth'

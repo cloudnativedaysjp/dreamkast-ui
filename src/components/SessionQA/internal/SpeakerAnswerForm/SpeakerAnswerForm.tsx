@@ -47,9 +47,7 @@ export const SpeakerAnswerForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
           <Styled.ErrorText>{errors.body.message}</Styled.ErrorText>
         )}
         <Styled.Footer>
-          <Styled.CharCount>
-            {bodyLength}文字
-          </Styled.CharCount>
+          <Styled.CharCount>{bodyLength}文字</Styled.CharCount>
           <Styled.ButtonGroup>
             <Styled.CancelButton type="button" onClick={onCancel}>
               キャンセル

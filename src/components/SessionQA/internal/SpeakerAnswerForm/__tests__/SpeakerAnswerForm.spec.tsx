@@ -12,14 +12,20 @@ describe('SpeakerAnswerForm', () => {
   })
 
   it('renders form correctly', () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
-    expect(screen.getByPlaceholderText('回答を入力してください')).toBeInTheDocument()
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
+    expect(
+      screen.getByPlaceholderText('回答を入力してください'),
+    ).toBeInTheDocument()
     expect(screen.getByText('回答する')).toBeInTheDocument()
     expect(screen.getByText('キャンセル')).toBeInTheDocument()
   })
 
   it('submits form with valid input', async () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
     const textarea = screen.getByPlaceholderText('回答を入力してください')
     const submitButton = screen.getByText('回答する')
 
@@ -32,7 +38,9 @@ describe('SpeakerAnswerForm', () => {
   })
 
   it('calls onCancel when cancel button is clicked', () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
     const cancelButton = screen.getByText('キャンセル')
 
     fireEvent.click(cancelButton)
@@ -41,13 +49,17 @@ describe('SpeakerAnswerForm', () => {
   })
 
   it('disables submit button when body is empty', () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
     const submitButton = screen.getByText('回答する')
     expect(submitButton).toBeDisabled()
   })
 
   it('enables submit button when body has content', () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
     const textarea = screen.getByPlaceholderText('回答を入力してください')
     const submitButton = screen.getByText('回答する')
 
@@ -57,7 +69,9 @@ describe('SpeakerAnswerForm', () => {
   })
 
   it('shows character count', () => {
-    render(<SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />)
+    render(
+      <SpeakerAnswerForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />,
+    )
     const textarea = screen.getByPlaceholderText('回答を入力してください')
 
     fireEvent.change(textarea, { target: { value: '回答' } })

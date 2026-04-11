@@ -11,13 +11,17 @@ describe('QuestionForm', () => {
 
   it('renders form correctly', () => {
     render(<QuestionForm isVisibleForm={true} onSubmit={mockOnSubmit} />)
-    expect(screen.getByPlaceholderText('質問を入力してください')).toBeInTheDocument()
+    expect(
+      screen.getByPlaceholderText('質問を入力してください'),
+    ).toBeInTheDocument()
     expect(screen.getByText('質問を投稿')).toBeInTheDocument()
   })
 
   it('does not render when isVisibleForm is false', () => {
     render(<QuestionForm isVisibleForm={false} onSubmit={mockOnSubmit} />)
-    expect(screen.queryByPlaceholderText('質問を入力してください')).not.toBeInTheDocument()
+    expect(
+      screen.queryByPlaceholderText('質問を入力してください'),
+    ).not.toBeInTheDocument()
   })
 
   it('submits form with valid input', async () => {
