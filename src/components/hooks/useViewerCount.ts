@@ -28,6 +28,11 @@ export const useViewerCount = (
     variables: { confName: eventAbbr as ConfName },
     skip: !selectedTrackName,
     pollInterval: 60 * 1000,
+    errorPolicy: 'ignore', // エラーを無視してアプリを続行
+    onError: (err) => {
+      // エラーをログに記録するが、アプリを停止しない
+      console.warn('useViewerCount query error (non-critical):', err)
+    },
   })
 
   const viewTrack = gql(`
@@ -55,7 +60,13 @@ export const useViewerCount = (
   }, [data, loading, error, selectedTrackName])
 
   // mutate viewer count
-  const [setViewTrack, { error: viewTrackError }] = useMutation(viewTrack)
+  const [setViewTrack, { error: viewTrackError }] = useMutation(viewTrack, {
+    errorPolicy: 'ignore', // エラーを無視してアプリを続行
+    onError: (err) => {
+      // エラーをログに記録するが、アプリを停止しない
+      console.warn('useViewerCount mutation error (non-critical):', err)
+    },
+  })
 
   useEffect(() => {
     if (!profileId || !selectedTrackName || !selectedTalkId) {
