@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { uuid4 } from '@sentry/utils'
 import { ConfirmDialog } from './internal/ConfirmDialog'
 import { Debug } from './internal/Debug/Debug'
 import { Camera } from './internal/Camera'
@@ -35,6 +34,17 @@ export const CheckIn: React.FC<Props> = ({
   talk,
   debug,
 }) => {
+  const createUuid = () => {
+    if (
+      typeof crypto !== 'undefined' &&
+      typeof crypto.randomUUID === 'function'
+    ) {
+      return crypto.randomUUID()
+    }
+
+    return `${Date.now()}-${Math.random().toString(16).slice(2)}`
+  }
+
   const [storedKeys, setStoredKeys] = React.useState<string[]>([])
   const [open, setOpen] = useState(false)
   const [enableScan, setEnableScan] = useState(true)
@@ -66,7 +76,7 @@ export const CheckIn: React.FC<Props> = ({
         return // already checked in
       }
     }
-    const uuid = uuid4()
+    const uuid = createUuid()
     const key = `check_in_${uuid}`
     const value: CheckInData = {
       checkInType: checkInType,

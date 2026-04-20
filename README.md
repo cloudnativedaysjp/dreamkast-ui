@@ -5,7 +5,7 @@ This is a front-end application for online conferences.
 ## How to run locally
 
 ```
-npm run dev
+yarn run dev
 ```
 
 ## How to use it?

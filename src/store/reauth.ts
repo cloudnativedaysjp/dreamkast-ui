@@ -1,6 +1,7 @@
-import { BaseQueryEnhancer } from '@reduxjs/toolkit/dist/query'
-import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
-import { MaybePromise } from '@reduxjs/toolkit/dist/query/tsHelpers'
+import type {
+  BaseQueryEnhancer,
+  QueryReturnValue,
+} from '@reduxjs/toolkit/query'
 
 export type ReauthOptions = Record<string, never>
 
@@ -21,6 +22,8 @@ export const reauth: BaseQueryEnhancer<
       }
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return result as MaybePromise<QueryReturnValue<any, any, any>>
+    return result as
+      | QueryReturnValue<any, any, any>
+      | Promise<QueryReturnValue<any, any, any>>
   }
 }

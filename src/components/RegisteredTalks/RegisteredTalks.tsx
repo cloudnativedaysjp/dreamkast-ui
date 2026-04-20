@@ -34,11 +34,11 @@ export const RegisteredTalks: React.FC<Props> = ({ event }) => {
             return talk.conferenceDay == day.date
           })
           return (
-            <div>
+            <div key={day.date}>
               <Typography variant="h6">{day.date}</Typography>
               {talks?.map((talk) => {
                 return (
-                  <Styled.TalkContainer>
+                  <Styled.TalkContainer key={talk.talkId}>
                     <CardContent>
                       <Styled.TalkInfo color="textSecondary" gutterBottom>
                         {talkInfo(talk)}

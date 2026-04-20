@@ -9,22 +9,6 @@ const { withSentryConfig } = require('@sentry/nextjs')
 // your existing module.exports or default export
 const nextConfig = {
   // Optional build-time configuration options
-  sentry: {
-    hideSourceMaps: true,
-    // See the sections below for information on the following options:
-    //   'Configure Source Maps':
-    //     - disableServerWebpackPlugin
-    //     - disableClientWebpackPlugin
-    //     - hideSourceMaps
-    //     - widenClientFileUpload
-    //   'Configure Legacy Browser Support':
-    //     - transpileClientSDK
-    //   'Configure Serverside Auto-instrumentation':
-    //     - autoInstrumentServerFunctions
-    //     - excludeServerRoutes
-    //   'Configure Tunneling to avoid Ad-Blockers':
-    //     - tunnelRoute
-  },
 }
 
 const sentryWebpackPluginOptions = {
@@ -38,6 +22,7 @@ const sentryWebpackPluginOptions = {
   project: 'dreamkast-ui',
 
   silent: true, // Suppresses all logs
+  hideSourceMaps: true,
 
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.

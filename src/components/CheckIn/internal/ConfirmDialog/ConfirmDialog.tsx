@@ -7,8 +7,8 @@ import {
   DialogTitle,
   IconButton,
 } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
 import React from 'react'
-import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
 
 type Props = {
   open: boolean

@@ -1,20 +1,31 @@
 import {
-  fetchBaseQuery,
   createApi,
-  FetchArgs,
-  BaseQueryFn,
-  FetchBaseQueryError,
+  fetchBaseQuery,
+  type BaseQueryFn,
+  type FetchArgs,
+  type FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
 import { retry } from './retry'
-import { RootState } from './index'
 import { reauth } from './reauth'
+
+type AuthStoreState = {
+  auth: {
+    token: string
+    apiBaseUrl: string
+  }
+}
+
+type HydrateAction = {
+  type: typeof HYDRATE
+  payload: Record<string, unknown>
+}
 
 const createBaseQuery = (baseUrl: string) => {
   const baseQuery = fetchBaseQuery({
     baseUrl,
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token
+      const token = (getState() as AuthStoreState).auth.token
 
       // TODO reconsider that API call without token should be passed
       if (token) {
@@ -45,7 +56,7 @@ const dynamicBaseQuery: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  const apiBaseUrl = (api.getState() as RootState).auth.apiBaseUrl
+  const apiBaseUrl = (api.getState() as AuthStoreState).auth.apiBaseUrl
   const baseQuery = createBaseQuery(apiBaseUrl)
   return baseQuery(args, api, extraOptions)
 }
@@ -55,9 +66,11 @@ export const baseApi = createApi({
   endpoints: () => ({}),
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: 300,
-  extractRehydrationInfo(action, { reducerPath }) {
+  // next-redux-wrapper serializes the api slice into HYDRATE payload.
+  extractRehydrationInfo(action, { reducerPath }): any {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
+      const hydrateAction = action as HydrateAction
+      return hydrateAction.payload[reducerPath]
     }
   },
 })

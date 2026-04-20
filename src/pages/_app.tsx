@@ -14,7 +14,7 @@ import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
-import { useDispatch } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
@@ -108,7 +108,17 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
   )
 }
 
-RootApp.getInitialProps = wrapper.getInitialAppProps(
+const WrappedApp = (props: RootAppProps) => {
+  const { store, props: wrappedProps } = wrapper.useWrappedStore(props)
+
+  return (
+    <Provider store={store}>
+      <RootApp {...wrappedProps} />
+    </Provider>
+  )
+}
+
+WrappedApp.getInitialProps = wrapper.getInitialAppProps(
   (_store) => async (appContext) => {
     if (typeof window === 'undefined') {
       validateEnv()
@@ -120,4 +130,4 @@ RootApp.getInitialProps = wrapper.getInitialAppProps(
   },
 )
 
-export default wrapper.withRedux(RootApp)
+export default WrappedApp
