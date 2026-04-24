@@ -78,6 +78,19 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
   const client = new ApolloClient({
     uri: new URL('query', env.NEXT_PUBLIC_WEAVER_URL).href,
     cache: new InMemoryCache(),
+    defaultOptions: {
+      query: {
+        errorPolicy: 'ignore', // エラーを無視してアプリを続行
+        fetchPolicy: 'cache-first',
+      },
+      watchQuery: {
+        errorPolicy: 'ignore', // エラーを無視してアプリを続行
+        fetchPolicy: 'cache-and-network',
+      },
+      mutate: {
+        errorPolicy: 'ignore', // エラーを無視してアプリを続行
+      },
+    },
   })
 
   return (

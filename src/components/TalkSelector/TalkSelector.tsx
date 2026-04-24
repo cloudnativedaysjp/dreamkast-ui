@@ -57,7 +57,7 @@ export const PTalkSelector: React.FC<PProps> = ({
 }) => {
   const availableTalks = useMemo(
     () => extractAvailableTalks(talks, now, isRehearsal),
-    [talks, now],
+    [talks, now, isRehearsal],
   )
 
   return (

@@ -47,7 +47,7 @@ const IndexMain = () => {
       throw error
     }
     if (data) {
-      setTalks(data.filter((talk) => talk.type === 'SponsorSession'))
+      setTalks(data.filter((talk) => talk.sponsor !== null))
     }
   }, [data, isLoading, isError])
 
