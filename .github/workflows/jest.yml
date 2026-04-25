@@ -18,12 +18,14 @@ jobs:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           persist-credentials: false
+      - name: Enable corepack
+        run: corepack enable
       - name: Set up Node.js
         uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
         with:
           node-version-file: '.node-version'
           cache: 'yarn'
       - name: yarn install
-        run: yarn install
+        run: yarn install --immutable
       - name: jest
         run: yarn test
