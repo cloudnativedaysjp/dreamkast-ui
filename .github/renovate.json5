@@ -4,6 +4,7 @@
     "config:base",
   ],
   "labels": ["dependencies"],
+  "minimumReleaseAge": "7 days",
   "packageRules": [
     {
       "matchManagers": ["dockerfile", "docker-compose"],

@@ -1,15 +1,16 @@
 {
     "name": "with-typescript",
     "version": "1.0.0",
+    "packageManager": "yarn@4.14.1",
     "scripts": {
-        "dev": "yarn install --frozen-lockfile && next -p 3001",
+        "dev": "yarn install --immutable && next -p 3001",
         "build": "next build",
         "start": "next start",
         "export": "next build && next export",
         "type-check": "tsc",
         "gql": "graphql-codegen",
         "lint": "prettier --write '**/*.{js,jsx,ts,tsx}' && eslint --fix './**/*.{js,jsx,ts,tsx}' && eslint '*/**/*.{js,ts}' --quiet --fix",
-        "test": "yarn install --frozen-lockfile && jest",
+        "test": "yarn install --immutable && jest",
         "test:update": "jest -u",
         "test:coverage": "jest --collect-coverage",
         "rtk-query-codegen": "rtk-query-codegen-openapi ./rtk-query-codegen-openapi.config.ts"
