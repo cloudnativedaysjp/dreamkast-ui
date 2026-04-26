@@ -649,6 +649,7 @@ export type RegisteredTalk = {
 }
 export type Profile = {
   id: number
+  userId?: (number | null) | undefined
   name: string
   email: string
   isAttendOffline: boolean
@@ -740,6 +741,7 @@ export type Talk = {
   speakers: {
     id?: number | undefined
     name?: string | undefined
+    userId?: (number | null) | undefined
   }[]
   dayId: number | null
   showOnTimetable: boolean
