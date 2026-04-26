@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react'
-import jsQR from 'jsqr'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import decodeQR from '@paulmillr/qr/decode'
 
 type Props = {
   height: number
@@ -8,120 +8,370 @@ type Props = {
   enableScan: boolean
 }
 
+type FrameLoop = {
+  stop: () => void
+}
+
 export const Camera: React.FC<Props> = ({
   height,
   width,
   setCheckInDataToLocalStorage,
   enableScan,
 }) => {
+  const [isStarted, setIsStarted] = useState(false)
+  const hasAutoStarted = useRef(false)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const overlayRef = useRef<HTMLCanvasElement>(null)
+  const lastScannedCodeRef = useRef<string>('')
+  const isProcessingRef = useRef(false)
+  const [error, setError] = useState<string>('')
+  const [cameraPermission, setCameraPermission] = useState<
+    'granted' | 'denied' | 'prompt'
+  >('prompt')
+  const [isInitializing, setIsInitializing] = useState(false)
+  const frameLoopRef = useRef<FrameLoop | null>(null)
+  const loadedMetadataHandlerRef = useRef<(() => void) | null>(null)
 
-  const getStream = useCallback(async () => {
-    const aspectRatio = height / width
-    return await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: 'environment',
-        // width: {
-        //   ideal: IDEAL_VIDEO_WIDTH,
-        // },
-        aspectRatio,
+  // Keep callback prop in a ref so identity changes don't invalidate memoized callbacks.
+  const setCheckInRef = useRef(setCheckInDataToLocalStorage)
+  useEffect(() => {
+    setCheckInRef.current = setCheckInDataToLocalStorage
+  }, [setCheckInDataToLocalStorage])
+
+  // Viewport width is used to clamp the container size. Read in an effect so SSR doesn't touch `window`.
+  const [viewportWidth, setViewportWidth] = useState<number | null>(null)
+  useEffect(() => {
+    const update = () => setViewportWidth(window.innerWidth)
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
+
+  const handleQRCodeDetected = useCallback((profileId: string) => {
+    if (isProcessingRef.current || profileId === lastScannedCodeRef.current) {
+      return
+    }
+    isProcessingRef.current = true
+    lastScannedCodeRef.current = profileId
+    setCheckInRef.current(profileId)
+  }, [])
+
+  const stopFrameLoop = useCallback(() => {
+    if (frameLoopRef.current) {
+      frameLoopRef.current.stop()
+      frameLoopRef.current = null
+    }
+  }, [])
+
+  const beginScanLoop = useCallback(() => {
+    stopFrameLoop()
+    const video = videoRef.current
+    const canvas = overlayRef.current
+    if (!video || !canvas) return
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    if (!ctx) return
+
+    let rafId = 0
+    let cancelled = false
+    let lastDecodeAt = 0
+    const DECODE_INTERVAL_MS = 100
+
+    const scanFrame = (now: number) => {
+      if (cancelled) return
+      rafId = requestAnimationFrame(scanFrame)
+
+      if (isProcessingRef.current) return
+      if (now - lastDecodeAt < DECODE_INTERVAL_MS) return
+      if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return
+
+      const w = video.videoWidth
+      const h = video.videoHeight
+      if (!w || !h) return
+
+      if (canvas.width !== w) canvas.width = w
+      if (canvas.height !== h) canvas.height = h
+
+      lastDecodeAt = now
+      ctx.drawImage(video, 0, 0, w, h)
+      const imageData = ctx.getImageData(0, 0, w, h)
+
+      try {
+        const qrResult = decodeQR({
+          width: w,
+          height: h,
+          data: imageData.data,
+        })
+        if (!qrResult) return
+
+        try {
+          const qrData = JSON.parse(qrResult)
+          if (qrData.profile_id) {
+            handleQRCodeDetected(qrData.profile_id.toString())
+          }
+        } catch {
+          // Not JSON — treat the raw result as a profile ID for legacy QR codes.
+          handleQRCodeDetected(qrResult)
+        }
+      } catch {
+        // decodeQR throws on every frame that doesn't contain a QR code; ignore.
+      }
+    }
+
+    rafId = requestAnimationFrame(scanFrame)
+    frameLoopRef.current = {
+      stop: () => {
+        cancelled = true
+        cancelAnimationFrame(rafId)
       },
-      audio: false,
-    })
-  }, [width, height])
-
-  useEffect(() => {
-    console.log('enableScan:', enableScan)
-  }, [enableScan])
-
-  useEffect(() => {
-    let stream: MediaStream | null = null
-    const video = videoRef.current
-
-    const setVideo = async () => {
-      stream = await getStream()
-      if (video === null || !stream) {
-        return
-      }
-      video.srcObject = stream
-      video.play()
     }
+  }, [handleQRCodeDetected, stopFrameLoop])
 
-    setVideo()
-    const intervalScan = setInterval(scanQrCode, 3000)
+  const checkCameraPermission = useCallback(async () => {
+    try {
+      const permission = await navigator.permissions.query({
+        name: 'camera' as PermissionName,
+      })
+      setCameraPermission(permission.state)
+      permission.onchange = () => setCameraPermission(permission.state)
+    } catch {
+      // Permission API not supported — fall through silently.
+    }
+  }, [])
 
-    const cleanupVideo = () => {
-      if (!stream) {
-        return
-      }
+  const stopScanning = useCallback(() => {
+    stopFrameLoop()
+    if (videoRef.current && loadedMetadataHandlerRef.current) {
+      videoRef.current.removeEventListener(
+        'loadedmetadata',
+        loadedMetadataHandlerRef.current,
+      )
+      loadedMetadataHandlerRef.current = null
+    }
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream
       stream.getTracks().forEach((track) => track.stop())
-      if (video === null) {
-        return
-      }
-      video.srcObject = null
+      videoRef.current.srcObject = null
     }
+    setIsStarted(false)
+    lastScannedCodeRef.current = ''
+    isProcessingRef.current = false
+    setError('')
+    setIsInitializing(false)
+  }, [stopFrameLoop])
 
-    return () => {
-      clearInterval(intervalScan)
-      cleanupVideo()
-    }
-  }, [getStream])
-
-  const scanQrCode = () => {
-    const canvas = canvasRef.current
+  const startScanning = useCallback(async () => {
     const video = videoRef.current
-    if (!enableScan) {
-      console.log(`enableScan: ${enableScan}`)
-    }
-    if (canvas && video) {
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-        const qrCodeData = jsQR(
-          imageData.data,
-          imageData.width,
-          imageData.height,
-        )
-        if (qrCodeData != null) {
-          console.log(qrCodeData)
-        }
-        if (qrCodeData && enableScan) {
-          const profileId = JSON.parse(qrCodeData.data)['profile_id']
-          setCheckInDataToLocalStorage(profileId)
+    if (!video || !overlayRef.current) return
+    if (isInitializing) return
+
+    setIsInitializing(true)
+    setError('')
+    isProcessingRef.current = false
+
+    try {
+      if (video.srcObject) {
+        const existing = video.srcObject as MediaStream
+        existing.getTracks().forEach((track) => track.stop())
+      }
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment',
+          width: { ideal: 640, max: 1280 },
+          height: { ideal: 640, max: 1280 },
+        },
+      })
+
+      setIsStarted(true)
+      setCameraPermission('granted')
+      video.srcObject = stream
+      video.play().catch((err) => {
+        console.warn('Video play failed:', err)
+      })
+
+      if (enableScan) {
+        if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+          beginScanLoop()
+        } else {
+          const start = () => {
+            video.removeEventListener('loadedmetadata', start)
+            loadedMetadataHandlerRef.current = null
+            beginScanLoop()
+          }
+          loadedMetadataHandlerRef.current = start
+          video.addEventListener('loadedmetadata', start)
         }
       }
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'Unknown camera error'
+      setError(`Camera access error: ${message}`)
+      setCameraPermission('denied')
+      setIsStarted(false)
+      if (video.srcObject) {
+        const stream = video.srcObject as MediaStream
+        stream.getTracks().forEach((track) => track.stop())
+        video.srcObject = null
+      }
+    } finally {
+      setIsInitializing(false)
+    }
+  }, [enableScan, beginScanLoop, isInitializing])
+
+  const handleStartStop = () => {
+    if (isStarted) {
+      stopScanning()
     } else {
-      console.log('canvas or video is null')
+      startScanning()
     }
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log('This will run every 10 seconds!')
-      const rawItem = localStorage.getItem('profiles')
-      const profiles = JSON.parse(rawItem || '[]')
+    checkCameraPermission()
+  }, [checkCameraPermission])
 
-      for (const profile of profiles) {
-        console.log(profile)
-      }
-    }, 10000)
-    return () => clearInterval(interval)
-  }, [])
+  // When the parent re-enables scanning (dialog closed), clear the processing lock.
+  useEffect(() => {
+    if (enableScan) {
+      isProcessingRef.current = false
+      lastScannedCodeRef.current = ''
+    }
+  }, [enableScan])
+
+  // Auto-start scanning once on mount when scanning is enabled.
+  useEffect(() => {
+    if (enableScan && !isStarted && !hasAutoStarted.current) {
+      hasAutoStarted.current = true
+      startScanning()
+    }
+  }, [enableScan, isStarted, startScanning])
+
+  useEffect(() => {
+    return () => {
+      stopScanning()
+    }
+  }, [stopScanning])
+
+  const containerWidth =
+    viewportWidth !== null
+      ? Math.max(0, Math.min(width, viewportWidth - 40))
+      : width
+  const containerHeight = Math.min(height, containerWidth)
 
   return (
-    <div>
+    <div
+      style={{
+        position: 'relative',
+        width: containerWidth,
+        height: containerHeight,
+        maxWidth: '100%',
+        margin: '0 auto',
+      }}
+    >
+      <button
+        type="button"
+        onClick={handleStartStop}
+        disabled={(!enableScan && !isStarted) || isInitializing}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          zIndex: 10,
+          padding: '8px 16px',
+          backgroundColor: isStarted ? '#f44336' : '#4caf50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: enableScan || isStarted ? 'pointer' : 'not-allowed',
+          opacity: (enableScan || isStarted) && !isInitializing ? 1 : 0.5,
+        }}
+      >
+        {isInitializing ? 'Initializing...' : isStarted ? 'Stop' : 'Start'}{' '}
+        Scanning
+      </button>
+
       <video
         ref={videoRef}
-        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: isStarted ? 'block' : 'none',
+          borderRadius: '8px',
+        }}
         autoPlay
-        muted
         playsInline
+        muted
       />
-      <div style={{ display: 'none' }}>
-        <canvas ref={canvasRef} id="js-canvas"></canvas>
-      </div>
+
+      <canvas
+        ref={overlayRef}
+        style={{
+          display: isStarted ? 'block' : 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          borderRadius: '8px',
+        }}
+      />
+
+      {error && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'rgba(244, 67, 54, 0.9)',
+            color: 'white',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            zIndex: 20,
+            fontSize: '14px',
+            maxWidth: '90%',
+            textAlign: 'center',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      {!isStarted && !error && (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#f5f5f5',
+            color: '#666',
+            fontSize: '16px',
+            textAlign: 'center',
+            padding: '20px',
+            borderRadius: '8px',
+            border: '2px dashed #ccc',
+          }}
+        >
+          {!enableScan ? (
+            'Scanning is disabled'
+          ) : cameraPermission === 'denied' ? (
+            <>
+              <div style={{ marginBottom: '16px' }}>Camera access denied</div>
+              <div style={{ fontSize: '14px', color: '#999' }}>
+                Please allow camera access and refresh the page
+              </div>
+            </>
+          ) : (
+            'Click "Start Scanning" to begin'
+          )}
+        </div>
+      )}
     </div>
   )
 }
