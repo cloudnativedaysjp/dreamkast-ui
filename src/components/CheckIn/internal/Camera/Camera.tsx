@@ -30,6 +30,7 @@ export const Camera: React.FC<Props> = ({
   >('prompt')
   const [isInitializing, setIsInitializing] = useState(false)
   const frameLoopRef = useRef<FrameLoop | null>(null)
+  const loadedMetadataHandlerRef = useRef<(() => void) | null>(null)
 
   // Keep callback prop in a ref so identity changes don't invalidate memoized callbacks.
   const setCheckInRef = useRef(setCheckInDataToLocalStorage)
@@ -68,14 +69,20 @@ export const Camera: React.FC<Props> = ({
     const canvas = overlayRef.current
     if (!video || !canvas) return
 
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    if (!ctx) return
+
     let rafId = 0
     let cancelled = false
+    let lastDecodeAt = 0
+    const DECODE_INTERVAL_MS = 100
 
-    const scanFrame = () => {
+    const scanFrame = (now: number) => {
       if (cancelled) return
       rafId = requestAnimationFrame(scanFrame)
 
       if (isProcessingRef.current) return
+      if (now - lastDecodeAt < DECODE_INTERVAL_MS) return
       if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return
 
       const w = video.videoWidth
@@ -85,8 +92,7 @@ export const Camera: React.FC<Props> = ({
       if (canvas.width !== w) canvas.width = w
       if (canvas.height !== h) canvas.height = h
 
-      const ctx = canvas.getContext('2d', { willReadFrequently: true })
-      if (!ctx) return
+      lastDecodeAt = now
       ctx.drawImage(video, 0, 0, w, h)
       const imageData = ctx.getImageData(0, 0, w, h)
 
@@ -135,6 +141,13 @@ export const Camera: React.FC<Props> = ({
 
   const stopScanning = useCallback(() => {
     stopFrameLoop()
+    if (videoRef.current && loadedMetadataHandlerRef.current) {
+      videoRef.current.removeEventListener(
+        'loadedmetadata',
+        loadedMetadataHandlerRef.current,
+      )
+      loadedMetadataHandlerRef.current = null
+    }
     if (videoRef.current && videoRef.current.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream
       stream.getTracks().forEach((track) => track.stop())
@@ -142,6 +155,7 @@ export const Camera: React.FC<Props> = ({
     }
     setIsStarted(false)
     lastScannedCodeRef.current = ''
+    isProcessingRef.current = false
     setError('')
     setIsInitializing(false)
   }, [stopFrameLoop])
@@ -153,14 +167,13 @@ export const Camera: React.FC<Props> = ({
 
     setIsInitializing(true)
     setError('')
+    isProcessingRef.current = false
 
     try {
       if (video.srcObject) {
         const existing = video.srcObject as MediaStream
         existing.getTracks().forEach((track) => track.stop())
       }
-
-      setIsStarted(true)
 
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
@@ -170,6 +183,7 @@ export const Camera: React.FC<Props> = ({
         },
       })
 
+      setIsStarted(true)
       setCameraPermission('granted')
       video.srcObject = stream
       video.play().catch((err) => {
@@ -177,13 +191,15 @@ export const Camera: React.FC<Props> = ({
       })
 
       if (enableScan) {
-        const start = () => {
-          video.removeEventListener('loadedmetadata', start)
-          beginScanLoop()
-        }
         if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
           beginScanLoop()
         } else {
+          const start = () => {
+            video.removeEventListener('loadedmetadata', start)
+            loadedMetadataHandlerRef.current = null
+            beginScanLoop()
+          }
+          loadedMetadataHandlerRef.current = start
           video.addEventListener('loadedmetadata', start)
         }
       }
@@ -192,6 +208,7 @@ export const Camera: React.FC<Props> = ({
         err instanceof Error ? err.message : 'Unknown camera error'
       setError(`Camera access error: ${message}`)
       setCameraPermission('denied')
+      setIsStarted(false)
       if (video.srcObject) {
         const stream = video.srcObject as MediaStream
         stream.getTracks().forEach((track) => track.stop())
@@ -237,7 +254,9 @@ export const Camera: React.FC<Props> = ({
   }, [stopScanning])
 
   const containerWidth =
-    viewportWidth !== null ? Math.min(width, viewportWidth - 40) : width
+    viewportWidth !== null
+      ? Math.max(0, Math.min(width, viewportWidth - 40))
+      : width
   const containerHeight = Math.min(height, containerWidth)
 
   return (
@@ -251,6 +270,7 @@ export const Camera: React.FC<Props> = ({
       }}
     >
       <button
+        type="button"
         onClick={handleStartStop}
         disabled={(!enableScan && !isStarted) || isInitializing}
         style={{
