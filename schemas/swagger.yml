@@ -1194,6 +1194,9 @@ components:
       properties:
         id:
           type: number
+        userId:
+          type: number
+          nullable: true
         name:
           type: string
         email:
@@ -1417,6 +1420,9 @@ components:
                 type: number
               name:
                 type: string
+              userId:
+                type: number
+                nullable: true
         dayId:
           type: number
           nullable: true

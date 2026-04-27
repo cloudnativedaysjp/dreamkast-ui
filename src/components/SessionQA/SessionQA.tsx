@@ -46,9 +46,12 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
   }, [sortBy])
 
   // RTK Query hooks (生成されたAPIフックを使用)
+  // ソートはクライアント側で行うため API クエリには sort を渡さない。
+  // sort をキャッシュキーに含めると、ソート切替時に新規フェッチが走り
+  // isLoading=true で投稿直後の質問が一瞬消える問題が発生する。
   const { data: questionsData, isLoading } =
     useGetApiV1TalksByTalkIdSessionQuestionsQuery(
-      { talkId: talk?.id || 0, sort: sortBy },
+      { talkId: talk?.id || 0 },
       { skip: !talk?.id },
     )
 
@@ -98,17 +101,18 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
           return sortQuestions(updated, sortByRef.current)
         })
       } else if (message.type === 'question_voted') {
+        // has_voted は投票したユーザー視点の値で broadcast されるため、
+        // 受信側では votes_count のみ更新する。自分の has_voted は投票 API
+        // のレスポンス（handleVote）でのみ更新される。
         setQuestions((prev) => {
           const updated = prev.map((q) =>
             q.id === message.question_id
               ? {
                   ...q,
                   votes_count: message.votes_count,
-                  has_voted: message.has_voted,
                 }
               : q,
           )
-          // 投票数が変わった場合はソートを再適用（最新のsortByを使用）
           return sortQuestions(updated, sortByRef.current)
         })
       } else if (message.type === 'answer_created') {
@@ -214,15 +218,29 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
       if (!talk?.id) return
 
       try {
-        await voteQuestion({
+        const response = await voteQuestion({
           talkId: talk.id,
           id: questionId,
         }).unwrap()
+        // 投票数が変わるため、現在のソートを再適用しないと
+        // 投票数順表示時に並びが古いままになる（WebSocket に依存しない）
+        setQuestions((prev) => {
+          const updated = prev.map((q) =>
+            q.id === questionId
+              ? {
+                  ...q,
+                  has_voted: response.has_voted,
+                  votes_count: response.votes_count,
+                }
+              : q,
+          )
+          return sortQuestions(updated, sortByRef.current)
+        })
       } catch (error) {
         console.error('Failed to vote:', error)
       }
     },
-    [talk?.id, voteQuestion],
+    [talk?.id, voteQuestion, sortQuestions],
   )
 
   const handleAnswerSubmit = useCallback(
@@ -264,13 +282,12 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
     [talk?.id, deleteQuestion],
   )
 
-  // スピーカー判定
-  // Note: Profile型にspeakerIdが含まれていないため、talk.speakersに含まれるかどうかで判定
-  // 実際の実装では、profile.idとspeakerのuser_idを比較する必要がある可能性がある
+  // スピーカー判定: Profile.userId と Talk.speakers[].userId を比較
+  // どちらも User.id を指すため、一致すれば現在のユーザーがこのトークの
+  // スピーカーであると判定できる。
   const isSpeaker = useMemo(() => {
-    if (!talk || !profile) return false
-    // 暫定的にfalseを返す（実際のスピーカー判定は別途実装が必要）
-    return false
+    if (!talk || !profile?.userId) return false
+    return talk.speakers.some((speaker) => speaker.userId === profile.userId)
   }, [talk, profile])
 
   // 常に質問可能
