@@ -222,8 +222,10 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
           talkId: talk.id,
           id: questionId,
         }).unwrap()
-        setQuestions((prev) =>
-          prev.map((q) =>
+        // 投票数が変わるため、現在のソートを再適用しないと
+        // 投票数順表示時に並びが古いままになる（WebSocket に依存しない）
+        setQuestions((prev) => {
+          const updated = prev.map((q) =>
             q.id === questionId
               ? {
                   ...q,
@@ -231,13 +233,14 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
                   votes_count: response.votes_count,
                 }
               : q,
-          ),
-        )
+          )
+          return sortQuestions(updated, sortByRef.current)
+        })
       } catch (error) {
         console.error('Failed to vote:', error)
       }
     },
-    [talk?.id, voteQuestion],
+    [talk?.id, voteQuestion, sortQuestions],
   )
 
   const handleAnswerSubmit = useCallback(
