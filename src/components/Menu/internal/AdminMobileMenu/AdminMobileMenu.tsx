@@ -20,15 +20,6 @@ export const AdminMobileMenu: React.FC<Props> = ({ event }) => {
         <ListItemText primary="Admin" />
       </ListItem>
 
-      <Styled.NestedListItem button key="check_in_event">
-        <ListItemIcon>
-          <CheckIcon />
-        </ListItemIcon>
-        <Link href={`/${event?.abbr}/ui/admin/check_in_event`} rel="noreferrer">
-          <Button style={{ color: '#423A57' }}>Check-In (Event)</Button>
-        </Link>
-      </Styled.NestedListItem>
-
       <Styled.NestedListItem button key="check_in_session">
         <ListItemIcon>
           <CheckIcon />
