@@ -31,8 +31,8 @@ const mockQuestions = {
         {
           id: 1,
           body: '回答1',
-          speaker: {
-            id: 1,
+          answerer: {
+            type: 'speaker',
             name: 'スピーカー1',
           },
           created_at: '2026-01-01T12:00:00Z',
@@ -40,6 +40,7 @@ const mockQuestions = {
       ],
     },
   ],
+  current_user_role: null,
 }
 
 const server = setupMockServer(

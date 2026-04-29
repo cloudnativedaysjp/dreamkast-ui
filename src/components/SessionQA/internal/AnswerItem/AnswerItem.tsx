@@ -14,7 +14,7 @@ export const AnswerItem: React.FC<Props> = ({ answer }) => {
   return (
     <Styled.Container>
       <Styled.AnswerHeader>
-        <Styled.SpeakerName>{answer.speaker.name}</Styled.SpeakerName>
+        <Styled.SpeakerName>{answer.answerer.name}</Styled.SpeakerName>
         <Styled.AnswerTime>
           {dayjs(answer.created_at).tz().format('HH:mm')}
         </Styled.AnswerTime>
