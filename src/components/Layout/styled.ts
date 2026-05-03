@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Toolbar from '@material-ui/core/Toolbar'
 
 export const Container = styled.div<{ eventAbbr?: string }>`
-  background-image: url('/${(props) => props.eventAbbr}/ui/background.jpg');
+  background-image: url('/${(props) => props.eventAbbr}/ui/background.png');
   background-position: 50%;
   background-repeat: no-repeat;
   background-attachment: fixed;
