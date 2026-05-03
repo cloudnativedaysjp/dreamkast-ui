@@ -862,7 +862,7 @@ export type SessionQuestion = {
 }
 export type SessionQuestionsResponse = {
   questions: SessionQuestion[]
-  current_user_role?: (('speaker' | 'sponsor') | null) | undefined
+  current_user_role: ('speaker' | 'sponsor') | null
 }
 export type SessionQuestionCreateRequest = {
   body: string
