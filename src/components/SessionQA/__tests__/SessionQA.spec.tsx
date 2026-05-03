@@ -120,9 +120,7 @@ describe('SessionQA', () => {
       it('should show "回答する" button', async () => {
         server.use(
           rest.get(`/api/v1/talks/:talkId/session_questions`, (_, res, ctx) => {
-            return res(
-              ctx.json({ ...mockQuestions, current_user_role: role }),
-            )
+            return res(ctx.json({ ...mockQuestions, current_user_role: role }))
           }),
         )
 
