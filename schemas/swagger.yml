@@ -1935,12 +1935,19 @@ components:
       title: "SessionQuestionsResponse"
       required:
         - "questions"
+        - "current_user_role"
       type: "object"
       properties:
         questions:
           type: "array"
           items:
             $ref: "#/components/schemas/SessionQuestion"
+        current_user_role:
+          type: "string"
+          nullable: true
+          enum:
+            - "speaker"
+            - "sponsor"
       additionalProperties: false
     SessionQuestion:
       title: "SessionQuestion"
@@ -2009,7 +2016,7 @@ components:
       required:
         - "id"
         - "body"
-        - "speaker"
+        - "answerer"
         - "created_at"
       type: "object"
       properties:
@@ -2017,11 +2024,26 @@ components:
           type: "integer"
         body:
           type: "string"
-        speaker:
-          $ref: "#/components/schemas/SpeakerInfo"
+        answerer:
+          $ref: "#/components/schemas/AnswererInfo"
         created_at:
           type: "string"
           format: "date-time"
+      additionalProperties: false
+    AnswererInfo:
+      title: "AnswererInfo"
+      required:
+        - "type"
+        - "name"
+      type: "object"
+      properties:
+        type:
+          type: "string"
+          enum:
+            - "speaker"
+            - "sponsor"
+        name:
+          type: "string"
       additionalProperties: false
     SessionQuestionAnswerCreateRequest:
       title: "SessionQuestionAnswerCreateRequest"

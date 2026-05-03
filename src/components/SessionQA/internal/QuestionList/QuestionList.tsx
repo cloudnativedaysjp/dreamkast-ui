@@ -7,7 +7,7 @@ type Props = {
   questions: SessionQuestion[]
   isLoading: boolean
   autoScroll: boolean
-  isSpeaker: boolean
+  canAnswer: boolean
   currentProfileId?: number
   onVote: (questionId: number) => void
   onAnswerSubmit: (questionId: number, body: string) => void
@@ -18,7 +18,7 @@ export const QuestionList: React.FC<Props> = ({
   questions,
   isLoading,
   autoScroll,
-  isSpeaker,
+  canAnswer,
   currentProfileId,
   onVote,
   onAnswerSubmit,
@@ -54,7 +54,7 @@ export const QuestionList: React.FC<Props> = ({
         <QuestionItem
           key={question.id}
           question={question}
-          isSpeaker={isSpeaker}
+          canAnswer={canAnswer}
           isOwnQuestion={question.profile_id === currentProfileId}
           onVote={onVote}
           onAnswerSubmit={onAnswerSubmit}

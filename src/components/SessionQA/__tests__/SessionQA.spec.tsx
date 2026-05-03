@@ -31,8 +31,8 @@ const mockQuestions = {
         {
           id: 1,
           body: '回答1',
-          speaker: {
-            id: 1,
+          answerer: {
+            type: 'speaker',
             name: 'スピーカー1',
           },
           created_at: '2026-01-01T12:00:00Z',
@@ -40,6 +40,7 @@ const mockQuestions = {
       ],
     },
   ],
+  current_user_role: null,
 }
 
 const server = setupMockServer(
@@ -108,5 +109,60 @@ describe('SessionQA', () => {
     await waitFor(() => {
       expect(screen.getByText('質問1')).toBeInTheDocument()
     })
+  })
+
+  describe.each([
+    { role: 'speaker' as const, label: 'speaker' },
+    { role: 'sponsor' as const, label: 'sponsor' },
+  ])(
+    'when current_user_role is $label',
+    ({ role }: { role: 'speaker' | 'sponsor' }) => {
+      it('should show "回答する" button', async () => {
+        server.use(
+          rest.get(`/api/v1/talks/:talkId/session_questions`, (_, res, ctx) => {
+            return res(
+              ctx.json({ ...mockQuestions, current_user_role: role }),
+            )
+          }),
+        )
+
+        const mockProps = {
+          event: MockEvent(),
+          talk: MockTalkA1(),
+        }
+
+        const store = setupStore()
+        store.dispatch(setProfile(MockProfile()))
+        store.dispatch(setWsBaseUrl('http://localhost:8080'))
+        const screen = renderWithProviders(<SessionQA {...mockProps} />, {
+          store,
+        })
+
+        await waitFor(() => {
+          expect(screen.getByText('質問1')).toBeInTheDocument()
+        })
+        // 質問の数だけ「回答する」ボタンが表示される
+        expect(screen.getAllByText('回答する').length).toBe(
+          mockQuestions.questions.length,
+        )
+      })
+    },
+  )
+
+  it('should not show "回答する" button when current_user_role is null', async () => {
+    const mockProps = {
+      event: MockEvent(),
+      talk: MockTalkA1(),
+    }
+
+    const store = setupStore()
+    store.dispatch(setProfile(MockProfile()))
+    store.dispatch(setWsBaseUrl('http://localhost:8080'))
+    const screen = renderWithProviders(<SessionQA {...mockProps} />, { store })
+
+    await waitFor(() => {
+      expect(screen.getByText('質問1')).toBeInTheDocument()
+    })
+    expect(screen.queryByText('回答する')).not.toBeInTheDocument()
   })
 })

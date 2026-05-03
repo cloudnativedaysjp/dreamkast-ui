@@ -11,7 +11,7 @@ setupDayjs()
 
 type Props = {
   question: SessionQuestion
-  isSpeaker: boolean
+  canAnswer: boolean
   isOwnQuestion: boolean
   onVote: (questionId: number) => void
   onAnswerSubmit: (questionId: number, body: string) => void
@@ -20,7 +20,7 @@ type Props = {
 
 export const QuestionItem: React.FC<Props> = ({
   question,
-  isSpeaker,
+  canAnswer,
   isOwnQuestion,
   onVote,
   onAnswerSubmit,
@@ -85,7 +85,7 @@ export const QuestionItem: React.FC<Props> = ({
           ))}
         </Styled.AnswersContainer>
       )}
-      {isSpeaker && (
+      {canAnswer && (
         <Styled.AnswerSection>
           {!showAnswerForm ? (
             <Styled.ShowAnswerButton onClick={() => setShowAnswerForm(true)}>

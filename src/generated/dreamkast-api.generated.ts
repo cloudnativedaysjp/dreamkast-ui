@@ -841,14 +841,14 @@ export type ProfilePointsResponse = {
 export type ErrorSchema = {
   message?: string | undefined
 }
-export type SpeakerInfo = {
-  id: number
+export type AnswererInfo = {
+  type: 'speaker' | 'sponsor'
   name: string
 }
 export type SessionQuestionAnswer = {
   id: number
   body: string
-  speaker: SpeakerInfo
+  answerer: AnswererInfo
   created_at: string
 }
 export type SessionQuestion = {
@@ -862,6 +862,7 @@ export type SessionQuestion = {
 }
 export type SessionQuestionsResponse = {
   questions: SessionQuestion[]
+  current_user_role: ('speaker' | 'sponsor') | null
 }
 export type SessionQuestionCreateRequest = {
   body: string

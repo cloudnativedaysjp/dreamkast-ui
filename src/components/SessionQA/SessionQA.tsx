@@ -282,13 +282,12 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
     [talk?.id, deleteQuestion],
   )
 
-  // スピーカー判定: Profile.userId と Talk.speakers[].userId を比較
-  // どちらも User.id を指すため、一致すれば現在のユーザーがこのトークの
-  // スピーカーであると判定できる。
-  const isSpeaker = useMemo(() => {
-    if (!talk || !profile?.userId) return false
-    return talk.speakers.some((speaker) => speaker.userId === profile.userId)
-  }, [talk, profile])
+  // 回答可否は API のレスポンス current_user_role で判定する
+  // ('speaker' or 'sponsor' なら回答可、null なら不可)
+  const canAnswer = useMemo(
+    () => questionsData?.current_user_role != null,
+    [questionsData?.current_user_role],
+  )
 
   // 常に質問可能
   const isVisibleForm = true
@@ -330,7 +329,7 @@ export const SessionQA: React.FC<Props> = ({ talk }) => {
         questions={questions}
         isLoading={isLoading}
         autoScroll={autoScroll}
-        isSpeaker={isSpeaker}
+        canAnswer={canAnswer}
         currentProfileId={profile?.id}
         onVote={handleVote}
         onAnswerSubmit={handleAnswerSubmit}
