@@ -52,8 +52,9 @@ export const PTalkInfo: React.FC<Props> = ({
   selectedTalk,
   selectedTrack,
 }) => {
+  const hashtag = eventAbbr === 'cnk' ? 'cloudnativekaigi' : eventAbbr
   const xURL = (trackName?: string) => {
-    const base = `http://x.com/share?url=https://event.cloudnativedays.jp/${eventAbbr}&related=@cloudnativedays&hashtags=${eventAbbr}`
+    const base = `http://x.com/share?url=https://event.cloudnativedays.jp/${eventAbbr}&related=@cloudnativedays&hashtags=${hashtag}`
     if (!trackName) return base
     return base + '_' + trackName
   }
@@ -85,7 +86,7 @@ export const PTalkInfo: React.FC<Props> = ({
         <Styled.ButtonLink href={xURL(selectedTrack?.name)} target="_blank">
           <Styled.XPostButton>
             <Styled.XImg src={`/${eventAbbr}/ui/x_logo.png`} />
-            {`ポスト #${eventAbbr}_${selectedTrack?.name}`}
+            {`ポスト #${hashtag}_${selectedTrack?.name}`}
           </Styled.XPostButton>
         </Styled.ButtonLink>
       </Styled.ButtonContainer>
