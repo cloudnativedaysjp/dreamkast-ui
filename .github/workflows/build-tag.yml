@@ -12,7 +12,6 @@ jobs:
       id-token: write
     with:
       image_name: dreamkast-ui
-      platforms: amd64
       aws_region: ap-northeast-1
       run-trivy: false
       build_args: |
