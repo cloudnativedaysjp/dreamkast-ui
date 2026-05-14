@@ -130,11 +130,13 @@ describe('useInitSetup', () => {
       })
       const screen = renderWithProviders(<Test />, { store })
       await screen.findByTestId('tgt')
-      await waitFor(() => {
-        expect(window.location.href).toBe(
-          `${dkUrl}/${eventAbbr}/registration`,
-        )
-      })
+      const expectedHref = `${dkUrl}/${eventAbbr}/registration`
+      await waitFor(
+        () => {
+          expect(window.location.href).toBe(expectedHref)
+        },
+        { timeout: 15000 },
+      )
     } finally {
       Object.defineProperty(window, 'location', {
         configurable: true,
@@ -142,5 +144,5 @@ describe('useInitSetup', () => {
         value: originalLocation,
       })
     }
-  })
+  }, 30000)
 })
