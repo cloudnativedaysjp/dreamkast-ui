@@ -128,7 +128,7 @@ export const MobileMenu: React.FC<Props> = ({ event, isAdminRole }) => {
             <SendIcon />
           </ListItemIcon>
           <CommonStyled.MenuLink
-            href={'https://bit.ly/cnds2024-contactstaff'}
+            href={'https://pfem.notion.site/2c121b0141e0802c91e1ee001c05ba91'}
             target="_blank"
             rel="noreferrer noopener"
           >
