@@ -6,7 +6,8 @@ import {
 } from '../../../../generated/dreamkast-api.generated'
 import { NextPage } from 'next'
 import { setProfile } from '../../../../store/settings'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { authSelector } from '../../../../store/auth'
 import { Layout } from '../../../../components/Layout'
 import { RegisteredTalks } from '../../../../components/RegisteredTalks'
 import { Typography } from '@material-ui/core'
@@ -19,6 +20,7 @@ const IndexPage: NextPage = () => {
 const IndexMain: NextPage = () => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const { dkUrl } = useSelector(authSelector)
   const eventAbbr = useMemo<string>(() => {
     if (router.asPath !== router.route) {
       const { eventAbbr } = router.query
@@ -40,6 +42,18 @@ const IndexMain: NextPage = () => {
       dispatch(setProfile(myProfileQuery.data))
     }
   }, [myProfileQuery.data])
+  useEffect(() => {
+    const error = myProfileQuery.error
+    if (
+      error &&
+      'status' in error &&
+      error.status === 404 &&
+      eventAbbr &&
+      dkUrl
+    ) {
+      window.location.href = `${dkUrl}/${eventAbbr}/registration`
+    }
+  }, [myProfileQuery.error, eventAbbr, dkUrl])
 
   if (event) {
     return (
