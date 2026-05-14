@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   loadFromStorage,
   setEvent,
@@ -10,9 +10,11 @@ import {
   useGetApiV1ByEventAbbrMyProfileQuery,
   useGetApiV1EventsByEventAbbrQuery,
 } from '../../generated/dreamkast-api.generated'
+import { authSelector } from '../../store/auth'
 
 export const useInitSetup = (eventAbbr: string) => {
   const dispatch = useDispatch()
+  const { dkUrl } = useSelector(authSelector)
 
   useEffect(() => {
     dispatch(loadFromStorage())
@@ -41,6 +43,18 @@ export const useInitSetup = (eventAbbr: string) => {
       dispatch(setProfile(myProfileQuery.data))
     }
   }, [myProfileQuery.data])
+  useEffect(() => {
+    const error = myProfileQuery.error
+    if (
+      error &&
+      'status' in error &&
+      error.status === 404 &&
+      eventAbbr &&
+      dkUrl
+    ) {
+      window.location.href = `${dkUrl}/${eventAbbr}/registration`
+    }
+  }, [myProfileQuery.error, eventAbbr, dkUrl])
 
   return {
     event: eventQuery.data,
