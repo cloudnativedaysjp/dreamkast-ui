@@ -15,9 +15,6 @@ COPY --link --from=base /base ./
 COPY --link . .
 RUN yarn build
 
-ARG SENTRY_RELEASE
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
-
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD [ "yarn", "start", "-p", "3001" ]
 EXPOSE 3001
