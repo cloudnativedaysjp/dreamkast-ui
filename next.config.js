@@ -1,47 +1,20 @@
-// This file sets a custom webpack configuration to use your Next.js app
-// with Sentry.
-// https://nextjs.org/docs/api-reference/next.config.js/introduction
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withSentryConfig } = require('@sentry/nextjs')
-
-// your existing module.exports or default export
 const nextConfig = {
-  // Optional build-time configuration options
-  sentry: {
-    hideSourceMaps: true,
-    // See the sections below for information on the following options:
-    //   'Configure Source Maps':
-    //     - disableServerWebpackPlugin
-    //     - disableClientWebpackPlugin
-    //     - hideSourceMaps
-    //     - widenClientFileUpload
-    //   'Configure Legacy Browser Support':
-    //     - transpileClientSDK
-    //   'Configure Serverside Auto-instrumentation':
-    //     - autoInstrumentServerFunctions
-    //     - excludeServerRoutes
-    //   'Configure Tunneling to avoid Ad-Blockers':
-    //     - tunnelRoute
+  experimental: {
+    instrumentationHook: true,
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // recordExceptionAndFlush()はサーバー用/ブラウザ用のtracingモジュールを
+      // 動的importで出し分けるが、webpackはビルド時に両方の依存を解決しようとする。
+      // サーバー専用モジュール(@opentelemetry/sdk-trace-node等)が使うNode組み込みを
+      // クライアントビルドではダミー化し、実際には実行されない分岐の解決失敗を防ぐ。
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        async_hooks: false,
+      }
+    }
+    return config
   },
 }
 
-const sentryWebpackPluginOptions = {
-  // Additional config options for the Sentry Webpack plugin. Keep in mind that
-  // the following options are set automatically, and overriding them is not
-  // recommended:
-  //   release, url, authToken, configFile, stripPrefix,
-  //   urlPrefix, include, ignore
-
-  org: 'cloudnative-days',
-  project: 'dreamkast-ui',
-
-  silent: true, // Suppresses all logs
-
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
-}
-
-// Make sure adding Sentry options is the last code to run before exporting
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+module.exports = nextConfig

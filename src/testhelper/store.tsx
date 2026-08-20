@@ -51,7 +51,7 @@ export function renderWithApolloClient(
 ) {
   function Wrapper({ children }: PropsWithChildren): JSX.Element {
     const client = new ApolloClient({
-      uri: 'http://localhost:3001',
+      uri: 'http://localhost:8080',
       cache: new InMemoryCache(),
     })
     return <ApolloProvider client={client}>{children}</ApolloProvider>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { uuid4 } from '@sentry/utils'
 import { ConfirmDialog } from './internal/ConfirmDialog'
 import { Debug } from './internal/Debug/Debug'
 import { Camera } from './internal/Camera'
+import { generateUuid } from '../../util/uuid'
 import {
   Talk,
   usePostApiV1CheckInEventsMutation,
@@ -66,7 +66,7 @@ export const CheckIn: React.FC<Props> = ({
         return // already checked in
       }
     }
-    const uuid = uuid4()
+    const uuid = generateUuid()
     const key = `check_in_${uuid}`
     const value: CheckInData = {
       checkInType: checkInType,

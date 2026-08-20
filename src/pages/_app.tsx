@@ -14,12 +14,20 @@ import theme from '../styles/theme'
 import { AppProps } from 'next/app'
 import TagManager from 'react-gtm-module'
 import App from 'next/app'
+import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { setApiBaseUrl, setDkUrl, setWsBaseUrl } from '../store/auth'
 import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { AuthProvider } from '../context/auth'
+import { ErrorBoundary } from '../components/ErrorBoundary'
+import { startWebTracing } from '../otel/webTracing'
+
+// ErrorBoundaryがマウント前の初回レンダーで発生した同期throwも記録できるよう、
+// useEffect(コミット後)を待たずモジュール読み込み時点で登録する。
+// サーバー側では内部でno-opになる。
+startWebTracing()
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -67,6 +75,7 @@ const AppComponent: any = ({ children }: PropsWithChildren) => {
 
 type RootAppProps = AppProps & { env: typeof ENV }
 const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
+  const router = useRouter()
   // inject env vars to redux
   const dispatch = useDispatch()
   useEffect(() => {
@@ -99,7 +108,10 @@ const RootApp = ({ Component, pageProps, env }: RootAppProps) => {
         <AppComponent>
           <ApolloProvider client={client}>
             <AuthProvider>
-              <Component {...pageProps} />
+              {/* keyでページ遷移ごとに再マウントし、前ページでのhasErrorを持ち越さない */}
+              <ErrorBoundary key={router.asPath}>
+                <Component {...pageProps} />
+              </ErrorBoundary>
             </AuthProvider>
           </ApolloProvider>
         </AppComponent>
