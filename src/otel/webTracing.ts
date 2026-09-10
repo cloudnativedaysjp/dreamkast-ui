@@ -11,6 +11,7 @@ import {
   WebTracerProvider,
 } from '@opentelemetry/sdk-trace-web'
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
+import { recordExceptionOnActiveSpan } from './recordException'
 
 // Mackerelのトレース収集エンドポイント。クライアントトークンは投稿権限のみに
 // スコープされているため、フロントエンドのコードに直接埋め込む設計になっている。
@@ -67,5 +68,12 @@ export function startWebTracing(): void {
       new FetchInstrumentation(),
       new XMLHttpRequestInstrumentation(),
     ],
+  })
+
+  window.addEventListener('error', (event) => {
+    recordExceptionOnActiveSpan(event.error ?? event.message)
+  })
+  window.addEventListener('unhandledrejection', (event) => {
+    recordExceptionOnActiveSpan(event.reason)
   })
 }
