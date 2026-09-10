@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	SENTRY_AUTH_TOKEN=$(SENTRY_AUTH_TOKEN) docker compose -f compose-dev.yaml build
+	docker compose -f compose-dev.yaml build
 
 .PHONY: up
 up:
