@@ -11,6 +11,8 @@ import {
   WebTracerProvider,
 } from '@opentelemetry/sdk-trace-web'
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
+import Router from 'next/router'
+import { PageViewBufferingSpanProcessor } from './pageViewBufferingSpanProcessor'
 import { recordExceptionOnActiveSpan } from './recordException'
 
 // Mackerelのトレース収集エンドポイント。クライアントトークンは投稿権限のみに
@@ -20,6 +22,7 @@ const MACKEREL_TRACES_ENDPOINT = 'https://otlp-vaxila.mackerelio.com/v1/traces'
 
 let started = false
 let provider: WebTracerProvider | undefined
+let bufferingProcessor: PageViewBufferingSpanProcessor | undefined
 
 // 未捕捉の例外をtraceに記録した直後にページ遷移/クラッシュしても送信されないことがあるため、
 // 記録後にexporterへの送信を明示的にflushする(spanは終了させない)。
@@ -47,16 +50,22 @@ export function startWebTracing(): void {
     headers: { 'X-Mackerel-Client-Token': clientToken },
   })
 
+  const maxBufferedSpans = Number(
+    process.env.NEXT_PUBLIC_OTEL_MAX_BUFFERED_SPANS,
+  )
+  bufferingProcessor = new PageViewBufferingSpanProcessor(
+    new BatchSpanProcessor(exporter),
+    maxBufferedSpans > 0 ? maxBufferedSpans : undefined,
+  )
+
   provider = new WebTracerProvider({
     resource: resourceFromAttributes({
       [ATTR_SERVICE_NAME]: 'dreamkast-ui-web',
     }),
-    // 送信するか否かの判断は別途導入するSpanProcessorに一本化する予定のため、
+    // 送信するか否かの判断はPageViewBufferingSpanProcessorに一本化するため、
     // サンプラーは全spanを記録対象にするAlwaysOnにする(サンプラーで捨てるとonEnd()に届かない)。
     sampler: new AlwaysOnSampler(),
-    // TODO(#606): 現時点では全spanを送信している。error spanを含むpage-viewの
-    // spanのみをまとめて送るtail bufferingのSpanProcessorに置き換える予定。
-    spanProcessors: [new BatchSpanProcessor(exporter)],
+    spanProcessors: [bufferingProcessor],
   })
 
   provider.register({ contextManager: new ZoneContextManager() })
@@ -75,5 +84,12 @@ export function startWebTracing(): void {
   })
   window.addEventListener('unhandledrejection', (event) => {
     recordExceptionOnActiveSpan(event.reason)
+  })
+
+  // Next.jsのクライアント側遷移(next/link, router.push等)ごとにpage viewの
+  // 世代を切り替える。history.pushStateを直接呼ぶ等next/routerを経由しない遷移は
+  // 検知できないが、ベストエフォートとして許容する。
+  Router.events.on('routeChangeStart', () => {
+    bufferingProcessor?.beginNewPageView()
   })
 }
