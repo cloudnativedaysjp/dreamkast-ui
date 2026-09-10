@@ -20,6 +20,11 @@ import { ENV, validateEnv } from '../config'
 import { PrivateCtxProvider } from '../context/private'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import { AuthProvider } from '../context/auth'
+import { startWebTracing } from '../otel/webTracing'
+
+// エラーの捕捉漏れを防ぐため、useEffect(コミット後)を待たずモジュール読み込み時点で
+// トレーシングを開始する。サーバー側では内部でno-opになる。
+startWebTracing()
 
 const GlobalStyle = createGlobalStyle`
   html, body {
