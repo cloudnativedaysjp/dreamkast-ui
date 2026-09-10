@@ -38,7 +38,6 @@ git clone git@github.com:cloudnativedaysjp/dreamkast.git
 export AUTH0_CLIENT_ID=
 export AUTH0_CLIENT_SECRET=
 export AUTH0_DOMAIN=
-export SENTRY_DSN=
 export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=
 export S3_BUCKET=
